@@ -1,0 +1,13 @@
+# General files
+.DS_Store
+
+# Javascript files
+/javascript/node_modules
+/javascript/.pnp
+/javascript.pnp.js
+
+/javascript/coverage
+
+/javascript/npm-debug.log*
+/javascript/yarn-debug.log*
+/javascript/yarn-error.log*
