@@ -1,0 +1,40 @@
+{
+  "name": "@joookiwi/enumerable",
+  "version": "1.0.0",
+  "description": "A Javascript implementation of an enum class",
+
+  "scripts": {
+    "compile": "npm-run-all --parallel compile-*",
+    "compile-esm":   "tsc --project tsconfig.esm.json",
+    "compile-cjs":   "tsc --project tsconfig.cjs.json",
+    "compile-amd":   "tsc --project tsconfig.amd.json",
+    "compile-types": "tsc --project tsconfig.types.json",
+
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest"
+  },
+
+  "main": "src/index.js",
+  "directories": {
+    "example": "example",
+    "test": "test"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joooKiwi/enumeration.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joooKiwi/enumeration/issues"
+  },
+
+  "keywords": [
+    "enum",
+    "enum class"
+  ],
+  "author": "JóôòKiwi",
+  "license": "ISC",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "typescript": "^4.8.4"
+  }
+}
