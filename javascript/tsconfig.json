@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src/util",
+
     "target": "ES2020",
     "module": "ESNext",
     "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
     "lib": [
       "DOM",
       "DOM.Iterable",
