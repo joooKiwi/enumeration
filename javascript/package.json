@@ -10,7 +10,7 @@
     "compile-amd":   "tsc --project tsconfig.amd.json",
     "compile-types": "tsc --project tsconfig.types.json",
 
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest"
+    "test": "jest"
   },
 
   "main": "src/index.js",
@@ -34,7 +34,11 @@
   "author": "JóôòKiwi",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.2.0",
+    "jest-environment-jsdom": "^29.2.1",
     "npm-run-all": "^4.1.5",
+    "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.1",
     "typescript": "^4.8.4"
   }
 }

@@ -1,0 +1,111 @@
+import {SimpleEmptyEnum, SimpleEnum1, SimpleEnum2, SimpleEnumWithDefault, SimpleEnumWithLateDefault, SimpleEnumWithVariables}                                                    from "./Enum.templateEnums"
+import {forbiddenEnumFunctions, forbiddenInheritedMembers, forbiddenNumbers, invalidInstances, nullValues, outOfBoundNumbers, simpleEnumVariables, unhandledValues, validValues} from "./Enum.constants"
+
+import {Enum}                                        from "enumerable/Enum"
+import {ForbiddenEnumFunctionException}              from "enumerable/exception/ForbiddenEnumFunctionException"
+import {ForbiddenInheritedEnumerableMemberException} from "enumerable/exception/ForbiddenInheritedEnumerableMemberException"
+import {ForbiddenNumericException}                   from "enumerable/exception/ForbiddenNumericException"
+import {IndexOutOfBoundException}                    from "enumerable/exception/IndexOutOfBoundException"
+import {InvalidEnumerableException}                  from "enumerable/exception/InvalidEnumerableException"
+import {InvalidEnumerableReferenceException}         from "enumerable/exception/InvalidEnumerableReferenceException"
+import {InvalidInstanceException}                    from "enumerable/exception/InvalidInstanceException"
+import {NonExistantReferenceException}               from "enumerable/exception/NonExistantReferenceException"
+import {NullEnumerableException}                     from "enumerable/exception/NullEnumerableException"
+import {NullInstanceException}                       from "enumerable/exception/NullInstanceException"
+import {UnhandledValueException}                     from "enumerable/exception/UnhandledValueException"
+
+describe("EnumTest", () => {
+
+    describe("throws exceptions", () => {
+
+        describe("NullInstanceException", () => describe.each(nullValues,)("%s", it => {
+            test("getDefaultOn", () => expect(() => Enum.getDefaultOn(it,)).toThrow(NullInstanceException,),)
+            test("setDefaultOn", () => expect(() => Enum.setDefaultOn(it, "",)).toThrow(NullInstanceException,),)
+            test("getValueOn", () => expect(() => Enum.getValueOn(it, "",)).toThrow(NullInstanceException,),)
+            test("getValuesOn", () => expect(() => Enum.getValuesOn(it,)).toThrow(NullInstanceException,),)
+            test("getNamesOn", () => expect(() => Enum.getNamesOn(it,)).toThrow(NullInstanceException,),)
+            test("getOrdinalsOn", () => expect(() => Enum.getOrdinalsOn(it,)).toThrow(NullInstanceException,),)
+        },),)
+        describe("InvalidInstanceException", () => describe.each(invalidInstances,)("%s", ({value: it,},) => {
+            test("getDefaultOn", () => expect(() => Enum.getDefaultOn(it,)).toThrow(InvalidInstanceException,),)
+            test("setDefaultOn", () => expect(() => Enum.setDefaultOn(it, "",)).toThrow(InvalidInstanceException,),)
+            test("getValueOn", () => expect(() => Enum.getValueOn(it, "",)).toThrow(InvalidInstanceException,),)
+            test("getValuesOn", () => expect(() => Enum.getValuesOn(it,)).toThrow(InvalidInstanceException,),)
+            test("getNamesOn", () => expect(() => Enum.getNamesOn(it,)).toThrow(InvalidInstanceException,),)
+            test("getOrdinalsOn", () => expect(() => Enum.getOrdinalsOn(it,)).toThrow(InvalidInstanceException,),)
+        },),)
+
+        describe("UnhandledValueException", () => describe.each(unhandledValues,)("%s", ({value: it,},) => {
+            test("getValueOn", () => expect(() => Enum.getValueOn(SimpleEmptyEnum, it,),).toThrow(UnhandledValueException,),)
+            test("getValueOn", () => expect(() => Enum.setDefaultOn(SimpleEmptyEnum, it,),).toThrow(UnhandledValueException,),)
+        },),)
+        describe("NullEnumerableException", () => describe.each(nullValues,)("%s", it => {
+            test("getValueOn", () => expect(() => Enum.getValueOn(SimpleEmptyEnum, it,),).toThrow(NullEnumerableException,),)
+            test("getDefaultOn", () => expect(() => Enum.getDefaultOn(SimpleEmptyEnum,),).toThrow(NullEnumerableException,),)
+        },),)
+        describe("InvalidEnumerableException", () => {
+            test("getValueOn", () => expect(() => Enum.getValueOn(SimpleEnum1, SimpleEnum2.A,),).toThrow(InvalidEnumerableException,),)
+            test("setDefaultOn", () => expect(() => Enum.setDefaultOn(SimpleEnum1, SimpleEnum2.A,),).toThrow(InvalidEnumerableException,),)
+            describe("existant value as another enum", () => {
+                test("getValueOn", () => expect(() => Enum.getValueOn(SimpleEnumWithVariables, SimpleEnumWithVariables.VARIABLE_SIMPLE_ENUM_1_A,),).toThrow(InvalidEnumerableException,),)
+                test("setDefaultOn", () => expect(() => Enum.getValueOn(SimpleEnumWithVariables, SimpleEnumWithVariables.VARIABLE_SIMPLE_ENUM_1_A,),).toThrow(InvalidEnumerableException,),)
+            },)
+        },)
+        describe("InvalidEnumerableReferenceException", () => describe.each(simpleEnumVariables,)("%s", it => {
+            test("getValueOn", () => expect(() => Enum.getValueOn(SimpleEnumWithVariables, it,),).toThrow(InvalidEnumerableReferenceException,),)
+            test("setDefaultOn", () => expect(() => Enum.setDefaultOn(SimpleEnumWithVariables, it,),).toThrow(InvalidEnumerableReferenceException,),)
+        },),)
+
+        describe("IndexOutOfBoundException", () => describe.each(outOfBoundNumbers,)("%s", ({value: it,},) => {
+            test("getValueOn", () => expect(() => Enum.getValueOn(SimpleEnum1, it,),).toThrow(IndexOutOfBoundException,),)
+            test("setDefaultOn", () => expect(() => Enum.setDefaultOn(SimpleEnum1, it,),).toThrow(IndexOutOfBoundException,),)
+        },),)
+        describe("NonExistantReferenceException", () => {
+            test("getValueOn", () => expect(() => Enum.getValueOn(SimpleEmptyEnum, "somethingInvalid",),).toThrow(NonExistantReferenceException),)
+            test("setDefaultOn", () => expect(() => Enum.setDefaultOn(SimpleEmptyEnum, "somethingInvalid",),).toThrow(NonExistantReferenceException),)
+        },)
+
+        describe("ForbiddenNumericException", () => describe.each(forbiddenNumbers,)("%s", ({value: it,},) => {
+            test("getValueOn", () => expect(() => Enum.getValueOn(SimpleEnum1, it,),).toThrow(ForbiddenNumericException,),)
+            test("setDefaultOn", () => expect(() => Enum.setDefaultOn(SimpleEnum1, it,),).toThrow(ForbiddenNumericException,),)
+        }),)
+        describe("ForbiddenEnumFunctionException", () => describe.each(forbiddenEnumFunctions,)("%s", ({value: it,},) => {
+            test("getValueOn", () => expect(() => Enum.getValueOn(SimpleEnum1, it,),).toThrow(ForbiddenEnumFunctionException,),)
+            test("setDefaultOn", () => expect(() => Enum.getValueOn(SimpleEnum1, it,),).toThrow(ForbiddenEnumFunctionException,),)
+        }),)
+        describe("ForbiddenInheritedEnumerableMemberException", () => describe.each(forbiddenInheritedMembers,)("%s", ({value: it,},) => {
+            test("getValueOn", () => expect(() => Enum.getValueOn(SimpleEnum1, it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
+            test("setDefaultOn", () => expect(() => Enum.setDefaultOn(SimpleEnum1, it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
+        }),)
+
+    },)
+
+    describe("array validation", () => {
+        test("size of 2 on simple", () => expect(Enum.getValuesOn(SimpleEnum1,),).toHaveLength(2,),)
+        test("size of 2 on with default", () => expect(Enum.getValuesOn(SimpleEnumWithDefault,),).toHaveLength(2,),)
+        test("size of 2 on with late default", () => expect(Enum.getValuesOn(SimpleEnumWithLateDefault,),).toHaveLength(2,),)
+    },)
+    describe("valid value", () => describe.each(validValues,)("%s", ({value: it,},) => {
+        test("getValueOn", () => expect(Enum.getValueOn(SimpleEnum1, it,),).toBe(SimpleEnum1.A,),)
+        test("setDefaultOn", () => {
+            expect(Enum.getDefaultOn(Enum.setDefaultOn(SimpleEnum1, it,),),).toBe(SimpleEnum1.A,)
+            Enum.setDefaultOn(SimpleEnum1, SimpleEnum1.B,)
+        },)
+    },),)
+    describe("default validation", () => {
+        describe("Construction init", () => {
+            // @ts-ignore
+            test("first get", () => expect(Enum.getDefaultOn(SimpleEnumWithDefault,),).toBe(SimpleEnumWithDefault._DEFAULT,),)
+            test("get after set", () => expect(Enum.getDefaultOn(Enum.setDefaultOn(SimpleEnumWithDefault, 'B',),),).toBe(SimpleEnumWithDefault.B,),)
+        },)
+        describe("Late init", () => {
+            test("exception on first get", () => expect(() => Enum.getDefaultOn(SimpleEnumWithLateDefault,),).toThrow(NullEnumerableException,),)
+            test("get after set", () => expect(Enum.getDefaultOn(Enum.setDefaultOn(SimpleEnumWithLateDefault, 'B',),),).toBe(SimpleEnumWithLateDefault.B,),)
+        },)
+    },)
+
+},)
+// test("setDefaultOn", () => {
+//     expect(() => Enum.setDefaultOn(SimpleEnumWithLateDefault, it,),).not.toThrow()
+//     expect(Enum.getDefaultOn(SimpleEnumWithLateDefault,),).toBeNull()
+// },)
