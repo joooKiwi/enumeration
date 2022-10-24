@@ -1,4 +1,4 @@
-import {AbstractCollectionHolder} from "collection/AbstractCollectionHolder"
+import {AbstractCollectionHolder} from "./AbstractCollectionHolder"
 
 export class GenericCollectionHolder<T = any, >
     extends AbstractCollectionHolder<T> {
