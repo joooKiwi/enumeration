@@ -1,0 +1,6 @@
+/.idea
+/coverage/**/*
+/dist/types/**/*.d.ts.map
+tsconfig*.json
+jest.config.ts
+/test/**/*

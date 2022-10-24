@@ -16,7 +16,19 @@
   "main": "src/index.js",
   "directories": {
     "example": "example",
+    "lib": "dist/types",
     "test": "test"
+  },
+  "exports": {
+    "./Enum": {
+      "node": "./dist/common javascript/util/enumerable/Enum.js"
+    },
+    "./collection/*": {
+      "node": "./dist/common javascript/util/collection/*.js"
+    },
+    "./exception/*": {
+      "node": "./dist/common javascript/util/enumerable/exception/*.js"
+    }
   },
 
   "repository": {
