@@ -123,18 +123,6 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
 
     public readonly [Symbol.toStringTag]: EnumerableName = Enum.#TO_STRING_TAG
 
-    public static get valuesMap() {
-        return this.#VALUES_MAP
-    }
-
-    public static get namesMap() {
-        return this.#NAMES_MAP
-    }
-
-    public static get ordinalsMap() {
-        return this.#ORDINALS_MAP
-    }
-
     //#endregion -------------------- Getter methods --------------------
     //#region -------------------- Methods --------------------
 
