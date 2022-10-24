@@ -21,12 +21,20 @@
   },
   "exports": {
     "./Enum": {
+      "import": "./dist/ecmascript module/util/enumerable/Enum.js",
       "node": "./dist/common javascript/util/enumerable/Enum.js"
     },
+
+    "./enumerable/*": {
+      "import": "./dist/ecmascript module/util/enumerable/*.js",
+      "node": "./dist/common javascript/util/enumerable/*.js"
+    },
     "./collection/*": {
+      "import": "./dist/ecmascript module/util/collection/*.js",
       "node": "./dist/common javascript/util/collection/*.js"
     },
     "./exception/*": {
+      "import": "./dist/ecmascript module/util/enumerable/exception/*.js",
       "node": "./dist/common javascript/util/enumerable/exception/*.js"
     }
   },
