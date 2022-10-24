@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Compile (AMD)" type="js.build_tools.npm" folderName="Compile">
+  <configuration default="false" name="Compile (Universal module definition)" type="js.build_tools.npm" folderName="Compile">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="compile-amd" />
+      <script value="compile-umd" />
     </scripts>
     <node-interpreter value="project" />
     <envs />

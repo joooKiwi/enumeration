@@ -2,9 +2,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     //    "isolatedModules": false,
-    "module": "AMD",
+    "module": "UMD",
     "target": "ES2022",
 
-    "outFile": "dist/asynchronous module definition/index.js"
+    "outDir": "dist/universal module definition"
   },
 }

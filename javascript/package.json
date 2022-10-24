@@ -8,6 +8,7 @@
     "compile-esm":   "tsc --project tsconfig.esm.json",
     "compile-cjs":   "tsc --project tsconfig.cjs.json",
     "compile-amd":   "tsc --project tsconfig.amd.json",
+    "compile-umd":   "tsc --project tsconfig.umd.json",
     "compile-types": "tsc --project tsconfig.types.json",
 
     "test": "jest"
@@ -20,6 +21,9 @@
     "test": "test"
   },
   "exports": {
+    ".": {
+      "require": "./dist/asynchronous module definition/index.js"
+    },
     "./Enum": {
       "import": "./dist/ecmascript module/util/enumerable/Enum.js",
       "node": "./dist/common javascript/util/enumerable/Enum.js"
