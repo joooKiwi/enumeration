@@ -11,38 +11,90 @@
     "compile-umd":   "tsc --project tsconfig.umd.json",
     "compile-types": "tsc --project tsconfig.types.json",
 
-    "test": "jest"
+    "test":         "jest",
+    "test-pack":    "npm pack --dry-run",
+    "test-publish": "npm publish --@access=public --dry-run",
+
+    "pack": "npm pack",
+
+    "prelocal-publish": "npm run compile",
+    "local-publish":    "npm link",
+
+    "prepublish": "npm run compile",
+    "publish":    "npm publish --access=public"
   },
 
-  "main": "src/index.js",
   "directories": {
-    "example": "example",
-    "lib": "dist/types",
-    "test": "test"
+    "example": "./example",
+    "lib": "./src/util/enumerable",
+    "test": "./test"
   },
+  "main": "./dist/common javascript/index.js",
+  "module": "./dist/ecmascript module/index.js",
+  "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/asynchronous module definition/index.js"
-    },
-    "./Enum": {
-      "import": "./dist/ecmascript module/util/enumerable/Enum.js",
-      "node": "./dist/common javascript/util/enumerable/Enum.js"
+      "types":   "./dist/types/index.d.ts",
+      "import":  "./dist/ecmascript module/index.js",
+      "require": "./dist/common javascript/index.js"
     },
 
-    "./enumerable/*": {
-      "import": "./dist/ecmascript module/util/enumerable/*.js",
-      "node": "./dist/common javascript/util/enumerable/*.js"
+    "./Enum": {
+      "types":   "./dist/types/util/enumerable/Enum.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/Enum.js",
+      "require": "./dist/common javascript/util/enumerable/Enum.js"
     },
     "./collection/*": {
-      "import": "./dist/ecmascript module/util/collection/*.js",
-      "node": "./dist/common javascript/util/collection/*.js"
+      "types":   "./dist/types/util/collection/*.d.ts",
+      "import":  "./dist/ecmascript module/util/collection/*.js",
+      "require": "./dist/common javascript/util/collection/*.js"
+    },
+    "./enumerable/*": {
+      "types":   "./dist/types/util/enumerable/*.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/*.js",
+      "require": "./dist/common javascript/util/enumerable/*.js"
     },
     "./exception/*": {
-      "import": "./dist/ecmascript module/util/enumerable/exception/*.js",
-      "node": "./dist/common javascript/util/enumerable/exception/*.js"
+      "types":   "./dist/types/util/enumerable/exception/*.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/exception/*.js",
+      "require": "./dist/common javascript/util/enumerable/exception/*.js"
+    },
+    "./enumerable/exception/*": {
+      "types":   "./dist/types/util/enumerable/exception/*.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/exception/*.js",
+      "require": "./dist/common javascript/util/enumerable/exception/*.js"
+    },
+
+    "./collection": {
+      "types":   "./dist/types/util/collection/index.d.ts",
+      "import":  "./dist/ecmascript module/util/collection/index.js",
+      "require": "./dist/common javascript/util/collection/index.js"
+    },
+    "./enumerable": {
+      "types":   "./dist/types/util/enumerable/index.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/index.js",
+      "require": "./dist/common javascript/util/enumerable/index.js"
+    },
+    "./exception": {
+      "types":   "./dist/types/util/enumerable/exception/index.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/exception/index.js",
+      "require": "./dist/common javascript/util/enumerable/exception/index.js"
+    },
+    "./enumerable/exception": {
+      "types":   "./dist/types/util/enumerable/exception/index.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/exception/index.js",
+      "require": "./dist/common javascript/util/enumerable/exception/index.js"
     }
   },
 
+  "files": [
+    "dist/asynchronous module definition",
+    "dist/common javascript",
+    "dist/ecmascript module",
+    "dist/types",
+    "dist/universal module definition",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joooKiwi/enumeration.git"
@@ -53,7 +105,8 @@
 
   "keywords": [
     "enum",
-    "enum class"
+    "enum class",
+    "enumeration"
   ],
   "author": "JóôòKiwi",
   "license": "ISC",
