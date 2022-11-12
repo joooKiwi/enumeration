@@ -8,8 +8,7 @@
     "esModuleInterop": true,
     "lib": [
       "DOM",
-      "DOM.Iterable",
-      "ESNext"
+      "ESNext",
     ],
     "pretty": true,
 
@@ -37,14 +36,14 @@
 
     "isolatedModules": true,
     "sourceMap": true,
-    "declaration": false
+    "declaration": false,
   },
   "include": [
-    "src"
+    "src",
   ],
   "exclude": [
     "node_modules",
     "test",
-    "coverage"
-  ]
+    "coverage",
+  ],
 }
