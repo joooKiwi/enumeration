@@ -52,6 +52,7 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
 
     static readonly #NUMBER_ONLY_REGEX = /^-?\d+(\.\d+)?$/
     static readonly #INTEGER_ONLY_REGEX = /^-?\d+$/
+    static readonly #TO_PRIMITIVE_VALUES = /string|number|default/
     static readonly #PROTOTYPE_NAME = "prototype"
     // static readonly #RESERVED_JAVASCRIPT_FUNCTION_NAMES = ["prototype", "name", "length", "apply", "call", "bind", "caller",] as const
     // static readonly #RESERVED_JAVASCRIPT_OBJECT_NAMES = ["constructor", "hasOwnProperty", "isPrototypeOf", "toLocaleString", "toString", "valueOf",] as const
@@ -113,7 +114,21 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
      */
     protected abstract get _static(): EnumerableConstructor<ORDINAL, NAME>
 
-    public readonly [Symbol.toStringTag]: EnumerableName = Enum.#TO_STRING_TAG
+    public [Symbol.toPrimitive]<HINT extends PossiblePrimitiveHint, >(hint: Nullable<HINT>,): EnumerableToPrimitive<HINT, this>
+    public [Symbol.toPrimitive](hint: Nullable<PossibleString>,): EnumerableToPrimitive<PossiblePrimitiveHint, this>
+    public [Symbol.toPrimitive](hint: Nullable<PossibleString>,): EnumerableToPrimitive<PossiblePrimitiveHint, this> {
+        if (hint == null)
+            throw new TypeError(`Invalid null hint: The ${this._static.name} cannot be converted to a primitive`)
+        if (hint instanceof String)
+            return this[Symbol.toPrimitive](hint.valueOf())
+        if (!Enum.#TO_PRIMITIVE_VALUES.test(hint))
+            throw new TypeError(`Invalid hint "${hint}": The ${this._static.name} cannot be converted to a primitive`)
+        return hint == "number" ? this.ordinal : this.name
+    }
+
+    public get [Symbol.toStringTag](): EnumerableName {
+        return Enum.#TO_STRING_TAG
+    }
 
     //#endregion -------------------- Getter methods --------------------
     //#region -------------------- Methods --------------------
