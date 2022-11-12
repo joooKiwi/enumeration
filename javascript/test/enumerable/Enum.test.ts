@@ -92,14 +92,16 @@ describe("EnumTest", () => {
     describe("valid value", () => describe.each(validValues,)("%s", ({value: it,},) => {
         test("getValueOn", () => expect(Enum.getValueOn(SimpleEnum1, it,),).toBe(SimpleEnum1.A,),)
         test("setDefaultOn", () => {
+            if (it.name == 'B')
+                fail("The test could not be done since the value has 'B' as its name",)
+            Enum.setDefaultOn(SimpleEnum1, SimpleEnum1.B,)
             expect(Enum.getDefaultOn(Enum.setDefaultOn(SimpleEnum1, it,),),).toBe(SimpleEnum1.A,)
             Enum.setDefaultOn(SimpleEnum1, SimpleEnum1.B,)
         },)
     },),)
     describe("default validation", () => {
         describe("Construction init", () => {
-            // @ts-ignore
-            test("first get", () => expect(Enum.getDefaultOn(SimpleEnumWithDefault,),).toBe(SimpleEnumWithDefault._DEFAULT,),)
+            test("first get", () => expect(Enum.getDefaultOn(SimpleEnumWithDefault,),).toBe(SimpleEnumWithDefault.A,),)
             test("get after set", () => expect(Enum.getDefaultOn(Enum.setDefaultOn(SimpleEnumWithDefault, 'B',),),).toBe(SimpleEnumWithDefault.B,),)
         },)
         describe("Late init", () => {
@@ -119,7 +121,3 @@ describe("EnumTest", () => {
     },),),),)
 
 },)
-// test("setDefaultOn", () => {
-//     expect(() => Enum.setDefaultOn(SimpleEnumWithLateDefault, it,),).not.toThrow()
-//     expect(Enum.getDefaultOn(SimpleEnumWithLateDefault,),).toBeNull()
-// },)

@@ -36,7 +36,7 @@ export class SimpleEnum1
     public static readonly A = new SimpleEnum1()
     public static readonly B = new SimpleEnum1()
 
-    static [index: number]: SimpleEmptyEnum
+    static [index: number]: SimpleEnum1
 
     protected override get _static(): EnumerableConstructor<number, Names> {
         return SimpleEnum1
@@ -62,7 +62,7 @@ export class SimpleEnum2
     public static readonly A = new SimpleEnum2()
     public static readonly B = new SimpleEnum2()
 
-    static [index: number]: SimpleEmptyEnum
+    static [index: number]: SimpleEnum2
 
     protected override get _static(): EnumerableConstructor<number, Names> {
         return SimpleEnum2
@@ -90,7 +90,7 @@ export class SimpleEnumWithVariables
     public static readonly VARIABLE_BIGINT = BigInt(0,)
     public static readonly VARIABLE_SIMPLE_ENUM_1_A = SimpleEnum1.A
 
-    static [index: number]: SimpleEmptyEnum
+    static [index: number]: SimpleEnumWithVariables
 
     protected override get _static(): EnumerableConstructor<number, never> {
         return SimpleEnumWithVariables
@@ -119,7 +119,7 @@ export class SimpleEnumWithDefault
 
     protected static _DEFAULT = this.A
 
-    static [index: number]: SimpleEmptyEnum
+    static [index: number]: SimpleEnumWithDefault
 
     protected override get _static(): EnumerableConstructorWithDefault<number, Names> {
         return SimpleEnumWithDefault
@@ -157,7 +157,7 @@ export class SimpleEnumWithLateDefault
     public static readonly A = new SimpleEnumWithLateDefault()
     public static readonly B = new SimpleEnumWithLateDefault()
 
-    static [index: number]: SimpleEmptyEnum
+    static [index: number]: SimpleEnumWithDefault
 
     protected override get _static(): EnumerableConstructorWithDefault<number, Names> {
         return SimpleEnumWithLateDefault
