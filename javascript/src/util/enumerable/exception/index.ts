@@ -2,6 +2,8 @@ export {ForbiddenEnumFunctionException}              from "./ForbiddenEnumFuncti
 export {ForbiddenInheritedEnumerableMemberException} from "./ForbiddenInheritedEnumerableMemberException"
 export {ForbiddenNumericException}                   from "./ForbiddenNumericException"
 export {IndexOutOfBoundException}                    from "./IndexOutOfBoundException"
+export {InvalidEnumerableException}                  from "./InvalidEnumerableException"
+export {InvalidEnumerableReferenceException}         from "./InvalidEnumerableReferenceException"
 export {InvalidInstanceException}                    from "./InvalidInstanceException"
 export {NonExistantReferenceException}               from "./NonExistantReferenceException"
 export {NullInstanceException}                       from "./NullInstanceException"
