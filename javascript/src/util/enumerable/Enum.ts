@@ -56,7 +56,7 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
     static readonly #PROTOTYPE_NAME = "prototype"
     // static readonly #RESERVED_JAVASCRIPT_FUNCTION_NAMES = ["prototype", "name", "length", "apply", "call", "bind", "caller",] as const
     // static readonly #RESERVED_JAVASCRIPT_OBJECT_NAMES = ["constructor", "hasOwnProperty", "isPrototypeOf", "toLocaleString", "toString", "valueOf",] as const
-    // static readonly #FORBIDDEN_ENUM_MEMBERS = ["_EXCLUDED_NAMES", "_DEFAULT_NAME", "_PARENT",] as const
+    // static readonly #FORBIDDEN_ENUM_MEMBERS = ["_EXCLUDED_NAMES", "_DEFAULT_NAME",] as const
     static readonly #FORBIDDEN_NUMERIC_NAME = ["NaN", "-Infinity", "Infinity",] as const
     static readonly #FORBIDDEN_ENUM_FUNCTION = ["getDefaultOn", "setDefaultOn", "getValueOn", "getValuesOn", "getNamesOn", "getOrdinalsOn",] as const
     static readonly #FORBIDDEN_INHERITED_MEMBERS = ["default", "setDefault", "values", "names", "ordinals",] as const
@@ -75,7 +75,7 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
     protected constructor() {
         // @ts-ignore
         const staticReference = this._static
-        Reflect.set(staticReference, this.#ordinal = Enum.#getLastOrdinalOn(staticReference,), this,)
+        set(staticReference, this.#ordinal = Enum.#getLastOrdinalOn(staticReference,), this,)
     }
 
     //#region -------------------- Getter methods --------------------
@@ -296,6 +296,8 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
             throw new UnhandledValueException(`A boolean value cannot be received in "${instance.name}.getValue(value)".`, value,)
         if (this.#isASymbol(value,))
             throw new UnhandledValueException(`A symbol value cannot be received in "${instance.name}.getValue(value)".`, value,)
+        if (value instanceof RegExp)
+            throw new UnhandledValueException(`A regex value cannot be received in "${instance.name}.getValue(value)".`, value,)
         throw new UnhandledValueException(`The value received is not of type string, number, bigint or enumerable. It cannot be received in "${instance.name}.getValue(value)".`, value,)
     }
 
