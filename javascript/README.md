@@ -22,7 +22,6 @@ npm i -S @joookiwi/enumerable
 npm install --save-dev @joookiwi/enumerable
 npm i -D @joookiwi/enumerable
 ```
-- --
 
 ## Motivation
 
@@ -35,7 +34,6 @@ In `C#` or `PHP`, it has at some extends some functionality provided within the 
 But, in `Javascript` _(inherently `Typescipt`)_, there is no such implementation for `enum`.
 
 The goal is to have an implementation of an `enum class` usable for either `Javascript` or `Typescript`.<br/>
-- --
 
 ## Usage
 
@@ -200,16 +198,16 @@ class AnotherExample extends Enum {
 <summary>Typescript</summary>
 
 ```typescript
-class Example extends Enum {
+class Example extends Enum<Ordinals, Names> {
 
-    protected static override readonly _DEFAULT = Example.A
+   protected static override readonly _DEFAULT = Example.A
 
 }
 
-class AnotherExample extends Enum {
+class AnotherExample extends Enum<Ordinals, Names> {
 
-    protected static override readonly _DEFAULT_NAME = "_ANOTHER_NAME"
-    protected static override readonly _ANOTHER_NAME = AnotherExample.A
+   protected static override readonly _DEFAULT_NAME = "_ANOTHER_NAME"
+   protected static override readonly _ANOTHER_NAME = AnotherExample.A
 
 }
 ```
