@@ -1,24 +1,25 @@
-import type {AnyEnumerableConstructor, EnumerableConstructor}           from "enumerable/EnumerableConstructor.type"
-import type {CollectionHolder}                                          from "collection/CollectionHolder"
-import type {Enumerable}                                                from "enumerable/Enumerable"
-import type {EnumerableName}                                            from "enumerable/Enumerable.types"
-import type {Nullable, NullOr, PossibleString, PossibleStringOrNumeric} from "../../type"
+import type {AnyEnumerableConstructor, EnumerableConstructor}                                                             from "enumerable/EnumerableConstructor.type"
+import type {CollectionHolder}                                                                                            from "collection/CollectionHolder"
+import type {Enumerable}                                                                                                  from "enumerable/Enumerable"
+import type {EnumerableName, EnumerableToPrimitive, PossibleEnumerableConstructorByEnumerable, PossibleValueByEnumerable} from "enumerable/Enumerable.types"
+import type {Nullable, NullOr, PossiblePrimitiveHint, PossibleString, PossibleStringOrNumeric}                            from "../../type"
 
 import {GenericCollectionHolder}                     from "../collection/GenericCollectionHolder"
+import {ForbiddenNumericException}                   from "./exception/ForbiddenNumericException"
+import {ForbiddenEnumFunctionException}              from "./exception/ForbiddenEnumFunctionException"
+import {ForbiddenInheritedEnumerableMemberException} from "./exception/ForbiddenInheritedEnumerableMemberException"
+import {IndexOutOfBoundException}                    from "./exception/IndexOutOfBoundException"
 import {InvalidEnumerableException}                  from "./exception/InvalidEnumerableException"
+import {InvalidEnumerableReferenceException}         from "./exception/InvalidEnumerableReferenceException"
 import {InvalidInstanceException}                    from "./exception/InvalidInstanceException"
+import {NonExistantReferenceException}               from "./exception/NonExistantReferenceException"
 import {NullEnumerableException}                     from "./exception/NullEnumerableException"
 import {NullInstanceException}                       from "./exception/NullInstanceException"
 import {UnhandledValueException}                     from "./exception/UnhandledValueException"
-import {ForbiddenNumericException}                   from "./exception/ForbiddenNumericException"
-import {IndexOutOfBoundException}                    from "./exception/IndexOutOfBoundException"
-import {ForbiddenEnumFunctionException}              from "./exception/ForbiddenEnumFunctionException"
-import {ForbiddenInheritedEnumerableMemberException} from "./exception/ForbiddenInheritedEnumerableMemberException"
-import {InvalidEnumerableReferenceException}         from "./exception/InvalidEnumerableReferenceException"
-import {NonExistantReferenceException}               from "./exception/NonExistantReferenceException"
 
 const {POSITIVE_INFINITY, NEGATIVE_INFINITY, MAX_VALUE, isNaN,} = Number,
-    MAX_VALUE_AS_BIGINT = BigInt(MAX_VALUE,)
+    MAX_VALUE_AS_BIGINT = BigInt(MAX_VALUE,),
+    {get, getPrototypeOf, has, set,} = Reflect
 
 export abstract class Enum<ORDINAL extends number = number, NAME extends string = string, >
     implements Enumerable<ORDINAL, NAME> {
@@ -41,15 +42,6 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
      * {@link EnumerableConstructor.values static get values} of the current instance.
      */
     protected static readonly _DEFAULT_NAME = "_DEFAULT"
-    /**
-     * The parent of the current instance.
-     *
-     * This value is referred when a <u>child enum class</u> extends another <u>enum class</u>.
-     *
-     * @see Enum.getValueOn
-     */
-    protected static readonly _PARENT = Enum as unknown as EnumerableConstructor<any, any>
-
 
     static readonly #LAST_ORDINAL_MAP = new Map<EnumerableConstructor, number>()
     static readonly #NAME_MAP = new Map<Enumerable, string>()
@@ -202,8 +194,19 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
     }
 
     static #validateSameStaticOnEnumerable<ENUMERABLE extends Enumerable, >(instance: EnumerableConstructor, value: Enum,): ENUMERABLE {
-        if (value._static !== instance)
-            throw new InvalidEnumerableException(`The value received is not the same instance (${value._static.constructor.name}) as the one expected (${instance.name}).`, instance, value,)
+        if (value._static !== instance) {
+            if (value instanceof instance)
+                return get(instance, value.name,)//Get the value by a possible child//TODO gives an error that the child instance doesn't exist on the parent instance.
+            let parent = (getPrototypeOf(instance,) as Enum & EnumerableConstructor)
+            const valueConstructor = value._static
+            // @ts-ignore
+            while (parent !== Enum) {
+                if (parent === valueConstructor)
+                    return get(instance, value.name,)
+                parent = (getPrototypeOf(parent,) as Enum & EnumerableConstructor)
+            }
+            throw new InvalidEnumerableException(`The value received is not the same instance (${value._static.name}) as the one expected (${instance.name}).`, instance, value,)
+        }
         return value as unknown as ENUMERABLE
     }
 
@@ -263,9 +266,9 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
     }
 
     static #validateIsEnumerable<ENUMERABLE extends Enumerable, >(instance: EnumerableConstructor, key: | string | number, value: | PossibleStringOrNumeric | Enumerable,): ENUMERABLE {
-        if (!Reflect.has(instance, key,))
+        if (!has(instance, key,))
             throw new NonExistantReferenceException(`No value exist in "${instance.name}.${value}".`, value,)
-        const returnedValue = Reflect.get(instance, key,)
+        const returnedValue = get(instance, key,)
         if (!(returnedValue instanceof Enum))
             throw new InvalidEnumerableReferenceException(`The value "${instance.name}.${value}" is not an instance of "${instance.name}"`, value,)
         if (returnedValue._static !== instance)
@@ -354,15 +357,14 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
     public static setDefaultOn<ENUMERABLE extends Enumerable, ENUMERABLE_CONSTRUCTOR extends PossibleEnumerableConstructorByEnumerable<ENUMERABLE> = PossibleEnumerableConstructorByEnumerable<ENUMERABLE>, >(instance: ENUMERABLE_CONSTRUCTOR, value: PossibleValueByEnumerable<ENUMERABLE>,): ENUMERABLE_CONSTRUCTOR
     public static setDefaultOn(instance: Nullable<EnumerableConstructor>, value: PossibleValueReceived,) {
         this.#validateEnumerableConstructor(instance,)
-        if (value == null) {
-            this.#DEFAULT_MAP.set(instance, null,)
-            return instance
-        }
-        if (value instanceof Enum) {
-            this.#DEFAULT_MAP.set(instance, this.#validateSameStaticOnEnumerable(instance, value,),)
-            return instance
-        }
-        this.#DEFAULT_MAP.set(instance, instance.getValue(this.#validateStringOrNumber(value,),),)
+        this.#DEFAULT_MAP.set(
+            instance,
+            value == null
+                ? null
+                : value instanceof Enum
+                    ? this.#validateSameStaticOnEnumerable(instance, value,)
+                    : Enum.getValueOn(instance, this.#validateStringOrNumber(value,),),
+        )
         return instance
     }
 
@@ -371,15 +373,12 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
         this.#validateEnumerableConstructor(instance,)
         if (value == null)
             throw new NullEnumerableException(`Unable to get the value. The value received for the instance ${instance.name} cannot be null (or undefined).`,)
-        const parent = instance._PARENT as EnumerableConstructor & typeof Enum
 
-        return parent !== Enum
-            ? Enum.getValueOn(parent, value,)
-            : value instanceof Enum
-                ? this.#validateSameStaticOnEnumerable(instance, value,)
-                : this.#isAStringOrNumeric(value,)
-                    ? this.#validateIsEnumerable(instance, this.#validateStringOrNumber(value,), value,)
-                    : this.#throwInvalidScenarios(instance, value,)
+        return value instanceof Enum
+            ? this.#validateSameStaticOnEnumerable(instance, value,)
+            : this.#isAStringOrNumeric(value,)
+                ? this.#validateIsEnumerable(instance, this.#validateStringOrNumber(value,), value,)
+                : this.#throwInvalidScenarios(instance, value,)
     }
 
     public static getValuesOn<ENUMERABLE_CONSTRUCTOR extends AnyEnumerableConstructor, >(instance: Nullable<ENUMERABLE_CONSTRUCTOR>,): ENUMERABLE_CONSTRUCTOR["values"]
@@ -406,5 +405,3 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
 }
 
 type PossibleValueReceived = Nullable<| PossibleStringOrNumeric | Enum>
-export type PossibleEnumerableConstructorByEnumerable<ENUMERABLE extends Enumerable, > = Nullable<EnumerableConstructor<ENUMERABLE["ordinal"], ENUMERABLE["name"], any>>
-export type PossibleValueByEnumerable<ENUMERABLE extends Enumerable, > = Nullable<| PossibleStringOrNumeric | Enumerable<ENUMERABLE["ordinal"], ENUMERABLE["name"]>>

@@ -28,6 +28,7 @@ export class SimpleEmptyEnum
 }
 
 type Names = | 'A' | 'B'
+type Names2 = | Names | 'C'
 
 export class SimpleEnum1
     extends Enum<number, Names> {
@@ -183,6 +184,118 @@ export class SimpleEnumWithLateDefault
     }
 
     public static [Symbol.iterator]() {
+        return this.values[Symbol.iterator]()
+    }
+
+}
+
+
+export class SimpleParentEnum
+    extends Enum<number, Names> {
+
+    public static readonly A = new SimpleParentEnum()
+    public static readonly B = new SimpleParentEnum()
+
+    static [index: number]: SimpleParentEnum
+
+    public override get _static(): EnumerableConstructor<number, Names> {
+        return SimpleParentEnum
+    }
+
+    public static getValue(value: Nullable<PossibleStringOrNumeric | SimpleParentEnum>,): SimpleParentEnum {
+        return Enum.getValueOn(this, value,)
+    }
+
+    public static get values(): CollectionHolder<SimpleParentEnum> {
+        return Enum.getValuesOn(this,)
+    }
+
+    public static [Symbol.iterator]() {
+        return this.values[Symbol.iterator]()
+    }
+
+}
+
+export class SimpleChild1Enum
+    extends SimpleParentEnum {
+
+    public static override readonly A = new SimpleChild1Enum()
+    public static override readonly B = new SimpleChild1Enum()
+    public static readonly C = new SimpleChild1Enum()
+
+    static [index: number]: SimpleChild1Enum
+
+    // @ts-ignore
+    public override get _static(): EnumerableConstructor<number, Names2> {
+        return SimpleChild1Enum
+    }
+
+    public static override getValue(value: Nullable<PossibleStringOrNumeric | SimpleParentEnum | SimpleChild1Enum>,): SimpleChild1Enum {
+        return Enum.getValueOn(this, value,)
+    }
+
+    public static override get values(): CollectionHolder<SimpleChild1Enum> {
+        return Enum.getValuesOn(this,)
+    }
+
+    public static override [Symbol.iterator]() {
+        return this.values[Symbol.iterator]()
+    }
+
+}
+
+export class SimpleChild2Enum
+    extends SimpleChild1Enum {
+
+    public static override readonly A = new SimpleChild2Enum()
+    public static override readonly B = new SimpleChild2Enum()
+    public static override readonly C = new SimpleChild2Enum()
+
+    static [index: number]: SimpleChild2Enum
+
+    public override get _static(): EnumerableConstructor<number, Names2> {
+        return SimpleChild2Enum
+    }
+
+    public static override getValue(value: Nullable<PossibleStringOrNumeric | SimpleParentEnum | SimpleChild1Enum | SimpleChild2Enum>,): SimpleChild2Enum {
+        return Enum.getValueOn(this, value,)
+    }
+
+    public static override get values(): CollectionHolder<SimpleChild2Enum> {
+        return Enum.getValuesOn(this,)
+    }
+
+    public static override [Symbol.iterator]() {
+        return this.values[Symbol.iterator]()
+    }
+
+}
+
+
+
+export class SimpleAnotherChildEnum
+    extends SimpleParentEnum {
+
+    public static override readonly A = new SimpleAnotherChildEnum()
+    public static override readonly B = new SimpleAnotherChildEnum()
+    public static readonly C = new SimpleAnotherChildEnum()
+
+    static [index: number]: SimpleAnotherChildEnum
+
+    // @ts-ignore
+    public override get _static(): EnumerableConstructor<number, Names2> {
+        return SimpleAnotherChildEnum
+    }
+
+    public static override getValue(value: Nullable<PossibleStringOrNumeric | SimpleParentEnum | SimpleAnotherChildEnum>,): SimpleAnotherChildEnum {
+        return Enum.getValueOn(this, value,)
+    }
+
+    public static override get values(): CollectionHolder<SimpleAnotherChildEnum> {
+        return Enum.getValuesOn(this,)
+    }
+
+    public static override [Symbol.iterator]() {
         return this.values[Symbol.iterator]()
     }
 

@@ -1,5 +1,5 @@
-import {SimpleEmptyEnum, SimpleEnum1, SimpleEnum2, SimpleEnumWithDefault, SimpleEnumWithLateDefault, SimpleEnumWithVariables}                                                    from "./Enum.templateEnums"
-import {forbiddenEnumFunctions, forbiddenInheritedMembers, forbiddenNumbers, invalidInstances, nullValues, outOfBoundNumbers, simpleEnumVariables, unhandledValues, validValues} from "./Enum.constants"
+import {SimpleAnotherChildEnum, SimpleChild1Enum, SimpleEmptyEnum, SimpleEnum1, SimpleEnum2, SimpleEnumWithDefault, SimpleEnumWithLateDefault, SimpleEnumWithVariables}                             from "./Enum.templateEnums"
+import {forbiddenEnumFunctions, forbiddenInheritedMembers, forbiddenNumbers, invalidInstances, nullValues, outOfBoundNumbers, parentChildValues, simpleEnumVariables, unhandledValues, validValues} from "./Enum.constants"
 
 import {Enum}                                        from "enumerable/Enum"
 import {ForbiddenEnumFunctionException}              from "enumerable/exception/ForbiddenEnumFunctionException"
@@ -49,6 +49,10 @@ describe("EnumTest", () => {
             describe("existant value as another enum", () => {
                 test("getValueOn", () => expect(() => Enum.getValueOn(SimpleEnumWithVariables, SimpleEnumWithVariables.VARIABLE_SIMPLE_ENUM_1_A,),).toThrow(InvalidEnumerableException,),)
                 test("setDefaultOn", () => expect(() => Enum.getValueOn(SimpleEnumWithVariables, SimpleEnumWithVariables.VARIABLE_SIMPLE_ENUM_1_A,),).toThrow(InvalidEnumerableException,),)
+            },)
+            describe("invalid sub enum", () => {
+                test("getValueOn", () => expect(() => Enum.getValueOn(SimpleChild1Enum, SimpleAnotherChildEnum.A,),).toThrow(InvalidEnumerableException),)
+                test("getValueOn", () => expect(() => Enum.setDefaultOn(SimpleChild1Enum, SimpleAnotherChildEnum.A,),).toThrow(InvalidEnumerableException),)
             },)
         },)
         describe("InvalidEnumerableReferenceException", () => describe.each(simpleEnumVariables,)("%s", it => {
@@ -103,6 +107,16 @@ describe("EnumTest", () => {
             test("get after set", () => expect(Enum.getDefaultOn(Enum.setDefaultOn(SimpleEnumWithLateDefault, 'B',),),).toBe(SimpleEnumWithLateDefault.B,),)
         },)
     },)
+    describe("sub enum", () => describe("valid sub enum", () => describe.each(parentChildValues,)("%s", ({value,},) => describe.each(parentChildValues,)("%s", ({value: it,},) => {
+        test("getValueOn", () => expect(Enum.getValueOn(value._static, it,),).toBe(value,),)
+        test("setDefaultOn", () => {
+            if (it.name == 'B')
+                fail("The test could not be done since the value has 'B' as its name",)
+            Enum.setDefaultOn(value._static, 'B',)
+            expect(Enum.getDefaultOn(Enum.setDefaultOn(value._static, it,),),).toBe(value,)
+            Enum.setDefaultOn(value._static, 'B',)
+        },)
+    },),),),)
 
 },)
 // test("setDefaultOn", () => {

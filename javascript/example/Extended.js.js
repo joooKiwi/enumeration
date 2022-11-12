@@ -8,8 +8,6 @@ export class ExtendedEnum
     static B = new ExtendedEnum()
     static C = new ExtendedEnum()
 
-    static _PARENT = SimpleEnum
-
     get _static() {
         return ExtendedEnum
     }

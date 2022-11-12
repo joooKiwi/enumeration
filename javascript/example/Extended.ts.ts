@@ -14,8 +14,6 @@ export class ExtendedEnum
     public static override readonly B = new ExtendedEnum()
     public static override readonly C = new ExtendedEnum()
 
-    protected static override readonly _PARENT = SimpleEnum as unknown as EnumerableConstructor<any, any>
-
     static [index: number]: ExtendedEnum
 
     private constructor() {
