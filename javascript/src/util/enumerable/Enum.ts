@@ -92,24 +92,28 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
      * Get the constructor instance for the {@link Enumerable} as an anchor point.
      * This reference should <b>never</b> change during the code execution (in the browser).
      *
-     * But, it does not restrain inheritance of a base class.
+     * <p>But, it does not restrain inheritance of a base class.<br/>
      *
      * <code>
      *     class ChildEnum extends Enum {
-     *         _static = ChildEnum
+     *         get _static() {
+     *             return ChildEnum
+     *         }
      *     }
-     * </code>
+     * </code><br/>
      *
      * <code>
      *     class SecondChildEnum extends ChildEnum {
-     *         _static = SecondChildEnum
+     *         get _static() {
+     *             return SecondChildEnum
+     *         }
      *     }
      * </code>
      *
-     * Of course, using typescript, the signature should be:
+     * <p>Of course, using typescript, the signature should be:<br/>
      *
      * <code>
-     *     _static: {@link EnumerableConstructor}&#60;Ordinal, Name>
+     *     get _static(): {@link EnumerableConstructor}&#60;Ordinal, Name>
      * </code>
      */
     protected abstract get _static(): EnumerableConstructor<ORDINAL, NAME>
@@ -173,12 +177,26 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
         everyFields.forEach(([name, enumerable,],) => nameMap.set(enumerable, name,),)
     }
 
-    static #getValueOnMapByEnumerable<T, >(key: Enumerable & Enum, map: Map<Enumerable, T>,): T {
+    /**
+     * Get (or initialise) the value by the key received
+     *
+     * @param key the key
+     * @param map The map to get or initialise by the key
+     */
+    static #getValueOnMapByEnumerable<T, >(key: Enumerable & Enum, map: ReadonlyMap<Enumerable, T>,): T {
         if (!map.has(key,))
             this.#initialiseMapsOn(key._static,)
         return map.get(key)!
     }
 
+    /**
+     * Get (or initialise) the value by the key received
+     *
+     * @param key the key
+     * @param map The map to get or initialise by the key
+     * @throws {InvalidInstanceException} The key is not an {@link EnumerableConstructor}
+     * @throws {NullInstanceException} The key is <b>null</b>
+     */
     static #getValueOnMapByEnumerableConstructor<T, >(key: Nullable<EnumerableConstructor>, map: ReadonlyMap<EnumerableConstructor, T>,): T {
         this.#validateEnumerableConstructor(key,)
         if (!map.has(key,))
@@ -191,11 +209,13 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
 
     /**
      * Validate that the instance is
-     *  - not null
+     *  - not <b>null</b>
      *  - is not {@link Enum}
      *  - is an instance of {@link Enum.constructor}
      *
      * @param instance The instance to validate
+     * @throws {InvalidInstanceException} The instance is not an {@link EnumerableConstructor}
+     * @throws {NullInstanceException} The instance is <b>null</b>
      */
     static #validateEnumerableConstructor(instance: Nullable<EnumerableConstructor>,): asserts instance is EnumerableConstructor {
         if (instance == null)
@@ -208,6 +228,14 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
         // return this
     }
 
+    /**
+     * Validate that the instance received is the type of {@link Enum} received
+     * (from either the child or parent {@link Enum})
+     *
+     * @param instance The compared instance
+     * @param value The value to compare {@link Enum._static} with the instance
+     * @throws {InvalidEnumerableException} The value {@link Enum._static _static} is not the same type as the instance
+     */
     static #validateSameStaticOnEnumerable<ENUMERABLE extends Enumerable, >(instance: EnumerableConstructor, value: Enum,): ENUMERABLE {
         if (value._static !== instance) {
             if (value instanceof instance)
@@ -225,6 +253,25 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
         return value as unknown as ENUMERABLE
     }
 
+    /**
+     * Validate that the value (interpolated included) is not
+     *  - {@link Number.NaN NaN}
+     *  - {@link Number.POSITIVE_INFINITY +∞}
+     *  - {@link Number.NEGATIVE_INFINITY -∞}
+     *  - a floating {@link Number numeric}
+     *  - a negative {@link Number numeric}
+     *  - under 0
+     *  - over the {@link Number.MAX_VALUE maximum value}
+     *
+     * @param value The value to validate
+     * @throws {ForbiddenEnumFunctionException} The {@link String} value is a function in an {@link EnumerableConstructor}
+     * (with {@link EnumerableConstructorWithDefault default}, {@link EnumerableConstructorWithNamesAndOrdinals name or ordinal})
+     * @throws {ForbiddenInheritedEnumerableMemberException} The {@link String} value is a reserved word for a {@link EnumerableConstructor}
+     * (with {@link EnumerableConstructorWithDefault default}, {@link EnumerableConstructorWithNamesAndOrdinals name or ordinal})
+     * @throws {ForbiddenNumericException} The {@link String} value is a predefined value (NaN, ±∞)
+     * @throws {IndexOutOfBoundException} The value is over the {@link Number.MAX_VALUE maximum} or under 0
+     * @throws {UnhandledValueException} The value is a floating {@link Number}
+     */
     static #validateStringOrNumber(value: PossibleStringOrNumeric,): | string | number {
         const primitiveValue = value.valueOf()
         switch (typeof primitiveValue) {
@@ -280,6 +327,18 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
         return typeof primitiveValue == "bigint" ? Number(primitiveValue) : primitiveValue
     }
 
+    /**
+     * Validate that the key received is an instance of {@link Enum}.
+     *
+     * It also validate that the {@link Enum._static} is the type of the instance received.
+     *
+     * @param instance The instance to test the key
+     * @param key The key to get
+     * @param value The value received from a method
+     * @throws {InvalidEnumerableException} The {@link Enum._static _static} is not the same type as the instance received
+     * @throws {InvalidEnumerableReferenceException} The value from the key is not a {@link Enum}
+     * @throws {NonExistantReferenceException} There is nothing in the instance at the specified key
+     */
     static #validateIsEnumerable<ENUMERABLE extends Enumerable, >(instance: EnumerableConstructor, key: | string | number, value: | PossibleStringOrNumeric | Enumerable,): ENUMERABLE {
         if (!has(instance, key,))
             throw new NonExistantReferenceException(`No value exist in "${instance.name}.${value}".`, value,)
@@ -291,6 +350,13 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
         return returnedValue as unknown as ENUMERABLE
     }
 
+    /**
+     * Throws an exception for the invalid scenario (not {@link String}, {@link Number}, {@link BigInt} or {@link Enum})
+     *
+     * @param instance The instance of the scenario
+     * @param value The invalid value
+     * @throws {UnhandledValueException}
+     */
     static #throwInvalidScenarios(instance: EnumerableConstructor, value: unknown,): never {
         if (this.#isABoolean(value,))
             throw new UnhandledValueException(`A boolean value cannot be received in "${instance.name}.getValue(value)".`, value,)
@@ -338,7 +404,6 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
      * Or 0 if it is the first element.
      *
      * @param instance The instance (as the key) for the map
-     * @see Enum.ordinal
      * @see Enumerable.ordinal
      */
     static #getLastOrdinalOn<ORDINAL extends Enumerable["ordinal"], >(instance: EnumerableConstructor<ORDINAL>,): ORDINAL
@@ -363,6 +428,16 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
     }
 
 
+    /**
+     * Get the default value on the instance received
+     *
+     * @param instance The instance to retrieve the default value
+     * @throws {InvalidInstanceException} The instance is not an {@link EnumerableConstructor}
+     * @throws {NullEnumerableException} The instance is <b>null</b>
+     * @throws {NullInstanceException} There is no default value, or it has been set to <b>null</b>
+     * @see EnumerableConstructorWithDefault.default
+     * @canInitialiseMaps
+     */
     public static getDefaultOn<ENUMERABLE extends Enumerable, >(instance: PossibleEnumerableConstructorByEnumerable<ENUMERABLE>,): ENUMERABLE
     public static getDefaultOn(instance: Nullable<EnumerableConstructor & typeof Enum>,) {
         const defaultValue = this.#getValueOnMapByEnumerableConstructor(instance, this.#DEFAULT_MAP)
@@ -371,6 +446,35 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
         return defaultValue
     }
 
+    /**
+     * Set the default value based on the instance received.
+     *
+     * It also calls the {@link EnumerableConstructor.getValue getValue()} with an already validated value ({@link String} or {@link Number}).
+     *
+     * If a forbidden exception is thrown ({@link ForbiddenEnumFunctionException enum function}, {@link ForbiddenInheritedEnumerableMemberException inherited member} or {@link ForbiddenNumericException numeric}),
+     * it is because the {@link String} value reference to something that is not supposed to be accessed.
+     *
+     *
+     *
+     * @param instance The instance to set its default value
+     * @param value The value to set the default
+     * @throws {ForbiddenEnumFunctionException} The {@link String} value is a function in an {@link EnumerableConstructor}
+     * (with {@link EnumerableConstructorWithDefault default}, {@link EnumerableConstructorWithNamesAndOrdinals name or ordinal})
+     * @throws {ForbiddenInheritedEnumerableMemberException}The {@link String} value is a reserved word for a {@link EnumerableConstructor}
+     * (with {@link EnumerableConstructorWithDefault default}, {@link EnumerableConstructorWithNamesAndOrdinals name or ordinal})
+     * @throws {ForbiddenNumericException} The {@link String} value is a predefined value (NaN, ±∞)
+     * @throws {IndexOutOfBoundException} The value is over the {@link Number.MAX_VALUE maximum} or under 0
+     * @throws {InvalidEnumerableException} The {@link Enumerable} value is incompatible with the instance received
+     * @throws {InvalidEnumerableReferenceException} The value (via reflection) is not a {@link Enumerable}
+     * @throws {InvalidInstanceException} The instance is not an {@link EnumerableConstructor}
+     * @throws {NonExistantReferenceException} The value is not existant in the instance received (via reflection)
+     * @throws {NullInstanceException} The instance is <b>null</b>
+     * @throws {UnhandledValueException} The value is either a floating {@link Number} or not a valid value ({@link String}, {@link Number}, {@link BigInt} or {@link Enum})
+     * @see EnumerableConstructorWithDefault.default
+     * @see EnumerableConstructorWithDefault.setDefault
+     * @see Enum.getValueOn
+     * @canInitialiseMaps
+     */
     public static setDefaultOn<ENUMERABLE extends Enumerable, ENUMERABLE_CONSTRUCTOR extends PossibleEnumerableConstructorByEnumerable<ENUMERABLE> = PossibleEnumerableConstructorByEnumerable<ENUMERABLE>, >(instance: ENUMERABLE_CONSTRUCTOR, value: PossibleValueByEnumerable<ENUMERABLE>,): ENUMERABLE_CONSTRUCTOR
     public static setDefaultOn(instance: Nullable<EnumerableConstructor>, value: PossibleValueReceived,) {
         this.#validateEnumerableConstructor(instance,)
@@ -385,6 +489,27 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
         return instance
     }
 
+    /**
+     * Get the value to retrieve in the instance received (via reflection)
+     *
+     * @param instance The {@link EnumerableConstructor} instance to retrieve the value
+     * @param value The value to retrieve ({@link String}, {@link Number}, {@link BigInt} or {@link Enum})
+     * @throws {ForbiddenEnumFunctionException} The {@link String} value is a function in an {@link EnumerableConstructor}
+     * (with {@link EnumerableConstructorWithDefault default}, {@link EnumerableConstructorWithNamesAndOrdinals name or ordinal})
+     * @throws {ForbiddenInheritedEnumerableMemberException}The {@link String} value is a reserved word for a {@link EnumerableConstructor}
+     * (with {@link EnumerableConstructorWithDefault default}, {@link EnumerableConstructorWithNamesAndOrdinals name or ordinal})
+     * @throws {ForbiddenNumericException} The {@link String} value is a predefined value (NaN, ±∞)
+     * @throws {IndexOutOfBoundException} The value is over the {@link Number.MAX_VALUE maximum} or under 0
+     * @throws {InvalidEnumerableException} The {@link Enumerable} value is incompatible with the instance received
+     * @throws {InvalidEnumerableReferenceException} The value (via reflection) is not a {@link Enumerable}
+     * @throws {InvalidInstanceException} The instance is not an {@link EnumerableConstructor}
+     * @throws {NonExistantReferenceException} The value is not existant in the instance received (via reflection)
+     * @throws {NullEnumerableException} The value is <b>null</b>
+     * @throws {NullInstanceException} The instance is <b>null</b>
+     * @throws {UnhandledValueException} The value is either a floating {@link Number} or not a valid value ({@link String}, {@link Number}, {@link BigInt} or {@link Enum})
+     * @see Reflect.get
+     * @canInitialiseMaps
+     */
     public static getValueOn<ENUMERABLE extends Enumerable, >(instance: PossibleEnumerableConstructorByEnumerable<ENUMERABLE>, value: PossibleValueByEnumerable<ENUMERABLE>,): ENUMERABLE
     public static getValueOn<ENUMERABLE extends Enum, >(instance: Nullable<EnumerableConstructor & typeof Enum>, value: PossibleValueReceived,): ENUMERABLE {
         this.#validateEnumerableConstructor(instance,)
@@ -398,16 +523,43 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
                 : this.#throwInvalidScenarios(instance, value,)
     }
 
+    /**
+     * Get every value from the instance
+     *
+     * @param instance The instance to retrieve the values
+     * @throws {InvalidInstanceException} The instance is not an {@link EnumerableConstructor}
+     * @throws {NullInstanceException} The instance is <b>null</b>
+     * @see BasicEnumerableConstructor.values
+     * @canInitialiseMaps
+     */
     public static getValuesOn<ENUMERABLE_CONSTRUCTOR extends AnyEnumerableConstructor, >(instance: Nullable<ENUMERABLE_CONSTRUCTOR>,): ENUMERABLE_CONSTRUCTOR["values"]
     public static getValuesOn(instance: Nullable<EnumerableConstructor>,) {
         return this.#getValueOnMapByEnumerableConstructor(instance, this.#VALUES_MAP,)
     }
 
+    /**
+     * Get every {@link Enumerable.name name} of an instance
+     *
+     * @param instance The instance to retrieve the names
+     * @throws {InvalidInstanceException} The instance is not an {@link EnumerableConstructor}
+     * @throws {NullInstanceException} The instance is <b>null</b>
+     * @see BasicEnumerableConstructorWithNamesAndOrdinals.names
+     * @canInitialiseMaps
+     */
     public static getNamesOn<ENUMERABLE_CONSTRUCTOR extends AnyEnumerableConstructor, >(instance: Nullable<ENUMERABLE_CONSTRUCTOR>,): ENUMERABLE_CONSTRUCTOR["names"]
     public static getNamesOn(instance: Nullable<EnumerableConstructor>,) {
         return this.#getValueOnMapByEnumerableConstructor(instance, this.#NAMES_MAP,)
     }
 
+    /**
+     * Get every {@link Enumerable.ordinal ordinal} of an instance
+     *
+     * @param instance The instance to retrieve the ordinals
+     * @throws {InvalidInstanceException} The instance is not an {@link EnumerableConstructor}
+     * @throws {NullInstanceException} The instance is <b>null</b>
+     * @see BasicEnumerableConstructorWithNamesAndOrdinals.ordinals
+     * @canInitialiseMaps
+     */
     public static getOrdinalsOn<ENUMERABLE_CONSTRUCTOR extends AnyEnumerableConstructor, >(instance: Nullable<ENUMERABLE_CONSTRUCTOR>,): ENUMERABLE_CONSTRUCTOR["ordinals"]
     public static getOrdinalsOn(instance: Nullable<EnumerableConstructor>,) {
         return this.#getValueOnMapByEnumerableConstructor(instance, this.#ORDINALS_MAP,)
