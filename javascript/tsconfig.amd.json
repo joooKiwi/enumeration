@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    //    "isolatedModules": false,
+    "isolatedModules": false,
     "module": "AMD",
     "target": "ES2022",
 
