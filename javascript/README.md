@@ -9,6 +9,7 @@
    * [Default field](#default-field)
    * [Name & ordinal](#name--ordinal)
    * [protected get _static](#protected-get-_static)
+   * [Excluded fields](#excluded-field)
 
 ## Installation
 
@@ -271,3 +272,43 @@ the usage of specific type is used:
 |      names & ordinals      | `EnumerableConstructorWithNamesAndOrdinals`                               |
 | default + names & ordinals | `EnumerableConstructorWithEverything`                                     |
 
+### Excluded field
+
+Excluding a field may become part once some fields for whatever reason.
+In this case, just use:
+ - `protected static readonly _EXCLUDED_NAMES`
+
+<details>
+<summary>Javascript</summary>
+
+```javascript
+class Example extends Enum {
+
+    static A = new Example()
+    static B = new Example()
+    static C = new Example()
+    static D = someReason ? this.A : this.B
+    static SOME_FIELD = this.D
+
+   _EXCLUDED_NAMES = ['D', "SOME_FIELD",]
+
+}
+```
+</details>
+<details>
+<summary>Javascript</summary>
+
+```typescript
+class Example extends Enum<Ordinals, Names> {
+
+    public static readonly A = new Example()
+    public static readonly B = new Example()
+    public static readonly C = new Example()
+    public static readonly D = someReason ? this.A : this.B
+    public static readonly SOME_FIELD = this.D
+
+    protected static override readonly _EXCLUDED_NAMES = ['D', "SOME_FIELD",]
+
+}
+```
+</details>
