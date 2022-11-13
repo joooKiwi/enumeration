@@ -26,7 +26,7 @@ npm i -D @joookiwi/enumerable
 
 ## Motivation
 
-The [Typescript emums](https://www.typescriptlang.org/docs/handbook/enums.html#handbook-content)
+The [Typescript enums](https://www.typescriptlang.org/docs/handbook/enums.html#handbook-content)
 can only have basic types (`string` or `number`).<br/>
 But, trying to have a `method` for **each instance** or some `static method` is impossible.
 
@@ -75,8 +75,7 @@ class Example extends Enum {
 ```typescript
 // Example.ts
 import {Enum} from "@joookiwi/enumerable"
-import type {EnumerableConstructor} from "@joookiwi/enumerable/dist/types/util/enumerable"
-import type {CollectionHolder} from "@joookiwi/enumerable/dist/types/util/collection"
+import type {CollectionHolder, EnumerableConstructor, PossibleValueByEnumerable} from "@joookiwi/enumerable/dist/types"
 import type {Names, Ordinals} from "./Example.types"
 
 class Example extends Enum<Ordinals, Names> {
@@ -91,7 +90,7 @@ class Example extends Enum<Ordinals, Names> {
 
     protected override get _static(): EnumerableConstructor<Ordinals, Names> { return Example }
 
-    public static getValue(value: | string | String | number | Number | bigint | BigInt | Example | null | undefined,): Example {
+    public static getValue(value: PossibleValueByEnumerable<Example>,): Example {
         return Enum.getValueOn(this, value,)
     }
 
@@ -143,24 +142,20 @@ class Example extends Enum {
 <summary>Typescript</summary>
 
 ```typescript
-import type {EnumerableConstructorWithDefault} from "@joookiwi/enumerable/dist/types/util/enumerable"
+import type {PossibleValueByEnumerable} from "@joookiwi/enumerable/dist/types"
 import type {Names, Ordinals} from "./Example.types"
 
 class Example extends Enum<Ordinals, Names> {
-
-    protected override get _static(): EnumerableConstructorWithDefault<Ordinals, Names> {
-        return Example
-    }
 
     public static get default(): Example {
         return Enum.getDefaultOn(this,)
     }
 
-    public static set default(value: | string | String | number | Number | bigint | BigInt | Example | null | undefined,) {
+    public static set default(value: PossibleValueByEnumerable<Example>,) {
         Enum.setDefaultOn(this, value,)
     }
 
-    public static setDefault(value: | string | String | number | Number | bigint | BigInt | Example | null | undefined,): typeof Example {
+    public static setDefault(value: PossibleValueByEnumerable<Example>,): typeof Example {
         return Enum.setDefaultOn(this, value,)
     }
 
@@ -237,15 +232,10 @@ class Example extends Enum {
 <summary>Typescript</summary>
 
 ```typescript
-import type {EnumerableConstructorWithNamesAndOrdinals} from "@joookiwi/enumerable/dist/types/util/enumerable"
-import type {CollectionHolder} from "@joookiwi/enumerable/dist/types/util/collection"
+import type {CollectionHolder} from "@joookiwi/enumerable/dist/types"
 import type {Names, Ordinals} from "./Example.types"
 
 class Example extends Enum<Ordinals, Names> {
-
-    protected override get _static(): EnumerableConstructorWithNamesAndOrdinals<Ordinals, Names> {
-        return Example
-    }
 
     public static get names(): CollectionHolder<Names> {
         return Enum.getNamesOn(this,)
@@ -265,12 +255,12 @@ The getter method **_static** will always be the same in `Javascript`,
 but in `Typescript`, in order to ensure a better type signature,
 the usage of specific type is used:
 
-|        when to use         | import value<br/>_from `@joookiwi/enumerable/dist/types/util/collection`_ |
-|:--------------------------:|:--------------------------------------------------------------------------|
-|           basic            | `EnumerableConstructor`                                                   |
-|          default           | `EnumerableConstructorWithDefault`                                        |
-|      names & ordinals      | `EnumerableConstructorWithNamesAndOrdinals`                               |
-| default + names & ordinals | `EnumerableConstructorWithEverything`                                     |
+|        when to use         | import value<br/>_from `@joookiwi/enumerable/dist/types`_                |
+|:--------------------------:|:-------------------------------------------------------------------------|
+|           basic            | `EnumerableConstructor`                                                  |
+|          default           | `EnumerableConstructorWithDefault`                                       |
+|      names & ordinals      | `EnumerableConstructorWithNamesAndOrdinals`                              |
+| default + names & ordinals | `EnumerableConstructorWithEverything`                                    |
 
 ### Excluded field
 
