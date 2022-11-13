@@ -4,20 +4,20 @@ import type {EnumerableConstructor, EnumerableConstructorWithDefault} from "enum
 
 import {Enum} from "enumerable/Enum"
 
-export class SimpleEmptyEnum
+export class EmptyEnum
     extends Enum<number, never> {
 
-    static [index: number]: SimpleEmptyEnum
+    static [index: number]: EmptyEnum
 
     protected override get _static(): EnumerableConstructor<number, never> {
-        return SimpleEmptyEnum
+        return EmptyEnum
     }
 
-    public static getValue(value: Nullable<PossibleStringOrNumeric | SimpleEmptyEnum>,): SimpleEmptyEnum {
+    public static getValue(value: Nullable<PossibleStringOrNumeric | EmptyEnum>,): EmptyEnum {
         return Enum.getValueOn(this, value,)
     }
 
-    public static get values(): CollectionHolder<SimpleEmptyEnum> {
+    public static get values(): CollectionHolder<EmptyEnum> {
         return Enum.getValuesOn(this,)
     }
 
@@ -30,23 +30,23 @@ export class SimpleEmptyEnum
 type Names = | 'A' | 'B'
 type Names2 = | Names | 'C'
 
-export class SimpleEnum1
+export class Enum1
     extends Enum<number, Names> {
 
-    public static readonly A = new SimpleEnum1()
-    public static readonly B = new SimpleEnum1()
+    public static readonly A = new Enum1()
+    public static readonly B = new Enum1()
 
-    static [index: number]: SimpleEnum1
+    static [index: number]: Enum1
 
     protected override get _static(): EnumerableConstructor<number, Names> {
-        return SimpleEnum1
+        return Enum1
     }
 
-    public static getValue(value: Nullable<PossibleStringOrNumeric | SimpleEnum1>,): SimpleEnum1 {
+    public static getValue(value: Nullable<PossibleStringOrNumeric | Enum1>,): Enum1 {
         return Enum.getValueOn(this, value,)
     }
 
-    public static get values(): CollectionHolder<SimpleEnum1> {
+    public static get values(): CollectionHolder<Enum1> {
         return Enum.getValuesOn(this,)
     }
 
@@ -56,23 +56,23 @@ export class SimpleEnum1
 
 }
 
-export class SimpleEnum2
+export class Enum2
     extends Enum<number, Names> {
 
-    public static readonly A = new SimpleEnum2()
-    public static readonly B = new SimpleEnum2()
+    public static readonly A = new Enum2()
+    public static readonly B = new Enum2()
 
-    static [index: number]: SimpleEnum2
+    static [index: number]: Enum2
 
     protected override get _static(): EnumerableConstructor<number, Names> {
-        return SimpleEnum2
+        return Enum2
     }
 
-    public static getValue(value: Nullable<PossibleStringOrNumeric | SimpleEnum2>,): SimpleEnum2 {
+    public static getValue(value: Nullable<PossibleStringOrNumeric | Enum2>,): Enum2 {
         return Enum.getValueOn(this, value,)
     }
 
-    public static get values(): CollectionHolder<SimpleEnum2> {
+    public static get values(): CollectionHolder<Enum2> {
         return Enum.getValuesOn(this,)
     }
 
@@ -82,25 +82,25 @@ export class SimpleEnum2
 
 }
 
-export class SimpleEnumWithVariables
+export class EnumWithVariables
     extends Enum<number, never> {
 
     public static readonly VARIABLE_STRING = ""
     public static readonly VARIABLE_NUMBER = 0
     public static readonly VARIABLE_BIGINT = BigInt(0,)
-    public static readonly VARIABLE_SIMPLE_ENUM_1_A = SimpleEnum1.A
+    public static readonly VARIABLE_SIMPLE_ENUM_1_A = Enum1.A
 
-    static [index: number]: SimpleEnumWithVariables
+    static [index: number]: EnumWithVariables
 
     protected override get _static(): EnumerableConstructor<number, never> {
-        return SimpleEnumWithVariables
+        return EnumWithVariables
     }
 
-    public static getValue(value: Nullable<PossibleStringOrNumeric | SimpleEnumWithVariables>,): SimpleEnumWithVariables {
+    public static getValue(value: Nullable<PossibleStringOrNumeric | EnumWithVariables>,): EnumWithVariables {
         return Enum.getValueOn(this, value,)
     }
 
-    public static get values(): CollectionHolder<SimpleEnumWithVariables> {
+    public static get values(): CollectionHolder<EnumWithVariables> {
         return Enum.getValuesOn(this,)
     }
 
@@ -111,37 +111,37 @@ export class SimpleEnumWithVariables
 }
 
 
-export class SimpleEnumWithDefault
+export class EnumWithDefault
     extends Enum<number, Names> {
 
-    public static readonly A = new SimpleEnumWithDefault()
-    public static readonly B = new SimpleEnumWithDefault()
+    public static readonly A = new EnumWithDefault()
+    public static readonly B = new EnumWithDefault()
 
     protected static _DEFAULT = this.A
 
-    static [index: number]: SimpleEnumWithDefault
+    static [index: number]: EnumWithDefault
 
     protected override get _static(): EnumerableConstructorWithDefault<number, Names> {
-        return SimpleEnumWithDefault
+        return EnumWithDefault
     }
 
-    public static get default(): SimpleEnumWithDefault {
+    public static get default(): EnumWithDefault {
         return Enum.getDefaultOn(this,)
     }
 
-    public static set default(value: Nullable<| PossibleStringOrNumeric | SimpleEnumWithDefault>,) {
+    public static set default(value: Nullable<| PossibleStringOrNumeric | EnumWithDefault>,) {
         this.setDefault(value,)
     }
 
-    public static setDefault(value: Nullable<| PossibleStringOrNumeric | SimpleEnumWithDefault>,): typeof SimpleEnumWithDefault {
+    public static setDefault(value: Nullable<| PossibleStringOrNumeric | EnumWithDefault>,): typeof EnumWithDefault {
         return Enum.setDefaultOn(this, value,)
     }
 
-    public static getValue(value: Nullable<PossibleStringOrNumeric | SimpleEnumWithDefault>,): SimpleEnumWithDefault {
+    public static getValue(value: Nullable<PossibleStringOrNumeric | EnumWithDefault>,): EnumWithDefault {
         return Enum.getValueOn(this, value,)
     }
 
-    public static get values(): CollectionHolder<SimpleEnumWithDefault> {
+    public static get values(): CollectionHolder<EnumWithDefault> {
         return Enum.getValuesOn(this,)
     }
 
@@ -151,35 +151,35 @@ export class SimpleEnumWithDefault
 
 }
 
-export class SimpleEnumWithLateDefault
+export class EnumWithLateDefault
     extends Enum<number, Names> {
 
-    public static readonly A = new SimpleEnumWithLateDefault()
-    public static readonly B = new SimpleEnumWithLateDefault()
+    public static readonly A = new EnumWithLateDefault()
+    public static readonly B = new EnumWithLateDefault()
 
-    static [index: number]: SimpleEnumWithDefault
+    static [index: number]: EnumWithDefault
 
     protected override get _static(): EnumerableConstructorWithDefault<number, Names> {
-        return SimpleEnumWithLateDefault
+        return EnumWithLateDefault
     }
 
-    public static get default(): SimpleEnumWithLateDefault {
+    public static get default(): EnumWithLateDefault {
         return Enum.getDefaultOn(this,)
     }
 
-    public static set default(value: Nullable<| PossibleStringOrNumeric | SimpleEnumWithLateDefault>,) {
+    public static set default(value: Nullable<| PossibleStringOrNumeric | EnumWithLateDefault>,) {
         this.setDefault(value,)
     }
 
-    public static setDefault(value: Nullable<| PossibleStringOrNumeric | SimpleEnumWithLateDefault>,): typeof SimpleEnumWithLateDefault {
+    public static setDefault(value: Nullable<| PossibleStringOrNumeric | EnumWithLateDefault>,): typeof EnumWithLateDefault {
         return Enum.setDefaultOn(this, value,)
     }
 
-    public static getValue(value: Nullable<PossibleStringOrNumeric | SimpleEnumWithLateDefault>,): SimpleEnumWithLateDefault {
+    public static getValue(value: Nullable<PossibleStringOrNumeric | EnumWithLateDefault>,): EnumWithLateDefault {
         return Enum.getValueOn(this, value,)
     }
 
-    public static get values(): CollectionHolder<SimpleEnumWithLateDefault> {
+    public static get values(): CollectionHolder<EnumWithLateDefault> {
         return Enum.getValuesOn(this,)
     }
 
@@ -190,23 +190,23 @@ export class SimpleEnumWithLateDefault
 }
 
 
-export class SimpleParentEnum
+export class ParentEnum
     extends Enum<number, Names> {
 
-    public static readonly A = new SimpleParentEnum()
-    public static readonly B = new SimpleParentEnum()
+    public static readonly A = new ParentEnum()
+    public static readonly B = new ParentEnum()
 
-    static [index: number]: SimpleParentEnum
+    static [index: number]: ParentEnum
 
     public override get _static(): EnumerableConstructor<number, Names> {
-        return SimpleParentEnum
+        return ParentEnum
     }
 
-    public static getValue(value: Nullable<PossibleStringOrNumeric | SimpleParentEnum>,): SimpleParentEnum {
+    public static getValue(value: Nullable<PossibleStringOrNumeric | ParentEnum>,): ParentEnum {
         return Enum.getValueOn(this, value,)
     }
 
-    public static get values(): CollectionHolder<SimpleParentEnum> {
+    public static get values(): CollectionHolder<ParentEnum> {
         return Enum.getValuesOn(this,)
     }
 
@@ -216,25 +216,25 @@ export class SimpleParentEnum
 
 }
 
-export class SimpleChild1Enum
-    extends SimpleParentEnum {
+export class Child1Enum
+    extends ParentEnum {
 
-    public static override readonly A = new SimpleChild1Enum()
-    public static override readonly B = new SimpleChild1Enum()
-    public static readonly C = new SimpleChild1Enum()
+    public static override readonly A = new Child1Enum()
+    public static override readonly B = new Child1Enum()
+    public static readonly C = new Child1Enum()
 
-    static [index: number]: SimpleChild1Enum
+    static [index: number]: Child1Enum
 
     // @ts-ignore
     public override get _static(): EnumerableConstructor<number, Names2> {
-        return SimpleChild1Enum
+        return Child1Enum
     }
 
-    public static override getValue(value: Nullable<PossibleStringOrNumeric | SimpleParentEnum | SimpleChild1Enum>,): SimpleChild1Enum {
+    public static override getValue(value: Nullable<PossibleStringOrNumeric | ParentEnum | Child1Enum>,): Child1Enum {
         return Enum.getValueOn(this, value,)
     }
 
-    public static override get values(): CollectionHolder<SimpleChild1Enum> {
+    public static override get values(): CollectionHolder<Child1Enum> {
         return Enum.getValuesOn(this,)
     }
 
@@ -244,24 +244,24 @@ export class SimpleChild1Enum
 
 }
 
-export class SimpleChild2Enum
-    extends SimpleChild1Enum {
+export class Child2Enum
+    extends Child1Enum {
 
-    public static override readonly A = new SimpleChild2Enum()
-    public static override readonly B = new SimpleChild2Enum()
-    public static override readonly C = new SimpleChild2Enum()
+    public static override readonly A = new Child2Enum()
+    public static override readonly B = new Child2Enum()
+    public static override readonly C = new Child2Enum()
 
-    static [index: number]: SimpleChild2Enum
+    static [index: number]: Child2Enum
 
     public override get _static(): EnumerableConstructor<number, Names2> {
-        return SimpleChild2Enum
+        return Child2Enum
     }
 
-    public static override getValue(value: Nullable<PossibleStringOrNumeric | SimpleParentEnum | SimpleChild1Enum | SimpleChild2Enum>,): SimpleChild2Enum {
+    public static override getValue(value: Nullable<PossibleStringOrNumeric | ParentEnum | Child1Enum | Child2Enum>,): Child2Enum {
         return Enum.getValueOn(this, value,)
     }
 
-    public static override get values(): CollectionHolder<SimpleChild2Enum> {
+    public static override get values(): CollectionHolder<Child2Enum> {
         return Enum.getValuesOn(this,)
     }
 
@@ -271,27 +271,25 @@ export class SimpleChild2Enum
 
 }
 
+export class AnotherChildEnum
+    extends ParentEnum {
 
+    public static override readonly A = new AnotherChildEnum()
+    public static override readonly B = new AnotherChildEnum()
+    public static readonly C = new AnotherChildEnum()
 
-export class SimpleAnotherChildEnum
-    extends SimpleParentEnum {
-
-    public static override readonly A = new SimpleAnotherChildEnum()
-    public static override readonly B = new SimpleAnotherChildEnum()
-    public static readonly C = new SimpleAnotherChildEnum()
-
-    static [index: number]: SimpleAnotherChildEnum
+    static [index: number]: AnotherChildEnum
 
     // @ts-ignore
     public override get _static(): EnumerableConstructor<number, Names2> {
-        return SimpleAnotherChildEnum
+        return AnotherChildEnum
     }
 
-    public static override getValue(value: Nullable<PossibleStringOrNumeric | SimpleParentEnum | SimpleAnotherChildEnum>,): SimpleAnotherChildEnum {
+    public static override getValue(value: Nullable<PossibleStringOrNumeric | ParentEnum | AnotherChildEnum>,): AnotherChildEnum {
         return Enum.getValueOn(this, value,)
     }
 
-    public static override get values(): CollectionHolder<SimpleAnotherChildEnum> {
+    public static override get values(): CollectionHolder<AnotherChildEnum> {
         return Enum.getValuesOn(this,)
     }
 

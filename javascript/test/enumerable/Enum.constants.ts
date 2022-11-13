@@ -1,5 +1,5 @@
-import {Enum}                                                 from "enumerable/Enum"
-import {SimpleChild1Enum, SimpleChild2Enum, SimpleParentEnum} from "./Enum.templateEnums"
+import {Enum}                               from "enumerable/Enum"
+import {Child1Enum, Child2Enum, ParentEnum} from "./Enum.templateEnums"
 
 class Holder<T, MESSAGE extends string, > {
 
@@ -92,7 +92,7 @@ export const nullValues = [null, undefined,] as const,
         ],).flat(),
     ],
     parentChildValues = [
-        new Holder(SimpleParentEnum.A, "parent",),
-        new Holder(SimpleChild1Enum.A, "child1",),
-        new Holder(SimpleChild2Enum.A, "child2",),
+        new Holder(ParentEnum.A, "parent",),
+        new Holder(Child1Enum.A, "child1",),
+        new Holder(Child2Enum.A, "child2",),
     ] as const
