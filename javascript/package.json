@@ -1,0 +1,120 @@
+{
+  "name": "@joookiwi/enumerable",
+  "version": "1.0.5",
+  "description": "A Javascript implementation of an enum class",
+
+  "scripts": {
+    "precompile": "del-cli dist/",
+    "compile": "npm-run-all --parallel compile-*",
+    "compile-esm":   "tsc --project tsconfig.esm.json",
+    "compile-cjs":   "tsc --project tsconfig.cjs.json",
+    "compile-amd":   "tsc --project tsconfig.amd.json",
+    "compile-umd":   "tsc --project tsconfig.umd.json",
+    "compile-types": "tsc --project tsconfig.types.json",
+
+    "test":         "jest --testNamePattern=EnumTest",
+    "test-pack":    "npm pack --dry-run",
+    "test-publish": "npm publish --@access=public --dry-run",
+
+    "pack": "npm pack",
+
+    "prelocal-publish": "npm run compile",
+    "local-publish":    "npm link",
+
+    "prepublish": "npm-run-all compile test",
+    "publish":    "npm publish --access=public"
+  },
+
+  "directories": {
+    "example": "./example",
+    "lib": "./src/util/enumerable",
+    "test": "./test"
+  },
+  "main": "./dist/common javascript/index.js",
+  "module": "./dist/ecmascript module/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types":   "./dist/types/index.d.ts",
+      "import":  "./dist/ecmascript module/index.js",
+      "require": "./dist/common javascript/index.js"
+    },
+
+    "./Enum": {
+      "types":   "./dist/types/util/enumerable/Enum.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/Enum.js",
+      "require": "./dist/common javascript/util/enumerable/Enum.js"
+    },
+    "./collection/*": {
+      "types":   "./dist/types/util/collection/*.d.ts",
+      "import":  "./dist/ecmascript module/util/collection/*.js",
+      "require": "./dist/common javascript/util/collection/*.js"
+    },
+    "./enumerable/*": {
+      "types":   "./dist/types/util/enumerable/*.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/*.js",
+      "require": "./dist/common javascript/util/enumerable/*.js"
+    },
+    "./exception/*": {
+      "types":   "./dist/types/util/enumerable/exception/*.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/exception/*.js",
+      "require": "./dist/common javascript/util/enumerable/exception/*.js"
+    },
+    "./enumerable/exception/*": {
+      "types":   "./dist/types/util/enumerable/exception/*.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/exception/*.js",
+      "require": "./dist/common javascript/util/enumerable/exception/*.js"
+    },
+
+    "./collection": {
+      "types":   "./dist/types/util/collection/index.d.ts",
+      "import":  "./dist/ecmascript module/util/collection/index.js",
+      "require": "./dist/common javascript/util/collection/index.js"
+    },
+    "./enumerable": {
+      "types":   "./dist/types/util/enumerable/index.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/index.js",
+      "require": "./dist/common javascript/util/enumerable/index.js"
+    },
+    "./exception": {
+      "types":   "./dist/types/util/enumerable/exception/index.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/exception/index.js",
+      "require": "./dist/common javascript/util/enumerable/exception/index.js"
+    },
+    "./enumerable/exception": {
+      "types":   "./dist/types/util/enumerable/exception/index.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/exception/index.js",
+      "require": "./dist/common javascript/util/enumerable/exception/index.js"
+    }
+  },
+
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joooKiwi/enumeration.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joooKiwi/enumeration/issues"
+  },
+
+  "keywords": [
+    "enum",
+    "enum class",
+    "enumeration"
+  ],
+  "author": "JóôòKiwi",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.2.2",
+    "del-cli": "^5.0.0",
+    "jest-environment-jsdom": "^29.2.2",
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  }
+}
