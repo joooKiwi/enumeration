@@ -1,6 +1,6 @@
 {
   "name": "@joookiwi/enumerable",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "A Javascript implementation of an enum class",
 
   "scripts": {
@@ -21,7 +21,7 @@
     "prelocal-publish": "npm run compile",
     "local-publish":    "npm link",
 
-    "prepublish": "npm run compile",
+    "prepublish": "npm-run-all compile test",
     "publish":    "npm publish --access=public"
   },
 
