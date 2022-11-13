@@ -286,7 +286,7 @@ class Example extends Enum {
 ```
 </details>
 <details>
-<summary>Javascript</summary>
+<summary>Typescript</summary>
 
 ```typescript
 class Example extends Enum<Ordinals, Names> {
