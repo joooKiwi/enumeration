@@ -111,6 +111,36 @@ export class EnumWithVariables
 }
 
 
+export class EnumWithExcludedFields
+    extends Enum<number, Names> {
+
+    public static readonly A = new EnumWithExcludedFields()
+    public static readonly B = new EnumWithExcludedFields()
+    public static readonly C = this.A
+
+    static [index: number]: Enum2
+
+    protected static override readonly _EXCLUDED_NAMES = ['C',]
+
+    protected override get _static(): EnumerableConstructor<number, Names> {
+        return EnumWithExcludedFields
+    }
+
+    public static getValue(value: Nullable<PossibleStringOrNumeric | EnumWithExcludedFields>,): EnumWithExcludedFields {
+        return Enum.getValueOn(this, value,)
+    }
+
+    public static get values(): CollectionHolder<EnumWithExcludedFields> {
+        return Enum.getValuesOn(this,)
+    }
+
+    public static [Symbol.iterator]() {
+        return this.values[Symbol.iterator]()
+    }
+
+}
+
+
 export class EnumWithDefault
     extends Enum<number, Names> {
 

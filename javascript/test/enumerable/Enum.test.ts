@@ -1,4 +1,4 @@
-import {AnotherChildEnum, Child1Enum, EmptyEnum, Enum1, Enum2, EnumWithDefault, EnumWithLateDefault, EnumWithVariables}                                                                             from "./Enum.templateEnums"
+import {AnotherChildEnum, Child1Enum, EmptyEnum, Enum1, Enum2, EnumWithDefault, EnumWithExcludedFields, EnumWithLateDefault, EnumWithVariables}                                                     from "./Enum.templateEnums"
 import {forbiddenEnumFunctions, forbiddenInheritedMembers, forbiddenNumbers, invalidInstances, nullValues, outOfBoundNumbers, parentChildValues, simpleEnumVariables, unhandledValues, validValues} from "./Enum.constants"
 
 import {Enum}                                        from "enumerable/Enum"
@@ -85,9 +85,10 @@ describe("EnumTest", () => {
     },)
 
     describe("array validation", () => {
-        test("size of 2 on simple", () => expect(Enum.getValuesOn(Enum1,),).toHaveLength(2,),)
-        test("size of 2 on with default", () => expect(Enum.getValuesOn(EnumWithDefault,),).toHaveLength(2,),)
-        test("size of 2 on with late default", () => expect(Enum.getValuesOn(EnumWithLateDefault,),).toHaveLength(2,),)
+        test("size of 2 on \"simple\"", () => expect(Enum.getValuesOn(Enum1,),).toHaveLength(2,),)
+        test("size of 2 on \"with default\"", () => expect(Enum.getValuesOn(EnumWithDefault,),).toHaveLength(2,),)
+        test("size of 2 on \"with late default\"", () => expect(Enum.getValuesOn(EnumWithLateDefault,),).toHaveLength(2,),)
+        test("size of 2 on \"with excluded field\"", () => expect(Enum.getValuesOn(EnumWithExcludedFields,),).toHaveLength(2,),)
     },)
     describe("valid value", () => describe.each(validValues,)("%s", ({value: it,},) => {
         test("getValueOn", () => expect(Enum.getValueOn(Enum1, it,),).toBe(Enum1.A,),)
