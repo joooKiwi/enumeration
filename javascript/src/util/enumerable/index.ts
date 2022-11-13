@@ -5,5 +5,5 @@ export type {BasicEnumerableConstructorWithEverything}                          
 export type {BasicEnumerableConstructorWithNamesAndOrdinals}                                                                                                                    from "./BasicEnumerableConstructorWithNamesAndOrdinals"
 export {Enum}                                                                                                                                                                   from "./Enum"
 export type {Enumerable}                                                                                                                                                        from "./Enumerable"
-export type {EnumerableName, SimpleEnumerableFromName}                                                                                                                          from "./Enumerable.types"
+export type {EnumerableName, EnumerableToPrimitive, PossibleEnumerableConstructorByEnumerable, PossibleValueByEnumerable, SimpleEnumerableFromName}                             from "./Enumerable.types"
 export type {EnumerableConstructor, EnumerableConstructorWithDefault, EnumerableConstructorWithEverything, EnumerableConstructorWithNamesAndOrdinals, AnyEnumerableConstructor} from "./EnumerableConstructor.type"
