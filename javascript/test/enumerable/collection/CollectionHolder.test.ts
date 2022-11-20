@@ -1,7 +1,7 @@
 import {nonPresentItem, sizeValues, templateCollection, templateItems} from "./CollectionHolder.constants"
 import {GenericCollectionHolder as Collection}                         from "../../../src"
 
-describe("CollectionHolerTest", () => {
+describe("CollectionHolderTest", () => {
     describe("size", () => describe.each(sizeValues,)("%s", ({value: {collection: it, size,},},) => {
         test("size", () => expect(it.size,).toEqual(size),)
         test("length", () => expect(it.length,).toEqual(size),)

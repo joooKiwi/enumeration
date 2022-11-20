@@ -47,7 +47,9 @@ describe("EnumTest", () => {
             test("getValueOn", () => expect(() => Enum.getValueOn(Enum1, Enum2.A,),).toThrow(InvalidEnumerableException,),)
             test("setDefaultOn", () => expect(() => Enum.setDefaultOn(Enum1, Enum2.A,),).toThrow(InvalidEnumerableException,),)
             describe("existant value as another enum", () => {
+                // @ts-expect-error
                 test("getValueOn", () => expect(() => Enum.getValueOn(EnumWithVariables, EnumWithVariables.VARIABLE_SIMPLE_ENUM_1_A,),).toThrow(InvalidEnumerableException,),)
+                // @ts-expect-error
                 test("setDefaultOn", () => expect(() => Enum.getValueOn(EnumWithVariables, EnumWithVariables.VARIABLE_SIMPLE_ENUM_1_A,),).toThrow(InvalidEnumerableException,),)
             },)
             describe("invalid sub enum", () => {

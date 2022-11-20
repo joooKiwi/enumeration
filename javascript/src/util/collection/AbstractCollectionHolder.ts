@@ -1,4 +1,5 @@
-import type {BasicFilterCallback, CollectionHolder, ForEachCallback, ForEachIndexCallback, MapCallback, MapIndexCallback, RestrainedFilterCallback} from "collection/CollectionHolder"
+import type {NullOr}                                                                                                                                                   from "../../type"
+import type {BooleanCallback, BooleanIndexCallback, CollectionHolder, ForEachCallback, ForEachIndexCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "collection/CollectionHolder"
 
 export abstract class AbstractCollectionHolder<T = any, >
     implements CollectionHolder<T> {
@@ -97,8 +98,12 @@ export abstract class AbstractCollectionHolder<T = any, >
     //#endregion -------------------- Join methods --------------------
     //#region -------------------- Filter methods --------------------
 
-    public abstract filter<S extends T, >(callback: RestrainedFilterCallback<T, S>,): CollectionHolder<S>
-    public abstract filter(callback: BasicFilterCallback<T>,): CollectionHolder<T>
+    public abstract filter<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<S>
+    public abstract filter(callback: BooleanCallback<T>,): CollectionHolder<T>
+
+    public filterByIndex(callback: BooleanIndexCallback,): CollectionHolder<T> {
+        return this.filter((_, index,) => callback(index,))
+    }
 
     public filterNonNull(): CollectionHolder<NonNullable<T>>
     public filterNonNull() {
@@ -108,13 +113,36 @@ export abstract class AbstractCollectionHolder<T = any, >
     }
 
     //#endregion -------------------- Filter methods --------------------
+    //#region -------------------- Find methods --------------------
+
+    public find<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
+    public find(callback: BooleanCallback<T>,): NullOr<T>
+    public find<S extends T, >(callback: | RestrainedBooleanCallback<T, S> | BooleanCallback<T>,) {
+        return this._array.find((value, index,) => callback(value, index,),) ?? null
+    }
+
+    public findByIndex(callback: BooleanIndexCallback,): NullOr<T> {
+        return this.find((_, index,) => callback(index,),)
+    }
+
+
+    public findIndex(callback: BooleanCallback<T>,): NullOr<number> {
+        const indexFound = this._array.findIndex((value, index,) => callback(value, index,),)
+        return indexFound == -1 ? null : indexFound
+    }
+
+    public findIndexByIndex(callback: BooleanIndexCallback,): NullOr<number> {
+        return this.findIndex((_, index,) => callback(index,),)
+    }
+
+    //#endregion -------------------- Find methods --------------------
 
     public abstract map<U, >(callback: MapCallback<T, U>,): CollectionHolder<U>
 
     public abstract mapIndex<U, >(callback: MapIndexCallback<U>,): CollectionHolder<U>
 
     public forEach(callback: ForEachCallback<T>,): this {
-        this._array.forEach(callback,)
+        this._array.forEach((value, index,) => callback(value, index,),)
         return this
     }
 
@@ -124,11 +152,15 @@ export abstract class AbstractCollectionHolder<T = any, >
     }
 
     //#endregion -------------------- Loop methods --------------------
+    //#region -------------------- Iterator methods --------------------
 
-    public [Symbol.iterator](): Iterator<T> {
-        return this._iterable[Symbol.iterator]()
+    public *[Symbol.iterator](): IterableIterator<T> {
+        const iterable = this._iterable
+        for(const value of iterable)
+            yield value
     }
 
+    //#endregion -------------------- Iterator methods --------------------
     //#region -------------------- Conversion methods --------------------
 
     public toArray(): readonly T[] {

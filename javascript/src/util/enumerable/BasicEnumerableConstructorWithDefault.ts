@@ -2,6 +2,12 @@ import type {Enumerable}                        from "enumerable/Enumerable"
 import type {BasicEnumerableConstructor}        from "enumerable/BasicEnumerableConstructor"
 import type {Nullable, PossibleStringOrNumeric} from "../../type"
 
+/**
+ * A basic <i>static</i> {@link Enumerable} definition.
+ *
+ * It contains everything from the {@link BasicEnumerableConstructor} plus
+ * the implementation to have the default integration.
+ */
 export interface BasicEnumerableConstructorWithDefault<ORDINAL extends number = number, NAME extends string = string, ENUMERABLE extends Enumerable<ORDINAL, NAME> = Enumerable<ORDINAL, NAME>, >
     extends BasicEnumerableConstructor<ORDINAL, NAME, ENUMERABLE> {
 

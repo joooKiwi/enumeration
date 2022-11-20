@@ -1,10 +1,13 @@
+import type {NullOr} from "../../type"
+
 /**
  * A collection to hold another collection and do some generic stuff if applicable.
  *
  * It is used for holding the {@link Enum} collection of instances by names, ordinals or instance.
+ *
+ * It also has some methods that are applicable for both {@link Array} & {@link Set} to give options.
  */
-export interface CollectionHolder<T = any, >
-    extends Iterable<T> {
+export interface CollectionHolder<T = any, > {
 
     //#region -------------------- Size methods --------------------
 
@@ -73,24 +76,65 @@ export interface CollectionHolder<T = any, >
      *
      * @param callback The restrained filter callback
      */
-    filter<S extends T, >(callback: RestrainedFilterCallback<T, S>,): CollectionHolder<S>
-
+    filter<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<S>
 
     /**
      * Get a new collection from the {@link CollectionHolder condition} returned by the callback.
      *
-     * @param callback The basic filter callback
+     * @param callback The filter callback
      */
-    filter(callback: BasicFilterCallback<T>,): CollectionHolder<T>
+    filter(callback: BooleanCallback<T>,): CollectionHolder<T>
 
     /**
-     * Remove any items that is <b>null</b> or <b>undefined</b> & return a new collection
+     * Get a new collection from the {@link CollectionHolder condition} returned by the index callback.
      *
-     * @see whereNonNull
+     * @param callback The filter index callback
      */
+    filterByIndex(callback: BooleanIndexCallback,): CollectionHolder<T>
+
+    /** Remove any items that is <b>null</b> or <b>undefined</b> & return a new collection */
     filterNonNull(): CollectionHolder<NonNullable<T>>
 
     //#endregion -------------------- Filter methods --------------------
+    //#region -------------------- Find methods --------------------
+
+    /**
+     * Get the first item found or <b>null</b> if nothing was found
+     *
+     * @param callback The restrained find callback
+     */
+    find<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
+
+    /**
+     * Get the first item found or <b>null</b> if nothing was found
+     *
+     * @param callback The find callback
+     */
+    find(callback: BooleanCallback<T>,): NullOr<T>
+
+    /**
+     * Get the first item found or <b>null</b> if nothing was found
+     *
+     * @param callback The find index callback
+     */
+    findByIndex(callback: BooleanIndexCallback,): NullOr<T>
+
+
+    /**
+     * Get the first index found or <b>null</b> if nothing was found
+     *
+     * @param callback The find callback
+     */
+    findIndex(callback: BooleanCallback<T>,): NullOr<number>
+
+    /**
+     * Get the first index found or <b>null</b> if nothing was found
+     *
+     * @param callback The find index callback
+     */
+    findIndexByIndex(callback: BooleanIndexCallback,): NullOr<number>
+
+    //#endregion -------------------- Find methods --------------------
 
     /**
      * Loop over the {@link CollectionHolder collection}
@@ -126,6 +170,12 @@ export interface CollectionHolder<T = any, >
     forEachIndex(callback: ForEachIndexCallback,): this
 
     //#endregion -------------------- Loop methods --------------------
+    //#region -------------------- Iterator methods --------------------
+
+    /** A Javascript way to implements a "for‥of" over the {@link CollectionHolder collection} */
+    [Symbol.iterator](): IterableIterator<T>
+
+    //#endregion -------------------- Iterator methods --------------------
     //#region -------------------- Conversion methods --------------------
 
     /** Convert the {@link CollectionHolder current collection} to a new {@link ReadonlyArray array} */
@@ -161,8 +211,9 @@ export interface CollectionHolder<T = any, >
 
 //#region -------------------- Types --------------------
 
-export type BasicFilterCallback<T, > = (value: T, index: number,) => boolean
-export type RestrainedFilterCallback<T, S extends T, > = (value: T, index: number,) => value is S
+export type BooleanCallback<T, > = (value: T, index: number,) => boolean
+export type BooleanIndexCallback = (index: number,) => boolean
+export type RestrainedBooleanCallback<T, S extends T, > = (value: T, index: number,) => value is S
 
 export type MapCallback<T, U> = (value: T, index: number,) => U
 export type MapIndexCallback<U> = (index: number,) => U

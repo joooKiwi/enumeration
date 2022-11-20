@@ -10,6 +10,8 @@
    * [Name & ordinal](#name--ordinal)
    * [protected get _static](#protected-get-_static)
    * [Excluded fields](#excluded-field)
+ * [Common mistakes](#common-mistakes)
+   * [ChildEnum extends ParentEnum](#childenum-extends-parentenum)
 
 ## Installation
 
@@ -298,6 +300,57 @@ class Example extends Enum<Ordinals, Names> {
     public static readonly SOME_FIELD = this.D
 
     protected static override readonly _EXCLUDED_NAMES = ['D', "SOME_FIELD",]
+
+}
+```
+</details>
+
+## Common mistakes
+
+### ChildEnum extends ParentEnum
+
+The enum extension is possible since it utilise the `Enum._static` reference to imply the parent & the child.
+
+So in result of this, the `ParentEnum` can receive the `ChildEnum` and still return the proper type.
+The same apply for the `ChildEnum` while receiving a `ParentEnum`.
+
+<details>
+<summary>Javascript</summary>
+
+The ChildEnum has nothing to change to its implementation
+since it is a Typescript possible problem only.
+</details>
+<details>
+<summary>Typescript</summary>
+
+If this error happen:
+```text
+TS2375: Type 'ChildEnum | ParentEnum' is not assignable to type 'ChildEnum' with 'exactOptionalPropertyTypes: true'.
+Consider adding 'undefined' to the types of the target's properties.
+   Type 'ParentEnum' is not assignable to type 'ChildEnum' with 'exactOptionalPropertyTypes: true'.
+   Consider adding 'undefined' to the types of the target's properties.
+       Property '_static' is protected but type 'ParentEnum' is not a class derived from 'ChildEnum'.
+```
+
+Change the implementation from:
+```typescript
+class ChildEnum extends ParentEnum {
+
+   public static getValue(value: PossibleValueByEnumerable<| ChildEnum | ParentEnum>,) {
+      return Enum.getValueOn(this, value,)
+   }
+
+}
+```
+
+to
+
+```typescript
+class ChildEnum extends ParentEnum {
+
+   public static getValue(value: PossibleValueByEnumerable<| ChildEnum | ParentEnum>,) {
+       return Enum.getValueOn<ChildEnum>(this, value,)
+   }
 
 }
 ```

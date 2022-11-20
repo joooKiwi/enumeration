@@ -1,7 +1,7 @@
-import type {CollectionHolder}                  from "collection/CollectionHolder"
-import type {EnumerableConstructorWithDefault}  from "enumerable/EnumerableConstructor.type"
-import type {Names, Ordinals}                   from "./type"
-import type {Nullable, PossibleStringOrNumeric} from "../src/type"
+import type {CollectionHolder}                 from "collection/CollectionHolder"
+import type {EnumerableConstructorWithDefault} from "enumerable/EnumerableConstructor.type"
+import type {Names, Ordinals}                  from "./type"
+import type {PossibleValueByEnumerable}        from "enumerable/Enumerable.types"
 
 import {Enum} from "enumerable/Enum"
 
@@ -28,15 +28,15 @@ export class EnumWithDefault
         return Enum.getDefaultOn(this,)
     }
 
-    public static set default(value: Nullable<| PossibleStringOrNumeric | EnumWithDefault>,) {
+    public static set default(value: PossibleValueByEnumerable<EnumWithDefault>,) {
         this.setDefault(value,)
     }
 
-    public static setDefault(value: Nullable<| PossibleStringOrNumeric | EnumWithDefault>,): typeof EnumWithDefault {
+    public static setDefault(value: PossibleValueByEnumerable<EnumWithDefault>,): typeof EnumWithDefault {
         return Enum.setDefaultOn(this, value,)
     }
 
-    public static getValue(value: Nullable<PossibleStringOrNumeric | EnumWithDefault>,): EnumWithDefault {
+    public static getValue(value: PossibleValueByEnumerable<EnumWithDefault>,): EnumWithDefault {
         return Enum.getValueOn(this, value,)
     }
 

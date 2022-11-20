@@ -1,7 +1,7 @@
-import type {CollectionHolder}                  from "collection/CollectionHolder"
-import type {EnumerableConstructor}             from "enumerable/EnumerableConstructor.type"
-import type {Names, Ordinals}                   from "./type"
-import type {Nullable, PossibleStringOrNumeric} from "../src/type"
+import type {CollectionHolder}          from "collection/CollectionHolder"
+import type {EnumerableConstructor}     from "enumerable/EnumerableConstructor.type"
+import type {Names, Ordinals}           from "./type"
+import type {PossibleValueByEnumerable} from "enumerable/Enumerable.types"
 
 import {Enum} from "enumerable/Enum"
 
@@ -50,7 +50,7 @@ export abstract class EnumWithComportement
 
     public abstract aComportmentDifferentInEachInstance(): void
 
-    public static getValue(value: Nullable<PossibleStringOrNumeric | EnumWithComportement>,): EnumWithComportement {
+    public static getValue(value: PossibleValueByEnumerable<EnumWithComportement>,): EnumWithComportement {
         return Enum.getValueOn(this, value,)
     }
 

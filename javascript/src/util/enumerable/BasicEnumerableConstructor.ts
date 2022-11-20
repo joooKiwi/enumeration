@@ -2,8 +2,13 @@ import type {Enumerable}                                                        
 import type {Nullable, PossibleNumeric, PossibleString, PossibleStringOrNumeric} from "../../type"
 import type {CollectionHolder}                                                   from "collection/CollectionHolder"
 
+/**
+ * A basic <i>static</i> {@link Enumerable} definition.
+ *
+ * It contains the basic methods in the static context.
+ */
 export interface BasicEnumerableConstructor<ORDINAL extends number = number, NAME extends string = string, ENUMERABLE extends Enumerable<ORDINAL, NAME> = Enumerable<ORDINAL, NAME>, >
-    extends Function, Iterable<ENUMERABLE> {
+    extends Function {
 
     [index: number]: ENUMERABLE//This part is only there to help retrieve the value in static context
 
@@ -39,7 +44,10 @@ export interface BasicEnumerableConstructor<ORDINAL extends number = number, NAM
     getValue<I extends ENUMERABLE, >(value: Nullable<| I | ENUMERABLE | PossibleStringOrNumeric>,): | I | ENUMERABLE
 
 
-    /** Every {@link Enumerable instance} for the possible {@link Enumerable} instance. */
+    /** Every {@link Enumerable instance} for the possible {@link Enumerable} instance */
     get values(): CollectionHolder<ENUMERABLE>
+
+    /** A Javascript way to implements a "for‥of" for a {@link Enumerable instance} instance */
+    [Symbol.iterator](): IterableIterator<ENUMERABLE>
 
 }

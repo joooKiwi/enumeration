@@ -261,7 +261,7 @@ export class Child1Enum
     }
 
     public static override getValue(value: Nullable<PossibleStringOrNumeric | ParentEnum | Child1Enum>,): Child1Enum {
-        return Enum.getValueOn(this, value,)
+        return Enum.getValueOn<Child1Enum>(this, value,)
     }
 
     public static override get values(): CollectionHolder<Child1Enum> {
@@ -288,7 +288,7 @@ export class Child2Enum
     }
 
     public static override getValue(value: Nullable<PossibleStringOrNumeric | ParentEnum | Child1Enum | Child2Enum>,): Child2Enum {
-        return Enum.getValueOn(this, value,)
+        return Enum.getValueOn<Child2Enum>(this, value,)
     }
 
     public static override get values(): CollectionHolder<Child2Enum> {
@@ -316,7 +316,7 @@ export class AnotherChildEnum
     }
 
     public static override getValue(value: Nullable<PossibleStringOrNumeric | ParentEnum | AnotherChildEnum>,): AnotherChildEnum {
-        return Enum.getValueOn(this, value,)
+        return Enum.getValueOn<AnotherChildEnum>(this, value,)
     }
 
     public static override get values(): CollectionHolder<AnotherChildEnum> {
