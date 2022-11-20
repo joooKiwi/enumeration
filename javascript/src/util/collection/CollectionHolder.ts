@@ -26,6 +26,7 @@ export interface CollectionHolder<T = any, >
      * Tell whenever at least one value exist in the current {@link CollectionHolder collection}
      *
      * @param values The values to compare
+     * @see includesOne
      */
     hasOne(...values: readonly any[]): boolean
 
@@ -33,6 +34,7 @@ export interface CollectionHolder<T = any, >
      * Tell whenever at least one value exist in the current {@link CollectionHolder collection}
      *
      * @param values The values to compare
+     * @see hasOne
      */
     includesOne(...values: readonly any[]): boolean
 
@@ -41,6 +43,7 @@ export interface CollectionHolder<T = any, >
      * Tell that every value received in the current {@link CollectionHolder collection}
      *
      * @param values The values to compare
+     * @see includesAll
      */
     hasAll(...values: readonly any[]): boolean
 
@@ -48,6 +51,7 @@ export interface CollectionHolder<T = any, >
      * Tell that every value received in the current {@link CollectionHolder collection}
      *
      * @param values The values to compare
+     * @see hasAll
      */
     includesAll(...values: readonly any[]): boolean
 
