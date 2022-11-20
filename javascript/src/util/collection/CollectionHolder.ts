@@ -8,11 +8,14 @@ export interface CollectionHolder<T = any, >
 
     //#region -------------------- Size methods --------------------
 
-    /** Get the size (or length) of the current {@link CollectionHolder collection} */
+    /** Get the size (length or count) of the current {@link CollectionHolder collection} */
     get size(): number
 
-    /** Get the length (or size) of the current {@link CollectionHolder collection} */
+    /** Get the length (size or count) of the current {@link CollectionHolder collection} */
     get length(): this["size"]
+
+    /** Get the count (length or count) of the current {@link CollectionHolder collection} */
+    get count(): this["size"]
 
     //#endregion -------------------- Size methods --------------------
     //#region -------------------- Loop methods --------------------

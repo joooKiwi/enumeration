@@ -41,6 +41,10 @@ export abstract class AbstractCollectionHolder<T = any, >
         return this.size
     }
 
+    public get count(): this["size"] {
+        return this.size
+    }
+
     //#endregion -------------------- Size methods --------------------
 
     protected get _iterable(): Iterable<T> {
