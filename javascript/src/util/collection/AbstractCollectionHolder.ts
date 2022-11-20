@@ -1,4 +1,4 @@
-import type {CollectionHolder, ForEachCallback, ForEachIndexCallback, MapCallback, MapIndexCallback} from "collection/CollectionHolder"
+import type {BasicFilterCallback, CollectionHolder, ForEachCallback, ForEachIndexCallback, MapCallback, MapIndexCallback, RestrainedFilterCallback} from "collection/CollectionHolder"
 
 export abstract class AbstractCollectionHolder<T = any, >
     implements CollectionHolder<T> {
@@ -84,6 +84,26 @@ export abstract class AbstractCollectionHolder<T = any, >
     public includesAll = this.hasAll
 
     //#endregion -------------------- Has / includes methods --------------------
+    //#region -------------------- Join methods --------------------
+
+    public join(separator?: string,): string {
+        return this._array.join(separator,)
+    }
+
+    //#endregion -------------------- Join methods --------------------
+    //#region -------------------- Filter methods --------------------
+
+    public abstract filter<S extends T, >(callback: RestrainedFilterCallback<T, S>,): CollectionHolder<S>
+    public abstract filter(callback: BasicFilterCallback<T>,): CollectionHolder<T>
+
+    public filterNonNull(): CollectionHolder<NonNullable<T>>
+    public filterNonNull() {
+        return this.hasOne(null,)
+            ? this.filter((value,): value is NonNullable<T> => value != null,)
+            : this
+    }
+
+    //#endregion -------------------- Filter methods --------------------
 
     public abstract map<U, >(callback: MapCallback<T, U>,): CollectionHolder<U>
 

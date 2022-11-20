@@ -49,6 +49,41 @@ export interface CollectionHolder<T = any, >
     includesAll(...values: readonly any[]): boolean
 
     //#endregion -------------------- Has / includes methods --------------------
+    //#region -------------------- Join methods --------------------
+
+    /**
+     * Get a new {@link String} separated by a separator (or a comma by default)
+     *
+     * @param separator The separator for the result (or a comma by default)
+     */
+    join(separator?: string,): string
+
+    //#endregion -------------------- Join methods --------------------
+    //#region -------------------- Filter methods --------------------
+
+    /**
+     * Get a new collection from the {@link CollectionHolder condition} returned by the callback
+     *
+     * @param callback The restrained filter callback
+     */
+    filter<S extends T, >(callback: RestrainedFilterCallback<T, S>,): CollectionHolder<S>
+
+
+    /**
+     * Get a new collection from the {@link CollectionHolder condition} returned by the callback.
+     *
+     * @param callback The basic filter callback
+     */
+    filter(callback: BasicFilterCallback<T>,): CollectionHolder<T>
+
+    /**
+     * Remove any items that is <b>null</b> or <b>undefined</b> & return a new collection
+     *
+     * @see whereNonNull
+     */
+    filterNonNull(): CollectionHolder<NonNullable<T>>
+
+    //#endregion -------------------- Filter methods --------------------
 
     /**
      * Loop over the {@link CollectionHolder collection}
@@ -118,6 +153,9 @@ export interface CollectionHolder<T = any, >
 }
 
 //#region -------------------- Types --------------------
+
+export type BasicFilterCallback<T, > = (value: T, index: number,) => boolean
+export type RestrainedFilterCallback<T, S extends T, > = (value: T, index: number,) => value is S
 
 export type MapCallback<T, U> = (value: T, index: number,) => U
 export type MapIndexCallback<U> = (index: number,) => U
