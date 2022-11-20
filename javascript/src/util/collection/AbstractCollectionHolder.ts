@@ -1,4 +1,4 @@
-import type {BasicFilterCallback, CollectionHolder, ForEachCallback, ForEachIndexCallback, MapCallback, MapIndexCallback, RestrainedFilterCallback} from "collection/CollectionHolder"
+import type {BooleanCallback, BooleanIndexCallback, CollectionHolder, ForEachCallback, ForEachIndexCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "collection/CollectionHolder"
 
 export abstract class AbstractCollectionHolder<T = any, >
     implements CollectionHolder<T> {
@@ -97,8 +97,12 @@ export abstract class AbstractCollectionHolder<T = any, >
     //#endregion -------------------- Join methods --------------------
     //#region -------------------- Filter methods --------------------
 
-    public abstract filter<S extends T, >(callback: RestrainedFilterCallback<T, S>,): CollectionHolder<S>
-    public abstract filter(callback: BasicFilterCallback<T>,): CollectionHolder<T>
+    public abstract filter<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<S>
+    public abstract filter(callback: BooleanCallback<T>,): CollectionHolder<T>
+
+    public filterByIndex(callback: BooleanIndexCallback,): CollectionHolder<T> {
+        return this.filter((_, index,) => callback(index,))
+    }
 
     public filterNonNull(): CollectionHolder<NonNullable<T>>
     public filterNonNull() {

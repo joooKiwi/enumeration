@@ -1,5 +1,5 @@
-import {AbstractCollectionHolder}                                                          from "./AbstractCollectionHolder"
-import type {BasicFilterCallback, MapCallback, MapIndexCallback, RestrainedFilterCallback} from "./CollectionHolder"
+import {AbstractCollectionHolder}                                                       from "./AbstractCollectionHolder"
+import type {BooleanCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder"
 
 export class GenericCollectionHolder<T = any, >
     extends AbstractCollectionHolder<T> {
@@ -14,9 +14,9 @@ export class GenericCollectionHolder<T = any, >
 
     //#region -------------------- Filter methods --------------------
 
-    public override filter<S extends T, >(callback: RestrainedFilterCallback<T, S>,): GenericCollectionHolder<S>
-    public override filter(callback: BasicFilterCallback<T>,): GenericCollectionHolder<T>
-    public override filter<S extends T, >(callback: | BasicFilterCallback<T> | RestrainedFilterCallback<T, S>,) {
+    public override filter<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): GenericCollectionHolder<S>
+    public override filter(callback: BooleanCallback<T>,): GenericCollectionHolder<T>
+    public override filter<S extends T, >(callback: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
         return new GenericCollectionHolder(this._array.filter(callback,),)
     }
 

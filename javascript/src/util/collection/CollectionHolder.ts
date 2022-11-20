@@ -72,21 +72,23 @@ export interface CollectionHolder<T = any, > {
      *
      * @param callback The restrained filter callback
      */
-    filter<S extends T, >(callback: RestrainedFilterCallback<T, S>,): CollectionHolder<S>
-
+    filter<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<S>
 
     /**
      * Get a new collection from the {@link CollectionHolder condition} returned by the callback.
      *
-     * @param callback The basic filter callback
+     * @param callback The filter callback
      */
-    filter(callback: BasicFilterCallback<T>,): CollectionHolder<T>
+    filter(callback: BooleanCallback<T>,): CollectionHolder<T>
 
     /**
-     * Remove any items that is <b>null</b> or <b>undefined</b> & return a new collection
+     * Get a new collection from the {@link CollectionHolder condition} returned by the index callback.
      *
-     * @see whereNonNull
+     * @param callback The filter index callback
      */
+    filterByIndex(callback: BooleanIndexCallback,): CollectionHolder<T>
+
+    /** Remove any items that is <b>null</b> or <b>undefined</b> & return a new collection */
     filterNonNull(): CollectionHolder<NonNullable<T>>
 
     //#endregion -------------------- Filter methods --------------------
@@ -166,8 +168,9 @@ export interface CollectionHolder<T = any, > {
 
 //#region -------------------- Types --------------------
 
-export type BasicFilterCallback<T, > = (value: T, index: number,) => boolean
-export type RestrainedFilterCallback<T, S extends T, > = (value: T, index: number,) => value is S
+export type BooleanCallback<T, > = (value: T, index: number,) => boolean
+export type BooleanIndexCallback = (index: number,) => boolean
+export type RestrainedBooleanCallback<T, S extends T, > = (value: T, index: number,) => value is S
 
 export type MapCallback<T, U> = (value: T, index: number,) => U
 export type MapIndexCallback<U> = (index: number,) => U
