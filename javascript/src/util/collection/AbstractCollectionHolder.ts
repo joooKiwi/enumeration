@@ -142,7 +142,7 @@ export abstract class AbstractCollectionHolder<T = any, >
     public abstract mapIndex<U, >(callback: MapIndexCallback<U>,): CollectionHolder<U>
 
     public forEach(callback: ForEachCallback<T>,): this {
-        this._array.forEach(callback,)
+        this._array.forEach((value, index,) => callback(value, index,),)
         return this
     }
 
