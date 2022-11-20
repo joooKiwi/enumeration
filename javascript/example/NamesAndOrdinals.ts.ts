@@ -1,7 +1,7 @@
 import type {CollectionHolder}                          from "collection/CollectionHolder"
 import type {EnumerableConstructorWithNamesAndOrdinals} from "enumerable/EnumerableConstructor.type"
 import type {Names, Ordinals}                           from "./type"
-import type {Nullable, PossibleStringOrNumeric}         from "../src/type"
+import type {PossibleValueByEnumerable}                 from "enumerable/Enumerable.types"
 
 import {Enum} from "enumerable/Enum"
 
@@ -22,7 +22,7 @@ export class EnumWithNamesAndOrdinals
         return EnumWithNamesAndOrdinals
     }
 
-    public static getValue(value: Nullable<PossibleStringOrNumeric | EnumWithNamesAndOrdinals>,): EnumWithNamesAndOrdinals {
+    public static getValue(value: PossibleValueByEnumerable<EnumWithNamesAndOrdinals>,): EnumWithNamesAndOrdinals {
         return Enum.getValueOn(this, value,)
     }
 

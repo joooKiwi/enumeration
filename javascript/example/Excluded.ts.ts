@@ -1,7 +1,7 @@
-import type {CollectionHolder}                  from "collection/CollectionHolder"
-import type {EnumerableConstructor}             from "enumerable/EnumerableConstructor.type"
-import type {Names, Ordinals}                   from "./type"
-import type {Nullable, PossibleStringOrNumeric} from "../src/type"
+import type {CollectionHolder}          from "collection/CollectionHolder"
+import type {EnumerableConstructor}     from "enumerable/EnumerableConstructor.type"
+import type {Names, Ordinals}           from "./type"
+import type {PossibleValueByEnumerable} from "enumerable/Enumerable.types"
 
 import {Enum} from "enumerable/Enum"
 
@@ -26,7 +26,7 @@ export class EnumWithExcluded
         return EnumWithExcluded
     }
 
-    public static getValue(value: Nullable<PossibleStringOrNumeric | EnumWithExcluded>,): EnumWithExcluded {
+    public static getValue(value: PossibleValueByEnumerable<EnumWithExcluded>,): EnumWithExcluded {
         return Enum.getValueOn(this, value,)
     }
 

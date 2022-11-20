@@ -1,7 +1,7 @@
-import type {CollectionHolder}                  from "collection/CollectionHolder"
-import type {EnumerableConstructor}             from "enumerable/EnumerableConstructor.type"
-import type {Names, Ordinals}                   from "./type"
-import type {Nullable, PossibleStringOrNumeric} from "../src/type"
+import type {CollectionHolder}          from "collection/CollectionHolder"
+import type {EnumerableConstructor}     from "enumerable/EnumerableConstructor.type"
+import type {Names, Ordinals}           from "./type"
+import type {PossibleValueByEnumerable} from "enumerable/Enumerable.types"
 
 import {Enum}       from "enumerable/Enum"
 import {SimpleEnum} from "./Simple.ts"
@@ -24,7 +24,7 @@ export class ExtendedEnum
         return ExtendedEnum
     }
 
-    public static override getValue(value: Nullable<PossibleStringOrNumeric | SimpleEnum | ExtendedEnum>,): ExtendedEnum {
+    public static override getValue(value: PossibleValueByEnumerable<| SimpleEnum | ExtendedEnum>,): ExtendedEnum {
         return Enum.getValueOn<ExtendedEnum>(this, value,)
     }
 

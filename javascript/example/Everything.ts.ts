@@ -1,7 +1,7 @@
 import type {CollectionHolder}                    from "collection/CollectionHolder"
 import type {EnumerableConstructorWithEverything} from "enumerable/EnumerableConstructor.type"
 import type {Names, Ordinals}                     from "./type"
-import type {Nullable, PossibleStringOrNumeric}   from "../src/type"
+import type {PossibleValueByEnumerable}           from "enumerable/Enumerable.types"
 
 import {Enum} from "enumerable/Enum"
 
@@ -28,15 +28,15 @@ export class EnumWithEverything
         return Enum.getDefaultOn(this,)
     }
 
-    public static set default(value: Nullable<| PossibleStringOrNumeric | EnumWithEverything>,) {
+    public static set default(value: PossibleValueByEnumerable<EnumWithEverything>,) {
         this.setDefault(value,)
     }
 
-    public static setDefault(value: Nullable<| PossibleStringOrNumeric | EnumWithEverything>,): typeof EnumWithEverything {
+    public static setDefault(value: PossibleValueByEnumerable<EnumWithEverything>,): typeof EnumWithEverything {
         return Enum.setDefaultOn(this, value,)
     }
 
-    public static getValue(value: Nullable<PossibleStringOrNumeric | EnumWithEverything>,): EnumWithEverything {
+    public static getValue(value: PossibleValueByEnumerable<EnumWithEverything>,): EnumWithEverything {
         return Enum.getValueOn(this, value,)
     }
 

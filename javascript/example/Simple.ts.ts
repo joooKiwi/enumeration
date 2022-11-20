@@ -1,7 +1,7 @@
-import type {CollectionHolder}                  from "collection/CollectionHolder"
-import type {EnumerableConstructor}             from "enumerable/EnumerableConstructor.type"
-import type {Names, Ordinals}                   from "./type"
-import type {Nullable, PossibleStringOrNumeric} from "../src/type"
+import type {CollectionHolder}          from "collection/CollectionHolder"
+import type {EnumerableConstructor}     from "enumerable/EnumerableConstructor.type"
+import type {Names, Ordinals}           from "./type"
+import type {PossibleValueByEnumerable} from "enumerable/Enumerable.types"
 
 import {Enum} from "enumerable/Enum"
 
@@ -22,7 +22,7 @@ export class SimpleEnum
         return SimpleEnum
     }
 
-    public static getValue(value: Nullable<PossibleStringOrNumeric | SimpleEnum>,): SimpleEnum {
+    public static getValue(value: PossibleValueByEnumerable<SimpleEnum>,): SimpleEnum {
         return Enum.getValueOn(this, value,)
     }
 
