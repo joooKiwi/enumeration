@@ -4,7 +4,7 @@ import type {Nullable, PossiblePrimitiveHint, PossibleString} from "../../type"
 export interface Enumerable<ORDINAL extends number = number, NAME extends string = string, > {
 
     /**
-     * Get the name on the current enum instance (not to be confused with the class name).
+     * Get the name on the current enum instance (not to be confused with the class name)
      *
      * @failAtConstruction
      */

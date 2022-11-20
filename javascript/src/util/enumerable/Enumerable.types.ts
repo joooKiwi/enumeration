@@ -16,5 +16,12 @@ export type SimpleEnumerableFromName<NAME extends string, ENUMERABLE extends Enu
 
 /** A possible {@link EnumerableConstructor} based on a {@link Enumerable} */
 export type PossibleEnumerableConstructorByEnumerable<ENUMERABLE extends Enumerable, > = Nullable<EnumerableConstructor<ENUMERABLE["ordinal"], ENUMERABLE["name"], any>>
-/** A possible value based on a {@link Enumerable} */
-export type PossibleValueByEnumerable<ENUMERABLE extends Enumerable, > = Nullable<| PossibleStringOrNumeric | Enumerable<ENUMERABLE["ordinal"], ENUMERABLE["name"]>>
+/**
+ * A possible value based on a {@link Enumerable}.
+ *
+ * It can be from a {@link String}, a numeric ({@link Number} or {@link BigInt}),
+ * the {@link Enumerable} directly
+ * or an equivalent {@link Enumerable enumerable} by its {@link Enumerable.ordinal ordinal} & {@link Enumerable.name name}.
+ * Also, <b>null</b> and <b>undefined</b> can be received.
+ */
+export type PossibleValueByEnumerable<ENUMERABLE extends Enumerable, > = Nullable<| PossibleStringOrNumeric | ENUMERABLE | Enumerable<ENUMERABLE["ordinal"], ENUMERABLE["name"]>>

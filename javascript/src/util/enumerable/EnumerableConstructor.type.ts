@@ -10,12 +10,16 @@ type TemplateEnumerableConstructor<T, ORDINAL extends number, NAME extends strin
     & SimpleEnumerableFromName<NAME, ENUMERABLE>
 //& SimpleEnumerableFromOrdinal<ORDINAL, ENUMERABLE>//TODO Try adding it while being implemented in the Enum section (not their child)
 
+/** The {@link BasicEnumerableConstructor} definition for the {@link Enum._static} type definition */
 export type EnumerableConstructor<ORDINAL extends number = number, NAME extends string = string, ENUMERABLE extends Enumerable<ORDINAL, NAME> = Enumerable<ORDINAL, NAME>, >
     = TemplateEnumerableConstructor<BasicEnumerableConstructor<ORDINAL, NAME, ENUMERABLE>, ORDINAL, NAME, ENUMERABLE>
+/** The {@link BasicEnumerableConstructorWithDefault} definition for the {@link Enum._static} type definition */
 export type EnumerableConstructorWithDefault<ORDINAL extends number = number, NAME extends string = string, ENUMERABLE extends Enumerable<ORDINAL, NAME> = Enumerable<ORDINAL, NAME>, >
     = TemplateEnumerableConstructor<BasicEnumerableConstructorWithDefault<ORDINAL, NAME, ENUMERABLE>, ORDINAL, NAME, ENUMERABLE>
+/** The {@link BasicEnumerableConstructorWithNamesAndOrdinals} definition for the {@link Enum._static} type definition */
 export type EnumerableConstructorWithNamesAndOrdinals<ORDINAL extends number = number, NAME extends string = string, ENUMERABLE extends Enumerable<ORDINAL, NAME> = Enumerable<ORDINAL, NAME>, >
     = TemplateEnumerableConstructor<BasicEnumerableConstructorWithNamesAndOrdinals<ORDINAL, NAME, ENUMERABLE>, ORDINAL, NAME, ENUMERABLE>
+/** The {@link BasicEnumerableConstructorWithEverything} definition for the {@link Enum._static} type definition */
 export type EnumerableConstructorWithEverything<ORDINAL extends number = number, NAME extends string = string, ENUMERABLE extends Enumerable<ORDINAL, NAME> = Enumerable<ORDINAL, NAME>, >
     = TemplateEnumerableConstructor<BasicEnumerableConstructorWithEverything<ORDINAL, NAME, ENUMERABLE>, ORDINAL, NAME, ENUMERABLE>
 

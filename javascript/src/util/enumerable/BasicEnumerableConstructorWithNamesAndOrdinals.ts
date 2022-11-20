@@ -2,6 +2,12 @@ import type {BasicEnumerableConstructor} from "enumerable/BasicEnumerableConstru
 import type {Enumerable}                 from "enumerable/Enumerable"
 import type {CollectionHolder}           from "collection/CollectionHolder"
 
+/**
+ * A basic <i>static</i> {@link Enumerable} definition.
+ *
+ * It contains everything from the {@link BasicEnumerableConstructor} plus
+ * the names & ordinals implementation.
+ */
 export interface BasicEnumerableConstructorWithNamesAndOrdinals<ORDINAL extends number = number, NAME extends string = string, ENUMERABLE extends Enumerable<ORDINAL, NAME> = Enumerable<ORDINAL, NAME>, >
     extends BasicEnumerableConstructor<ORDINAL, NAME, ENUMERABLE> {
 

@@ -4,6 +4,8 @@ import type {NullOr} from "../../type"
  * A collection to hold another collection and do some generic stuff if applicable.
  *
  * It is used for holding the {@link Enum} collection of instances by names, ordinals or instance.
+ *
+ * It also has some methods that are applicable for both {@link Array} & {@link Set} to give options.
  */
 export interface CollectionHolder<T = any, > {
 
