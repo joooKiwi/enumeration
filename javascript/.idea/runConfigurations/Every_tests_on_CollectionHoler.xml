@@ -8,7 +8,7 @@
     <scope-kind value="SUITE" />
     <test-file value="$PROJECT_DIR$/test/enumerable/collection/CollectionHolder.test.ts" />
     <test-names>
-      <test-name value="CollectionHolerTest" />
+      <test-name value="CollectionHolderTest" />
     </test-names>
     <method v="2" />
   </configuration>

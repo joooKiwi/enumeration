@@ -19,6 +19,7 @@ _(This may change once the implementation is made)_
 
 | Git version | Implementation version |
 |-------------|------------------------|
+| 1.2.0       | `JS / TS`: 1.2.0       |
 | 1.1.0       | `JS / TS`: 1.1.0       |
 | 1.0.1       | `JS / TS`: 1.0.6       |
 | 1.0.0       | `JS / TS`: 1.0.5       |
