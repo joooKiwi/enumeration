@@ -124,11 +124,13 @@ export abstract class AbstractCollectionHolder<T = any, >
     }
 
     //#endregion -------------------- Loop methods --------------------
+    //#region -------------------- Iterator methods --------------------
 
-    public [Symbol.iterator](): Iterator<T> {
-        return this._iterable[Symbol.iterator]()
+    public [Symbol.iterator](): IterableIterator<T> {
+        return this._array[Symbol.iterator]()
     }
 
+    //#endregion -------------------- Iterator methods --------------------
     //#region -------------------- Conversion methods --------------------
 
     public toArray(): readonly T[] {

@@ -3,7 +3,7 @@ import type {Nullable, PossibleNumeric, PossibleString, PossibleStringOrNumeric}
 import type {CollectionHolder}                                                   from "collection/CollectionHolder"
 
 export interface BasicEnumerableConstructor<ORDINAL extends number = number, NAME extends string = string, ENUMERABLE extends Enumerable<ORDINAL, NAME> = Enumerable<ORDINAL, NAME>, >
-    extends Function, Iterable<ENUMERABLE> {
+    extends Function {
 
     [index: number]: ENUMERABLE//This part is only there to help retrieve the value in static context
 
@@ -41,5 +41,8 @@ export interface BasicEnumerableConstructor<ORDINAL extends number = number, NAM
 
     /** Every {@link Enumerable instance} for the possible {@link Enumerable} instance. */
     get values(): CollectionHolder<ENUMERABLE>
+
+    /** A Javascript way to implements a "for‥of" for a {@link Enumerable instance} instance */
+    [Symbol.iterator](): IterableIterator<ENUMERABLE>
 
 }

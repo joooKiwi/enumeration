@@ -3,8 +3,7 @@
  *
  * It is used for holding the {@link Enum} collection of instances by names, ordinals or instance.
  */
-export interface CollectionHolder<T = any, >
-    extends Iterable<T> {
+export interface CollectionHolder<T = any, > {
 
     //#region -------------------- Size methods --------------------
 
@@ -126,6 +125,12 @@ export interface CollectionHolder<T = any, >
     forEachIndex(callback: ForEachIndexCallback,): this
 
     //#endregion -------------------- Loop methods --------------------
+    //#region -------------------- Iterator methods --------------------
+
+    /** A Javascript way to implements a "for‥of" over the {@link CollectionHolder collection} */
+    [Symbol.iterator](): IterableIterator<T>
+
+    //#endregion -------------------- Iterator methods --------------------
     //#region -------------------- Conversion methods --------------------
 
     /** Convert the {@link CollectionHolder current collection} to a new {@link ReadonlyArray array} */
