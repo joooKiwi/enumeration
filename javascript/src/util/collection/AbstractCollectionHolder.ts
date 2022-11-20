@@ -1,3 +1,4 @@
+import type {NullOr}                                                                                                                                                   from "../../type"
 import type {BooleanCallback, BooleanIndexCallback, CollectionHolder, ForEachCallback, ForEachIndexCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "collection/CollectionHolder"
 
 export abstract class AbstractCollectionHolder<T = any, >
@@ -112,6 +113,29 @@ export abstract class AbstractCollectionHolder<T = any, >
     }
 
     //#endregion -------------------- Filter methods --------------------
+    //#region -------------------- Find methods --------------------
+
+    public find<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
+    public find(callback: BooleanCallback<T>,): NullOr<T>
+    public find<S extends T, >(callback: | RestrainedBooleanCallback<T, S> | BooleanCallback<T>,) {
+        return this._array.find((value, index,) => callback(value, index,),) ?? null
+    }
+
+    public findByIndex(callback: BooleanIndexCallback,): NullOr<T> {
+        return this.find((_, index,) => callback(index,),)
+    }
+
+
+    public findIndex(callback: BooleanCallback<T>,): NullOr<number> {
+        const indexFound = this._array.findIndex((value, index,) => callback(value, index,),)
+        return indexFound == -1 ? null : indexFound
+    }
+
+    public findIndexByIndex(callback: BooleanIndexCallback,): NullOr<number> {
+        return this.findIndex((_, index,) => callback(index,),)
+    }
+
+    //#endregion -------------------- Find methods --------------------
 
     public abstract map<U, >(callback: MapCallback<T, U>,): CollectionHolder<U>
 

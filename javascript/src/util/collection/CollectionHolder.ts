@@ -1,3 +1,5 @@
+import type {NullOr} from "../../type"
+
 /**
  * A collection to hold another collection and do some generic stuff if applicable.
  *
@@ -92,6 +94,45 @@ export interface CollectionHolder<T = any, > {
     filterNonNull(): CollectionHolder<NonNullable<T>>
 
     //#endregion -------------------- Filter methods --------------------
+    //#region -------------------- Find methods --------------------
+
+    /**
+     * Get the first item found or <b>null</b> if nothing was found
+     *
+     * @param callback The restrained find callback
+     */
+    find<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
+
+    /**
+     * Get the first item found or <b>null</b> if nothing was found
+     *
+     * @param callback The find callback
+     */
+    find(callback: BooleanCallback<T>,): NullOr<T>
+
+    /**
+     * Get the first item found or <b>null</b> if nothing was found
+     *
+     * @param callback The find index callback
+     */
+    findByIndex(callback: BooleanIndexCallback,): NullOr<T>
+
+
+    /**
+     * Get the first index found or <b>null</b> if nothing was found
+     *
+     * @param callback The find callback
+     */
+    findIndex(callback: BooleanCallback<T>,): NullOr<number>
+
+    /**
+     * Get the first index found or <b>null</b> if nothing was found
+     *
+     * @param callback The find index callback
+     */
+    findIndexByIndex(callback: BooleanIndexCallback,): NullOr<number>
+
+    //#endregion -------------------- Find methods --------------------
 
     /**
      * Loop over the {@link CollectionHolder collection}
