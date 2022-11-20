@@ -8,11 +8,14 @@ export interface CollectionHolder<T = any, >
 
     //#region -------------------- Size methods --------------------
 
-    /** Get the size (or length) of the current {@link CollectionHolder collection} */
+    /** Get the size (length or count) of the current {@link CollectionHolder collection} */
     get size(): number
 
-    /** Get the length (or size) of the current {@link CollectionHolder collection} */
+    /** Get the length (size or count) of the current {@link CollectionHolder collection} */
     get length(): this["size"]
+
+    /** Get the count (length or count) of the current {@link CollectionHolder collection} */
+    get count(): this["size"]
 
     //#endregion -------------------- Size methods --------------------
     //#region -------------------- Loop methods --------------------
@@ -23,6 +26,7 @@ export interface CollectionHolder<T = any, >
      * Tell whenever at least one value exist in the current {@link CollectionHolder collection}
      *
      * @param values The values to compare
+     * @see includesOne
      */
     hasOne(...values: readonly any[]): boolean
 
@@ -30,6 +34,7 @@ export interface CollectionHolder<T = any, >
      * Tell whenever at least one value exist in the current {@link CollectionHolder collection}
      *
      * @param values The values to compare
+     * @see hasOne
      */
     includesOne(...values: readonly any[]): boolean
 
@@ -38,6 +43,7 @@ export interface CollectionHolder<T = any, >
      * Tell that every value received in the current {@link CollectionHolder collection}
      *
      * @param values The values to compare
+     * @see includesAll
      */
     hasAll(...values: readonly any[]): boolean
 
@@ -45,35 +51,79 @@ export interface CollectionHolder<T = any, >
      * Tell that every value received in the current {@link CollectionHolder collection}
      *
      * @param values The values to compare
+     * @see hasAll
      */
     includesAll(...values: readonly any[]): boolean
 
     //#endregion -------------------- Has / includes methods --------------------
+    //#region -------------------- Join methods --------------------
+
+    /**
+     * Get a new {@link String} separated by a separator (or a comma by default)
+     *
+     * @param separator The separator for the result (or a comma by default)
+     */
+    join(separator?: string,): string
+
+    //#endregion -------------------- Join methods --------------------
+    //#region -------------------- Filter methods --------------------
+
+    /**
+     * Get a new collection from the {@link CollectionHolder condition} returned by the callback
+     *
+     * @param callback The restrained filter callback
+     */
+    filter<S extends T, >(callback: RestrainedFilterCallback<T, S>,): CollectionHolder<S>
+
+
+    /**
+     * Get a new collection from the {@link CollectionHolder condition} returned by the callback.
+     *
+     * @param callback The basic filter callback
+     */
+    filter(callback: BasicFilterCallback<T>,): CollectionHolder<T>
+
+    /**
+     * Remove any items that is <b>null</b> or <b>undefined</b> & return a new collection
+     *
+     * @see whereNonNull
+     */
+    filterNonNull(): CollectionHolder<NonNullable<T>>
+
+    //#endregion -------------------- Filter methods --------------------
 
     /**
      * Loop over the {@link CollectionHolder collection}
      * while creating a new {@link CollectionHolder collection} after-end
+     *
+     * @param callback The callback to retrieve the result
      */
-    map<U, >(callback: (value: T, index: number,) => U,): CollectionHolder<U>
+    map<U, >(callback: MapCallback<T, U>,): CollectionHolder<U>
 
     /**
      * Loop over the {@link CollectionHolder collection} using only the index
      * while creating a new {@link CollectionHolder collection} after-end
+     *
+     * @param callback The callback to retrieve the result
      */
-    mapIndex<U>(callback: (index: number,) => U,): CollectionHolder<U>
+    mapIndex<U>(callback: MapIndexCallback<U>,): CollectionHolder<U>
 
 
     /**
      * Loop over the {@link CollectionHolder collection}
      * and return the same instance after the loop
+     *
+     * @param callback The callback for each element
      */
-    forEach(callback: (value: T, index: number,) => void,): this
+    forEach(callback: ForEachCallback<T>,): this
 
     /**
      * Loop over the {@link CollectionHolder collection} using only the index
      * and return the same instance after the loop
+     *
+     * @param callback The callback for each element
      */
-    forEachIndex(callback: (index: number,) => void): this
+    forEachIndex(callback: ForEachIndexCallback,): this
 
     //#endregion -------------------- Loop methods --------------------
     //#region -------------------- Conversion methods --------------------
@@ -108,3 +158,16 @@ export interface CollectionHolder<T = any, >
     //#endregion -------------------- Conversion methods --------------------
 
 }
+
+//#region -------------------- Types --------------------
+
+export type BasicFilterCallback<T, > = (value: T, index: number,) => boolean
+export type RestrainedFilterCallback<T, S extends T, > = (value: T, index: number,) => value is S
+
+export type MapCallback<T, U> = (value: T, index: number,) => U
+export type MapIndexCallback<U> = (index: number,) => U
+
+export type ForEachCallback<T> = (value: T, index: number,) => void
+export type ForEachIndexCallback = (index: number,) => void
+
+//#endregion -------------------- Types --------------------

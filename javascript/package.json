@@ -1,6 +1,6 @@
 {
   "name": "@joookiwi/enumerable",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "A Javascript implementation of an enum class",
 
   "scripts": {
@@ -12,7 +12,10 @@
     "compile-umd":   "tsc --project tsconfig.umd.json",
     "compile-types": "tsc --project tsconfig.types.json",
 
-    "test":         "jest --testNamePattern=EnumTest",
+    "test": "npm-run-all --parallel test-enum test-collection",
+    "test-enum":       "jest --testNamePattern=EnumTest",
+    "test-collection": "jest --testNamePattern=CollectionHolerTest",
+
     "test-pack":    "npm pack --dry-run",
     "test-publish": "npm publish --@access=public --dry-run",
 

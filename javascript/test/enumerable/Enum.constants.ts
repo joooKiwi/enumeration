@@ -1,16 +1,6 @@
 import {Enum}                               from "enumerable/Enum"
 import {Child1Enum, Child2Enum, ParentEnum} from "./Enum.templateEnums"
-
-class Holder<T, MESSAGE extends string, > {
-
-    readonly value
-    readonly toString
-
-    public constructor(value: T, message: MESSAGE,) {
-        this.value = value
-        this.toString = () => message
-    }
-}
+import {Holder}                             from "./Holder"
 
 export const nullValues = [null, undefined,] as const,
     unhandledValues = [

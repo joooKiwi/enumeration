@@ -1,4 +1,4 @@
-import type {CollectionHolder} from "collection/CollectionHolder"
+import type {BasicFilterCallback, CollectionHolder, ForEachCallback, ForEachIndexCallback, MapCallback, MapIndexCallback, RestrainedFilterCallback} from "collection/CollectionHolder"
 
 export abstract class AbstractCollectionHolder<T = any, >
     implements CollectionHolder<T> {
@@ -38,6 +38,10 @@ export abstract class AbstractCollectionHolder<T = any, >
     }
 
     public get length(): this["size"] {
+        return this.size
+    }
+
+    public get count(): this["size"] {
         return this.size
     }
 
@@ -84,17 +88,37 @@ export abstract class AbstractCollectionHolder<T = any, >
     public includesAll = this.hasAll
 
     //#endregion -------------------- Has / includes methods --------------------
+    //#region -------------------- Join methods --------------------
 
-    public abstract map<U, >(callback: (value: T, index: number,) => U,): CollectionHolder<U>
+    public join(separator?: string,): string {
+        return this._array.join(separator,)
+    }
 
-    public abstract mapIndex<U, >(callback: (index: number,) => U,): CollectionHolder<U>
+    //#endregion -------------------- Join methods --------------------
+    //#region -------------------- Filter methods --------------------
 
-    public forEach(callback: (value: T, index: number,) => void,): this {
+    public abstract filter<S extends T, >(callback: RestrainedFilterCallback<T, S>,): CollectionHolder<S>
+    public abstract filter(callback: BasicFilterCallback<T>,): CollectionHolder<T>
+
+    public filterNonNull(): CollectionHolder<NonNullable<T>>
+    public filterNonNull() {
+        return this.hasOne(null,)
+            ? this.filter((value,): value is NonNullable<T> => value != null,)
+            : this
+    }
+
+    //#endregion -------------------- Filter methods --------------------
+
+    public abstract map<U, >(callback: MapCallback<T, U>,): CollectionHolder<U>
+
+    public abstract mapIndex<U, >(callback: MapIndexCallback<U>,): CollectionHolder<U>
+
+    public forEach(callback: ForEachCallback<T>,): this {
         this._array.forEach(callback,)
         return this
     }
 
-    public forEachIndex(callback: (index: number,) => void,): this {
+    public forEachIndex(callback: ForEachIndexCallback,): this {
         this._array.forEach((_, index,) => callback(index,),)
         return this
     }
