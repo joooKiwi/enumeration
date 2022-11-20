@@ -53,27 +53,35 @@ export interface CollectionHolder<T = any, >
     /**
      * Loop over the {@link CollectionHolder collection}
      * while creating a new {@link CollectionHolder collection} after-end
+     *
+     * @param callback The callback to retrieve the result
      */
-    map<U, >(callback: (value: T, index: number,) => U,): CollectionHolder<U>
+    map<U, >(callback: MapCallback<T, U>,): CollectionHolder<U>
 
     /**
      * Loop over the {@link CollectionHolder collection} using only the index
      * while creating a new {@link CollectionHolder collection} after-end
+     *
+     * @param callback The callback to retrieve the result
      */
-    mapIndex<U>(callback: (index: number,) => U,): CollectionHolder<U>
+    mapIndex<U>(callback: MapIndexCallback<U>,): CollectionHolder<U>
 
 
     /**
      * Loop over the {@link CollectionHolder collection}
      * and return the same instance after the loop
+     *
+     * @param callback The callback for each element
      */
-    forEach(callback: (value: T, index: number,) => void,): this
+    forEach(callback: ForEachCallback<T>,): this
 
     /**
      * Loop over the {@link CollectionHolder collection} using only the index
      * and return the same instance after the loop
+     *
+     * @param callback The callback for each element
      */
-    forEachIndex(callback: (index: number,) => void): this
+    forEachIndex(callback: ForEachIndexCallback,): this
 
     //#endregion -------------------- Loop methods --------------------
     //#region -------------------- Conversion methods --------------------
@@ -108,3 +116,13 @@ export interface CollectionHolder<T = any, >
     //#endregion -------------------- Conversion methods --------------------
 
 }
+
+//#region -------------------- Types --------------------
+
+export type MapCallback<T, U> = (value: T, index: number,) => U
+export type MapIndexCallback<U> = (index: number,) => U
+
+export type ForEachCallback<T> = (value: T, index: number,) => void
+export type ForEachIndexCallback = (index: number,) => void
+
+//#endregion -------------------- Types --------------------

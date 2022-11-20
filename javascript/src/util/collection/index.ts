@@ -1,3 +1,3 @@
-export type {CollectionHolder}    from "./CollectionHolder"
-export {AbstractCollectionHolder} from "./AbstractCollectionHolder"
-export {GenericCollectionHolder}  from "./GenericCollectionHolder"
+export type {CollectionHolder, ForEachCallback, ForEachIndexCallback, MapCallback, MapIndexCallback} from "./CollectionHolder"
+export {AbstractCollectionHolder}                                                                    from "./AbstractCollectionHolder"
+export {GenericCollectionHolder}                                                                     from "./GenericCollectionHolder"

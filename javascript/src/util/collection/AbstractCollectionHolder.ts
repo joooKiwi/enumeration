@@ -1,4 +1,4 @@
-import type {CollectionHolder} from "collection/CollectionHolder"
+import type {CollectionHolder, ForEachCallback, ForEachIndexCallback, MapCallback, MapIndexCallback} from "collection/CollectionHolder"
 
 export abstract class AbstractCollectionHolder<T = any, >
     implements CollectionHolder<T> {
@@ -85,16 +85,16 @@ export abstract class AbstractCollectionHolder<T = any, >
 
     //#endregion -------------------- Has / includes methods --------------------
 
-    public abstract map<U, >(callback: (value: T, index: number,) => U,): CollectionHolder<U>
+    public abstract map<U, >(callback: MapCallback<T, U>,): CollectionHolder<U>
 
-    public abstract mapIndex<U, >(callback: (index: number,) => U,): CollectionHolder<U>
+    public abstract mapIndex<U, >(callback: MapIndexCallback<U>,): CollectionHolder<U>
 
-    public forEach(callback: (value: T, index: number,) => void,): this {
+    public forEach(callback: ForEachCallback<T>,): this {
         this._array.forEach(callback,)
         return this
     }
 
-    public forEachIndex(callback: (index: number,) => void,): this {
+    public forEachIndex(callback: ForEachIndexCallback,): this {
         this._array.forEach((_, index,) => callback(index,),)
         return this
     }
