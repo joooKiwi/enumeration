@@ -14,7 +14,7 @@
 
     "test": "npm-run-all --parallel test-enum test-collection",
     "test-enum":       "jest --testNamePattern=EnumTest",
-    "test-collection": "jest --testNamePattern=CollectionHolerTest",
+    "test-collection": "jest --testNamePattern=CollectionHolderTest",
 
     "test-pack":    "npm pack --dry-run",
     "test-publish": "npm publish --@access=public --dry-run",
