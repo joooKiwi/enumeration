@@ -1,7 +1,7 @@
 import {AbstractCollectionHolder} from "collection/AbstractCollectionHolder"
 import type {CollectionHolder}    from "collection/CollectionHolder"
 
-export class GenericCollectionHolder<T = any, >
+export class GenericCollectionHolder<T = unknown, >
     extends AbstractCollectionHolder<T> {
 
     public constructor(iterable: Iterable<T>,) {
