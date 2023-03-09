@@ -147,7 +147,12 @@ export abstract class AbstractCollectionHolder<T = unknown, >
     //#endregion -------------------- Value methods --------------------
     //#region -------------------- Loop methods --------------------
 
-    //#region -------------------- Has / includes methods --------------------
+    /**
+     * Create a new instance of an {@link CollectionHolder} from an {@link Iterable} value
+     *
+     * @param iterable The iterable to send to the new instance
+     */
+    protected abstract _new<U, >(iterable: Iterable<U>,): CollectionHolder<U>
 
     //#region -------------------- Has / includes / contains methods --------------------
 
@@ -186,8 +191,11 @@ export abstract class AbstractCollectionHolder<T = unknown, >
     //#endregion -------------------- Join methods --------------------
     //#region -------------------- Filter methods --------------------
 
-    public abstract filter<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<S>
-    public abstract filter(callback: BooleanCallback<T>,): CollectionHolder<T>
+    public filter<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<S>
+    public filter(callback: BooleanCallback<T>,): CollectionHolder<T>
+    public filter<S extends T, >(callback: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
+        return this._new(this._array.filter(callback,),)
+    }
 
     public filterByIndex(callback: BooleanIndexCallback,): CollectionHolder<T> {
         return this.filter((_, index,) => callback(index,))
@@ -257,9 +265,13 @@ export abstract class AbstractCollectionHolder<T = unknown, >
 
     //#endregion -------------------- Find methods --------------------
 
-    public abstract map<U, >(callback: MapCallback<T, U>,): CollectionHolder<U>
+    public map<U, >(callback: MapCallback<T, U>,): CollectionHolder<U> {
+        return this._new(this._array.map((value, index,) => callback(value, index,),),)
+    }
 
-    public abstract mapIndex<U, >(callback: MapIndexCallback<U>,): CollectionHolder<U>
+    public mapIndex<U, >(callback: MapIndexCallback<U>,): CollectionHolder<U> {
+        return this._new(this._array.map((_, index,) => callback(index,),),)
+    }
 
     public forEach(callback: ForEachCallback<T>,): this {
         this._array.forEach((value, index,) => callback(value, index,),)
