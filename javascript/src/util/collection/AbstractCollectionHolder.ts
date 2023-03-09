@@ -160,10 +160,8 @@ export abstract class AbstractCollectionHolder<T = unknown, >
     //#endregion -------------------- Loop methods --------------------
     //#region -------------------- Iterator methods --------------------
 
-    public *[Symbol.iterator](): IterableIterator<T> {
-        const iterable = this._iterable
-        for(const value of iterable)
-            yield value
+    public* [Symbol.iterator](): IterableIterator<T> {
+        yield* this._iterable
     }
 
     //#endregion -------------------- Iterator methods --------------------

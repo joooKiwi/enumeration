@@ -52,8 +52,8 @@ export class EnumWithEverything
         return Enum.getOrdinalsOn(this,)
     }
 
-    public static [Symbol.iterator]() {
-        return this.values[Symbol.iterator]()
+    public static* [Symbol.iterator](): IterableIterator<EnumWithEverything> {
+        yield* this.values
     }
 
 }

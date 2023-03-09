@@ -32,8 +32,8 @@ export class ExtendedEnum
         return Enum.getValuesOn(this,)
     }
 
-    public static [Symbol.iterator]() {
-        return this.values[Symbol.iterator]()
+    public static* [Symbol.iterator](): IterableIterator<ExtendedEnum> {
+        yield* this.values
     }
 
 }

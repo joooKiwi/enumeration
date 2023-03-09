@@ -34,8 +34,8 @@ export class EnumWithExcluded
         return Enum.getValuesOn(this,)
     }
 
-    public static [Symbol.iterator]() {
-        return this.values[Symbol.iterator]()
+    public static* [Symbol.iterator](): IterableIterator<EnumWithExcluded> {
+        yield* this.values
     }
 
 }

@@ -20,8 +20,8 @@ export class ExtendedEnum
         return Enum.getValuesOn(this,)
     }
 
-    static [Symbol.iterator]() {
-        return this.values[Symbol.iterator]()
+    static* [Symbol.iterator]() {
+        yield* this.values
     }
 
 }

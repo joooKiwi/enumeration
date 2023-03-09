@@ -38,8 +38,8 @@ export class EnumWithNamesAndOrdinals
         return Enum.getOrdinalsOn(this,)
     }
 
-    public static [Symbol.iterator]() {
-        return this.values[Symbol.iterator]()
+    public static* [Symbol.iterator](): IterableIterator<EnumWithNamesAndOrdinals> {
+        yield* this.values
     }
 
 }
