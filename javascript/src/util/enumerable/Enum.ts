@@ -394,7 +394,7 @@ export abstract class Enum<ORDINAL extends number = number, NAME extends string 
      * @param value The value to validate its type
      */
     static #isASymbol(value: unknown,): value is(| symbol | Symbol) {
-        return typeof value == "symbol" || value as any instanceof Symbol
+        return typeof value == "symbol" || value as unknown instanceof Symbol
     }
 
     //#endregion -------------------- Methods (is) --------------------

@@ -1,7 +1,7 @@
 import type {NullOr}                                                                                                                                                   from "../../type"
 import type {BooleanCallback, BooleanIndexCallback, CollectionHolder, ForEachCallback, ForEachIndexCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "collection/CollectionHolder"
 
-export abstract class AbstractCollectionHolder<T = any, >
+export abstract class AbstractCollectionHolder<T = unknown, >
     implements CollectionHolder<T> {
 
     //#region -------------------- Fields --------------------
@@ -67,28 +67,34 @@ export abstract class AbstractCollectionHolder<T = any, >
 
     //#region -------------------- Has / includes methods --------------------
 
-    public hasOne(...values: readonly any[]): boolean {
+    //#region -------------------- Has / includes / contains methods --------------------
+
+    public hasOne(...values: readonly unknown[]): boolean {
         const array = this._array
         for (let value of values)
-            if (array.includes(value))
+            if (array.includes(value as never))
                 return true
         return false
     }
 
     public includesOne = this.hasOne
 
+    public containsOne = this.hasOne
 
-    public hasAll(...values: readonly any[]): boolean {
+
+    public hasAll(...values: readonly unknown[]): boolean {
         const array = this._array
         for (let value of values)
-            if (!array.includes(value))
+            if (!array.includes(value as never))
                 return false
         return true
     }
 
     public includesAll = this.hasAll
 
-    //#endregion -------------------- Has / includes methods --------------------
+    public containsAll = this.hasAll
+
+    //#endregion -------------------- Has / includes / contains methods --------------------
     //#region -------------------- Join methods --------------------
 
     public join(separator?: string,): string {

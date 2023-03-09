@@ -23,42 +23,58 @@ export interface CollectionHolder<T = any, > {
     //#endregion -------------------- Size methods --------------------
     //#region -------------------- Loop methods --------------------
 
-    //#region -------------------- Has / includes methods --------------------
+    //#region -------------------- Has / includes / contains methods --------------------
 
     /**
-     * Tell whenever at least one value exist in the current {@link CollectionHolder collection}
+     * Tell whenever at least one value exist in the current {@link CollectionHolder}
      *
      * @param values The values to compare
      * @see includesOne
      */
-    hasOne(...values: readonly any[]): boolean
+    hasOne(...values: readonly unknown[]): boolean
 
     /**
-     * Tell whenever at least one value exist in the current {@link CollectionHolder collection}
+     * Tell whenever at least one value exist in the current {@link CollectionHolder}
      *
      * @param values The values to compare
      * @see hasOne
      */
-    includesOne(...values: readonly any[]): boolean
+    includesOne(...values: readonly unknown[]): boolean
+
+    /**
+     * Tell whenever at least one value exist in the current {@link CollectionHolder}
+     *
+     * @param values The values to compare
+     * @see hasOne
+     */
+    containsOne(...values: readonly unknown[]): boolean
 
 
     /**
-     * Tell that every value received in the current {@link CollectionHolder collection}
+     * Tell that every value received in the current {@link CollectionHolder}
      *
      * @param values The values to compare
      * @see includesAll
      */
-    hasAll(...values: readonly any[]): boolean
+    hasAll(...values: readonly unknown[]): boolean
 
     /**
-     * Tell that every value received in the current {@link CollectionHolder collection}
+     * Tell that every value received in the current {@link CollectionHolder}
      *
      * @param values The values to compare
      * @see hasAll
      */
-    includesAll(...values: readonly any[]): boolean
+    includesAll(...values: readonly unknown[]): boolean
 
-    //#endregion -------------------- Has / includes methods --------------------
+    /**
+     * Tell that every value received in the current {@link CollectionHolder}
+     *
+     * @param values The values to compare
+     * @see hasAll
+     */
+    containsAll(...values: readonly unknown[]): boolean
+
+    //#endregion -------------------- Has / includes / contains methods --------------------
     //#region -------------------- Join methods --------------------
 
     /**
