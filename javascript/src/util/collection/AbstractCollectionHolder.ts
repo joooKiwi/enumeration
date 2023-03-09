@@ -1,5 +1,5 @@
-import type {NullOr}                                                                                                                                                   from "../../type"
-import type {BooleanCallback, BooleanIndexCallback, CollectionHolder, ForEachCallback, ForEachIndexCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "collection/CollectionHolder"
+import type {NullOr}                                                                                                                                                                        from "../../type"
+import type {BooleanCallback, BooleanIndexCallback, CollectionHolder, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "collection/CollectionHolder"
 
 export abstract class AbstractCollectionHolder<T = unknown, >
     implements CollectionHolder<T> {
@@ -7,9 +7,14 @@ export abstract class AbstractCollectionHolder<T = unknown, >
     //#region -------------------- Fields --------------------
 
     #size?: number
+    #isEmpty?: IsEmpty<this>
+
     readonly #iterable
     #array?: readonly T[]
     #set?: ReadonlySet<T>
+
+    #first?: NullOr<T>
+    #last?: NullOr<T>
 
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------
@@ -17,9 +22,9 @@ export abstract class AbstractCollectionHolder<T = unknown, >
     protected constructor(iterable: Iterable<T>,) {
         this.#iterable = iterable
         if (iterable instanceof Array)
-            this.#size = iterable.length
+            this.#isEmpty = ((this.#size = (this.#array = Object.freeze(iterable)).length) === 0) as IsEmpty<this>
         else if (iterable instanceof Set)
-            this.#size = iterable.size
+            this.#isEmpty = ((this.#size = (this.#set = Object.freeze(iterable)).size) === 0) as IsEmpty<this>
     }
 
     //#endregion -------------------- Constructor --------------------
@@ -46,16 +51,28 @@ export abstract class AbstractCollectionHolder<T = unknown, >
         return this.size
     }
 
+
+    public get isEmpty(): IsEmpty<this> {
+        return this.#isEmpty ??= (this.size === 0) as IsEmpty<this>
+    }
+
+    public get isNotEmpty(): IsNotEmpty<this> {
+        return !this.isEmpty as IsNotEmpty<this>
+    }
+
     //#endregion -------------------- Size methods --------------------
 
+    /** The iterable received in the constructor */
     protected get _iterable(): Iterable<T> {
         return this.#iterable
     }
 
+    /** The iterable (if it was an {@link Array}) or the values converted to an {@link Array} */
     protected get _array(): readonly T[] {
         return this.#array ??= this.toArray()
     }
 
+    /** The iterable (if it was a {@link Set}) or the values converted to a {@link Set} */
     protected get _set(): ReadonlySet<T> {
         return this.#set ??= this.toSet()
     }
@@ -63,6 +80,71 @@ export abstract class AbstractCollectionHolder<T = unknown, >
     //#endregion -------------------- Getter methods --------------------
     //#region -------------------- Methods --------------------
 
+    //#region -------------------- Value methods --------------------
+
+    public first(): NonNullable<T>
+    public first<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
+    public first(callback: BooleanCallback<T>,): NonNullable<T>
+    public first<S extends T, >(callback?: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
+        if (this.isEmpty)
+            throw new ReferenceError("No element at the index 0 could be found since it it empty.")
+        if (callback == null) {
+            const element = this.firstOrNull()
+            if (element == null)
+                throw new ReferenceError("There is no element at the index 0 in the current EnumArray.")
+            return element
+        }
+        const element = this.firstOrNull(callback)
+        if (element == null)
+            throw new ReferenceError("There is no element at the index 0 (from a filter) in the current EnumArray.")
+        return element
+    }
+
+    public firstOrNull(): NullOr<T>
+    public firstOrNull<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
+    public firstOrNull(callback: BooleanCallback<T>,): NullOr<T>
+    public firstOrNull<S extends T, >(callback?: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
+        if (this.isEmpty)
+            return null
+        if (callback == null)
+            return this.#first === undefined
+                ? this.#first = this._array[0] ?? null
+                : this.#first
+        return this.find(callback)
+    }
+
+    public last(): NonNullable<T>
+    public last<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
+    public last(callback: BooleanCallback<T>,): NonNullable<T>
+    public last<S extends T, >(callback?: BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
+        if (this.isEmpty)
+            throw new ReferenceError("No element at the index 0 could be found since it it empty.")
+        if (callback == null) {
+            const element = this.firstOrNull()
+            if (element == null)
+                throw new ReferenceError("There is no element at the last index in the current EnumArray.")
+            return element
+        }
+        const element = this.firstOrNull(callback)
+        if (element == null)
+            throw new ReferenceError("There is no element at the last index (from a filter) in the current EnumArray.")
+        return element
+    }
+
+    public lastOrNull(): NullOr<T>
+    public lastOrNull<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
+    public lastOrNull(callback: BooleanCallback<T>,): NullOr<T>
+    public lastOrNull<S extends T, >(callback?: BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
+        if (this.isEmpty)
+            return null
+        if (callback == null)
+            return this.#last === undefined
+                ? this.#last = this._array[this.size - 1] ?? null
+                : this.#last
+        return this.findLast(callback)
+    }
+
+    //#endregion -------------------- Value methods --------------------
     //#region -------------------- Loop methods --------------------
 
     //#region -------------------- Has / includes methods --------------------
@@ -111,6 +193,18 @@ export abstract class AbstractCollectionHolder<T = unknown, >
         return this.filter((_, index,) => callback(index,))
     }
 
+
+    public filterNot<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<Exclude<T, S>>
+    public filterNot(callback: BooleanCallback<T>,): CollectionHolder<T>
+    public filterNot<S extends T, >(callback: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
+        return this._new(this._array.filter((value, index) => !callback(value, index,),),)
+    }
+
+    public filterNotByIndex(callback: BooleanIndexCallback,): CollectionHolder<T> {
+        return this.filterNot((_, index,) => callback(index,),)
+    }
+
+
     public filterNonNull(): CollectionHolder<NonNullable<T>>
     public filterNonNull() {
         return this.hasOne(null,)
@@ -139,6 +233,26 @@ export abstract class AbstractCollectionHolder<T = unknown, >
 
     public findIndexByIndex(callback: BooleanIndexCallback,): NullOr<number> {
         return this.findIndex((_, index,) => callback(index,),)
+    }
+
+
+    public findLast<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
+    public findLast(callback: BooleanCallback<T>,): NullOr<T>
+    public findLast<S extends T, >(callback: | RestrainedBooleanCallback<T, S> | BooleanCallback<T>,) {
+        return this._array.findLast((value, index,) => callback(value, index,),) ?? null
+    }
+
+    public findLastByIndex(callback: BooleanIndexCallback,): NullOr<T> {
+        return this.findLast((_, index,) => callback(index),)
+    }
+
+    public findLastIndex(callback: BooleanCallback<T>,): NullOr<number> {
+        const indexFound = this._array.findLastIndex((value, index,) => callback(value, index,),)
+        return indexFound == -1 ? null : indexFound
+    }
+
+    public findLastIndexByIndex(callback: BooleanIndexCallback,): NullOr<number> {
+        return this.findLastIndex((_, index,) => callback(index,),)
     }
 
     //#endregion -------------------- Find methods --------------------

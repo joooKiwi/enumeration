@@ -1,5 +1,5 @@
-import {AbstractCollectionHolder}                                                       from "./AbstractCollectionHolder"
-import type {BooleanCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder"
+import {AbstractCollectionHolder} from "collection/AbstractCollectionHolder"
+import type {CollectionHolder}    from "collection/CollectionHolder"
 
 export class GenericCollectionHolder<T = any, >
     extends AbstractCollectionHolder<T> {

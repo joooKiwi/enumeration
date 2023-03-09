@@ -3,24 +3,136 @@ import type {NullOr} from "../../type"
 /**
  * A collection to hold another collection and do some generic stuff if applicable.
  *
- * It is used for holding the {@link Enum} collection of instances by names, ordinals or instance.
+ * It is used for holding a collection of {@link EnumerableConstructor.name names}, {@link EnumerableConstructor.ordinal ordinals} or {@link Enumerable Enumerable instances}.
  *
  * It also has some methods that are applicable for both {@link Array} & {@link Set} to give options.
+ * Some methods are inspired by other languages to give more cross-language functionality.
+ *
+ * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+ * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set
+ * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-collection/
+ * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable
  */
-export interface CollectionHolder<T = any, > {
+export interface CollectionHolder<T = unknown, > {
 
     //#region -------------------- Size methods --------------------
 
-    /** Get the size (length or count) of the current {@link CollectionHolder collection} */
+    /** Get the size ({@link CollectionHolder.length length} or {@link CollectionHolder.count count}) of the current {@link CollectionHolder collection} */
     get size(): number
 
-    /** Get the length (size or count) of the current {@link CollectionHolder collection} */
+    /** Get the length ({@link CollectionHolder.size size} or {@link CollectionHolder.count count}) of the current {@link CollectionHolder collection} */
     get length(): this["size"]
 
-    /** Get the count (length or count) of the current {@link CollectionHolder collection} */
+    /** Get the count ({@link CollectionHolder.length length} or {@link CollectionHolder.count count}) of the current {@link CollectionHolder collection} */
     get count(): this["size"]
 
+    /**
+     * The {@link CollectionHolder collection} has no values
+     *
+     * @see isNotEmpty
+     */
+    get isEmpty(): IsEmpty<this>
+
+    /**
+     * The {@link CollectionHolder collection} has at least one value
+     *
+     * @see isEmpty
+     */
+    get isNotEmpty(): IsNotEmpty<this>
+
     //#endregion -------------------- Size methods --------------------
+    //#region -------------------- Value methods --------------------
+
+    /**
+     * Get the first element
+     *
+     * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     * @throws {ReferenceError} The element was <b>null</b> or <b>undefined</b>
+     */
+    first(): NonNullable<T>
+
+    /**
+     * Get the first element matching the given callback
+     *
+     * @param callback The matching callback
+     * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     */
+    first(callback: BooleanCallback<T>,): NonNullable<T>
+
+    /**
+     * Get the first element matching the given callback
+     *
+     * @param callback The matching callback
+     * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     */
+    first<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
+
+
+    /** Get the first element or <b>null</b> is the {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty} */
+    firstOrNull(): NullOr<T>
+
+    /**
+     * Get the first element matching the given or <b>null</b> is the {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     * or no element was found
+     *
+     * @param callback The matching callback
+     */
+    firstOrNull(callback: BooleanCallback<T>,): NullOr<T>
+
+    /**
+     * Get the first element matching the given or <b>null</b> is the {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     * or no element was found
+     *
+     * @param callback The matching callback
+     */
+    firstOrNull<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
+
+
+    /**
+     * Get the last element
+     *
+     * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     * @throws {ReferenceError} The element was <b>null</b> or <b>undefined</b>
+     */
+    last(): NonNullable<T>
+
+    /**
+     * Get the last element matching the given callback
+     *
+     * @param callback The matching callback
+     * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     */
+    last(callback: BooleanCallback<T>,): NonNullable<T>
+
+    /**
+     * Get the last element matching the given callback
+     *
+     * @param callback The matching callback
+     * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     */
+    last<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
+
+
+    /** Get the last element or <b>null</b> is the {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty} */
+    lastOrNull(): NullOr<T>
+
+    /**
+     * Get the last element matching the given or <b>null</b> is the {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     * or no element was found
+     *
+     * @param callback The matching callback
+     */
+    lastOrNull(callback: BooleanCallback<T>,): NullOr<T>
+
+    /**
+     * Get the last element matching the given or <b>null</b> is the {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     * or no element was found
+     *
+     * @param callback The matching callback
+     */
+    lastOrNull<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
+
+    //#endregion -------------------- Value methods --------------------
     //#region -------------------- Loop methods --------------------
 
     //#region -------------------- Has / includes / contains methods --------------------
@@ -30,6 +142,9 @@ export interface CollectionHolder<T = any, > {
      *
      * @param values The values to compare
      * @see includesOne
+     * @see containsOne
+     * @see ReadonlyArray.includes
+     * @see ReadonlySet.has
      */
     hasOne(...values: readonly unknown[]): boolean
 
@@ -38,6 +153,9 @@ export interface CollectionHolder<T = any, > {
      *
      * @param values The values to compare
      * @see hasOne
+     * @see containsOne
+     * @see ReadonlyArray.includes
+     * @see ReadonlySet.has
      */
     includesOne(...values: readonly unknown[]): boolean
 
@@ -46,6 +164,9 @@ export interface CollectionHolder<T = any, > {
      *
      * @param values The values to compare
      * @see hasOne
+     * @see includesOne
+     * @see ReadonlyArray.includes
+     * @see ReadonlySet.has
      */
     containsOne(...values: readonly unknown[]): boolean
 
@@ -55,6 +176,9 @@ export interface CollectionHolder<T = any, > {
      *
      * @param values The values to compare
      * @see includesAll
+     * @see containsAll
+     * @see ReadonlyArray.includes
+     * @see ReadonlySet.has
      */
     hasAll(...values: readonly unknown[]): boolean
 
@@ -63,6 +187,9 @@ export interface CollectionHolder<T = any, > {
      *
      * @param values The values to compare
      * @see hasAll
+     * @see containsAll
+     * @see ReadonlyArray.includes
+     * @see ReadonlySet.has
      */
     includesAll(...values: readonly unknown[]): boolean
 
@@ -71,6 +198,9 @@ export interface CollectionHolder<T = any, > {
      *
      * @param values The values to compare
      * @see hasAll
+     * @see includesAll
+     * @see ReadonlyArray.includes
+     * @see ReadonlySet.has
      */
     containsAll(...values: readonly unknown[]): boolean
 
@@ -81,6 +211,7 @@ export interface CollectionHolder<T = any, > {
      * Get a new {@link String} separated by a separator (or a comma by default)
      *
      * @param separator The separator for the result (or a comma by default)
+     * @see ReadonlyArray.join
      */
     join(separator?: string,): string
 
@@ -88,27 +219,67 @@ export interface CollectionHolder<T = any, > {
     //#region -------------------- Filter methods --------------------
 
     /**
-     * Get a new collection from the {@link CollectionHolder condition} returned by the callback
+     * Get a new {@link CollectionHolder collection} from the condition returned by the callback
      *
      * @param callback The restrained filter callback
+     * @see ReadonlyArray.filter
+     * @see filterNot
      */
     filter<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<S>
 
     /**
-     * Get a new collection from the {@link CollectionHolder condition} returned by the callback.
+     * Get a new {@link CollectionHolder collection} from the condition returned by the callback.
      *
      * @param callback The filter callback
+     * @see ReadonlyArray.filter
+     * @see filterNot
      */
     filter(callback: BooleanCallback<T>,): CollectionHolder<T>
 
     /**
-     * Get a new collection from the {@link CollectionHolder condition} returned by the index callback.
+     * Get a new {@link CollectionHolder collection} from the condition returned by the index callback.
      *
      * @param callback The filter index callback
+     * @see ReadonlyArray.filter
+     * @see filterNotByIndex
      */
     filterByIndex(callback: BooleanIndexCallback,): CollectionHolder<T>
 
-    /** Remove any items that is <b>null</b> or <b>undefined</b> & return a new collection */
+
+    /**
+     * Get a new {@link CollectionHolder collection} from the reversed condition returned by the callback
+     *
+     * @param callback The restrained filter callback
+     * @see ReadonlyArray.filter
+     * @see filter
+     */
+    filterNot<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<Exclude<T, S>>
+
+    /**
+     * Get a new {@link CollectionHolder collection} from the reversed condition returned by the callback.
+     *
+     * @param callback The filter callback
+     * @see ReadonlyArray.filter
+     * @see filter
+     */
+    filterNot(callback: BooleanCallback<T>,): CollectionHolder<T>
+
+    /**
+     * Get a new {@link CollectionHolder collection} from the reversed condition returned by the index callback.
+     *
+     * @param callback The filter index callback
+     * @see ReadonlyArray.filter
+     * @see filterByIndex
+     */
+    filterNotByIndex(callback: BooleanIndexCallback,): CollectionHolder<T>
+
+
+    /**
+     * Remove any items that is <b>null</b> or <b>undefined</b> & return a new {@link CollectionHolder collection}.
+     *
+     * If no <b>null</b> or <b>undefined</b> are found, the current instance will be returned.
+     * @see ReadonlyArray.filter
+     */
     filterNonNull(): CollectionHolder<NonNullable<T>>
 
     //#endregion -------------------- Filter methods --------------------
@@ -118,6 +289,7 @@ export interface CollectionHolder<T = any, > {
      * Get the first item found or <b>null</b> if nothing was found
      *
      * @param callback The restrained find callback
+     * @see ReadonlyArray.find
      */
     find<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
 
@@ -125,6 +297,7 @@ export interface CollectionHolder<T = any, > {
      * Get the first item found or <b>null</b> if nothing was found
      *
      * @param callback The find callback
+     * @see ReadonlyArray.find
      */
     find(callback: BooleanCallback<T>,): NullOr<T>
 
@@ -132,6 +305,7 @@ export interface CollectionHolder<T = any, > {
      * Get the first item found or <b>null</b> if nothing was found
      *
      * @param callback The find index callback
+     * @see ReadonlyArray.find
      */
     findByIndex(callback: BooleanIndexCallback,): NullOr<T>
 
@@ -140,6 +314,7 @@ export interface CollectionHolder<T = any, > {
      * Get the first index found or <b>null</b> if nothing was found
      *
      * @param callback The find callback
+     * @see ReadonlyArray.findIndex
      */
     findIndex(callback: BooleanCallback<T>,): NullOr<number>
 
@@ -147,16 +322,60 @@ export interface CollectionHolder<T = any, > {
      * Get the first index found or <b>null</b> if nothing was found
      *
      * @param callback The find index callback
+     * @see ReadonlyArray.findIndex
      */
     findIndexByIndex(callback: BooleanIndexCallback,): NullOr<number>
+
+
+    /**
+     * Get the last item found or <b>null</b> if nothing was found
+     *
+     * @param callback The restrained find callback
+     * @see ReadonlyArray.findLast
+     */
+    findLast<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
+
+    /**
+     * Get the last item found or <b>null</b> if nothing was found
+     *
+     * @param callback The find callback
+     * @see ReadonlyArray.findLast
+     */
+    findLast(callback: BooleanCallback<T>,): NullOr<T>
+
+    /**
+     * Get the last item found or <b>null</b> if nothing was found
+     *
+     * @param callback The find index callback
+     * @see ReadonlyArray.findLast
+     */
+    findLastByIndex(callback: BooleanIndexCallback,): NullOr<T>
+
+
+    /**
+     * Get the last index found or <b>null</b> if nothing was found
+     *
+     * @param callback The find callback
+     * @see ReadonlyArray.findLastIndex
+     */
+    findLastIndex(callback: BooleanCallback<T>,): NullOr<number>
+
+    /**
+     * Get the last index found or <b>null</b> if nothing was found
+     *
+     * @param callback The find index callback
+     * @see ReadonlyArray.findLastIndex
+     */
+    findLastIndexByIndex(callback: BooleanIndexCallback,): NullOr<number>
 
     //#endregion -------------------- Find methods --------------------
 
     /**
-     * Loop over the {@link CollectionHolder collection}
-     * while creating a new {@link CollectionHolder collection} after-end
+     * Loop over the {@link CollectionHolder}
+     * while creating a new {@link CollectionHolder} after-end
      *
      * @param callback The callback to retrieve the result
+     * @see ReadonlyArray.map
      */
     map<U, >(callback: MapCallback<T, U>,): CollectionHolder<U>
 
@@ -165,8 +384,9 @@ export interface CollectionHolder<T = any, > {
      * while creating a new {@link CollectionHolder collection} after-end
      *
      * @param callback The callback to retrieve the result
+     * @see ReadonlyArray.map
      */
-    mapIndex<U>(callback: MapIndexCallback<U>,): CollectionHolder<U>
+    mapIndex<U, >(callback: MapIndexCallback<U>,): CollectionHolder<U>
 
 
     /**
@@ -174,6 +394,8 @@ export interface CollectionHolder<T = any, > {
      * and return the same instance after the loop
      *
      * @param callback The callback for each element
+     * @see ReadonlyArray.forEach
+     * @see ReadonlySet.forEach
      */
     forEach(callback: ForEachCallback<T>,): this
 
@@ -182,6 +404,8 @@ export interface CollectionHolder<T = any, > {
      * and return the same instance after the loop
      *
      * @param callback The callback for each element
+     * @see ReadonlyArray.forEach
+     * @see ReadonlySet.forEach
      */
     forEachIndex(callback: ForEachIndexCallback,): this
 
@@ -194,28 +418,28 @@ export interface CollectionHolder<T = any, > {
     //#endregion -------------------- Iterator methods --------------------
     //#region -------------------- Conversion methods --------------------
 
-    /** Convert the {@link CollectionHolder current collection} to a new {@link ReadonlyArray array} */
+    /** Convert the current {@link CollectionHolder collection} to a new {@link ReadonlyArray array} */
     toArray(): readonly T[]
 
-    /** Convert the {@link CollectionHolder current collection} to a new {@link Array mutable array} */
+    /** Convert the current {@link CollectionHolder collection} to a new {@link Array mutable array} */
     toMutableArray(): T[]
 
-    /** Convert the {@link CollectionHolder current collection} to a new {@link ReadonlySet set} */
+    /** Convert the current {@link CollectionHolder collection} to a new {@link ReadonlySet set} */
     toSet(): ReadonlySet<T>
 
-    /** Convert the {@link CollectionHolder current collection} to a new {@link Set mutable set} */
+    /** Convert the current {@link CollectionHolder collection} to a new {@link Set mutable set} */
     toMutableSet(): Set<T>
 
 
     /**
-     * Convert the {@link CollectionHolder current collection} to string using the {@link Array.toString} method
+     * Convert the current {@link CollectionHolder collection} to string using the {@link Array.toString} method
      *
      * @see Array.toString
      */
     toString(): string
 
     /**
-     * Convert the {@link CollectionHolder current collection} to string using the {@link Array.toLocaleString} method
+     * Convert the current {@link CollectionHolder collection} to string using the {@link Array.toLocaleString} method
      *
      * @see Array.toLocaleString
      */
@@ -238,3 +462,11 @@ export type ForEachCallback<T> = (value: T, index: number,) => void
 export type ForEachIndexCallback = (index: number,) => void
 
 //#endregion -------------------- Types --------------------
+//#region -------------------- Validation type --------------------
+
+/** A simple representation type to tell that a {@link CollectionHolder.size} is of 0 */
+export type IsEmpty<T extends CollectionHolder, > = T["size"] extends 0 ? true : false
+/** A simple representation type to tell that a {@link CollectionHolder.size} is not of 0 */
+export type IsNotEmpty<T extends CollectionHolder, > = T["size"] extends 0 ? false : true
+
+//#endregion -------------------- Validation type --------------------
