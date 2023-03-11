@@ -120,12 +120,12 @@ export abstract class AbstractCollectionHolder<T = unknown, >
         if (this.isEmpty)
             throw new ReferenceError("No element at the index 0 could be found since it it empty.")
         if (callback == null) {
-            const element = this.firstOrNull()
+            const element = this.lastOrNull()
             if (element == null)
                 throw new ReferenceError("There is no element at the last index in the current EnumArray.")
             return element
         }
-        const element = this.firstOrNull(callback)
+        const element = this.lastOrNull(callback)
         if (element == null)
             throw new ReferenceError("There is no element at the last index (from a filter) in the current EnumArray.")
         return element
@@ -215,7 +215,7 @@ export abstract class AbstractCollectionHolder<T = unknown, >
 
     public filterNonNull(): CollectionHolder<NonNullable<T>>
     public filterNonNull() {
-        return this.hasOne(null,)
+        return this.hasOne(null, undefined,)
             ? this.filter((value,): value is NonNullable<T> => value != null,)
             : this
     }
