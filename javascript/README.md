@@ -66,7 +66,7 @@ class Example extends Enum {
 
     static getValue(value,) { return Enum.getValueOn(this, value,) }
     static get values() { return Enum.getValuesOn(this,) }
-    static [Symbol.iterator]() { return this.values[Symbol.iterator]() }
+    static* [Symbol.iterator]() { yield* this.values }
 
 }
 ```
@@ -100,8 +100,8 @@ class Example extends Enum<Ordinals, Names> {
         return Enum.getValuesOn(this,)
     }
 
-    public static [Symbol.iterator](): Iterator<Example> {
-        return this.values[Symbol.iterator]()
+    public static* [Symbol.iterator](): IterableIterator<Example> {
+        yield* this.values
     }
 
 }
