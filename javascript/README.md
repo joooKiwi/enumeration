@@ -8,7 +8,7 @@
    * [Default method](#default-method)
    * [Default field](#default-field)
    * [Name & ordinal](#name--ordinal)
-   * [protected get _static](#protected-get-_static)
+   * [protected get _static](#protected-get--static)
    * [Excluded fields](#excluded-field)
  * [Common mistakes](#common-mistakes)
    * [ChildEnum extends ParentEnum](#childenum-extends-parentenum)
@@ -25,6 +25,8 @@ npm i -S @joookiwi/enumerable
 npm install --save-dev @joookiwi/enumerable
 npm i -D @joookiwi/enumerable
 ```
+
+---
 
 ## Motivation
 
@@ -53,6 +55,8 @@ The base of each `enum class` will have 4 methods:
 
 And 1 field definition (for `Typescript`) _for better support_
  - `static [index: number]`
+
+_Note: The `protected get _static` should be a getter method instead of a field to avoid compile time errors._
 
 <details>
 <summary>Javascript</summary>
