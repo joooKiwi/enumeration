@@ -1,5 +1,5 @@
-import type {NullOr}                                                                                                                                                                        from "../../type"
-import type {BooleanCallback, BooleanIndexCallback, CollectionHolder, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "collection/CollectionHolder"
+import type {CollectionHolder}                                                                                                                                            from "collection/CollectionHolder"
+import type {BooleanCallback, BooleanIndexCallback, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "collection/CollectionHolder.types"
 
 export abstract class AbstractCollectionHolder<T = unknown, >
     implements CollectionHolder<T> {

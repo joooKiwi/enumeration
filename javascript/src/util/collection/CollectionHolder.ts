@@ -1,9 +1,9 @@
-import type {NullOr} from "../../type"
+import type {BooleanCallback, BooleanIndexCallback, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "collection/CollectionHolder.types"
 
 /**
  * A collection to hold another collection and do some generic stuff if applicable.
  *
- * It is used for holding a collection of {@link EnumerableConstructor.name names}, {@link EnumerableConstructor.ordinal ordinals} or {@link Enumerable Enumerable instances}.
+ * It is used for holding a collection of {@link Enumerable.name names}, {@link Enumerable.ordinal ordinals} or {@link Enumerable Enumerable instances}.
  *
  * It also has some methods that are applicable for both {@link Array} & {@link Set} to give options.
  * Some methods are inspired by other languages to give more cross-language functionality.
@@ -448,25 +448,3 @@ export interface CollectionHolder<T = unknown, > {
     //#endregion -------------------- Conversion methods --------------------
 
 }
-
-//#region -------------------- Types --------------------
-
-export type BooleanCallback<T, > = (value: T, index: number,) => boolean
-export type BooleanIndexCallback = (index: number,) => boolean
-export type RestrainedBooleanCallback<T, S extends T, > = (value: T, index: number,) => value is S
-
-export type MapCallback<T, U> = (value: T, index: number,) => U
-export type MapIndexCallback<U> = (index: number,) => U
-
-export type ForEachCallback<T> = (value: T, index: number,) => void
-export type ForEachIndexCallback = (index: number,) => void
-
-//#endregion -------------------- Types --------------------
-//#region -------------------- Validation type --------------------
-
-/** A simple representation type to tell that a {@link CollectionHolder.size} is of 0 */
-export type IsEmpty<T extends CollectionHolder, > = T["size"] extends 0 ? true : false
-/** A simple representation type to tell that a {@link CollectionHolder.size} is not of 0 */
-export type IsNotEmpty<T extends CollectionHolder, > = T["size"] extends 0 ? false : true
-
-//#endregion -------------------- Validation type --------------------
