@@ -113,6 +113,7 @@ export abstract class AbstractCollectionHolder<T = unknown, >
         return this.find(callback)
     }
 
+
     public last(): NonNullable<T>
     public last<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
     public last(callback: BooleanCallback<T>,): NonNullable<T>
