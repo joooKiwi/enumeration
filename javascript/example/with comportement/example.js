@@ -1,4 +1,4 @@
-import {Enum} from "../src/util/enumerable/Enum"
+import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
 
 export class EnumWithComportement
     extends Enum {
@@ -29,24 +29,22 @@ export class EnumWithComportement
 
     }()
 
-    get _static() {
-        return EnumWithComportement
-    }
-
     aComportement() {
         console.log("Doing some generic stuff")
     }
 
-    static getValue(value,) {
-        return Enum.getValueOn(this, value,)
+}
+EnumWithComportement.CompanionEnum = class CompanionEnum_EnumWithComportement
+    extends BasicCompanionEnum {
+
+    static #instance
+
+    constructor() {
+        super(EnumWithComportement,)
     }
 
-    static get values() {
-        return Enum.getValuesOn(this,)
-    }
-
-    static* [Symbol.iterator]() {
-        yield* this.values
+    static get get() {
+        return this.#instance ??= new this()
     }
 
 }

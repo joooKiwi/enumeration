@@ -1,9 +1,6 @@
-import type {CollectionHolder}          from "collection/CollectionHolder"
-import type {EnumerableConstructor}     from "enumerable/EnumerableConstructor.type"
-import type {Names, Ordinals}           from "./type"
-import type {PossibleValueByEnumerable} from "enumerable/Enumerable.types"
+import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
 
-import {Enum} from "enumerable/Enum"
+import type {Names, Ordinals} from "../type"
 
 export abstract class EnumWithComportement
     extends Enum<Ordinals, Names> {
@@ -34,14 +31,8 @@ export abstract class EnumWithComportement
 
     }()
 
-    static [index: number]: EnumWithComportement
-
     private constructor() {
         super()
-    }
-
-    protected override get _static(): EnumerableConstructor<Ordinals, Names> {
-        return EnumWithComportement
     }
 
     public aComportement(): void {
@@ -50,16 +41,21 @@ export abstract class EnumWithComportement
 
     public abstract aComportmentDifferentInEachInstance(): void
 
-    public static getValue(value: PossibleValueByEnumerable<EnumWithComportement>,): EnumWithComportement {
-        return Enum.getValueOn(this, value,)
-    }
+}
+export namespace EnumWithComportement {
+    class CompanionEnum_EnumWithComportement
+        extends BasicCompanionEnum {
 
-    public static get values(): CollectionHolder<EnumWithComportement> {
-        return Enum.getValuesOn(this,)
-    }
+        static #instance?: CompanionEnum_EnumWithComportement
 
-    public static* [Symbol.iterator](): IterableIterator<EnumWithComportement> {
-        yield* this.values
-    }
+        constructor() {
+            super(EnumWithComportement,)
+        }
 
+        static get get() {
+            return this.#instance ??= new this()
+        }
+
+    }
+    export const CompanionEnum = CompanionEnum_EnumWithComportement
 }
