@@ -1,8 +1,11 @@
-export class NullEnumerableException
-    extends TypeError {
+import {NullPointerException} from "./generic/NullPointerException"
 
-    public constructor(message: string,) {
-        super(message,)
+/** An {@link Enumerable} was expected to not be <b>null</b> */
+export class NullEnumerableException<const ERROR extends Error = never, >
+    extends NullPointerException<ERROR> {
+
+    public constructor(message: string, cause?: Nullable<ERROR>,) {
+        super(message, cause,)
     }
 
 }
