@@ -13,12 +13,8 @@ SimpleEnum.CompanionEnum = class CompanionEnum_SimpleEnum
 
     static #instance
 
-    constructor() {
-        super(SimpleEnum,)
-    }
+    constructor() { super(SimpleEnum,) }
 
-    static get get() {
-        return this.#instance ??= new this()
-    }
+    static get get() { return this.#instance ??= new this() }
 
 }

@@ -5,33 +5,23 @@ export class EnumWithComportement
 
     static A = new class extends EnumWithComportement {
 
-        aComportement() {
-            console.log("Doing stuff from the class \"A\"")
-        }
+        aComportement() { console.log("Doing stuff from the class \"A\"") }
 
-        aComportmentDifferentInEachInstance() {
-            console.log("Doing a comportement specific to the class \"A\"")
-        }
+        aComportmentDifferentInEachInstance() { console.log("Doing a comportement specific to the class \"A\"") }
 
     }()
     static B = new class extends EnumWithComportement {
 
-        aComportmentDifferentInEachInstance() {
-            console.log("Doing a comportement specific to the class \"B\"")
-        }
+        aComportmentDifferentInEachInstance() { console.log("Doing a comportement specific to the class \"B\"") }
 
     }()
     static C = new class extends EnumWithComportement {
 
-        aComportmentDifferentInEachInstance() {
-            console.log("Doing a comportement specific to the class \"C\"")
-        }
+        aComportmentDifferentInEachInstance() { console.log("Doing a comportement specific to the class \"C\"") }
 
     }()
 
-    aComportement() {
-        console.log("Doing some generic stuff")
-    }
+    aComportement() { console.log("Doing some generic stuff") }
 
 }
 EnumWithComportement.CompanionEnum = class CompanionEnum_EnumWithComportement
@@ -39,12 +29,8 @@ EnumWithComportement.CompanionEnum = class CompanionEnum_EnumWithComportement
 
     static #instance
 
-    constructor() {
-        super(EnumWithComportement,)
-    }
+    constructor() { super(EnumWithComportement,) }
 
-    static get get() {
-        return this.#instance ??= new this()
-    }
+    static get get() { return this.#instance ??= new this() }
 
 }

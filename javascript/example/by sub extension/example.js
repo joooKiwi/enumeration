@@ -8,17 +8,13 @@ export class EnumWithSubExtension
     static SubClass1 = class EnumWithSubExtension_SubClass1
         extends EnumWithSubExtension {
 
-        comportment() {
-            return "a comportment from SubClass1"
-        }
+        comportment() { return "a comportment from SubClass1" }
 
     }
     static SubClass2 = class EnumWithSubExtension_SubClass2
         extends EnumWithSubExtension {
 
-        comportment() {
-            return "a comportment from SubClass2"
-        }
+        comportment() { return "a comportment from SubClass2" }
 
     }
 
@@ -29,9 +25,7 @@ export class EnumWithSubExtension
     static E = new EnumWithSubExtension.SubClass2()
     static F = new EnumWithSubExtension()
 
-    public comportment() {
-        return "A comportment by the default Enum"
-    }
+    public comportment() { return "A comportment by the default Enum" }
 
 }
 EnumWithSubExtension.CompanionEnum = class CompanionEnum_EnumWithSubExtension
@@ -39,12 +33,8 @@ EnumWithSubExtension.CompanionEnum = class CompanionEnum_EnumWithSubExtension
 
     static #instance
 
-    constructor() {
-        super(EnumWithSubExtension,)
-    }
+    constructor() { super(EnumWithSubExtension,) }
 
-    static get get() {
-        return this.#instance ??= new this()
-    }
+    static get get() { return this.#instance ??= new this() }
 
 }

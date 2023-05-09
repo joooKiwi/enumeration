@@ -8,17 +8,13 @@ export class EnumWithSubExtension
     private static readonly SubClass1 = class EnumWithSubExtension_SubClass1
         extends EnumWithSubExtension {
 
-        public override comportment() {
-            return "a comportment from SubClass1"
-        }
+        public override comportment() { return "a comportment from SubClass1" }
 
     }
     private static readonly SubClass2 = class EnumWithSubExtension_SubClass2
         extends EnumWithSubExtension {
 
-        public override comportment() {
-            return "a comportment from SubClass2"
-        }
+        public override comportment() { return "a comportment from SubClass2" }
 
     }
 
@@ -29,13 +25,9 @@ export class EnumWithSubExtension
     public static readonly E = new EnumWithSubExtension.SubClass2()
     public static readonly F = new EnumWithSubExtension()
 
-    private constructor() {
-        super()
-    }
+    private constructor() { super() }
 
-    public comportment() {
-        return "A comportment by the default Enum"
-    }
+    public comportment() { return "A comportment by the default Enum" }
 
 }
 export namespace EnumWithSubExtension {
@@ -45,13 +37,9 @@ export namespace EnumWithSubExtension {
 
         static #instance
 
-        private constructor() {
-            super(EnumWithSubExtension,)
-        }
+        private constructor() { super(EnumWithSubExtension,) }
 
-        public static get get() {
-            return this.#instance ??= new this()
-        }
+        public static get get() { return this.#instance ??= new this() }
 
     }
 

@@ -11,9 +11,7 @@ export class EnumWithExcluded
 
     public static readonly D = this.A
 
-    private constructor() {
-        super()
-    }
+    private constructor() { super() }
 
 }
 export namespace EnumWithExcluded {
@@ -23,16 +21,12 @@ export namespace EnumWithExcluded {
 
         static #instance?: CompanionEnum_EnumWithExcluded
 
-        private constructor() {
-            super(EnumWithExcluded,)
-        }
+        private constructor() { super(EnumWithExcluded,) }
 
-        public static get get() {
-            return this.#instance ??= new this()
-        }
+        public static get get() { return this.#instance ??= new this() }
 
 
-        protected readonly _EXCLUDED_NAMES = ['D',]
+        protected override readonly _EXCLUDED_NAMES = ['D',]
 
     }
     export const CompanionEnum = CompanionEnum_EnumWithExcluded

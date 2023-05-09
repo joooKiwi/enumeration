@@ -7,7 +7,7 @@ import {SimpleEnum} from "../simple/example"
 
 export class ExtendedEnum
     extends Enum<Names2, Ordinals2>
-    implements EnumerableWithParent<Names2, Ordinals2> {
+    implements EnumerableWithParent<Names2, Ordinals2, SimpleEnum> {
 
     public static readonly A = new ExtendedEnum(SimpleEnum.A,)
     public static readonly B = new ExtendedEnum(SimpleEnum.B,)
@@ -23,9 +23,7 @@ export class ExtendedEnum
         this.#parent = parent
     }
 
-    public get parent(): SimpleEnum | null {
-        return this.#parent
-    }
+    public get parent(): SimpleEnum | null { return this.#parent }
 
 }
 export namespace ExtendedEnum {
@@ -35,13 +33,9 @@ export namespace ExtendedEnum {
 
         static #instance?: CompanionEnum_ExtendedEnum
 
-        constructor() {
-            super(ExtendedEnum, SimpleEnum,)
-        }
+        private constructor() { super(ExtendedEnum, SimpleEnum,) }
 
-        static get get() {
-            return this.#instance ??= new this()
-        }
+        public static get get() { return this.#instance ??= new this() }
 
     }
 

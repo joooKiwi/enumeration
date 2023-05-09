@@ -27,12 +27,8 @@ ExtendedEnum.CompanionEnum = class Companion_ExtendedEnum
 
     static #instance
 
-    constructor() {
-        super(ExtendedEnum, SimpleEnum,)
-    }
+    constructor() { super(ExtendedEnum, SimpleEnum,) }
 
-    static get get() {
-        return this.#instance ??= new this()
-    }
+    static get get() { return this.#instance ??= new this() }
 
 }

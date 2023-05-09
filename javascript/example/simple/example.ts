@@ -9,9 +9,7 @@ export class SimpleEnum
     public static readonly B = new SimpleEnum()
     public static readonly C = new SimpleEnum()
 
-    private constructor() {
-        super()
-    }
+    private constructor() { super() }
 
 }
 export namespace SimpleEnum {
@@ -21,13 +19,9 @@ export namespace SimpleEnum {
 
         static #instance?: CompanionEnum_SimpleEnum
 
-        private constructor() {
-            super(SimpleEnum,)
-        }
+        private constructor() { super(SimpleEnum,) }
 
-        public static get get() {
-            return this.#instance ??= new this()
-        }
+        public static get get() { return this.#instance ??= new this() }
 
     }
     export const CompanionEnum = CompanionEnum_SimpleEnum
