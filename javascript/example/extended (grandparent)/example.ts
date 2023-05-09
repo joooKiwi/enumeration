@@ -36,7 +36,9 @@ export class SecondExtendedEnum
 export namespace SecondExtendedEnum {
 
     class CompanionEnum_SecondExtendedEnum
-        extends CompanionEnumWithGrandParent<SecondExtendedEnum, typeof SecondExtendedEnum, ExtendedEnum, typeof ExtendedEnum, SimpleEnum, typeof SimpleEnum> {
+        extends CompanionEnumWithGrandParent<SecondExtendedEnum, typeof SecondExtendedEnum,
+            ExtendedEnum, typeof ExtendedEnum,
+            SimpleEnum, typeof SimpleEnum> {
 
         static #instance?: CompanionEnum_SecondExtendedEnum
 

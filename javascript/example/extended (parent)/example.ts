@@ -29,7 +29,8 @@ export class ExtendedEnum
 export namespace ExtendedEnum {
 
     class CompanionEnum_ExtendedEnum
-        extends CompanionEnumWithParent<ExtendedEnum, typeof ExtendedEnum, SimpleEnum, typeof SimpleEnum> {
+        extends CompanionEnumWithParent<ExtendedEnum, typeof ExtendedEnum,
+            SimpleEnum, typeof SimpleEnum> {
 
         static #instance?: CompanionEnum_ExtendedEnum
 
