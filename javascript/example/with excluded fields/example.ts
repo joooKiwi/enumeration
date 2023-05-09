@@ -17,7 +17,7 @@ export class EnumWithExcluded
 export namespace EnumWithExcluded {
 
     class CompanionEnum_EnumWithExcluded
-        extends BasicCompanionEnum {
+        extends BasicCompanionEnum<EnumWithExcluded, typeof EnumWithExcluded> {
 
         static #instance?: CompanionEnum_EnumWithExcluded
 

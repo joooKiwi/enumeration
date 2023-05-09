@@ -15,7 +15,7 @@ export class SimpleEnum
 export namespace SimpleEnum {
 
     class CompanionEnum_SimpleEnum
-        extends BasicCompanionEnum<Ordinals, Names> {
+        extends BasicCompanionEnum<SimpleEnum, typeof SimpleEnum> {
 
         static #instance?: CompanionEnum_SimpleEnum
 

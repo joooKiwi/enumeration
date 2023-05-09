@@ -33,7 +33,7 @@ export abstract class EnumWithComportement
 export namespace EnumWithComportement {
 
     class CompanionEnum_EnumWithComportement
-        extends BasicCompanionEnum {
+        extends BasicCompanionEnum<EnumWithComportement, typeof EnumWithComportement> {
 
         static #instance?: CompanionEnum_EnumWithComportement
 
