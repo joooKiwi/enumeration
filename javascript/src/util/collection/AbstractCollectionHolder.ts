@@ -1,7 +1,7 @@
 import type {CollectionHolder}                                                                                                                                            from "collection/CollectionHolder"
 import type {BooleanCallback, BooleanIndexCallback, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "collection/CollectionHolder.types"
 
-export abstract class AbstractCollectionHolder<T = unknown, >
+export abstract class AbstractCollectionHolder<const T = unknown, >
     implements CollectionHolder<T> {
 
     //#region -------------------- Fields --------------------
@@ -83,9 +83,9 @@ export abstract class AbstractCollectionHolder<T = unknown, >
     //#region -------------------- Value methods --------------------
 
     public first(): NonNullable<T>
-    public first<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
+    public first<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
     public first(callback: BooleanCallback<T>,): NonNullable<T>
-    public first<S extends T, >(callback?: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
+    public first<const S extends T, >(callback?: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
         if (this.isEmpty)
             throw new ReferenceError("No element at the index 0 could be found since it it empty.")
         if (callback == null) {
@@ -101,9 +101,9 @@ export abstract class AbstractCollectionHolder<T = unknown, >
     }
 
     public firstOrNull(): NullOr<T>
-    public firstOrNull<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
+    public firstOrNull<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
     public firstOrNull(callback: BooleanCallback<T>,): NullOr<T>
-    public firstOrNull<S extends T, >(callback?: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
+    public firstOrNull<const S extends T, >(callback?: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
         if (this.isEmpty)
             return null
         if (callback == null)
@@ -115,9 +115,9 @@ export abstract class AbstractCollectionHolder<T = unknown, >
 
 
     public last(): NonNullable<T>
-    public last<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
+    public last<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
     public last(callback: BooleanCallback<T>,): NonNullable<T>
-    public last<S extends T, >(callback?: BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
+    public last<const S extends T, >(callback?: BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
         if (this.isEmpty)
             throw new ReferenceError("No element at the index 0 could be found since it it empty.")
         if (callback == null) {
@@ -133,9 +133,9 @@ export abstract class AbstractCollectionHolder<T = unknown, >
     }
 
     public lastOrNull(): NullOr<T>
-    public lastOrNull<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
+    public lastOrNull<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
     public lastOrNull(callback: BooleanCallback<T>,): NullOr<T>
-    public lastOrNull<S extends T, >(callback?: BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
+    public lastOrNull<const S extends T, >(callback?: BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
         if (this.isEmpty)
             return null
         if (callback == null)
@@ -153,7 +153,7 @@ export abstract class AbstractCollectionHolder<T = unknown, >
      *
      * @param iterable The iterable to send to the new instance
      */
-    protected abstract _new<U, >(iterable: Iterable<U>,): CollectionHolder<U>
+    protected abstract _new<const U, >(iterable: Iterable<U>,): CollectionHolder<U>
 
     //#region -------------------- Has / includes / contains methods --------------------
 
@@ -192,9 +192,9 @@ export abstract class AbstractCollectionHolder<T = unknown, >
     //#endregion -------------------- Join methods --------------------
     //#region -------------------- Filter methods --------------------
 
-    public filter<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<S>
+    public filter<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<S>
     public filter(callback: BooleanCallback<T>,): CollectionHolder<T>
-    public filter<S extends T, >(callback: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
+    public filter<const S extends T, >(callback: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
         return this._new(this._array.filter(callback,),)
     }
 
@@ -203,9 +203,9 @@ export abstract class AbstractCollectionHolder<T = unknown, >
     }
 
 
-    public filterNot<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<Exclude<T, S>>
+    public filterNot<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<Exclude<T, S>>
     public filterNot(callback: BooleanCallback<T>,): CollectionHolder<T>
-    public filterNot<S extends T, >(callback: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
+    public filterNot<const S extends T, >(callback: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
         return this._new(this._array.filter((value, index) => !callback(value, index,),),)
     }
 
@@ -224,9 +224,9 @@ export abstract class AbstractCollectionHolder<T = unknown, >
     //#endregion -------------------- Filter methods --------------------
     //#region -------------------- Find methods --------------------
 
-    public find<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
+    public find<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
     public find(callback: BooleanCallback<T>,): NullOr<T>
-    public find<S extends T, >(callback: | RestrainedBooleanCallback<T, S> | BooleanCallback<T>,) {
+    public find<const S extends T, >(callback: | RestrainedBooleanCallback<T, S> | BooleanCallback<T>,) {
         return this._array.find((value, index,) => callback(value, index,),) ?? null
     }
 
@@ -245,9 +245,9 @@ export abstract class AbstractCollectionHolder<T = unknown, >
     }
 
 
-    public findLast<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
+    public findLast<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
     public findLast(callback: BooleanCallback<T>,): NullOr<T>
-    public findLast<S extends T, >(callback: | RestrainedBooleanCallback<T, S> | BooleanCallback<T>,) {
+    public findLast<const S extends T, >(callback: | RestrainedBooleanCallback<T, S> | BooleanCallback<T>,) {
         return this._array.findLast((value, index,) => callback(value, index,),) ?? null
     }
 
@@ -266,11 +266,11 @@ export abstract class AbstractCollectionHolder<T = unknown, >
 
     //#endregion -------------------- Find methods --------------------
 
-    public map<U, >(callback: MapCallback<T, U>,): CollectionHolder<U> {
+    public map<const U, >(callback: MapCallback<T, U>,): CollectionHolder<U> {
         return this._new(this._array.map((value, index,) => callback(value, index,),),)
     }
 
-    public mapIndex<U, >(callback: MapIndexCallback<U>,): CollectionHolder<U> {
+    public mapIndex<const U, >(callback: MapIndexCallback<U>,): CollectionHolder<U> {
         return this._new(this._array.map((_, index,) => callback(index,),),)
     }
 

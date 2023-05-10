@@ -2,7 +2,7 @@ import type {CollectionHolder} from "collection/CollectionHolder"
 
 import {AbstractCollectionHolder} from "collection/AbstractCollectionHolder"
 
-export class GenericCollectionHolder<T = unknown, >
+export class GenericCollectionHolder<const T = unknown, >
     extends AbstractCollectionHolder<T> {
 
     public constructor(iterable: Iterable<T>,) {
@@ -13,7 +13,7 @@ export class GenericCollectionHolder<T = unknown, >
 
     //#region -------------------- Loop methods --------------------
 
-    protected override _new<U, >(iterable: Iterable<U>): CollectionHolder<U> {
+    protected override _new<const U, >(iterable: Iterable<U>): CollectionHolder<U> {
         return new GenericCollectionHolder(iterable)
     }
 

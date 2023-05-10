@@ -65,7 +65,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The matching callback
      * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
      */
-    first<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
+    first<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
 
 
     /** Get the first element or <b>null</b> is the {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty} */
@@ -85,7 +85,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The matching callback
      */
-    firstOrNull<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
+    firstOrNull<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
 
 
     /**
@@ -110,7 +110,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The matching callback
      * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
      */
-    last<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
+    last<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
 
 
     /** Get the last element or <b>null</b> is the {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty} */
@@ -130,7 +130,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The matching callback
      */
-    lastOrNull<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
+    lastOrNull<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
 
     //#endregion -------------------- Value methods --------------------
     //#region -------------------- Loop methods --------------------
@@ -225,7 +225,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see ReadonlyArray.filter
      * @see filterNot
      */
-    filter<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<S>
+    filter<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<S>
 
     /**
      * Get a new {@link CollectionHolder collection} from the condition returned by the callback.
@@ -253,7 +253,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see ReadonlyArray.filter
      * @see filter
      */
-    filterNot<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<Exclude<T, S>>
+    filterNot<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<Exclude<T, S>>
 
     /**
      * Get a new {@link CollectionHolder collection} from the reversed condition returned by the callback.
@@ -291,7 +291,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The restrained find callback
      * @see ReadonlyArray.find
      */
-    find<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
+    find<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
 
     /**
      * Get the first item found or <b>null</b> if nothing was found
@@ -333,7 +333,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The restrained find callback
      * @see ReadonlyArray.findLast
      */
-    findLast<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
+    findLast<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
 
     /**
      * Get the last item found or <b>null</b> if nothing was found
@@ -377,7 +377,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The callback to retrieve the result
      * @see ReadonlyArray.map
      */
-    map<U, >(callback: MapCallback<T, U>,): CollectionHolder<U>
+    map<const U, >(callback: MapCallback<T, U>,): CollectionHolder<U>
 
     /**
      * Loop over the {@link CollectionHolder collection} using only the index
@@ -386,7 +386,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The callback to retrieve the result
      * @see ReadonlyArray.map
      */
-    mapIndex<U, >(callback: MapIndexCallback<U>,): CollectionHolder<U>
+    mapIndex<const U, >(callback: MapIndexCallback<U>,): CollectionHolder<U>
 
 
     /**
