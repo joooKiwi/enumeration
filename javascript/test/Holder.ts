@@ -1,4 +1,4 @@
-export class Holder<T, MESSAGE extends string, > {
+export class Holder<const T, const MESSAGE extends string, > {
 
     readonly value
     readonly toString
