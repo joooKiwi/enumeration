@@ -3,7 +3,7 @@ import {CompanionEnumWithParent, Enum}                               from "@jooo
 
 import type {Names2, Ordinals2} from "../type"
 
-import {SimpleEnum} from "../simple/example"
+import {SimpleEnum} from "simple/example.ts"
 
 export class ExtendedEnum
     extends Enum<Names2, Ordinals2>

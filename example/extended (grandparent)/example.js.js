@@ -1,7 +1,7 @@
 import {CompanionEnumWithGrandParent, Enum} from "@joookiwi/enumerable"
 
-import {SimpleEnum}   from "../simple/example.js"
-import {ExtendedEnum} from "../extended (parent)/example.js"
+import {SimpleEnum}   from "../simple/example.js.js"
+import {ExtendedEnum} from "../extended (parent)/example.js.js"
 
 export class SecondExtendedEnum
     extends Enum {

@@ -1,6 +1,6 @@
 import {CompanionEnumWithParent, Enum} from "@joookiwi/enumerable"
 
-import {SimpleEnum} from "../simple/example.js"
+import {SimpleEnum} from "../simple/example.js.js"
 
 export class ExtendedEnum
     extends Enum {

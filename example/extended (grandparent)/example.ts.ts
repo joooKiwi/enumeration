@@ -3,8 +3,8 @@ import {CompanionEnumWithGrandParent, Enum}                                    f
 
 import type {Names3, Ordinals3} from "../type"
 
-import {SimpleEnum}   from "../simple/example"
-import {ExtendedEnum} from "../extended (parent)/example"
+import {SimpleEnum}   from "simple/example.ts"
+import {ExtendedEnum} from "extended (parent)/example.ts"
 
 export class SecondExtendedEnum
     extends Enum<Names3, Ordinals3>
