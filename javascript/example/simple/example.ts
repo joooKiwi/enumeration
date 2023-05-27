@@ -1,4 +1,5 @@
-import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
+import type {BasicCompanionEnumSingleton} from "@joookiwi/enumerable/dist/types"
+import {BasicCompanionEnum, Enum}         from "@joookiwi/enumerable"
 
 import type {Names, Ordinals} from "../type"
 
@@ -9,21 +10,17 @@ export class SimpleEnum
     public static readonly B = new SimpleEnum()
     public static readonly C = new SimpleEnum()
 
-    private constructor() { super() }
-
-}
-export namespace SimpleEnum {
-
-    class CompanionEnum_SimpleEnum
+    public static readonly CompanionEnum: BasicCompanionEnumSingleton<SimpleEnum, typeof SimpleEnum> = class CompanionEnum_SimpleEnum
         extends BasicCompanionEnum<SimpleEnum, typeof SimpleEnum> {
 
         static #instance?: CompanionEnum_SimpleEnum
 
         private constructor() { super(SimpleEnum,) }
 
-        public static get get() { return this.#instance ??= new this() }
+        public static get get() { return this.#instance ??= new CompanionEnum_SimpleEnum() }
 
     }
-    export const CompanionEnum = CompanionEnum_SimpleEnum
+
+    private constructor() { super() }
 
 }

@@ -1,5 +1,5 @@
-import type {EnumerableWithGrandParent}     from "@joookiwi/enumerable/dist/types"
-import {CompanionEnumWithGrandParent, Enum} from "@joookiwi/enumerable"
+import type {CompanionEnumWithGrandParentSingleton, EnumerableWithGrandParent} from "@joookiwi/enumerable/dist/types"
+import {CompanionEnumWithGrandParent, Enum}                                    from "@joookiwi/enumerable"
 
 import type {Names3, Ordinals3} from "../type"
 
@@ -20,6 +20,19 @@ export class SecondExtendedEnum
     public static readonly H = new SecondExtendedEnum()
     public static readonly I = new SecondExtendedEnum()
 
+    public static readonly CompanionEnum: CompanionEnumWithGrandParentSingleton<SecondExtendedEnum, typeof SecondExtendedEnum, ExtendedEnum, typeof ExtendedEnum, SimpleEnum, typeof SimpleEnum> = class CompanionEnum_SecondExtendedEnum
+        extends CompanionEnumWithGrandParent<SecondExtendedEnum, typeof SecondExtendedEnum,
+            ExtendedEnum, typeof ExtendedEnum,
+            SimpleEnum, typeof SimpleEnum> {
+
+        static #instance?: CompanionEnum_SecondExtendedEnum
+
+        private constructor() { super(SecondExtendedEnum, ExtendedEnum, SimpleEnum,) }
+
+        public static get get() { return this.#instance ??= new CompanionEnum_SecondExtendedEnum() }
+
+    }
+
     readonly #parent
     readonly #grandParent
 
@@ -32,21 +45,4 @@ export class SecondExtendedEnum
     public get parent(): ExtendedEnum | null { return this.#parent }
     public get grandParent(): SimpleEnum | null { return this.#grandParent }
 
-}
-export namespace SecondExtendedEnum {
-
-    class CompanionEnum_SecondExtendedEnum
-        extends CompanionEnumWithGrandParent<SecondExtendedEnum, typeof SecondExtendedEnum,
-            ExtendedEnum, typeof ExtendedEnum,
-            SimpleEnum, typeof SimpleEnum> {
-
-        static #instance?: CompanionEnum_SecondExtendedEnum
-
-        private constructor() { super(SecondExtendedEnum, ExtendedEnum, SimpleEnum,) }
-
-        public static get get() { return this.#instance ??= new this() }
-
-    }
-
-    export const CompanionEnum = CompanionEnum_SecondExtendedEnum
 }

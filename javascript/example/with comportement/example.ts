@@ -1,4 +1,5 @@
-import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
+import type {BasicCompanionEnumSingleton} from "@joookiwi/enumerable/dist/types"
+import {BasicCompanionEnum, Enum}         from "@joookiwi/enumerable"
 
 import type {Names, Ordinals} from "../type"
 
@@ -23,25 +24,21 @@ export abstract class EnumWithComportement
 
     }()
 
-    private constructor() { super() }
-
-    public aComportement() { console.log("Doing some generic stuff") }
-
-    public abstract aComportmentDifferentInEachInstance(): void
-
-}
-export namespace EnumWithComportement {
-
-    class CompanionEnum_EnumWithComportement
+    public static readonly CompanionEnum: BasicCompanionEnumSingleton<EnumWithComportement, typeof EnumWithComportement> = class CompanionEnum_EnumWithComportement
         extends BasicCompanionEnum<EnumWithComportement, typeof EnumWithComportement> {
 
         static #instance?: CompanionEnum_EnumWithComportement
 
         private constructor() { super(EnumWithComportement,) }
 
-        public static get get() { return this.#instance ??= new this() }
+        public static get get() { return this.#instance ??= new CompanionEnum_EnumWithComportement() }
 
     }
-    export const CompanionEnum = CompanionEnum_EnumWithComportement
+
+    private constructor() { super() }
+
+    public aComportement() { console.log("Doing some generic stuff") }
+
+    public abstract aComportmentDifferentInEachInstance(): void
 
 }

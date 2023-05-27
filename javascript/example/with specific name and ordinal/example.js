@@ -7,14 +7,15 @@ export class EnumWithSpecificNameAndOrdinal
     static B = new EnumWithSpecificNameAndOrdinal()
     static C = new EnumWithSpecificNameAndOrdinal()
 
-}
-EnumWithSpecificNameAndOrdinal.CompanionEnum = class CompanionEnum_EnumWithSpecificNameAndOrdinal
-    extends BasicCompanionEnum {
+    static CompanionEnum = class CompanionEnum_EnumWithSpecificNameAndOrdinal
+        extends BasicCompanionEnum {
 
-    static #instance
+        static #instance
 
-    constructor() { super(EnumWithSpecificNameAndOrdinal,) }
+        constructor() { super(EnumWithSpecificNameAndOrdinal,) }
 
-    static get get() { return this.#instance ??= new this() }
+        static get get() { return this.#instance ??= new CompanionEnum_EnumWithSpecificNameAndOrdinal() }
+
+    }
 
 }

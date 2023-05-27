@@ -1,4 +1,5 @@
-import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
+import type {BasicCompanionEnumSingleton} from "@joookiwi/enumerable/dist/types"
+import {BasicCompanionEnum, Enum}         from "@joookiwi/enumerable"
 
 import type {Names2, Ordinals2} from "../type"
 
@@ -25,24 +26,19 @@ export class EnumWithSubExtension
     public static readonly E = new EnumWithSubExtension.SubClass2()
     public static readonly F = new EnumWithSubExtension()
 
-    private constructor() { super() }
-
-    public comportment() { return "A comportment by the default Enum" }
-
-}
-export namespace EnumWithSubExtension {
-
-    class CompanionEnum_EnumWithSubExtension
+    public static readonly CompanionEnum: BasicCompanionEnumSingleton<EnumWithSubExtension, typeof EnumWithSubExtension> = class CompanionEnum_EnumWithSubExtension
         extends BasicCompanionEnum<EnumWithSubExtension, typeof EnumWithSubExtension> {
 
         static #instance
 
         private constructor() { super(EnumWithSubExtension,) }
 
-        public static get get() { return this.#instance ??= new this() }
+        public static get get() { return this.#instance ??= new CompanionEnum_EnumWithSubExtension() }
 
     }
 
-    export const CompanionEnum = CompanionEnum_EnumWithSubExtension
+    private constructor() { super() }
+
+    public comportment() { return "A comportment by the default Enum" }
 
 }

@@ -1,4 +1,5 @@
-import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
+import type {BasicCompanionEnumSingleton} from "@joookiwi/enumerable/dist/types"
+import {BasicCompanionEnum, Enum}         from "@joookiwi/enumerable"
 
 import type {Names, Ordinals} from "../type"
 
@@ -11,24 +12,20 @@ export class EnumWithExcluded
 
     public static readonly D = this.A
 
-    private constructor() { super() }
-
-}
-export namespace EnumWithExcluded {
-
-    class CompanionEnum_EnumWithExcluded
+    public static readonly CompanionEnum: BasicCompanionEnumSingleton<EnumWithExcluded, typeof EnumWithExcluded> = class CompanionEnum_EnumWithExcluded
         extends BasicCompanionEnum<EnumWithExcluded, typeof EnumWithExcluded> {
 
         static #instance?: CompanionEnum_EnumWithExcluded
 
         private constructor() { super(EnumWithExcluded,) }
 
-        public static get get() { return this.#instance ??= new this() }
+        public static get get() { return this.#instance ??= new CompanionEnum_EnumWithExcluded() }
 
 
         protected override readonly _EXCLUDED_NAMES = ['D',]
 
     }
-    export const CompanionEnum = CompanionEnum_EnumWithExcluded
+
+    private constructor() { super() }
 
 }

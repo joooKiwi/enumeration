@@ -29,14 +29,15 @@ export class SecondExtendedEnum
 
     get grandParent() { return this.#grandParent }
 
-}
-SecondExtendedEnum.CompanionEnum = class CompanionEnum_SecondExtendedEnum
-    extends CompanionEnumWithGrandParent {
+    static CompanionEnum = class CompanionEnum_SecondExtendedEnum
+        extends CompanionEnumWithGrandParent {
 
-    static #instance
+        static #instance
 
-    constructor() { super(SecondExtendedEnum, ExtendedEnum, SimpleEnum,) }
+        constructor() { super(SecondExtendedEnum, ExtendedEnum, SimpleEnum,) }
 
-    static get get() { return this.#instance ??= new this() }
+        static get get() { return this.#instance ??= new CompanionEnum_SecondExtendedEnum() }
+
+    }
 
 }

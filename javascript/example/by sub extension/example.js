@@ -27,14 +27,15 @@ export class EnumWithSubExtension
 
     public comportment() { return "A comportment by the default Enum" }
 
-}
-EnumWithSubExtension.CompanionEnum = class CompanionEnum_EnumWithSubExtension
-    extends BasicCompanionEnum {
+    static CompanionEnum = class CompanionEnum_EnumWithSubExtension
+        extends BasicCompanionEnum {
 
-    static #instance
+        static #instance
 
-    constructor() { super(EnumWithSubExtension,) }
+        constructor() { super(EnumWithSubExtension,) }
 
-    static get get() { return this.#instance ??= new this() }
+        static get get() { return this.#instance ??= new CompanionEnum_EnumWithSubExtension() }
+
+    }
 
 }

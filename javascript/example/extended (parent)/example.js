@@ -21,14 +21,15 @@ export class ExtendedEnum
 
     get parent() { return this.#parent }
 
-}
-ExtendedEnum.CompanionEnum = class Companion_ExtendedEnum
-    extends CompanionEnumWithParent {
+    static CompanionEnum = class Companion_ExtendedEnum
+        extends CompanionEnumWithParent {
 
-    static #instance
+        static #instance
 
-    constructor() { super(ExtendedEnum, SimpleEnum,) }
+        constructor() { super(ExtendedEnum, SimpleEnum,) }
 
-    static get get() { return this.#instance ??= new this() }
+        static get get() { return this.#instance ??= new Companion_ExtendedEnum() }
+
+    }
 
 }

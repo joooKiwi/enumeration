@@ -9,17 +9,18 @@ export class EnumWithExcluded
 
     static D = this.A
 
-}
-EnumWithExcluded.CompanionEnum = class CompanionEnum_EnumWithExcluded
-    extends BasicCompanionEnum {
+    static CompanionEnum = class CompanionEnum_EnumWithExcluded
+        extends BasicCompanionEnum {
 
-    static #instance
+        static #instance
 
-    constructor() { super(EnumWithExcluded,) }
+        constructor() { super(EnumWithExcluded,) }
 
-    static get get() { return this.#instance ??= new this() }
+        static get get() { return this.#instance ??= new CompanionEnum_EnumWithExcluded() }
 
 
-    _EXCLUDED_NAMES = ['D',]
+        _EXCLUDED_NAMES = ['D',]
+
+    }
 
 }

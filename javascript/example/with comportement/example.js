@@ -23,14 +23,15 @@ export class EnumWithComportement
 
     aComportement() { console.log("Doing some generic stuff") }
 
-}
-EnumWithComportement.CompanionEnum = class CompanionEnum_EnumWithComportement
-    extends BasicCompanionEnum {
+    static CompanionEnum = class CompanionEnum_EnumWithComportement
+        extends BasicCompanionEnum {
 
-    static #instance
+        static #instance
 
-    constructor() { super(EnumWithComportement,) }
+        constructor() { super(EnumWithComportement,) }
 
-    static get get() { return this.#instance ??= new this() }
+        static get get() { return this.#instance ??= new CompanionEnum_EnumWithComportement() }
+
+    }
 
 }

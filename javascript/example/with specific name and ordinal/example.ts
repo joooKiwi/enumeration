@@ -13,21 +13,17 @@ export class EnumWithSpecificNameAndOrdinal<ORDINAL extends Ordinals = Ordinals,
     public static readonly 1: typeof EnumWithSpecificNameAndOrdinal.B
     public static readonly 2: typeof EnumWithSpecificNameAndOrdinal.C
 
-    private constructor() { super() }
-
-}
-export namespace SimpleEnum {
-
-    class CompanionEnum_EnumWithSpecificNameAndOrdinal
+    public static readonly CompanionEnum: BasicCompanionEnum<EnumWithSpecificNameAndOrdinal, typeof EnumWithSpecificNameAndOrdinal> = class CompanionEnum_EnumWithSpecificNameAndOrdinal
         extends BasicCompanionEnum<EnumWithSpecificNameAndOrdinal, typeof EnumWithSpecificNameAndOrdinal> {
 
         static #instance?: CompanionEnum_EnumWithSpecificNameAndOrdinal
 
         private constructor() { super(EnumWithSpecificNameAndOrdinal,) }
 
-        public static get get() { return this.#instance ??= new this() }
+        public static get get() { return this.#instance ??= new CompanionEnum_EnumWithSpecificNameAndOrdinal() }
 
     }
-    export const CompanionEnum = CompanionEnum_EnumWithSpecificNameAndOrdinal
+
+    private constructor() { super() }
 
 }
