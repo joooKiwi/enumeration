@@ -38,7 +38,7 @@ export interface CompanionEnumWithGrandParentDeclaration<ENUMERABLE extends Enum
 
     getValue<const ORDINAL extends number, >                                                                                                                                                                            (ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,):                                                                                              ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
 
-    getValue<const NAME extends string, >                                                                                                                                                                               (name: Nullable<NAME>,):                                                                                                                     SpecificNameOf<NAME, ENUMERABLE>
+    getValue<const NAME extends string, >                                                                                                                                                                               (name: Nullable<NAME>,):                                                                                                                     ValueByEnumerableConstructorAndEnumerableNameAndName<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, NAME>
 
     getValue<const INSTANCE extends ENUMERABLE, >                                                                                                                                                                       (instance: Nullable<INSTANCE>,):                                                                                                             INSTANCE
 
