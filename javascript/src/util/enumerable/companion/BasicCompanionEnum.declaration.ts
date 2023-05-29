@@ -105,7 +105,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * Get nothing because of a <b>null</b> value
      *
      * @param value A <b>null</b> value
-     * @throws NullEnumerableException
+     * @throws {NullEnumerableException}
      */
     getValue                                                                                              (value: NullOrUndefined,):                                                                         never
 
