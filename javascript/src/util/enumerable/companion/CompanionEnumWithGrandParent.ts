@@ -34,6 +34,8 @@ export class CompanionEnumWithGrandParent<const ENUMERABLE extends EnumerableWit
         super(instance, parentInstance,)
         if (!("grandParent" in instance.prototype))
             throw new NonExistantKeyException(`No attribute "grandParent" exist in the "${instance.name}" instance. Either use a getter method or add it in the class.`, "grandParent", instance.prototype,)
+        if (!("parent" in parentInstance.prototype))
+            throw new NonExistantKeyException(`No attribute "parent" exist in the "${parentInstance.name}" instance. Either use a getter method or add it in the class.`, "parent", parentInstance.prototype,)
         if (grandParentInstance == null)
             throw new NullInstanceException()
         if (!(grandParentInstance instanceof Function))
