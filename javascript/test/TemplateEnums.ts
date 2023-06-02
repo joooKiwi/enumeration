@@ -287,6 +287,7 @@ export class EnumWithExcludedFields
         extends BasicCompanionEnum<EnumWithExcludedFields, typeof EnumWithExcludedFields> {
 
         static #instance?: CompanionEnum_EnumWithExcludedFields
+        protected override readonly _EXCLUDED_NAMES = ['C',] as const
 
         private constructor() {
             super(EnumWithExcludedFields,)
@@ -295,8 +296,6 @@ export class EnumWithExcludedFields
         static get get() {
             return this.#instance ??= new this()
         }
-
-        protected override readonly _EXCLUDED_NAMES = ['C',] as const
 
     }
 
@@ -321,6 +320,7 @@ export class EnumWithDefault
         extends BasicCompanionEnum<EnumWithDefault, typeof EnumWithDefault> {
 
         static #instance?: CompanionEnum_EnumWithDefault
+        protected override readonly _DEFAULT = EnumWithDefault.A
 
         private constructor() {
             super(EnumWithDefault,)
@@ -329,8 +329,6 @@ export class EnumWithDefault
         public static get get() {
             return this.#instance ??= new this()
         }
-
-        protected override _DEFAULT = EnumWithDefault.A
 
     }
 
