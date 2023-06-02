@@ -54,7 +54,7 @@ The base of each `enum class` has only 1 required field:
 Field definition (for `Typescript`) _for better support_:
  - `static O: EnumType.N` with `O` and `N` as their specific ordinal and name respectively
 
-And optional override fields _(in the <u>companion enum</u>)_:
+And optional override fields _(in the **companion enum**)_:
  - `protected readonly _EXCLUDED_NAMES`
  - `protected readonly _DEFAULT`
 
@@ -130,7 +130,7 @@ export type Ordinals = Enum[Names]
 
 ### Default usage
 
-By default, the <u>companion enum</u> is always implemented.
+By default, the **companion enum** is always implemented.
 But it will throw a `NullEnumerableException` if nothing has been set _(in the initialization)_.
 Or it may be that it has been removed _(at compile time)_.
 
@@ -160,7 +160,7 @@ class CompanionEnum_Example extends BasicCompanionEnum<Example, typeof Example> 
 ### Excluded field
 
 Excluding a field may become part once some fields for whatever reason.
-In this case, just override the **excluded names** in the <u>companion enum</u>.
+In this case, just override the **excluded names** in the **companion enum**.
 
 <details>
 <summary>Javascript</summary>
@@ -405,7 +405,7 @@ In `Typescript`, it can be possible to have an error even though, it cannot be o
 
 By declaring a class onto a field, then, the type inference would not work properly if it has a reference of itself.
 
-That is why every <u>companion enum</u> has a `singleton` type declaration.
+That is why every **companion enum** has a `singleton` type declaration.
 
 ```typescript
 // Bad example
