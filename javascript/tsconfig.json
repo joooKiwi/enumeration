@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./src/util",
 
-    "target": "ES2020",
+    "target": "ES2021",
     "module": "ESNext",
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
@@ -21,7 +21,6 @@
     "noImplicitOverride": true,
     "noImplicitThis": true,
     "noImplicitReturns": true,
-    "noImplicitUseStrict": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
