@@ -5,13 +5,19 @@ _Or at least give a similar behaviour_
 
 ## Implementation by language
 
-| Language                  |                                  Note                                  | Implementation                                                                                                                                                                                    |
-|:--------------------------|:----------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Javascript<br/>Typescript | [Published to npm](https://www.npmjs.com/package/@joookiwi/enumerable) | Utility class<br/> + Custom implementation `class ChildEnum extends Enum`<br/>+ Companion field `class ChilCompanion extends "CompanionEnum"`                                                     |
-| Java                      |                             _Not created_                              | Utility class<br/>+ Custom implementation `class ChildEnum extends Enum`<br/>+ Nested companion class `@CompanionOf(ChildEnum::class) class ChildCompanion extends CompanionEnum`                 |
-| Kotlin                    |                             _Not created_                              | Simple extension with`object: CompanionEnum()`<br/>+ Simple extension with`class ChildEnum: Enum()`                                                                                               |
-| PHP                       |                             _Not created_                              | Utility methods<br/>+ `trait` implementation with `class ChildEnum { use Enum; }`<br/>+ Companion field `class ChildCompanion extends "CompanionEnum"`                                            |
-| C#                        |                             _Not created_                              | Utility class<br/>+ Extension methods<br/>+ Custom implementation with`class ChildEnum: Enum`<br/>+ Nested companion class `[CompanionOf(typeof(ChildEnum))] class ChildCompanion: CompanionEnum` |
+_Note:_
+The usage of `COMPANION_ENUM` in the extension can be changed to
+`BasicCompanionEnum`, `CompanionEnumWithParent`,
+`CompanionEnumWithGrandParent` or `CompanionEnumWithGreatGrandParent`.
+And in `C#`, it uses the type system to its advantage (like for the [ValueTuple](https://learn.microsoft.com/dotnet/api/system.valuetuple)).
+
+| Language                  |                                  Note                                  | Implementation                                                                                                                                                                                     |
+|:--------------------------|:----------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Javascript<br/>Typescript | [Published to npm](https://www.npmjs.com/package/@joookiwi/enumerable) | Utility class<br/> + Custom implementation `class ChildEnum extends Enum`<br/>+ Companion field `class ChildCompanion extends COMPANION_ENUM`                                                      |
+| Java                      |                             _Not created_                              | Utility class<br/>+ Custom implementation `class ChildEnum extends Enum`<br/>+ Nested companion class `class ChildCompanion extends COMPANION_ENUM`                                                |
+| Kotlin                    |                             _Not created_                              | Simple extension with`companion object: COMPANION_ENUM()`<br/>+ Simple extension with`class ChildEnum: Enum()`                                                                                     |
+| PHP                       |                             _Not created_                              | Utility methods<br/>+ `trait` implementation with `class ChildEnum { use Enum; }`<br/>+ Companion field `class ChildCompanion extends COMPANION_ENUM`                                              |
+| C#                        |                             _Not created_                              | Utility class<br/>+ Extension methods<br/>+ Custom implementation with`class ChildEnum: Enum`<br/>+ Nested companion class `[CompanionOf(typeof(ChildEnum))] class ChildCompanion: COMPANION_ENUM` |
 
 _(This may change once the implementation is made)_
 
