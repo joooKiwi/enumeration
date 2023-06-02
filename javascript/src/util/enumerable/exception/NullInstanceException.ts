@@ -1,8 +1,11 @@
-export class NullInstanceException
-    extends TypeError {
+import {NullPointerException} from "./generic/NullPointerException"
 
-    public constructor() {
-        super("The instance received cannot be null!",)
+/** An instance was received as <b>null</b> value */
+export class NullInstanceException<const ERROR extends Error = never, >
+    extends NullPointerException<ERROR> {
+
+    public constructor(cause?: Nullable<ERROR>,) {
+        super("The instance received cannot be null!", cause,)
     }
 
 }

@@ -1,7 +1,8 @@
-import {AbstractCollectionHolder}                                                       from "./AbstractCollectionHolder"
-import type {BooleanCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder"
+import type {CollectionHolder} from "collection/CollectionHolder"
 
-export class GenericCollectionHolder<T = any, >
+import {AbstractCollectionHolder} from "collection/AbstractCollectionHolder"
+
+export class GenericCollectionHolder<const T = unknown, >
     extends AbstractCollectionHolder<T> {
 
     public constructor(iterable: Iterable<T>,) {
@@ -12,22 +13,8 @@ export class GenericCollectionHolder<T = any, >
 
     //#region -------------------- Loop methods --------------------
 
-    //#region -------------------- Filter methods --------------------
-
-    public override filter<S extends T, >(callback: RestrainedBooleanCallback<T, S>,): GenericCollectionHolder<S>
-    public override filter(callback: BooleanCallback<T>,): GenericCollectionHolder<T>
-    public override filter<S extends T, >(callback: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
-        return new GenericCollectionHolder(this._array.filter(callback,),)
-    }
-
-    //#endregion -------------------- Filter methods --------------------
-
-    public override map<U>(callback: MapCallback<T, U>,): GenericCollectionHolder<U> {
-        return new GenericCollectionHolder(this._array.map((value, index,) => callback(value, index,),),)
-    }
-
-    public override mapIndex<U>(callback: MapIndexCallback<U>,): GenericCollectionHolder<U> {
-        return new GenericCollectionHolder(this._array.map((_, index,) => callback(index,),),)
+    protected override _new<const U, >(iterable: Iterable<U>): CollectionHolder<U> {
+        return new GenericCollectionHolder(iterable)
     }
 
     //#endregion -------------------- Loop methods --------------------

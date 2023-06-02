@@ -1,6 +1,6 @@
 {
   "name": "@joookiwi/enumerable",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "A Javascript implementation of an enum class",
 
   "scripts": {
@@ -12,9 +12,11 @@
     "compile-umd":   "tsc --project tsconfig.umd.json",
     "compile-types": "tsc --project tsconfig.types.json",
 
-    "test": "npm-run-all --parallel test-enum test-collection",
-    "test-enum":       "jest --testNamePattern=EnumTest",
-    "test-collection": "jest --testNamePattern=CollectionHolderTest",
+    "test": "jest --collect-coverage",
+    "test-general-enum":   "jest --testNamePattern=GeneralEnumTest",
+    "test-enum-helper":    "jest --testNamePattern=EnumHelperTest",
+    "test-companion-enum": "jest --testNamePattern=CompanionEnumTest",
+    "test-collection":     "jest --testNamePattern=CollectionHolderTest",
 
     "test-pack":    "npm pack --dry-run",
     "test-publish": "npm publish --@access=public --dry-run",
@@ -48,6 +50,12 @@
       "import":  "./dist/ecmascript module/util/enumerable/Enum.js",
       "require": "./dist/common javascript/util/enumerable/Enum.js"
     },
+
+    "./*": {
+      "types":   "./dist/types/*.d.ts",
+      "import":  "./dist/ecmascript module/*.js",
+      "require": "./dist/common javascript/*.js"
+    },
     "./collection/*": {
       "types":   "./dist/types/util/collection/*.d.ts",
       "import":  "./dist/ecmascript module/util/collection/*.js",
@@ -63,10 +71,20 @@
       "import":  "./dist/ecmascript module/util/enumerable/exception/*.js",
       "require": "./dist/common javascript/util/enumerable/exception/*.js"
     },
+    "./companion/*": {
+      "types":   "./dist/types/util/enumerable/companion/*.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/companion/*.js",
+      "require": "./dist/common javascript/util/enumerable/companion/*.js"
+    },
     "./enumerable/exception/*": {
       "types":   "./dist/types/util/enumerable/exception/*.d.ts",
       "import":  "./dist/ecmascript module/util/enumerable/exception/*.js",
       "require": "./dist/common javascript/util/enumerable/exception/*.js"
+    },
+    "./enumerable/companion/*": {
+      "types":   "./dist/types/util/enumerable/companion/*.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/companion/*.js",
+      "require": "./dist/common javascript/util/enumerable/companion/*.js"
     },
 
     "./collection": {
@@ -84,10 +102,20 @@
       "import":  "./dist/ecmascript module/util/enumerable/exception/index.js",
       "require": "./dist/common javascript/util/enumerable/exception/index.js"
     },
+    "./companion": {
+      "types":   "./dist/types/util/enumerable/companion/index.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/companion/index.js",
+      "require": "./dist/common javascript/util/enumerable/companion/index.js"
+    },
     "./enumerable/exception": {
       "types":   "./dist/types/util/enumerable/exception/index.d.ts",
       "import":  "./dist/ecmascript module/util/enumerable/exception/index.js",
       "require": "./dist/common javascript/util/enumerable/exception/index.js"
+    },
+    "./enumerable/companion": {
+      "types":   "./dist/types/util/enumerable/companion/index.d.ts",
+      "import":  "./dist/ecmascript module/util/enumerable/companion/index.js",
+      "require": "./dist/common javascript/util/enumerable/companion/index.js"
     }
   },
 
@@ -112,12 +140,14 @@
   "author": "JóôòKiwi",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^29.2.3",
+    "@types/jest": "^29.5.2",
+    "@types/node": "^18.15.3",
     "del-cli": "^5.0.0",
-    "jest-environment-jsdom": "^29.3.1",
+    "jest-environment-jsdom": "^29.5.0",
+    "jest-extended": "^3.2.4",
     "npm-run-all": "^4.1.5",
-    "ts-jest": "^29.0.3",
+    "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
-    "typescript": "^4.8.4"
+    "typescript": "^5.1.3"
   }
 }
