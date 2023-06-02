@@ -66,13 +66,13 @@ _Note: The companion field (in the class) should be in the static instance inste
 ```javascript
 import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
 
-class Example extends Enum {
+export class Example extends Enum {
 
    static A = new Example()
    static B = new Example()
    static C = new Example()
 
-   public static CompanionEnum = class CompanionEnum_Example extends BasicCompanionEnum {
+   static CompanionEnum = class CompanionEnum_Example extends BasicCompanionEnum {
        static #instance
        constructor() { super(Example,) }
        static get get() { return CompanionEnum_Example.#instance ??= new CompanionEnum_Example() }
@@ -90,7 +90,7 @@ import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
 import type {BasicCompanionEnumSingleton} from "@joookiwi/enumerable/dist/types"
 import type {Names, Ordinals} from "./Example.types"
 
-class Example extends Enum<Ordinals, Names> {
+export class Example extends Enum<Ordinals, Names> {
 
     public static readonly A = new Example()
     public static readonly B = new Example()
@@ -167,7 +167,6 @@ In this case, just override the **excluded names** in the <u>companion enum</u>.
 
 ```javascript
 class Example extends Enum {
-
     static A = new Example()
     static B = new Example()
     static C = new Example()
@@ -180,7 +179,6 @@ class Example extends Enum {
         constructor() { super(Example,) }
         static get get() { return CompanionEnum_Example.#instance ??= new CompanionEnum_Example() }
     }
-
 }
 ```
 </details>
@@ -189,7 +187,6 @@ class Example extends Enum {
 
 ```typescript
 class Example extends Enum<Ordinals, Names> {
-
     public static readonly A = new Example()
     public static readonly B = new Example()
     public static readonly C = new Example()
@@ -202,9 +199,7 @@ class Example extends Enum<Ordinals, Names> {
         static #instance?: CompanionEnum_Example
         private constructor() { super(Example,) }
         public get get() { return CompanionEnum_Example.#instance ??= new CompanionEnum_Example() }
-       
     }
-
 }
 ```
 </details>
@@ -229,7 +224,6 @@ it will not be possible (in practice).
 ```javascript
 // ParentEnum.js
 export class ParentEnum extends Enum {
-
     static A = new ParentEnum()
     static B = new ParentEnum()
    
@@ -238,7 +232,6 @@ export class ParentEnum extends Enum {
         constructor() { super(ParentEnum,) }
         static get get() { return BasicCompanionEnum.#instance ??= new BasicCompanionEnum() }
     }
-
 }
 ```
 
@@ -248,7 +241,6 @@ import {ParentEnum} from "./ParentEnum"
 
 /** @implements {EnumerableWithParent} */
 export class ChildEnum extends Enum {
-
     static A = new ChildEnum(ParentEnum.A,)
     static B = new ChildEnum(ParentEnum.B,)
     static C = new ChildEnum()
@@ -275,7 +267,6 @@ export class ChildEnum extends Enum {
 import type {ParentOrdinals, ParentNames} from "./ParentEnum.types"
 
 export class ParentEnum extends Enum<ParentOrdinals, ParentNames> {
-
    public static readonly A = new ParentEnum()
    public static readonly B = new ParentEnum()
 
@@ -290,7 +281,6 @@ export class ParentEnum extends Enum<ParentOrdinals, ParentNames> {
        private constructor() { super(ParentEnum,) }
        public static get get() { return BasicCompanionEnum.#instance ??= new BasicCompanionEnum() }
    }
-
 }
 ```
 ```typescript
@@ -310,7 +300,6 @@ import {ParentEnum} from "./ParentEnum"
 
 class ChildEnum extends Enum<ChildOrdinals, ChildNames>
     implements EnumerableWithParent<ChildOrdinals, ChildNames, ParentEnum> {
-
     public static readonly A = new ChildEnum(ParentEnum.A,)
     public static readonly B = new ChildEnum(ParentEnum.B,)
     public static readonly C = new ChildEnum()
@@ -370,29 +359,21 @@ Use `super(ChildEnum, ParentEnum,)` instead of `super(ParentEnum, ChildEnum,)`
 
 Change the implementation from:
 ```javascript
-class ChildEnum extends Enum {
-
-    public static CompanionEnum = class CompanionEnum_ChildEnum extends CompanionEnumWithParent {
-        static #instance
-        constructor() { super(ParentEnum, ChildEnum,) }
-        public static get get() { return CompanionEnum_ChildEnum.#instance ??= new CompanionEnum_ChildEnum() }
-    }
-
-}
+class CompanionEnum_ChildEnum extends CompanionEnumWithParent {
+     static #instance
+     constructor() { super(ParentEnum, ChildEnum,) }
+     static get get() { return CompanionEnum_ChildEnum.#instance ??= new CompanionEnum_ChildEnum() }
+ }
 ```
 
 to
 
 ```javascript
-class ChildEnum extends Enum {
-
-    public static CompanionEnum = class CompanionEnum_ChildEnum extends CompanionEnumWithParent {
-        static #instance
-        constructor() { super(ChildEnum, ParentEnum,) }
-        public static get get() { return CompanionEnum_ChildEnum.#instance ??= new CompanionEnum_ChildEnum() }
-    }
-
-}
+class CompanionEnum_ChildEnum extends CompanionEnumWithParent {
+     static #instance
+     constructor() { super(ChildEnum, ParentEnum,) }
+     static get get() { return CompanionEnum_ChildEnum.#instance ??= new CompanionEnum_ChildEnum() }
+ }
 ```
 </details>
 <details>
@@ -400,34 +381,20 @@ class ChildEnum extends Enum {
 
 Change the implementation from:
 ```typescript
-class ChildEnum extends Enum {
-
-   public static CompanionEnum: CompanionEnumWithParentSingleton<ParentEnum, typeof ParentEnum, ChildEnum, typeof ChildEnum> = class CompanionEnum_ChildEnum
-           extends CompanionEnumWithParent<ParentEnum, typeof ParentEnum, ChildEnum, typeof ChildEnum> {
-
-      static #instance?: CompanionEnum_ChildEnum
-      constructor() { super(ParentEnum, ChildEnum,) }
-      public static get get() { return CompanionEnum_ChildEnum.#instance ??= new CompanionEnum_ChildEnum() }
-
-   }
-
+class CompanionEnum_ChildEnum extends CompanionEnumWithParent<ParentEnum, typeof ParentEnum, ChildEnum, typeof ChildEnum> {
+   static #instance?: CompanionEnum_ChildEnum
+   private constructor() { super(ParentEnum, ChildEnum,) }
+   public static get get() { return CompanionEnum_ChildEnum.#instance ??= new CompanionEnum_ChildEnum() }
 }
 ```
 
 to
 
 ```typescript
-class ChildEnum extends Enum {
-
-   public static CompanionEnum: CompanionEnumWithParentSingleton<ChildEnum, typeof ChildEnum, ParentEnum, typeof ParentEnum> = class CompanionEnum_ChildEnum
-           extends CompanionEnumWithParent<ChildEnum, typeof ChildEnum, ParentEnum, typeof ParentEnum> {
-
-      static #instance?: CompanionEnum_ChildEnum
-      constructor() { super(ChildEnum, ParentEnum,) }
-      public static get get() { return CompanionEnum_ChildEnum.#instance ??= new CompanionEnum_ChildEnum() }
-
-   }
-
+class CompanionEnum_ChildEnum extends CompanionEnumWithParent<ChildEnum, typeof ChildEnum, ParentEnum, typeof ParentEnum> {
+   static #instance?: CompanionEnum_ChildEnum
+   private constructor() { super(ChildEnum, ParentEnum,) }
+   public static get get() { return CompanionEnum_ChildEnum.#instance ??= new CompanionEnum_ChildEnum() }
 }
 ```
 </details>
