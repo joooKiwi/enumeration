@@ -1,4 +1,4 @@
-import type {CollectionHolder} from "collection/CollectionHolder"
+import type {CollectionHolder} from "./CollectionHolder"
 
 export type BooleanCallback<T, > = (value: T, index: number,) => boolean
 export type BooleanIndexCallback = (index: number,) => boolean

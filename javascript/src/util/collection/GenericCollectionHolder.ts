@@ -1,6 +1,6 @@
-import type {CollectionHolder} from "collection/CollectionHolder"
+import type {CollectionHolder} from "./CollectionHolder"
 
-import {AbstractCollectionHolder} from "collection/AbstractCollectionHolder"
+import {AbstractCollectionHolder} from "./AbstractCollectionHolder"
 
 export class GenericCollectionHolder<const T = unknown, >
     extends AbstractCollectionHolder<T> {
