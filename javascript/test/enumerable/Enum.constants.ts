@@ -1,4 +1,4 @@
-import {EnumConstants} from "enumerable/EnumConstants"
+import {EnumConstants} from "../../src/util/enumerable/EnumConstants"
 
 import type {EmptyEnumWithVariables} from "../TemplateEnums"
 import {Holder}                      from "../Holder"

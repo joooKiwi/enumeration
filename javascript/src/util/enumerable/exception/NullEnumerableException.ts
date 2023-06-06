@@ -1,3 +1,5 @@
+import type {Nullable} from "../../../general type"
+
 import {NullPointerException} from "./generic/NullPointerException"
 
 /** An {@link Enumerable} was expected to not be <b>null</b> */

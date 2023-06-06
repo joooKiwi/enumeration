@@ -1,13 +1,14 @@
-import type {EnumerableWithGrandParent}                                                                                                                        from "enumerable/EnumerableWithGrandParent"
-import type {EnumerableWithGreatGrandParent}                                                                                                                   from "enumerable/EnumerableWithGreatGrandParent"
-import type {EnumerableWithParent}                                                                                                                             from "enumerable/EnumerableWithParent"
-import type {BasicCompanionEnumSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumWithParentSingleton} from "enumerable/Singleton.types"
+import type {NullOr}                                                                                                                                           from "../src/general type"
+import type {EnumerableWithGrandParent}                                                                                                                        from "../src/util/enumerable/EnumerableWithGrandParent"
+import type {EnumerableWithGreatGrandParent}                                                                                                                   from "../src/util/enumerable/EnumerableWithGreatGrandParent"
+import type {EnumerableWithParent}                                                                                                                             from "../src/util/enumerable/EnumerableWithParent"
+import type {BasicCompanionEnumSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumWithParentSingleton} from "../src/util/enumerable/Singleton.types"
 
-import {Enum}                              from "enumerable/Enum"
-import {BasicCompanionEnum}                from "enumerable/companion/BasicCompanionEnum"
-import {CompanionEnumWithGrandParent}      from "enumerable/companion/CompanionEnumWithGrandParent"
-import {CompanionEnumWithGreatGrandParent} from "enumerable/companion/CompanionEnumWithGreatGrandParent"
-import {CompanionEnumWithParent}           from "enumerable/companion/CompanionEnumWithParent"
+import {Enum}                              from "../src/util/enumerable/Enum"
+import {BasicCompanionEnum}                from "../src/util/enumerable/companion/BasicCompanionEnum"
+import {CompanionEnumWithGrandParent}      from "../src/util/enumerable/companion/CompanionEnumWithGrandParent"
+import {CompanionEnumWithGreatGrandParent} from "../src/util/enumerable/companion/CompanionEnumWithGreatGrandParent"
+import {CompanionEnumWithParent}           from "../src/util/enumerable/companion/CompanionEnumWithParent"
 
 type EnumType = {
     A: 0

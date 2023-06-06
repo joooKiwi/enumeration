@@ -1,5 +1,7 @@
-import type {ExceptionWithValue} from "enumerable/exception/declaration/ExceptionWithValue"
-import {ClassCastException}      from "./generic/ClassCastException"
+import type {Nullable}           from "../../../general type"
+import type {ExceptionWithValue} from "./declaration/ExceptionWithValue"
+
+import {ClassCastException} from "./generic/ClassCastException"
 
 /** The {@link value value received} was expected to be in a specific structure or an instance */
 export class InvalidInstanceException<const T, const ERROR extends Error = never, >

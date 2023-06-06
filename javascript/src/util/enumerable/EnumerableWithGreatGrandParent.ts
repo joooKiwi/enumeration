@@ -1,7 +1,8 @@
-import type {Enumerable}                        from "enumerable/Enumerable"
-import type {PossibleNameOf, PossibleOrdinalOf} from "enumerable/Enumerable.types"
-import type {EnumerableWithGrandParent}         from "enumerable/EnumerableWithGrandParent"
-import type {EnumerableWithParent}              from "enumerable/EnumerableWithParent"
+import type {NullOr}                            from "../../general type"
+import type {Enumerable}                        from "./Enumerable"
+import type {PossibleNameOf, PossibleOrdinalOf} from "./Enumerable.types"
+import type {EnumerableWithGrandParent}         from "./EnumerableWithGrandParent"
+import type {EnumerableWithParent}              from "./EnumerableWithParent"
 
 export interface EnumerableWithGreatGrandParent<ORDINAL extends PossibleOrdinalOf<number, PARENT> = number, NAME extends PossibleNameOf<string, PARENT> = string,
     PARENT extends EnumerableWithGrandParent<PossibleOrdinalOf<number, GRAND_PARENT>, PossibleNameOf<string, GRAND_PARENT>, GRAND_PARENT, GREAT_GRAND_PARENT> = EnumerableWithGrandParent<number, string, never, never>,

@@ -1,5 +1,7 @@
-import type {ExceptionWithValue} from "enumerable/exception/declaration/ExceptionWithValue"
-import {IllegalAccessException}  from "./generic/IllegalAccessException"
+import type {Nullable, PossibleStringOrNumeric} from "../../../general type"
+import type {ExceptionWithValue}                from "./declaration/ExceptionWithValue"
+
+import {IllegalAccessException} from "./generic/IllegalAccessException"
 
 /**
  * An exception to tell that an edge case numeric ({@link Number} or {@link BigInt})

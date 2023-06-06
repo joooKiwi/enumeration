@@ -1,6 +1,6 @@
-import type {Enumerable}                    from "enumerable/Enumerable"
-import type {Singleton}                     from "enumerable/Singleton"
-import type {BasicCompanionEnumDeclaration} from "enumerable/companion/BasicCompanionEnum.declaration"
+import type {Enumerable}                    from "./Enumerable"
+import type {Singleton}                     from "./Singleton"
+import type {BasicCompanionEnumDeclaration} from "./companion/BasicCompanionEnum.declaration"
 
 /** The <i>static</i> {@link Enumerable} definition containing the {@link BasicCompanionEnumDeclaration companion enum} {@link Singleton singleton} field */
 export interface EnumerableConstructor<ENUMERABLE extends Enumerable,

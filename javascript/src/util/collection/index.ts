@@ -1,4 +1,4 @@
-export type {CollectionHolder}    from "./CollectionHolder"
-export type *                     from "./CollectionHolder.types"
-export {AbstractCollectionHolder} from "./AbstractCollectionHolder"
-export {GenericCollectionHolder}  from "./GenericCollectionHolder"
+export type {CollectionHolder}    from "collection/CollectionHolder"
+export type *                     from "collection/CollectionHolder.types"
+export {AbstractCollectionHolder} from "collection/AbstractCollectionHolder"
+export {GenericCollectionHolder}  from "collection/GenericCollectionHolder"

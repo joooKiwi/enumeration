@@ -1,11 +1,11 @@
-import type {EnumConstants}                                           from "enumerable/EnumConstants"
-import type {Enumerable}                                              from "enumerable/Enumerable"
-import type {CompanionOf, NameOf, OrdinalOf, PossibleEnumerableValue} from "enumerable/Enumerable.types"
-import type {EnumerableConstructor}                                   from "enumerable/EnumerableConstructor"
-import type {BasicCompanionEnumDeclaration}                           from "enumerable/companion/BasicCompanionEnum.declaration"
-import type {CompanionEnumWithParentDeclaration}                      from "enumerable/companion/CompanionEnumWithParent.declaration"
-import type {CompanionEnumWithGrandParentDeclaration}                 from "enumerable/companion/CompanionEnumWithGrandParent.declaration"
-import type {CompanionEnumWithGreatGrandParentDeclaration}            from "enumerable/companion/CompanionEnumWithGreatGrandParent.declaration"
+import type {EnumConstants}                                           from "../EnumConstants"
+import type {Enumerable}                                              from "../Enumerable"
+import type {CompanionOf, NameOf, OrdinalOf, PossibleEnumerableValue} from "../Enumerable.types"
+import type {EnumerableConstructor}                                   from "../EnumerableConstructor"
+import type {BasicCompanionEnumDeclaration}                           from "./BasicCompanionEnum.declaration"
+import type {CompanionEnumWithParentDeclaration}                      from "./CompanionEnumWithParent.declaration"
+import type {CompanionEnumWithGrandParentDeclaration}                 from "./CompanionEnumWithGrandParent.declaration"
+import type {CompanionEnumWithGreatGrandParentDeclaration}            from "./CompanionEnumWithGreatGrandParent.declaration"
 
 /** The <b>companion enum</b> name in a {@link Object.toString toString()} method */
 export type CompanionEnumName = typeof EnumConstants["COMPANION_ENUM_TO_STRING_TAG"]

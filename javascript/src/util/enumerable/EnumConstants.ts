@@ -1,10 +1,11 @@
-import type {CollectionHolder}               from "collection/CollectionHolder"
-import type {Enumerable}                     from "enumerable/Enumerable"
-import type {EnumerableConstructor}          from "enumerable/EnumerableConstructor"
-import type {EnumerableWithGrandParent}      from "enumerable/EnumerableWithGrandParent"
-import type {EnumerableWithGreatGrandParent} from "enumerable/EnumerableWithGreatGrandParent"
-import type {EnumerableWithParent}           from "enumerable/EnumerableWithParent"
-import type {BasicCompanionEnumDeclaration}  from "enumerable/companion/BasicCompanionEnum.declaration"
+import type {NullOr}                         from "../../general type"
+import type {CollectionHolder}               from "../collection/CollectionHolder"
+import type {Enumerable}                     from "./Enumerable"
+import type {EnumerableConstructor}          from "./EnumerableConstructor"
+import type {EnumerableWithGrandParent}      from "./EnumerableWithGrandParent"
+import type {EnumerableWithGreatGrandParent} from "./EnumerableWithGreatGrandParent"
+import type {EnumerableWithParent}           from "./EnumerableWithParent"
+import type {BasicCompanionEnumDeclaration}  from "./companion/BasicCompanionEnum.declaration"
 
 /** A simple class containing every field used by an {@link Enumerable} helper, instance or companion */
 export namespace EnumConstants {

@@ -1,4 +1,6 @@
-import type {ExceptionWithValue}     from "enumerable/exception/declaration/ExceptionWithValue"
+import type {ExceptionWithValue} from "./declaration/ExceptionWithValue"
+import type {Nullable}           from "../../../general type"
+
 import {NoSuchElementException} from "./generic/NoSuchElementException"
 
 /** The property (or reference) by a {@link key} was not existant on the {@link value value received} */

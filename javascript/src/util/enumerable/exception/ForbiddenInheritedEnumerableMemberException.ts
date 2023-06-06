@@ -1,5 +1,7 @@
-import type {ExceptionWithValue} from "enumerable/exception/declaration/ExceptionWithValue"
-import {IllegalAccessException}  from "./generic/IllegalAccessException"
+import type {Nullable, PossibleString} from "../../../general type"
+import type {ExceptionWithValue}       from "./declaration/ExceptionWithValue"
+
+import {IllegalAccessException} from "./generic/IllegalAccessException"
 
 /**
  * An exception to tell that an {@link EnumConstants.INHERITED_ENUMERABLE_MEMBERS inherited Enumerable member} was used

@@ -1,4 +1,4 @@
-import {GenericCollectionHolder} from "collection/GenericCollectionHolder"
+import {GenericCollectionHolder} from "../../src/util/collection/GenericCollectionHolder"
 
 export const EMPTY = new GenericCollectionHolder([],),
     AB = new GenericCollectionHolder(["a", "b",],),

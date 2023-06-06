@@ -1,3 +1,4 @@
+import type {NullOr}                                                                                                                                                      from "../../general type"
 import type {BooleanCallback, BooleanIndexCallback, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "collection/CollectionHolder.types"
 
 /**
