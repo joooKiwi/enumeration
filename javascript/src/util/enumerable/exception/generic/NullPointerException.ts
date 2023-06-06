@@ -1,4 +1,5 @@
-import type {ExceptionWithNullableCause} from "enumerable/exception/declaration/ExceptionWithNullableCause"
+import type {Nullable, NullOr}           from "../../../../general type"
+import type {ExceptionWithNullableCause} from "../declaration/ExceptionWithNullableCause"
 
 /**
  * A simple generic exception made to have a cause of a <b>null</b> value

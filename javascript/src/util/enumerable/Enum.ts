@@ -1,7 +1,8 @@
-import type {Enumerable}                            from "enumerable/Enumerable"
-import type {EnumerableConstructor}                 from "enumerable/EnumerableConstructor"
-import type {EnumerableName, EnumerableToPrimitive} from "enumerable/Enumerable.types"
-import type {BasicCompanionEnumDeclaration}         from "enumerable/companion/BasicCompanionEnum.declaration"
+import type {Nullable, PossiblePrimitiveHint, PossibleString} from "../../general type"
+import type {Enumerable}                                      from "./Enumerable"
+import type {EnumerableConstructor}                           from "./EnumerableConstructor"
+import type {EnumerableName, EnumerableToPrimitive}           from "./Enumerable.types"
+import type {BasicCompanionEnumDeclaration}                   from "./companion/BasicCompanionEnum.declaration"
 
 import {EnumConstants}          from "./EnumConstants"
 import {EnumHelper}             from "./EnumHelper"

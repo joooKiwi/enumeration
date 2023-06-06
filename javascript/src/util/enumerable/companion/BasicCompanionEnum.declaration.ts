@@ -1,8 +1,9 @@
-import type {CollectionHolder}                                                                                                                                                                                                                                                                                                                                                  from "collection/CollectionHolder"
-import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                        from "enumerable/Enumerable"
-import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                             from "enumerable/EnumerableConstructor"
-import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, PossibleEnumerableValue, PossibleEnumerableValueBy, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "enumerable/Enumerable.types"
-import type {CompanionEnumName}                                                                                                                                                                                                                                                                                                                                                 from "enumerable/companion/types"
+import type {Nullable, NullOrUndefined, PossibleBigInt, PossibleNumeric, PossibleString}                                                                                                                                                                                                                                                                                        from "../../../general type"
+import type {CollectionHolder}                                                                                                                                                                                                                                                                                                                                                  from "../../collection/CollectionHolder"
+import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                        from "../Enumerable"
+import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                             from "../EnumerableConstructor"
+import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, PossibleEnumerableValue, PossibleEnumerableValueBy, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "../Enumerable.types"
+import type {CompanionEnumName}                                                                                                                                                                                                                                                                                                                                                 from "./types"
 
 export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
     ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<ENUMERABLE, BasicCompanionEnumDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR>>, > {
@@ -107,7 +108,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @param value A <b>null</b> value
      * @throws {NullEnumerableException}
      */
-    getValue                                                                                              (value: NullOrUndefined,):                                                                         never
+    getValue(value: NullOrUndefined,): never
 
     /**
      * Get the {@link Enumerable instance} from an {@link Enumerable.ordinal ordinal value} indirectly
@@ -119,7 +120,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
      */
-    getValue<const ORDINAL extends number, >                                                              (ordinal: Nullable<ORDINAL>,):                                                                     ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
+    getValue<const ORDINAL extends number, >(ordinal: Nullable<ORDINAL>,): ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
 
     /**
      * Get the {@link Enumerable instance} from a {@link Enumerable.ordinal ordinal value} indirectly
@@ -131,7 +132,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
      */
-    getValue<const ORDINAL extends number, >                                                              (ordinal: Nullable<`${ORDINAL}`>,):                                                                ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
+    getValue<const ORDINAL extends number, >(ordinal: Nullable<`${ORDINAL}`>,): ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
 
     /**
      * Get the {@link Enumerable instance} from a {@link Enumerable.ordinal ordinal value} indirectly
@@ -145,7 +146,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
      */
-    getValue<const ORDINAL extends number, >                                                              (ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,):                                                    ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
+    getValue<const ORDINAL extends number, >(ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,): ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
 
     /**
      * Get the {@link Enumerable instance} from a {@link Enumerable.name name value} indirectly
@@ -157,7 +158,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
      */
-    getValue<const NAME extends string, >                                                                 (name: Nullable<NAME>,):                                                                           ValueByEnumerableConstructorAndEnumerableNameAndName<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, NAME>
+    getValue<const NAME extends string, >(name: Nullable<NAME>,): ValueByEnumerableConstructorAndEnumerableNameAndName<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, NAME>
 
     /**
      * Get the {@link Enumerable instance} directly
@@ -165,7 +166,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @param instance The instance to find
      * @throws {InvalidEnumerableException}
      */
-    getValue<const INSTANCE extends ENUMERABLE, >                                                         (instance: Nullable<INSTANCE>,):                                                                   INSTANCE
+    getValue<const INSTANCE extends ENUMERABLE, >(instance: Nullable<INSTANCE>,): INSTANCE
 
     /**
      * Get the {@link Enumerable instance} from any valid value
@@ -191,7 +192,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @param value A <b>null</b> value
      * @throws {NullEnumerableException}
      */
-    getName                                                                                                           (value: NullOrUndefined,):                                                                       never
+    getName(value: NullOrUndefined,): never
 
     /**
      * Get the {@link Enumerable.name name} from an {@link Enumerable.ordinal ordinal value} directly
@@ -203,7 +204,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
      */
-    getName<const ORDINAL extends number, >                                                                           (ordinal: Nullable<ORDINAL>,):                                                                   EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
+    getName<const ORDINAL extends number, >(ordinal: Nullable<ORDINAL>,): EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
 
     /**
      * Get the {@link Enumerable.name name} from a {@link Enumerable.ordinal ordinal value} indirectly
@@ -215,7 +216,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
      */
-    getName<const ORDINAL extends number, >                                                                           (ordinal: Nullable<`${ORDINAL}`>,):                                                              EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
+    getName<const ORDINAL extends number, >(ordinal: Nullable<`${ORDINAL}`>,): EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
 
     /**
      * Get the {@link Enumerable.name name} from a {@link Enumerable.ordinal ordinal value} indirectly
@@ -229,7 +230,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
      */
-    getName<const ORDINAL extends number, >                                                                           (ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,):                                                  EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
+    getName<const ORDINAL extends number, >(ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,): EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
 
     /**
      * Get the {@link Enumerable.name name} from a {@link Enumerable.name name value} directly
@@ -241,7 +242,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
      */
-    getName<const NAME extends string, >                                                                              (name: Nullable<NAME>,):                                                                         SpecificNameOf<NAME, ENUMERABLE>
+    getName<const NAME extends string, >(name: Nullable<NAME>,): SpecificNameOf<NAME, ENUMERABLE>
 
     /**
      * Get the {@link Enumerable.name name} from the {@link Enumerable instance} directly
@@ -249,7 +250,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @param instance The instance to find
      * @throws {InvalidEnumerableException}
      */
-    getName<const INSTANCE extends ENUMERABLE, >                                                                      (instance: Nullable<INSTANCE>,):                                                                 NameOf<INSTANCE>
+    getName<const INSTANCE extends ENUMERABLE, >(instance: Nullable<INSTANCE>,): NameOf<INSTANCE>
 
     /**
      * Get the {@link Enumerable.name name} from any valid value ({@link Enumerable.ordinal ordinal}, {@link Enumerable.name name} or {@link Enumerable instance})
@@ -274,7 +275,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @param value A <b>null</b> value
      * @throws {NullEnumerableException}
      */
-    getOrdinal                                                                                                           (value: NullOrUndefined,):                                                                       never
+    getOrdinal(value: NullOrUndefined,): never
 
     /**
      * Get the {@link Enumerable.ordinal ordinal} from an {@link Enumerable.ordinal ordinal value} directly
@@ -286,7 +287,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
      */
-    getOrdinal<const ORDINAL extends number, >                                                                           (ordinal: Nullable<ORDINAL>,):                                                                   SpecificOrdinalOf<ORDINAL, ENUMERABLE>
+    getOrdinal<const ORDINAL extends number, >(ordinal: Nullable<ORDINAL>,): SpecificOrdinalOf<ORDINAL, ENUMERABLE>
 
     /**
      * Get the {@link Enumerable.ordinal ordinal} from a {@link Enumerable.ordinal ordinal value} directly
@@ -298,7 +299,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
      */
-    getOrdinal<const ORDINAL extends number, >                                                                           (ordinal: Nullable<`${ORDINAL}`>,):                                                              SpecificOrdinalOf<ORDINAL, ENUMERABLE>
+    getOrdinal<const ORDINAL extends number, >(ordinal: Nullable<`${ORDINAL}`>,): SpecificOrdinalOf<ORDINAL, ENUMERABLE>
 
     /**
      * Get the {@link Enumerable.ordinal ordinal} from a {@link Enumerable.ordinal ordinal value} directly
@@ -312,7 +313,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
      */
-    getOrdinal<const ORDINAL extends number, >                                                                           (ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,):                                                  SpecificOrdinalOf<ORDINAL, ENUMERABLE>
+    getOrdinal<const ORDINAL extends number, >(ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,): SpecificOrdinalOf<ORDINAL, ENUMERABLE>
 
     /**
      * Get the {@link Enumerable.ordinal ordinal} from a {@link Enumerable.name name value} indirectly
@@ -324,7 +325,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
      */
-    getOrdinal<const NAME extends string, >                                                                              (name: Nullable<NAME>,):                                                                         EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, NAME>
+    getOrdinal<const NAME extends string, >(name: Nullable<NAME>,): EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, NAME>
 
     /**
      * Get the {@link Enumerable.ordinal ordinal} from the {@link Enumerable instance} directly
@@ -332,7 +333,7 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @param instance The instance to find
      * @throws {InvalidEnumerableException}
      */
-    getOrdinal<const INSTANCE extends ENUMERABLE, >                                                                      (instance: Nullable<INSTANCE>,):                                                                 OrdinalOf<INSTANCE>
+    getOrdinal<const INSTANCE extends ENUMERABLE, >(instance: Nullable<INSTANCE>,): OrdinalOf<INSTANCE>
 
     /**
      * Get the {@link Enumerable.ordinal ordinal} from any valid value

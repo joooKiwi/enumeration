@@ -1,8 +1,8 @@
-import {Enum}                                from "enumerable/Enum"
-import type {Enumerable}                     from "enumerable/Enumerable"
-import type {EnumerableWithParent}           from "enumerable/EnumerableWithParent"
-import type {EnumerableWithGrandParent}      from "enumerable/EnumerableWithGrandParent"
-import type {EnumerableWithGreatGrandParent} from "enumerable/EnumerableWithGreatGrandParent"
+import {Enum}                                from "../src/util/enumerable/Enum"
+import type {Enumerable}                     from "../src/util/enumerable/Enumerable"
+import type {EnumerableWithParent}           from "../src/util/enumerable/EnumerableWithParent"
+import type {EnumerableWithGrandParent}      from "../src/util/enumerable/EnumerableWithGrandParent"
+import type {EnumerableWithGreatGrandParent} from "../src/util/enumerable/EnumerableWithGreatGrandParent"
 
 export class BasicEnumByEnum extends Enum<any, any> {
     constructor() { super() }

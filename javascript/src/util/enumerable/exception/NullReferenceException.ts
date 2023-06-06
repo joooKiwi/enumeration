@@ -1,5 +1,7 @@
-import type {ExceptionWithValue} from "enumerable/exception/declaration/ExceptionWithValue"
-import {NullPointerException}    from "./generic/NullPointerException"
+import type {Nullable}           from "../../../general type"
+import type {ExceptionWithValue} from "./declaration/ExceptionWithValue"
+
+import {NullPointerException} from "./generic/NullPointerException"
 
 /** The {@link value reference to retrieve} was not expected to be <b>null</b> */
 export class NullReferenceException<const T, const ERROR extends Error = never, >

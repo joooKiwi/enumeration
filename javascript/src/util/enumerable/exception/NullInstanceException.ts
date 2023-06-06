@@ -1,3 +1,5 @@
+import type {Nullable} from "../../../general type"
+
 import {NullPointerException} from "./generic/NullPointerException"
 
 /** An instance was received as <b>null</b> value */

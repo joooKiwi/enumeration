@@ -1,7 +1,8 @@
-import type {EnumConstants}                 from "enumerable/EnumConstants"
-import type {Enumerable}                    from "enumerable/Enumerable"
-import type {EnumerableConstructor}         from "enumerable/EnumerableConstructor"
-import type {BasicCompanionEnumDeclaration} from "enumerable/companion/BasicCompanionEnum.declaration"
+import type {PossibleBigInt}                from "../../general type"
+import type {EnumConstants}                 from "./EnumConstants"
+import type {Enumerable}                    from "./Enumerable"
+import type {EnumerableConstructor}         from "./EnumerableConstructor"
+import type {BasicCompanionEnumDeclaration} from "./companion/BasicCompanionEnum.declaration"
 
 /** The {@link Enumerable} name in a {@link Object.toString toString()} method */
 export type EnumerableName = typeof EnumConstants["ENUM_TO_STRING_TAG"]

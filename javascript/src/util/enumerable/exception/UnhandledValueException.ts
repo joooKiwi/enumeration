@@ -1,5 +1,7 @@
-import type {ExceptionWithValue} from "enumerable/exception/declaration/ExceptionWithValue"
-import {ClassCastException}      from "./generic/ClassCastException"
+import type {Nullable}           from "../../../general type"
+import type {ExceptionWithValue} from "./declaration/ExceptionWithValue"
+
+import {ClassCastException} from "./generic/ClassCastException"
 
 /**
  * A simple exception made to tell that the type received by

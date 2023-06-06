@@ -1,4 +1,5 @@
-import type {BooleanCallback, BooleanIndexCallback, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "collection/CollectionHolder.types"
+import type {NullOr}                                                                                                                                                      from "../../general type"
+import type {BooleanCallback, BooleanIndexCallback, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder.types"
 
 /**
  * A collection to hold another collection and do some generic stuff if applicable.

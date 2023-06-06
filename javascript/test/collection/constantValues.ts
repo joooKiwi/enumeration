@@ -1,4 +1,4 @@
-import {GenericCollectionHolder} from "collection/GenericCollectionHolder"
+import {GenericCollectionHolder} from "../../src/util/collection/GenericCollectionHolder"
 import {Holder}                  from "../Holder"
 
 export const sizeValues = [

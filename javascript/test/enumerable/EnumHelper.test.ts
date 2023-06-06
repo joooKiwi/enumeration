@@ -3,11 +3,11 @@ import {BasicEnumByEnum, BasicEnumByEnumerable, BasicEnumByGrandParentEnum, Basi
 import {BasicCompanionEnumByBasicCompanionEnum, BasicCompanionEnumByBasicCompanionEnumDeclaration, BasicCompanionEnumByCompanionEnumWithGrandParent, BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration, BasicCompanionEnumByCompanionEnumWithGreatGrandParent, BasicCompanionEnumByCompanionEnumWithGreatGrandParentDeclaration, BasicCompanionEnumByCompanionEnumWithParent, BasicCompanionEnumByCompanionEnumWithParentDeclaration} from "../BasicCompanionEnums"
 import {EmptyEnum}                                                                                                                                                                                                                                                                                                                                                                                                                              from "../TemplateEnums"
 
-import {EnumHelper}               from "enumerable/EnumHelper"
-import {InvalidInstanceException} from "enumerable/exception/InvalidInstanceException"
-import {NonExistantKeyException}  from "enumerable/exception/NonExistantKeyException"
-import {NullInstanceException}    from "enumerable/exception/NullInstanceException"
-import {NullReferenceException}   from "enumerable/exception/NullReferenceException"
+import {EnumHelper}               from "../../src/util/enumerable/EnumHelper"
+import {InvalidInstanceException} from "../../src/util/enumerable/exception/InvalidInstanceException"
+import {NonExistantKeyException}  from "../../src/util/enumerable/exception/NonExistantKeyException"
+import {NullInstanceException}    from "../../src/util/enumerable/exception/NullInstanceException"
+import {NullReferenceException}   from "../../src/util/enumerable/exception/NullReferenceException"
 
 const {isEnum, isEnumerableByStructure, isBasicCompanionEnum, isCompanionEnumByStructure, getCompanion,} = EnumHelper
 

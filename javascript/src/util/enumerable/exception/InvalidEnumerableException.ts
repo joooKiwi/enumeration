@@ -1,7 +1,9 @@
-import type {Enumerable}            from "enumerable/Enumerable"
-import type {EnumerableConstructor} from "enumerable/EnumerableConstructor"
-import type {ExceptionWithValue}    from "enumerable/exception/declaration/ExceptionWithValue"
-import {ClassCastException}         from "./generic/ClassCastException"
+import type {Nullable}              from "../../../general type"
+import type {Enumerable}            from "../Enumerable"
+import type {EnumerableConstructor} from "../EnumerableConstructor"
+import type {ExceptionWithValue}    from "./declaration/ExceptionWithValue"
+
+import {ClassCastException} from "./generic/ClassCastException"
 
 /**
  * An exception to tell that the {@link value value received} was not one of

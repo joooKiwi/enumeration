@@ -1,4 +1,5 @@
-import type {EnumerableName, EnumerableToPrimitive} from "enumerable/Enumerable.types"
+import type {Nullable, PossiblePrimitiveHint, PossibleString} from "../../general type"
+import type {EnumerableName, EnumerableToPrimitive}           from "./Enumerable.types"
 
 export interface Enumerable<ORDINAL extends number = number, NAME extends string = string, > {
 
