@@ -7,4 +7,7 @@
 
     "outFile": "dist/asynchronous module definition/index.js"
   },
+  "include": [
+    "src",
+  ],
 }

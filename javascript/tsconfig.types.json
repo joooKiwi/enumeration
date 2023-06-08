@@ -8,5 +8,8 @@
     "declarationMap": true,
 
     "outDir": "dist/types"
-  }
+  },
+  "include": [
+    "src",
+  ]
 }
