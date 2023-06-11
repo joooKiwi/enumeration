@@ -121,8 +121,14 @@ describe("CollectionHolderTest", () => {
         },),)
     },)
     describe("join", () => {
-        test("a,b", () => expect(AB.join(),).toBe("a,b"),)
-        test("a;b", () => expect(AB.join(';',),).toBe("a;b"),)
+        test("[a,b].join()", () => expect(AB.join(),).toBe("[a, b]",),)
+        test("[a,b].join(;)", () => expect(AB.join(';',),).toBe("[a;b]",),)
+        test("[a,b].join(null, <)", () => expect(AB.join(null,'<', null,),).toBe("<a, b]",),)
+        test("[a,b].join(null, null, >)", () => expect(AB.join(null,null, '>',),).toBe("[a, b>",),)
+        test("[a,b].join(null, null, null, 1)", () => expect(AB.join(null,null, null, 1,),).toBe("[a, …]",),)
+        test("[a,b].join(null, null, null, null, \"...\")", () => expect(AB.join(null,null, null, null, "...",),).toBe("[a, b]",),)
+        test("[a,b].join(null, null, null, 1, \"...\")", () => expect(AB.join(null,null, null, 1, "...",),).toBe("[a, ...]",),)
+        test("[a,b].join(null, null, null, null, () => toUpperCase)", () => expect(AB.join(null,null, null, null, null, it => it.toUpperCase(),),).toBe("[A, B]",),)
     },)
     describe("filter", () => {
         test("[a,b,c,d].filter(d) == [d]", () => expect(ABCD.filter(it => it === 'd',).toArray(),).toStrictEqual(['d',],),)
@@ -170,6 +176,30 @@ describe("CollectionHolderTest", () => {
         test("[a,b,c,d,A,B,C,D].findLastIndexByIndex(odd) == 7", () => expect(ABCD_ABCD.findLastIndexByIndex(it => it % 2 === 1,),).toBe(7,),)
         test("[a,b,c,d,A,B,C,D].findLastIndexByIndex(26) == null", () => expect(ABCD_ABCD.findLastIndexByIndex(it => it === 26,),).toBeNull(),)
     },)
+    describe("reverse", () => {
+        test("[a,b,c,d,e,f,g,h,i,j].reverse() == [j,i,h,g,f,e,d,c,b,a]", () => expect(ABCDEFGHIJ.reverse().toArray(),).toStrictEqual(['j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a',],),)
+
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(2) == [j,i,h,g,f,e,d,c]", () => expect(ABCDEFGHIJ.reverse(2,).toArray(),).toStrictEqual(['j', 'i', 'h', 'g', 'f', 'e', 'd', 'c',],),)
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(null, 2) == [j,i]", () => expect(ABCDEFGHIJ.reverse(null, 2,).toArray(),).toStrictEqual(['b', 'a',],),)
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(2, 5) == [e,d,c]", () => expect(ABCDEFGHIJ.reverse(2, 5,).toArray(),).toStrictEqual(['e', 'd', 'c',],),)
+
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(-2) == [j,i]", () => expect(ABCDEFGHIJ.reverse(-2,).toArray(),).toStrictEqual(['j', 'i',],),)
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(null, -2) == [h,g,f,e,d,c,b,a]", () => expect(ABCDEFGHIJ.reverse(null, -2,).toArray(),).toStrictEqual(['h', 'g', 'f', 'e', 'd', 'c', 'b', 'a',],),)
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(-5, -2) == [g,f,e,d,c]", () => expect(ABCDEFGHIJ.reverse(-5, -2,).toArray(),).toStrictEqual(['h', 'g', 'f',],),)
+
+        test('[a,b,c,d,e,f,g,h,i,j].reverse(2, 1) => error', () => expect(() => ABCDEFGHIJ.reverse(2, 1,),).toThrow(RangeError,),)
+
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(400) => error", () => expect(() => ABCDEFGHIJ.reverse(400,),).toThrow(RangeError,),)
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(-400) => error", () => expect(() => ABCDEFGHIJ.reverse(-400,),).toThrow(RangeError,),)
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(null, 400) => error", () => expect(() => ABCDEFGHIJ.reverse(null, 400,),).toThrow(RangeError,),)
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(null, -400) => error", () => expect(() => ABCDEFGHIJ.reverse(null, -400,),).toThrow(RangeError,),)
+    },)
+    describe("iterator", () => {
+        const iterator = AB[Symbol.iterator]()
+        test("1st: a", () => expect(iterator.next().value,).toBe('a',),)
+        test("2nd: b", () => expect(iterator.next().value,).toBe('b',),)
+        test("3rd: done", () => expect(iterator.next().done,).toBe(true,),)
+    },)
     describe("conversion", () => {
         describe("to array", () => {
             test("basic", () => expect(AB.toArray(),).toStrictEqual(['a', 'b',],),)
@@ -186,6 +216,14 @@ describe("CollectionHolderTest", () => {
         describe("to mutable set", () => {
             test("basic", () => expect(AB.toMutableSet(),).toStrictEqual(new Set(['a', 'b',],),),)
             test("frozen", () => expect(AB.toMutableSet(),).not.toBeFrozen(),)
+        })
+        describe("to weak set", () => {
+            test("basic", () => expect(AB_OBJECT.toWeakSet(),).toStrictEqual(new WeakSet([AB_OBJECT[0]!, AB_OBJECT[1]!,],),),)
+            test("frozen", () => expect(AB.toWeakSet(),).toBeFrozen(),)
+        })
+        describe("to mutable weak set", () => {
+            test("basic", () => expect(AB_OBJECT.toMutableWeakSet(),).toStrictEqual(new WeakSet([AB_OBJECT[0]!, AB_OBJECT[1]!,],),),)
+            test("frozen", () => expect(AB.toMutableWeakSet(),).not.toBeFrozen(),)
         })
     },)
 },)
