@@ -82,42 +82,52 @@ describe("CollectionHolderTest", () => {
             test("includes", () => expect(templateCollection.includesOne(it,),).toBeTrue(),)
             test("contains", () => expect(templateCollection.containsOne(it,),).toBeTrue(),)
 
-            test("has with not present", () => expect(templateCollection.hasOne(it, nonPresentItem,),).toBeTrue(),)
-            test("includes with not present", () => expect(templateCollection.includesOne(it, nonPresentItem,),).toBeTrue(),)
-            test("contains with not present", () => expect(templateCollection.containsOne(it, nonPresentItem,),).toBeTrue(),)
-
-            test('has not Object(value)', () => expect(templateCollection.hasOne(Object(it,),),).toBeFalse(),)
-            test('includes not Object(value)', () => expect(templateCollection.includesOne(Object(it,),),).toBeFalse(),)
-            test('contains not Object(value)', () => expect(templateCollection.containsAll(Object(it,),),).toBeFalse(),)
-
-            test('has not [value]', () => expect(templateCollection.hasOne([it,],),).toBeFalse(),)
-            test('includes not [value]', () => expect(templateCollection.includesOne([it,],),).toBeFalse(),)
-            test('contains not [value]', () => expect(templateCollection.containsOne([it,],),).toBeFalse(),)
-
-            test('has not {value}', () => expect(templateCollection.hasOne({it,},),).toBeFalse(),)
-            test('includes not {value}', () => expect(templateCollection.includesOne({it,},),).toBeFalse(),)
-            test('contains not {value}', () => expect(templateCollection.containsOne({it,},),).toBeFalse(),)
+            describe('with not present', () => {
+                test("has", () => expect(templateCollection.hasOne(it, nonPresentItem,),).toBeFalse(),)
+                test("includes", () => expect(templateCollection.includesOne(it, nonPresentItem,),).toBeFalse(),)
+                test("contains", () => expect(templateCollection.containsOne(it, nonPresentItem,),).toBeFalse(),)
+            },)
+            describe('Object(value)', () => {
+                test('has not', () => expect(templateCollection.hasOne(Object(it,),),).toBeFalse(),)
+                test('includes', () => expect(templateCollection.includesOne(Object(it,),),).toBeFalse(),)
+                test('contains', () => expect(templateCollection.containsOne(Object(it,),),).toBeFalse(),)
+            },)
+            describe('[value]', () => {
+                test('has', () => expect(templateCollection.hasOne([it,],),).toBeFalse(),)
+                test('includes', () => expect(templateCollection.includesOne([it,],),).toBeFalse(),)
+                test('contains', () => expect(templateCollection.containsOne([it,],),).toBeFalse(),)
+            },)
+            describe('{value}', () => {
+                test('has', () => expect(templateCollection.hasOne({it,},),).toBeFalse(),)
+                test('includes', () => expect(templateCollection.includesOne({it,},),).toBeFalse(),)
+                test('contains', () => expect(templateCollection.containsOne({it,},),).toBeFalse(),)
+            },)
         },),)
         describe("all", () => describe.each(templateItems,)("%s", it => {
             test("has", () => expect(templateCollection.hasAll(it,),).toBeTrue(),)
             test("includes", () => expect(templateCollection.includesAll(it,),).toBeTrue(),)
             test("contains", () => expect(templateCollection.containsAll(it,),).toBeTrue(),)
 
-            test("has not with not present", () => expect(templateCollection.hasAll(it, nonPresentItem,),).toBeFalse(),)
-            test("includes not with not present", () => expect(templateCollection.includesAll(it, nonPresentItem,),).toBeFalse(),)
-            test("contains not with not present", () => expect(templateCollection.containsAll(it, nonPresentItem,),).toBeFalse(),)
-
-            test('has not Object(value)', () => expect(templateCollection.hasAll(Object(it,),),).toBeFalse(),)
-            test('includes not Object(value)', () => expect(templateCollection.includesAll(Object(it,),),).toBeFalse(),)
-            test('contains not Object(value)', () => expect(templateCollection.containsAll(Object(it,),),).toBeFalse(),)
-
-            test('has not [value]', () => expect(templateCollection.hasAll([it,],),).toBeFalse(),)
-            test('includes not [value]', () => expect(templateCollection.includesAll([it,],),).toBeFalse(),)
-            test('contains not [value]', () => expect(templateCollection.containsAll([it,],),).toBeFalse(),)
-
-            test('has not {value}', () => expect(templateCollection.hasAll({it,},),).toBeFalse(),)
-            test('includes not {value}', () => expect(templateCollection.includesAll({it,},),).toBeFalse(),)
-            test('contains not {value}', () => expect(templateCollection.containsAll({it,},),).toBeFalse(),)
+            describe('with not present', () => {
+                test("has", () => expect(templateCollection.hasAll(it, nonPresentItem,),).toBeFalse(),)
+                test("includes", () => expect(templateCollection.includesAll(it, nonPresentItem,),).toBeFalse(),)
+                test("contains", () => expect(templateCollection.containsAll(it, nonPresentItem,),).toBeFalse(),)
+            },)
+            describe('Object(value)', () => {
+                test('has not', () => expect(templateCollection.hasAll(Object(it,),),).toBeFalse(),)
+                test('includes', () => expect(templateCollection.includesAll(Object(it,),),).toBeFalse(),)
+                test('contains', () => expect(templateCollection.containsAll(Object(it,),),).toBeFalse(),)
+            },)
+            describe('[value]', () => {
+                test('has', () => expect(templateCollection.hasAll([it,],),).toBeFalse(),)
+                test('includes', () => expect(templateCollection.includesAll([it,],),).toBeFalse(),)
+                test('contains', () => expect(templateCollection.containsAll([it,],),).toBeFalse(),)
+            },)
+            describe('{value}', () => {
+                test('has', () => expect(templateCollection.hasAll({it,},),).toBeFalse(),)
+                test('includes', () => expect(templateCollection.includesAll({it,},),).toBeFalse(),)
+                test('contains', () => expect(templateCollection.containsAll({it,},),).toBeFalse(),)
+            },)
         },),)
     },)
     describe("join", () => {
