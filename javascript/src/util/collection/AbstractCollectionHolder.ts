@@ -480,7 +480,10 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     //#region -------------------- Iterator methods --------------------
 
     public* [Symbol.iterator](): IterableIterator<T> {
-        yield* this._iterable
+        const size = this.size
+        let index = -1
+        while (++index < size)
+            yield this[index]!
     }
 
     //#endregion -------------------- Iterator methods --------------------
@@ -491,7 +494,12 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     public toMutableArray(): T[] {
-        return [...this,]
+        const size = this.size
+        const array = new Array<T>(size,)
+        let index = size
+        while (index-- > 0)
+            array[index] = this[index]!
+        return array
     }
 
     public toSet(): ReadonlySet<T> {
