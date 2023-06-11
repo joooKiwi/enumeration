@@ -7,28 +7,108 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
     //#region -------------------- Fields --------------------
 
-    #size?: number
-    #isEmpty?: IsEmpty<this>
+    [index: number]: UndefinedOr<T>
 
-    readonly #iterable
-    #array?: readonly T[]
+    readonly #size: number
+    readonly #isEmpty: IsEmpty<this>
+
+    readonly #reference: Iterable<T>
+    readonly #array: readonly T[]
     #set?: ReadonlySet<T>
     #weakSet?: Readonly<WeakSet<&T & object>>
 
     #hasNull?: boolean
 
-    #first?: NullOr<T>
-    #last?: NullOr<T>
+    readonly #first: NullOr<T>
+    readonly #last: NullOr<T>
 
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------
 
     protected constructor(iterable: Iterable<T>,) {
-        this.#iterable = iterable
-        if (iterable instanceof Array)
-            this.#isEmpty = ((this.#size = (this.#array = Object.freeze(iterable)).length) === 0) as IsEmpty<this>
-        else if (iterable instanceof Set)
-            this.#isEmpty = ((this.#size = (this.#set = Object.freeze(iterable)).size) === 0) as IsEmpty<this>
+        this.#reference = iterable
+
+        if (iterable instanceof Array) {
+            const size = this.#size = iterable.length
+            if (size == 0) {
+                this.#isEmpty = true as IsEmpty<this>
+                this.#hasNull = false
+                this.#first = this.#last = null
+                this.#array = Object.freeze([],)
+                return
+            }
+
+            this.#isEmpty = false as IsEmpty<this>
+            if (size == 1) {
+                const value = this.#first = this.#last = iterable[0]
+                this.#array = Object.freeze([value,],)
+                return
+            }
+
+            const array = new Array(size,)
+            this.#first = this[0] = array[0] = iterable[0]
+            this.#last = this[size - 1] = array[size - 1] = iterable[size - 1]
+            let index = size - 1
+            while (index-- > 1)
+                this[index] = array[index] = iterable[index]
+            this.#array = Object.freeze(array,)
+            return
+        }
+
+        if (iterable instanceof Set) {
+            const size: number = this.#size = iterable.size
+            if (size == 0) {
+                this.#isEmpty = true as IsEmpty<this>
+                this.#hasNull = false
+                this.#first = this.#last = null
+                this.#array = Object.freeze([],)
+                return
+            }
+
+            this.#isEmpty = false as IsEmpty<this>
+            if (size == 1) {
+                const value = this.#first = this.#last = iterable[Symbol.iterator]().next().value
+                this.#array = Object.freeze([value,],)
+                return
+            }
+
+            const array = new Array(size,)
+            const iterator = iterable[Symbol.iterator]() as IterableIterator<T>
+            this.#first = this[0] = array[0] = iterator.next().value
+            let index = size,
+                last = null as NullOr<T>
+            while (index-- > 0)
+                this[index] = array[index] = last = iterator.next().value
+            this.#last = last
+            this.#array = Object.freeze(array,)
+            return
+        }
+
+        const iterator = iterable[Symbol.iterator]() as IterableIterator<T>
+        let value = iterator.next()
+        if (value.done) {
+            this.#size = 0
+            this.#isEmpty = true as IsEmpty<this>
+            this.#hasNull = false
+            this.#first = this.#last = null
+            this.#array = Object.freeze([],)
+            return
+        }
+
+        const array = []
+        this.#isEmpty = false as IsEmpty<this>
+        this.#first = this[0] = array[0] = value.value
+        value = iterator.next()
+        let size = 1,
+            last = null as NullOr<T>
+        while (!value.done) {
+            this[size] = array[size] = last = value.value
+            value = iterator.next()
+            size++
+        }
+        this.#size = size
+        this.#last = last
+        this.#array = Object.freeze(array,)
     }
 
     //#endregion -------------------- Constructor --------------------
@@ -37,13 +117,6 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     //#region -------------------- Size methods --------------------
 
     public get size(): number {
-        if (this.#size == null) {
-            const iterable = this._iterable
-            let size = 0
-            for (let _ of iterable)
-                size++
-            this.#size = size
-        }
         return this.#size
     }
 
@@ -57,7 +130,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
 
     public get isEmpty(): IsEmpty<this> {
-        return this.#isEmpty ??= (this.size === 0) as IsEmpty<this>
+        return this.#isEmpty
     }
 
     public get isNotEmpty(): IsNotEmpty<this> {
@@ -90,18 +163,13 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     //#endregion -------------------- Has X methods --------------------
 
     /** The iterable received in the constructor */
-    protected get _iterable(): Iterable<T> {
-        return this.#iterable
+    protected get _reference(): Iterable<T> {
+        return this.#reference
     }
 
-    /** The iterable (if it was an {@link Array}) or the values converted to an {@link Array} */
+    /** The {@link Array} stored (from the construction) for the current {@link AbstractCollectionHolder collection} */
     protected get _array(): readonly T[] {
-        return this.#array ??= this.toArray()
-    }
-
-    /** The iterable (if it was a {@link Set}) or the values converted to a {@link Set} */
-    protected get _set(): ReadonlySet<T> {
-        return this.#set ??= this.toSet()
+        return this.#array
     }
 
     //#endregion -------------------- Getter methods --------------------
@@ -140,11 +208,10 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public firstOrNull<const S extends T, >(callback?: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
         if (this.isEmpty)
             return null
-        if (callback == null)
-            return this.#first === undefined
-                ? this.#first = this._array[0] ?? null
-                : this.#first
-        return this.find(callback)
+        if (callback != null)
+            return this.find(callback,)
+
+        return this.#first
     }
 
 
@@ -172,11 +239,10 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public lastOrNull<const S extends T, >(callback?: BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
         if (this.isEmpty)
             return null
-        if (callback == null)
-            return this.#last === undefined
-                ? this.#last = this._array[this.size - 1] ?? null
-                : this.#last
-        return this.findLast(callback)
+        if (callback != null)
+            return this.findLast(callback,)
+
+        return this.#last
     }
 
     //#endregion -------------------- Value methods --------------------

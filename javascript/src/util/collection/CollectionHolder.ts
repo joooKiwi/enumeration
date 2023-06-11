@@ -1,5 +1,5 @@
-import type {NullOr}                                                                                                                                                      from "../../general type"
-import type {BooleanCallback, BooleanIndexCallback, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder.types"
+import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                            from "../../general type"
+import type {BooleanCallback, BooleanIndexCallback, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder.types"
 
 /**
  * A collection to hold another collection and do some generic stuff if applicable.
@@ -15,6 +15,8 @@ import type {BooleanCallback, BooleanIndexCallback, ForEachCallback, ForEachInde
  * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable
  */
 export interface CollectionHolder<T = unknown, > {
+
+    [index: number]: UndefinedOr<T>
 
     //#region -------------------- Size methods --------------------
 
