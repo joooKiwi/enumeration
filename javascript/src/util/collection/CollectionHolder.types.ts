@@ -17,4 +17,11 @@ export type IsEmpty<T extends CollectionHolder, > = T["size"] extends 0 ? true :
 /** A simple representation type to tell that a {@link CollectionHolder.size} is not of 0 */
 export type IsNotEmpty<T extends CollectionHolder, > = T["size"] extends 0 ? false : true
 
+/**
+ * A simple type representation to tell if the {@link CollectionHolder.hasNull},
+ *  then the current instance is returned,
+ *  otherwise, it is a new {@link CollectionHolder} with {@link NonNullable} values
+ */
+export type FilterNonNull<T, COLLECTION extends CollectionHolder<T>, > = COLLECTION["hasNull"] extends false ? COLLECTION : CollectionHolder<NonNullable<T>>
+
 //#endregion -------------------- Validation type --------------------

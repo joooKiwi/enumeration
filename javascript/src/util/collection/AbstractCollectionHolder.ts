@@ -349,7 +349,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
 
-    public filterNonNull(): CollectionHolder<NonNullable<T>>
+    public filterNonNull(): FilterNonNull<T, this>
     public filterNonNull() {
         return this.hasNull ? this._new(this._array.filter(it => it != null)) : this
     }

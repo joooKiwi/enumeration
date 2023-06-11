@@ -236,7 +236,7 @@ export interface CollectionHolder<T = unknown, > {
     //#region -------------------- Join methods --------------------
 
     /**
-     * Get a new {@link String} separated by a separator (or a comma by default)
+     * Get a new {@link String} separated by a separator
      *
      * @param separator The separator for the result (<b>", "</b> by default)
      * @param prefix The character before the join (<b>''</b> by default)
@@ -316,7 +316,7 @@ export interface CollectionHolder<T = unknown, > {
      * If no <b>null</b> or <b>undefined</b> are found, the current instance will be returned.
      * @see ReadonlyArray.filter
      */
-    filterNonNull(): CollectionHolder<NonNullable<T>>
+    filterNonNull(): FilterNonNull<T, this>
 
     //#endregion -------------------- Filter methods --------------------
     //#region -------------------- Find methods --------------------
