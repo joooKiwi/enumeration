@@ -9,10 +9,10 @@ import type {BooleanCallback, BooleanIndexCallback, FilterNonNull, ForEachCallba
  * It also has some methods that are applicable for both {@link Array} & {@link Set} to give options.
  * Some methods are inspired by other languages to give more cross-language functionality.
  *
- * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
- * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set
- * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-collection/
- * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable
+ * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array Javascript Array
+ * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set Javascript Set
+ * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-collection/ Kotlin Collection
+ * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable C# Enumerable
  */
 export interface CollectionHolder<T = unknown, > {
 
