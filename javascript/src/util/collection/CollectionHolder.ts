@@ -42,6 +42,31 @@ export interface CollectionHolder<T = unknown, > {
     get isNotEmpty(): IsNotEmpty<this>
 
     //#endregion -------------------- Size methods --------------------
+    //#region -------------------- Has null methods --------------------
+
+    /**
+     * The {@link CollectionHolder} has at least one <b>null</b> or <b>undefined</b>
+     *
+     * @see includesNull
+     * @see containsNull
+     */
+    get hasNull(): boolean
+
+    /**
+     * The {@link CollectionHolder} has at least one <b>null</b> or <b>undefined</b>
+     *
+     * @alias {@link hasNull}
+     */
+    get includesNull(): this["hasNull"]
+
+    /**
+     * The {@link CollectionHolder} has at least one <b>null</b> or <b>undefined</b>
+     *
+     * @alias {@link hasNull}
+     */
+    get containsNull(): this["hasNull"]
+
+    //#endregion -------------------- Has null methods --------------------
     //#region -------------------- Value methods --------------------
 
     /**

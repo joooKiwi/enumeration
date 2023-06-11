@@ -15,6 +15,8 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     #set?: ReadonlySet<T>
     #weakSet?: Readonly<WeakSet<&T & object>>
 
+    #hasNull?: boolean
+
     #first?: NullOr<T>
     #last?: NullOr<T>
 
@@ -63,6 +65,29 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     //#endregion -------------------- Size methods --------------------
+    //#region -------------------- Has X methods --------------------
+
+    public get hasNull(): boolean {
+        if (this.#hasNull == null) {
+            const size = this.size
+            let index = -1
+            while (++index < size)
+                if (this[index] == null)
+                    return this.#hasNull = true
+            return this.#hasNull = false
+        }
+        return this.#hasNull
+    }
+
+    public get includesNull() {
+        return this.hasNull
+    }
+
+    public get containsNull() {
+        return this.hasNull
+    }
+
+    //#endregion -------------------- Has X methods --------------------
 
     /** The iterable received in the constructor */
     protected get _iterable(): Iterable<T> {
