@@ -166,9 +166,13 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return false
     }
 
-    public includesOne = this.hasOne
+    public includesOne(...values: readonly unknown[]): boolean {
+        return this.hasOne(...values,)
+    }
 
-    public containsOne = this.hasOne
+    public containsOne(...values: readonly unknown[]): boolean {
+        return this.hasOne(...values,)
+    }
 
 
     public hasAll(...values: readonly unknown[]): boolean {
@@ -179,9 +183,13 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return true
     }
 
-    public includesAll = this.hasAll
+    public includesAll(...values: readonly unknown[]): boolean {
+        return this.hasAll(...values,)
+    }
 
-    public containsAll = this.hasAll
+    public containsAll(...values: readonly unknown[]): boolean {
+        return this.hasAll(...values,)
+    }
 
     //#endregion -------------------- Has / includes / contains methods --------------------
     //#region -------------------- Join methods --------------------
