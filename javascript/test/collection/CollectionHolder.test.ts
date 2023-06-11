@@ -149,14 +149,14 @@ describe("CollectionHolderTest", () => {
         test("[a,b,1,2].filterNot(number) == [a,b]", () => expect(AB12.filterNot((it): it is (| 1 | 2) => typeof it == 'number',).toArray(),).toStrictEqual(['a', 'b',],),)
         test("[a,null,b,undefined].filterNotNull() == [a,b]", () => expect(A_NULL_B_UNDEFINED.filterNonNull().toArray(),).toStrictEqual(['a', 'b',],),)
         test("[a,null,b,undefined].filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED.filterNonNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
-        test("[a,null,b,undefined].filterNot(null).filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED.filterNot((it): it is null => it === null).filterNonNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
-        test("[a,null,b,undefined].filterNot(undefined).filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED.filterNot((it): it is undefined => it === undefined).filterNonNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
+        test("[a,null,b,undefined].filterNot(null).filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED.filterNot(it => it === null).filterNonNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
+        test("[a,null,b,undefined].filterNot(undefined).filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED.filterNot(it => it === undefined).filterNonNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
         test("[a,null,b,undefined].filterNot(undefined).filterNot(null).filterNotNull() == last iteration", () => {
-            const lastIteration = A_NULL_B_UNDEFINED.filterNot((it): it is undefined => it === undefined).filterNot((it): it is null => it === null)
+            const lastIteration = A_NULL_B_UNDEFINED.filterNot(it => it === undefined).filterNot((it): it is null => it === null)
             expect(lastIteration.filterNonNull(),).toStrictEqual(lastIteration,)
         },)
         test("[a,null,b,undefined].filterNot(null).filterNot(undefined).filterNotNull() == last iteration", () => {
-            const lastIteration = A_NULL_B_UNDEFINED.filterNot((it): it is null => it === null).filterNot((it): it is undefined => it === undefined)
+            const lastIteration = A_NULL_B_UNDEFINED.filterNot(it => it === null).filterNot((it): it is undefined => it === undefined)
             expect(lastIteration.filterNonNull(),).toStrictEqual(lastIteration,)
         },)
         test("[a,b].filterNotNull() == this", () => expect(AB.filterNonNull(),).toStrictEqual(AB,),)
