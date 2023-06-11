@@ -1,6 +1,6 @@
-import type {NullOr}                                                                                                                                                      from "../../general type"
-import type {CollectionHolder}                                                                                                                                            from "./CollectionHolder"
-import type {BooleanCallback, BooleanIndexCallback, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder.types"
+import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                            from "../../general type"
+import type {CollectionHolder}                                                                                                                                                                         from "./CollectionHolder"
+import type {BooleanCallback, BooleanIndexCallback, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder.types"
 
 export abstract class AbstractCollectionHolder<const T = unknown, >
     implements CollectionHolder<T> {
