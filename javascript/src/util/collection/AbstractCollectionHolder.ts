@@ -81,6 +81,13 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     //#endregion -------------------- Getter methods --------------------
     //#region -------------------- Methods --------------------
 
+    /**
+     * Create a new instance of an {@link CollectionHolder} from an {@link Iterable} value
+     *
+     * @param iterable The iterable to send to the new instance
+     */
+    protected abstract _new<const U, >(iterable: Iterable<U>,): CollectionHolder<U>
+
     //#region -------------------- Value methods --------------------
 
     public first(): NonNullable<T>
@@ -148,13 +155,6 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
     //#endregion -------------------- Value methods --------------------
     //#region -------------------- Loop methods --------------------
-
-    /**
-     * Create a new instance of an {@link CollectionHolder} from an {@link Iterable} value
-     *
-     * @param iterable The iterable to send to the new instance
-     */
-    protected abstract _new<const U, >(iterable: Iterable<U>,): CollectionHolder<U>
 
     //#region -------------------- Has / includes / contains methods --------------------
 
