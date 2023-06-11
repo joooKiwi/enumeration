@@ -274,7 +274,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     public findByIndex(callback: BooleanIndexCallback,): NullOr<T> {
-        return this.find((_, index,) => callback(index,),)
+        return this._array.find((_, index,) => callback(index,),) ?? null
     }
 
 
@@ -284,27 +284,45 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     public findIndexByIndex(callback: BooleanIndexCallback,): NullOr<number> {
-        return this.findIndex((_, index,) => callback(index,),)
+        const indexFound = this._array.findIndex((_, index,) => callback(index,),)
+        return indexFound == -1 ? null : indexFound
     }
 
 
     public findLast<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
     public findLast(callback: BooleanCallback<T>,): NullOr<T>
     public findLast<const S extends T, >(callback: | RestrainedBooleanCallback<T, S> | BooleanCallback<T>,) {
-        return this._array.findLast((value, index,) => callback(value, index,),) ?? null
+        let index = this.size
+        while (--index > 0) {
+            const value = this[index]!
+            if (callback(value, index,))
+                return value
+        }
+        return null
     }
 
     public findLastByIndex(callback: BooleanIndexCallback,): NullOr<T> {
-        return this.findLast((_, index,) => callback(index),)
+        let index = this.size
+        while (--index > 0)
+            if (callback(index,))
+                return this[index]!
+        return null
     }
 
     public findLastIndex(callback: BooleanCallback<T>,): NullOr<number> {
-        const indexFound = this._array.findLastIndex((value, index,) => callback(value, index,),)
-        return indexFound == -1 ? null : indexFound
+        let index = this.size
+        while (--index > 0)
+            if (callback(this[index]!, index,))
+                return index
+        return null
     }
 
     public findLastIndexByIndex(callback: BooleanIndexCallback,): NullOr<number> {
-        return this.findLastIndex((_, index,) => callback(index,),)
+        let index = this.size
+        while (--index > 0)
+            if (callback(index,))
+                return index
+        return null
     }
 
     //#endregion -------------------- Find methods --------------------
