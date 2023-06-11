@@ -4,6 +4,8 @@ export type BooleanCallback<T, > = (value: T, index: number,) => boolean
 export type BooleanIndexCallback = (index: number,) => boolean
 export type RestrainedBooleanCallback<T, S extends T, > = (value: T, index: number,) => value is S
 
+export type JoinCallback<T, > = (value: T,) => string
+
 export type MapCallback<T, U> = (value: T, index: number,) => U
 export type MapIndexCallback<U> = (index: number,) => U
 
