@@ -211,10 +211,18 @@ export interface CollectionHolder<T = unknown, > {
     /**
      * Get a new {@link String} separated by a separator (or a comma by default)
      *
-     * @param separator The separator for the result (or a comma by default)
+     * @param separator The separator for the result (<b>", "</b> by default)
+     * @param prefix The character before the join (<b>''</b> by default)
+     * @param postfix The character after the join (<b>''</b> by default)
+     * @param limit The maximum amount of values in the join (<b>null</b> by default)
+     * @param truncated The truncated string if there is a limit (<b>'…'</b> by default)
+     * @param transform A callback to transform into a {@link String}
+     *
+     * @canReceiveNegativeValue
      * @see ReadonlyArray.join
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/join-to-string.html Kotlin joinToString()
      */
-    join(separator?: string,): string
+    join(separator?: Nullable<string>, prefix?: Nullable<string>, postfix?: Nullable<string>, limit?: Nullable<number>, truncated?: Nullable<string>, transform?: Nullable<JoinCallback<T>>,): string
 
     //#endregion -------------------- Join methods --------------------
     //#region -------------------- Filter methods --------------------

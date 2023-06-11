@@ -218,8 +218,18 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     //#endregion -------------------- Has / includes / contains methods --------------------
     //#region -------------------- Join methods --------------------
 
-    public join(separator?: string,): string {
-        return this._array.join(separator,)
+    public join(separator: Nullable<string> = null, prefix: Nullable<string> = null, postfix: Nullable<string> = null, limit: Nullable<number> = null, truncated: Nullable<string> = null, transform: Nullable<JoinCallback<T>> = null,): string {
+        const size = this.size
+        separator ??= ", "
+        transform ??= it => `${it}`
+
+        let string = ''
+        const hasALimit = limit != null
+        const sizeMinus1 = (limit == null ? size : limit < 0 ? size + limit : limit) - 1
+        let index = -1
+        while (++index < sizeMinus1)
+            string += `${transform(this[index]!)}${separator}`
+        return `${prefix ?? '['}${string}${transform(this[index]!)}${hasALimit ? `${separator}${truncated ?? '…'}` : ''}${postfix ?? ']'}`
     }
 
     //#endregion -------------------- Join methods --------------------
