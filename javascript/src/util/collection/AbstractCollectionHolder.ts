@@ -159,9 +159,21 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     //#region -------------------- Has / includes / contains methods --------------------
 
     public hasOne(...values: readonly unknown[]): boolean {
+        const size = this.size
+        if (size === 0)
+            return false
+
+        const valueSize = values.length
+        if (valueSize === 0)
+            return true
+
         const array = this._array
-        for (let value of values)
-            if (array.includes(value as never))
+        if(size === 1)
+            return array.includes(values[0] as never,)
+
+        let valueIndex = -1
+        while (++valueIndex < valueSize)
+            if(array.includes(values[valueIndex] as never,))
                 return true
         return false
     }
@@ -176,9 +188,21 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
 
     public hasAll(...values: readonly unknown[]): boolean {
+        const size = this.size
+        if (size === 0)
+            return false
+
+        const valueSize = values.length
+        if (valueSize === 0)
+            return true
+
         const array = this._array
-        for (let value of values)
-            if (!array.includes(value as never))
+        if(size === 1)
+            return array.includes(values[0] as never,)
+
+        let valueIndex = -1
+        while (++valueIndex < valueSize)
+            if(!array.includes(values[valueIndex] as never,))
                 return false
         return true
     }
