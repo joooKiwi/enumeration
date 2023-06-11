@@ -336,12 +336,18 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     public forEach(callback: ForEachCallback<T>,): this {
-        this._array.forEach((value, index,) => callback(value, index,),)
+        const size = this.size
+        let index = -1
+        while (++index < size)
+            callback(this[index]!, index,)
         return this
     }
 
     public forEachIndex(callback: ForEachIndexCallback,): this {
-        this._array.forEach((_, index,) => callback(index,),)
+        const size = this.size
+        let index = -1
+        while (++index < size)
+            callback(index,)
         return this
     }
 
