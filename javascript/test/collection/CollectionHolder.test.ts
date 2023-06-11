@@ -29,7 +29,7 @@ describe("CollectionHolderTest", () => {
             test("[a,b,c,d,null].first() == a", () => expect(ABCD_NULL.first(),).toBe('a',),)
             describe("[undefined,a,b,c,d].first() == throw|null", () => {
                 test("throw", () => expect(() => UNDEFINED_ABCD.first(),).toThrow(ReferenceError,),)
-                test("or null", () => expect(UNDEFINED_ABCD.firstOrNull(),).toBeNull(),)
+                test("or null", () => expect(UNDEFINED_ABCD.firstOrNull(),).toBeUndefined(),)
             },)
             test("[a,b,c,d,undefined].first() == a", () => expect(ABCD_UNDEFINED.first(),).toBe('a',),)
 
@@ -60,7 +60,7 @@ describe("CollectionHolderTest", () => {
             test("[undefined,a,b,c,d].last() == d", () => expect(UNDEFINED_ABCD.last(),).toBe('d',),)
             describe("[a,b,c,d,undefined].last() == throw|null", () => {
                 test("throw", () => expect(() => ABCD_UNDEFINED.last(),).toThrow(ReferenceError,),)
-                test("or null", () => expect(ABCD_UNDEFINED.lastOrNull(),).toBeNull(),)
+                test("or null", () => expect(ABCD_UNDEFINED.lastOrNull(),).toBeUndefined(),)
             },)
 
             test("[a,b,c,d].last(!d) == c", () => expect(ABCD.last(it => it !== 'd',),).toBe('c',),)
@@ -72,7 +72,7 @@ describe("CollectionHolderTest", () => {
             test("[undefined,a,b,c,d].last(!d) == c", () => expect(UNDEFINED_ABCD.last(it => it !== 'd',),).toBe('c',),)
             describe("[a,b,c,d,undefined].last(!d) == throw|null", () => {
                 test("throw", () => expect(() => ABCD_UNDEFINED.last(it => it !== 'd',),).toThrow(ReferenceError,),)
-                test("or null", () => expect(ABCD_UNDEFINED.lastOrNull(it => it !== 'd',),).toBeNull(),)
+                test("or null", () => expect(ABCD_UNDEFINED.lastOrNull(it => it !== 'd',),).toBeUndefined(),)
             },)
         },)
     },)
