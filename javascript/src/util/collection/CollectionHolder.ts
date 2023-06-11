@@ -239,8 +239,8 @@ export interface CollectionHolder<T = unknown, > {
      * Get a new {@link String} separated by a separator
      *
      * @param separator The separator for the result (<b>", "</b> by default)
-     * @param prefix The character before the join (<b>''</b> by default)
-     * @param postfix The character after the join (<b>''</b> by default)
+     * @param prefix The character before the join (<b>'['</b> by default)
+     * @param postfix The character after the join (<b>']'</b> by default)
      * @param limit The maximum amount of values in the join (<b>null</b> by default)
      * @param truncated The truncated string if there is a limit (<b>'…'</b> by default)
      * @param transform A callback to transform into a {@link String}
