@@ -211,7 +211,7 @@ describe("CollectionHolderTest", () => {
         })
         describe("to set", () => {
             test("basic", () => expect(AB.toSet(),).toStrictEqual(new Set(['a', 'b',],),),)
-            test("frozen", () => expect(AB.toArray(),).toBeFrozen(),)
+            test("frozen", () => expect(AB.toSet(),).toBeFrozen(),)
         })
         describe("to mutable set", () => {
             test("basic", () => expect(AB.toMutableSet(),).toStrictEqual(new Set(['a', 'b',],),),)
