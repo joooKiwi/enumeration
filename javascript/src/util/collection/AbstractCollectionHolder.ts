@@ -189,16 +189,16 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public first(callback: BooleanCallback<T>,): NonNullable<T>
     public first<const S extends T, >(callback?: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
         if (this.isEmpty)
-            throw new ReferenceError("No element at the index 0 could be found since it it empty.")
+            throw new ReferenceError("No element at the index 0 could be found since it it empty.",)
         if (callback == null) {
             const element = this.firstOrNull()
             if (element == null)
-                throw new ReferenceError("There is no element at the index 0 in the current EnumArray.")
+                throw new ReferenceError("The first element is null in the collection.",)
             return element
         }
         const element = this.firstOrNull(callback)
         if (element == null)
-            throw new ReferenceError("There is no element at the index 0 (from a filter) in the current EnumArray.")
+            throw new ReferenceError("The first element (with filter) is null in the collection.",)
         return element
     }
 
@@ -220,16 +220,16 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public last(callback: BooleanCallback<T>,): NonNullable<T>
     public last<const S extends T, >(callback?: BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
         if (this.isEmpty)
-            throw new ReferenceError("No element at the index 0 could be found since it it empty.")
+            throw new ReferenceError("No element at the index 0 could be found since it it empty.",)
         if (callback == null) {
             const element = this.lastOrNull()
             if (element == null)
-                throw new ReferenceError("There is no element at the last index in the current EnumArray.")
+                throw new ReferenceError("The last element is null in the collection.",)
             return element
         }
         const element = this.lastOrNull(callback)
         if (element == null)
-            throw new ReferenceError("There is no element at the last index (from a filter) in the current EnumArray.")
+            throw new ReferenceError("The last element (with filter) is null in the collection.",)
         return element
     }
 
