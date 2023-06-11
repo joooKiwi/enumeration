@@ -433,11 +433,19 @@ export interface CollectionHolder<T = unknown, > {
     /** Convert the current {@link CollectionHolder collection} to a new {@link Array mutable array} */
     toMutableArray(): T[]
 
+
     /** Convert the current {@link CollectionHolder collection} to a new {@link ReadonlySet set} */
     toSet(): ReadonlySet<T>
 
     /** Convert the current {@link CollectionHolder collection} to a new {@link Set mutable set} */
     toMutableSet(): Set<T>
+
+
+    /** Convert the current {@link CollectionHolder collection} to a new {@link WeakSet weak set} */
+    toWeakSet(): Readonly<WeakSet<& T & object>>
+
+    /** Convert the current {@link CollectionHolder collection} to a new {@link WeakSet mutable weak set} */
+    toMutableWeakSet(): WeakSet<& T & object>
 
 
     /**

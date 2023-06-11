@@ -13,6 +13,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     readonly #iterable
     #array?: readonly T[]
     #set?: ReadonlySet<T>
+    #weakSet?: Readonly<WeakSet<&T & object>>
 
     #first?: NullOr<T>
     #last?: NullOr<T>
@@ -375,6 +376,22 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
     public toMutableSet(): Set<T> {
         return new Set(this,)
+    }
+
+    public toWeakSet(): Readonly<WeakSet<& T & object>> {
+        return this.#weakSet ??= Object.freeze(this.toMutableWeakSet())
+    }
+
+    public toMutableWeakSet(): WeakSet<& T & object> {
+        const size = this.size,
+            $this = this
+        return new WeakSet({
+            * [Symbol.iterator](): IterableIterator<& T & object> {
+                let index = -1
+                while (++index < size)
+                    yield Object($this[index]!)
+            }
+        },)
     }
 
 
