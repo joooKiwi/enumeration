@@ -238,18 +238,18 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public filter<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<S>
     public filter(callback: BooleanCallback<T>,): CollectionHolder<T>
     public filter<const S extends T, >(callback: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
-        return this._new(this._array.filter(callback,),)
+        return this._new(this._array.filter((value, index,) => callback(value, index,),),)
     }
 
     public filterByIndex(callback: BooleanIndexCallback,): CollectionHolder<T> {
-        return this.filter((_, index,) => callback(index,))
+        return this._new(this._array.filter((_, index,) => callback(index,),),)
     }
 
 
     public filterNot<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<Exclude<T, S>>
     public filterNot(callback: BooleanCallback<T>,): CollectionHolder<T>
     public filterNot<const S extends T, >(callback: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
-        return this._new(this._array.filter((value, index) => !callback(value, index,),),)
+        return this._new(this._array.filter((value, index,) => !callback(value, index,),),)
     }
 
     public filterNotByIndex(callback: BooleanIndexCallback,): CollectionHolder<T> {
@@ -260,7 +260,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public filterNonNull(): CollectionHolder<NonNullable<T>>
     public filterNonNull() {
         return this.hasOne(null, undefined,)
-            ? this.filter((value,): value is NonNullable<T> => value != null,)
+            ? this._new(this._array.filter(it => it != null))
             : this
     }
 
