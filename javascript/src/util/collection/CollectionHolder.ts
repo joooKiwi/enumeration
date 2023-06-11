@@ -418,6 +418,20 @@ export interface CollectionHolder<T = unknown, > {
      */
     forEachIndex(callback: ForEachIndexCallback,): this
 
+
+    /**
+     * Reverse the current collection from a range (if provided)
+     *
+     * @param fromIndex The inclusive starting index
+     * @param toIndex The exclusive ending index
+     *
+     * @canReceiveNegativeValue
+     * @throws {RangeError} The indexes "from" and "to" are not within a valid range
+     * @see Array.reverse
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/reverse.html Kotlin reverse
+     */
+    reverse(fromIndex?: Nullable<number>, toIndex?:Nullable<number>,): CollectionHolder<T>
+
     //#endregion -------------------- Loop methods --------------------
     //#region -------------------- Iterator methods --------------------
 
