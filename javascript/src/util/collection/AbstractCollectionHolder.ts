@@ -490,7 +490,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     //#region -------------------- Conversion methods --------------------
 
     public toArray(): readonly T[] {
-        return Object.freeze([...this,])
+        return this._array
     }
 
     public toMutableArray(): T[] {
@@ -503,7 +503,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     public toSet(): ReadonlySet<T> {
-        return Object.freeze(new Set(this,),)
+        return this.#set ??= Object.freeze(new Set(this,),)
     }
 
     public toMutableSet(): Set<T> {
