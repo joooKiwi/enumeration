@@ -196,7 +196,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
                 throw new ReferenceError("The first element is null in the collection.",)
             return element
         }
-        const element = this.firstOrNull(callback)
+        const element = this.firstOrNull(callback,)
         if (element == null)
             throw new ReferenceError("The first element (with filter) is null in the collection.",)
         return element
@@ -227,7 +227,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
                 throw new ReferenceError("The last element is null in the collection.",)
             return element
         }
-        const element = this.lastOrNull(callback)
+        const element = this.lastOrNull(callback,)
         if (element == null)
             throw new ReferenceError("The last element (with filter) is null in the collection.",)
         return element
