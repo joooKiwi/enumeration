@@ -345,15 +345,13 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     public filterNotByIndex(callback: BooleanIndexCallback,): CollectionHolder<T> {
-        return this.filterNot((_, index,) => callback(index,),)
+        return this._new(this._array.filter((_, index,) => !callback(index,),),)
     }
 
 
     public filterNonNull(): CollectionHolder<NonNullable<T>>
     public filterNonNull() {
-        return this.hasOne(null, undefined,)
-            ? this._new(this._array.filter(it => it != null))
-            : this
+        return this.hasNull ? this._new(this._array.filter(it => it != null)) : this
     }
 
     //#endregion -------------------- Filter methods --------------------
