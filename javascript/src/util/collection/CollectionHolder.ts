@@ -345,7 +345,6 @@ export interface CollectionHolder<T = unknown, > {
      */
     findByIndex(callback: BooleanIndexCallback,): NullOr<T>
 
-
     /**
      * Get the first index found or <b>null</b> if nothing was found
      *
@@ -457,7 +456,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see Array.reverse
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/reverse.html Kotlin reverse
      */
-    reverse(fromIndex?: Nullable<number>, toIndex?:Nullable<number>,): CollectionHolder<T>
+    reverse(fromIndex?: Nullable<number>, toIndex?: Nullable<number>,): CollectionHolder<T>
 
     //#endregion -------------------- Loop methods --------------------
     //#region -------------------- Iterator methods --------------------
