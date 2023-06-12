@@ -1,5 +1,5 @@
-import type {NullOr}                                                                                                                                                      from "../../general type"
-import type {BooleanCallback, BooleanIndexCallback, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder.types"
+import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                            from "../../general type"
+import type {BooleanCallback, BooleanIndexCallback, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder.types"
 
 /**
  * A collection to hold another collection and do some generic stuff if applicable.
@@ -9,12 +9,14 @@ import type {BooleanCallback, BooleanIndexCallback, ForEachCallback, ForEachInde
  * It also has some methods that are applicable for both {@link Array} & {@link Set} to give options.
  * Some methods are inspired by other languages to give more cross-language functionality.
  *
- * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
- * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set
- * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-collection/
- * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable
+ * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array Javascript Array
+ * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set Javascript Set
+ * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-collection/ Kotlin Collection
+ * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable C# Enumerable
  */
 export interface CollectionHolder<T = unknown, > {
+
+    [index: number]: UndefinedOr<T>
 
     //#region -------------------- Size methods --------------------
 
@@ -42,6 +44,31 @@ export interface CollectionHolder<T = unknown, > {
     get isNotEmpty(): IsNotEmpty<this>
 
     //#endregion -------------------- Size methods --------------------
+    //#region -------------------- Has null methods --------------------
+
+    /**
+     * The {@link CollectionHolder} has at least one <b>null</b> or <b>undefined</b>
+     *
+     * @see includesNull
+     * @see containsNull
+     */
+    get hasNull(): boolean
+
+    /**
+     * The {@link CollectionHolder} has at least one <b>null</b> or <b>undefined</b>
+     *
+     * @alias {@link hasNull}
+     */
+    get includesNull(): this["hasNull"]
+
+    /**
+     * The {@link CollectionHolder} has at least one <b>null</b> or <b>undefined</b>
+     *
+     * @alias {@link hasNull}
+     */
+    get containsNull(): this["hasNull"]
+
+    //#endregion -------------------- Has null methods --------------------
     //#region -------------------- Value methods --------------------
 
     /**
@@ -209,12 +236,20 @@ export interface CollectionHolder<T = unknown, > {
     //#region -------------------- Join methods --------------------
 
     /**
-     * Get a new {@link String} separated by a separator (or a comma by default)
+     * Get a new {@link String} separated by a separator
      *
-     * @param separator The separator for the result (or a comma by default)
+     * @param separator The separator for the result (<b>", "</b> by default)
+     * @param prefix The character before the join (<b>'['</b> by default)
+     * @param postfix The character after the join (<b>']'</b> by default)
+     * @param limit The maximum amount of values in the join (<b>null</b> by default)
+     * @param truncated The truncated string if there is a limit (<b>'…'</b> by default)
+     * @param transform A callback to transform into a {@link String}
+     *
+     * @canReceiveNegativeValue
      * @see ReadonlyArray.join
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/join-to-string.html Kotlin joinToString()
      */
-    join(separator?: string,): string
+    join(separator?: Nullable<string>, prefix?: Nullable<string>, postfix?: Nullable<string>, limit?: Nullable<number>, truncated?: Nullable<string>, transform?: Nullable<JoinCallback<T>>,): string
 
     //#endregion -------------------- Join methods --------------------
     //#region -------------------- Filter methods --------------------
@@ -281,7 +316,7 @@ export interface CollectionHolder<T = unknown, > {
      * If no <b>null</b> or <b>undefined</b> are found, the current instance will be returned.
      * @see ReadonlyArray.filter
      */
-    filterNonNull(): CollectionHolder<NonNullable<T>>
+    filterNonNull(): FilterNonNull<T, this>
 
     //#endregion -------------------- Filter methods --------------------
     //#region -------------------- Find methods --------------------
@@ -309,7 +344,6 @@ export interface CollectionHolder<T = unknown, > {
      * @see ReadonlyArray.find
      */
     findByIndex(callback: BooleanIndexCallback,): NullOr<T>
-
 
     /**
      * Get the first index found or <b>null</b> if nothing was found
@@ -410,6 +444,20 @@ export interface CollectionHolder<T = unknown, > {
      */
     forEachIndex(callback: ForEachIndexCallback,): this
 
+
+    /**
+     * Reverse the current collection from a range (if provided)
+     *
+     * @param fromIndex The inclusive starting index
+     * @param toIndex The exclusive ending index
+     *
+     * @canReceiveNegativeValue
+     * @throws {RangeError} The indexes "from" and "to" are not within a valid range
+     * @see Array.reverse
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/reverse.html Kotlin reverse
+     */
+    reverse(fromIndex?: Nullable<number>, toIndex?: Nullable<number>,): CollectionHolder<T>
+
     //#endregion -------------------- Loop methods --------------------
     //#region -------------------- Iterator methods --------------------
 
@@ -425,11 +473,19 @@ export interface CollectionHolder<T = unknown, > {
     /** Convert the current {@link CollectionHolder collection} to a new {@link Array mutable array} */
     toMutableArray(): T[]
 
+
     /** Convert the current {@link CollectionHolder collection} to a new {@link ReadonlySet set} */
     toSet(): ReadonlySet<T>
 
     /** Convert the current {@link CollectionHolder collection} to a new {@link Set mutable set} */
     toMutableSet(): Set<T>
+
+
+    /** Convert the current {@link CollectionHolder collection} to a new {@link WeakSet weak set} */
+    toWeakSet(): Readonly<WeakSet<& T & object>>
+
+    /** Convert the current {@link CollectionHolder collection} to a new {@link WeakSet mutable weak set} */
+    toMutableWeakSet(): WeakSet<& T & object>
 
 
     /**

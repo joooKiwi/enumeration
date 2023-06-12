@@ -154,22 +154,48 @@ export class BasicCompanionEnum<const ENUMERABLE extends Enumerable,
      */
     #initializeMaps(): void {
         const instance = this.instance,
+            prototypeName = EnumConstants.PROTOTYPE_NAME,
+            numberOnlyRegex = EnumConstants.NUMBER_ONLY_REGEX,
+            ordinalMap = EnumConstants.ORDINAL_MAP,
+            nameMap = EnumConstants.NAME_MAP,
             excludedNames = this._EXCLUDED_NAMES,
-            everyFields = entries(getOwnPropertyDescriptors(instance,),)
-                .filter(([, property,],) => property.get == null && property.set == null,)//No getter & setter
-                .filter(([name,],) => name !== EnumConstants.PROTOTYPE_NAME,)//No prototype
-                .filter(([name,],) => !excludedNames?.includes(name as never,),)//No instance from the excluded name
-                .filter(([name,],) => !EnumConstants.NUMBER_ONLY_REGEX.test(name,),)//No instance from the ordinal
-                .filter(([, property,],) => property.value instanceof instance,)//The value is an instance of the Enum (specified)
-                .map(([name, property,]) => [name, property.value as Enumerable,] as const,)
+            everyFields = entries(getOwnPropertyDescriptors(instance,),),
+            everyOrdinals = [] as number[],
+            everyNames = [] as string[],
+            everyEnumerable = [] as Enumerable[]
 
-        everyFields.forEach(([name, enumerable,], index,) => {
-            EnumConstants.NAME_MAP.set(enumerable, name,)
-            EnumConstants.ORDINAL_MAP.set(enumerable, index,)
-        })
-        EnumConstants.VALUES_MAP.set(this, freeze(new GenericCollectionHolder(freeze(everyFields.map(([, enumerable,],) => enumerable,),),),),)
-        EnumConstants.NAMES_MAP.set(this, freeze(new GenericCollectionHolder(freeze(everyFields.map(([name,],) => name,),),),),)
-        EnumConstants.ORDINALS_MAP.set(this, freeze(new GenericCollectionHolder(freeze(everyFields.map((_, index,) => index,),),),),)
+        const everyFieldsSize = everyFields.length
+        let currentOrdinal = 0
+        let everyFieldsIndex = everyFieldsSize
+        while (--everyFieldsIndex > 0) {
+            const [name, property,] = everyFields[everyFieldsIndex]!
+            if (property.get != null)
+                continue
+            if (property.set != null)
+                continue
+            if (name === prototypeName)
+                continue
+            if (excludedNames?.includes(name))
+                continue
+            if (numberOnlyRegex.test(name))
+                continue
+
+            const {value,} = property
+            if (!(value instanceof instance))
+                continue
+
+            ordinalMap.set(value as Enumerable, currentOrdinal,)
+            nameMap.set(value as Enumerable, name,)
+
+            everyOrdinals.push(currentOrdinal++,)
+            everyNames.push(name,)
+            everyEnumerable.push(value as Enumerable,)
+        }
+
+
+        EnumConstants.ORDINALS_MAP.set(this, new GenericCollectionHolder(freeze(everyOrdinals,),),)
+        EnumConstants.NAMES_MAP.set(this, new GenericCollectionHolder(freeze(everyNames,),),)
+        EnumConstants.VALUES_MAP.set(this, new GenericCollectionHolder(freeze(everyEnumerable,),),)
         EnumConstants.DEFAULT_MAP.set(this, this._DEFAULT ?? null,)
     }
 

@@ -5,6 +5,12 @@
  * @see Nullable
  */
 export type NullOr<T, > = | T | null
+/**
+ * A simple encapsulation type toward a specified type to be the value, <b>undefined</b>
+ *
+ * @see Nullable
+ */
+export type UndefinedOr<T, > = | T | undefined
 /** A simple type to join both nullable value (<b>null</b> and <b>undefined</b>) */
 export type NullOrUndefined = | null | undefined
 /**

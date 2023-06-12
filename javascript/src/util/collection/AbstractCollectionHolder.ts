@@ -1,31 +1,115 @@
-import type {NullOr}                                                                                                                                                      from "../../general type"
-import type {CollectionHolder}                                                                                                                                            from "./CollectionHolder"
-import type {BooleanCallback, BooleanIndexCallback, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder.types"
+import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                            from "../../general type"
+import type {CollectionHolder}                                                                                                                                                                         from "./CollectionHolder"
+import type {BooleanCallback, BooleanIndexCallback, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder.types"
 
 export abstract class AbstractCollectionHolder<const T = unknown, >
     implements CollectionHolder<T> {
 
     //#region -------------------- Fields --------------------
 
-    #size?: number
-    #isEmpty?: IsEmpty<this>
+    [index: number]: UndefinedOr<T>
 
-    readonly #iterable
-    #array?: readonly T[]
+    readonly #size: number
+    readonly #isEmpty: IsEmpty<this>
+
+    readonly #reference: Iterable<T>
+    readonly #array: readonly T[]
     #set?: ReadonlySet<T>
+    #weakSet?: Readonly<WeakSet<&T & object>>
 
-    #first?: NullOr<T>
-    #last?: NullOr<T>
+    #hasNull?: boolean
+
+    readonly #first: NullOr<T>
+    readonly #last: NullOr<T>
 
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------
 
     protected constructor(iterable: Iterable<T>,) {
-        this.#iterable = iterable
-        if (iterable instanceof Array)
-            this.#isEmpty = ((this.#size = (this.#array = Object.freeze(iterable)).length) === 0) as IsEmpty<this>
-        else if (iterable instanceof Set)
-            this.#isEmpty = ((this.#size = (this.#set = Object.freeze(iterable)).size) === 0) as IsEmpty<this>
+        //TODO implement the proxy pattern to have the index retrieved only when needed
+        this.#reference = iterable
+
+        if (iterable instanceof Array) {
+            const size = this.#size = iterable.length
+            if (size == 0) {
+                this.#isEmpty = true as IsEmpty<this>
+                this.#hasNull = false
+                this.#first = this.#last = null
+                this.#array = Object.freeze([],)
+                return
+            }
+
+            this.#isEmpty = false as IsEmpty<this>
+            if (size == 1) {
+                const value = this.#first = this.#last = iterable[0]
+                this.#array = Object.freeze([value,],)
+                return
+            }
+
+            const array = new Array(size,)
+            this.#first = this[0] = array[0] = iterable[0]
+            this.#last = this[size - 1] = array[size - 1] = iterable[size - 1]
+            let index = size - 1
+            while (index-- > 1)
+                this[index] = array[index] = iterable[index]
+            this.#array = Object.freeze(array,)
+            return
+        }
+
+        if (iterable instanceof Set) {
+            const size: number = this.#size = iterable.size
+            if (size == 0) {
+                this.#isEmpty = true as IsEmpty<this>
+                this.#hasNull = false
+                this.#first = this.#last = null
+                this.#array = Object.freeze([],)
+                return
+            }
+
+            this.#isEmpty = false as IsEmpty<this>
+            if (size == 1) {
+                const value = this.#first = this.#last = iterable[Symbol.iterator]().next().value
+                this.#array = Object.freeze([value,],)
+                return
+            }
+
+            const array = new Array(size,)
+            const iterator = iterable[Symbol.iterator]() as IterableIterator<T>
+            this.#first = this[0] = array[0] = iterator.next().value
+            let index = size,
+                last = null as NullOr<T>
+            while (index-- > 0)
+                this[index] = array[index] = last = iterator.next().value
+            this.#last = last
+            this.#array = Object.freeze(array,)
+            return
+        }
+
+        const iterator = iterable[Symbol.iterator]() as IterableIterator<T>
+        let value = iterator.next()
+        if (value.done) {
+            this.#size = 0
+            this.#isEmpty = true as IsEmpty<this>
+            this.#hasNull = false
+            this.#first = this.#last = null
+            this.#array = Object.freeze([],)
+            return
+        }
+
+        const array = []
+        this.#isEmpty = false as IsEmpty<this>
+        this.#first = this[0] = array[0] = value.value
+        value = iterator.next()
+        let size = 1,
+            last = null as NullOr<T>
+        while (!value.done) {
+            this[size] = array[size] = last = value.value
+            value = iterator.next()
+            size++
+        }
+        this.#size = size
+        this.#last = last
+        this.#array = Object.freeze(array,)
     }
 
     //#endregion -------------------- Constructor --------------------
@@ -34,13 +118,6 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     //#region -------------------- Size methods --------------------
 
     public get size(): number {
-        if (this.#size == null) {
-            const iterable = this._iterable
-            let size = 0
-            for (let _ of iterable)
-                size++
-            this.#size = size
-        }
         return this.#size
     }
 
@@ -54,7 +131,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
 
     public get isEmpty(): IsEmpty<this> {
-        return this.#isEmpty ??= (this.size === 0) as IsEmpty<this>
+        return this.#isEmpty
     }
 
     public get isNotEmpty(): IsNotEmpty<this> {
@@ -62,24 +139,49 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     //#endregion -------------------- Size methods --------------------
+    //#region -------------------- Has X methods --------------------
+
+    public get hasNull(): boolean {
+        if (this.#hasNull == null) {
+            const size = this.size
+            let index = -1
+            while (++index < size)
+                if (this[index] == null)
+                    return this.#hasNull = true
+            return this.#hasNull = false
+        }
+        return this.#hasNull
+    }
+
+    public get includesNull(): this['hasNull'] {
+        return this.hasNull
+    }
+
+    public get containsNull(): this['hasNull'] {
+        return this.hasNull
+    }
+
+    //#endregion -------------------- Has X methods --------------------
 
     /** The iterable received in the constructor */
-    protected get _iterable(): Iterable<T> {
-        return this.#iterable
+    protected get _reference(): Iterable<T> {
+        return this.#reference
     }
 
-    /** The iterable (if it was an {@link Array}) or the values converted to an {@link Array} */
+    /** The {@link Array} stored (from the construction) for the current {@link AbstractCollectionHolder collection} */
     protected get _array(): readonly T[] {
-        return this.#array ??= this.toArray()
-    }
-
-    /** The iterable (if it was a {@link Set}) or the values converted to a {@link Set} */
-    protected get _set(): ReadonlySet<T> {
-        return this.#set ??= this.toSet()
+        return this.#array
     }
 
     //#endregion -------------------- Getter methods --------------------
     //#region -------------------- Methods --------------------
+
+    /**
+     * Create a new instance of an {@link CollectionHolder} from an {@link Iterable} value
+     *
+     * @param iterable The iterable to send to the new instance
+     */
+    protected abstract _new<const U, >(iterable: Iterable<U>,): CollectionHolder<U>
 
     //#region -------------------- Value methods --------------------
 
@@ -88,16 +190,16 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public first(callback: BooleanCallback<T>,): NonNullable<T>
     public first<const S extends T, >(callback?: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
         if (this.isEmpty)
-            throw new ReferenceError("No element at the index 0 could be found since it it empty.")
+            throw new ReferenceError("No element at the index 0 could be found since it it empty.",)
         if (callback == null) {
             const element = this.firstOrNull()
             if (element == null)
-                throw new ReferenceError("There is no element at the index 0 in the current EnumArray.")
+                throw new ReferenceError("The first element is null in the collection.",)
             return element
         }
-        const element = this.firstOrNull(callback)
+        const element = this.firstOrNull(callback,)
         if (element == null)
-            throw new ReferenceError("There is no element at the index 0 (from a filter) in the current EnumArray.")
+            throw new ReferenceError("The first element (with filter) is null in the collection.",)
         return element
     }
 
@@ -107,11 +209,10 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public firstOrNull<const S extends T, >(callback?: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
         if (this.isEmpty)
             return null
-        if (callback == null)
-            return this.#first === undefined
-                ? this.#first = this._array[0] ?? null
-                : this.#first
-        return this.find(callback)
+        if (callback != null)
+            return this.find(callback,)
+
+        return this.#first
     }
 
 
@@ -120,16 +221,16 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public last(callback: BooleanCallback<T>,): NonNullable<T>
     public last<const S extends T, >(callback?: BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
         if (this.isEmpty)
-            throw new ReferenceError("No element at the index 0 could be found since it it empty.")
+            throw new ReferenceError("No element at the index 0 could be found since it it empty.",)
         if (callback == null) {
             const element = this.lastOrNull()
             if (element == null)
-                throw new ReferenceError("There is no element at the last index in the current EnumArray.")
+                throw new ReferenceError("The last element is null in the collection.",)
             return element
         }
-        const element = this.lastOrNull(callback)
+        const element = this.lastOrNull(callback,)
         if (element == null)
-            throw new ReferenceError("There is no element at the last index (from a filter) in the current EnumArray.")
+            throw new ReferenceError("The last element (with filter) is null in the collection.",)
         return element
     }
 
@@ -139,55 +240,89 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public lastOrNull<const S extends T, >(callback?: BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
         if (this.isEmpty)
             return null
-        if (callback == null)
-            return this.#last === undefined
-                ? this.#last = this._array[this.size - 1] ?? null
-                : this.#last
-        return this.findLast(callback)
+        if (callback != null)
+            return this.findLast(callback,)
+
+        return this.#last
     }
 
     //#endregion -------------------- Value methods --------------------
     //#region -------------------- Loop methods --------------------
 
-    /**
-     * Create a new instance of an {@link CollectionHolder} from an {@link Iterable} value
-     *
-     * @param iterable The iterable to send to the new instance
-     */
-    protected abstract _new<const U, >(iterable: Iterable<U>,): CollectionHolder<U>
-
     //#region -------------------- Has / includes / contains methods --------------------
 
     public hasOne(...values: readonly unknown[]): boolean {
+        const size = this.size
+        if (size === 0)
+            return false
+
+        const valueSize = values.length
+        if (valueSize === 0)
+            return true
+
         const array = this._array
-        for (let value of values)
-            if (array.includes(value as never))
+        if(size === 1)
+            return array.includes(values[0] as never,)
+
+        let valueIndex = -1
+        while (++valueIndex < valueSize)
+            if(array.includes(values[valueIndex] as never,))
                 return true
         return false
     }
 
-    public includesOne = this.hasOne
+    public includesOne(...values: readonly unknown[]): boolean {
+        return this.hasOne(...values,)
+    }
 
-    public containsOne = this.hasOne
+    public containsOne(...values: readonly unknown[]): boolean {
+        return this.hasOne(...values,)
+    }
 
 
     public hasAll(...values: readonly unknown[]): boolean {
+        const size = this.size
+        if (size === 0)
+            return false
+
+        const valueSize = values.length
+        if (valueSize === 0)
+            return true
+
         const array = this._array
-        for (let value of values)
-            if (!array.includes(value as never))
+        if(size === 1)
+            return array.includes(values[0] as never,)
+
+        let valueIndex = -1
+        while (++valueIndex < valueSize)
+            if(!array.includes(values[valueIndex] as never,))
                 return false
         return true
     }
 
-    public includesAll = this.hasAll
+    public includesAll(...values: readonly unknown[]): boolean {
+        return this.hasAll(...values,)
+    }
 
-    public containsAll = this.hasAll
+    public containsAll(...values: readonly unknown[]): boolean {
+        return this.hasAll(...values,)
+    }
 
     //#endregion -------------------- Has / includes / contains methods --------------------
     //#region -------------------- Join methods --------------------
 
-    public join(separator?: string,): string {
-        return this._array.join(separator,)
+    public join(separator: Nullable<string> = null, prefix: Nullable<string> = null, postfix: Nullable<string> = null, limit: Nullable<number> = null, truncated: Nullable<string> = null, transform: Nullable<JoinCallback<T>> = null,): string {
+        const size = this.size
+        separator ??= ", "
+        transform ??= it => `${it}`
+
+        let string = ''
+        const hasALimit = limit != null
+        const sizeMinus1 = (limit == null ? size : limit < 0 ? size + limit : limit) - 1
+        let index = -1
+        while (++index < sizeMinus1)
+            string += `${transform(this[index]!)}${separator}`
+        return `${prefix ?? '['}${string}${transform(this[index]!)}${hasALimit ? `${separator}${truncated ?? '…'}` : ''}${postfix ?? ']'}`
     }
 
     //#endregion -------------------- Join methods --------------------
@@ -196,30 +331,28 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public filter<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<S>
     public filter(callback: BooleanCallback<T>,): CollectionHolder<T>
     public filter<const S extends T, >(callback: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
-        return this._new(this._array.filter(callback,),)
+        return this._new(this._array.filter((value, index,) => callback(value, index,),),)
     }
 
     public filterByIndex(callback: BooleanIndexCallback,): CollectionHolder<T> {
-        return this.filter((_, index,) => callback(index,))
+        return this._new(this._array.filter((_, index,) => callback(index,),),)
     }
 
 
     public filterNot<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<Exclude<T, S>>
     public filterNot(callback: BooleanCallback<T>,): CollectionHolder<T>
     public filterNot<const S extends T, >(callback: | BooleanCallback<T> | RestrainedBooleanCallback<T, S>,) {
-        return this._new(this._array.filter((value, index) => !callback(value, index,),),)
+        return this._new(this._array.filter((value, index,) => !callback(value, index,),),)
     }
 
     public filterNotByIndex(callback: BooleanIndexCallback,): CollectionHolder<T> {
-        return this.filterNot((_, index,) => callback(index,),)
+        return this._new(this._array.filter((_, index,) => !callback(index,),),)
     }
 
 
-    public filterNonNull(): CollectionHolder<NonNullable<T>>
+    public filterNonNull(): FilterNonNull<T, this>
     public filterNonNull() {
-        return this.hasOne(null, undefined,)
-            ? this.filter((value,): value is NonNullable<T> => value != null,)
-            : this
+        return this.hasNull ? this._new(this._array.filter(it => it != null)) : this
     }
 
     //#endregion -------------------- Filter methods --------------------
@@ -232,7 +365,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     public findByIndex(callback: BooleanIndexCallback,): NullOr<T> {
-        return this.find((_, index,) => callback(index,),)
+        return this._array.find((_, index,) => callback(index,),) ?? null
     }
 
 
@@ -242,27 +375,45 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     public findIndexByIndex(callback: BooleanIndexCallback,): NullOr<number> {
-        return this.findIndex((_, index,) => callback(index,),)
+        const indexFound = this._array.findIndex((_, index,) => callback(index,),)
+        return indexFound == -1 ? null : indexFound
     }
 
 
     public findLast<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
     public findLast(callback: BooleanCallback<T>,): NullOr<T>
     public findLast<const S extends T, >(callback: | RestrainedBooleanCallback<T, S> | BooleanCallback<T>,) {
-        return this._array.findLast((value, index,) => callback(value, index,),) ?? null
+        let index = this.size
+        while (--index > 0) {
+            const value = this[index]!
+            if (callback(value, index,))
+                return value
+        }
+        return null
     }
 
     public findLastByIndex(callback: BooleanIndexCallback,): NullOr<T> {
-        return this.findLast((_, index,) => callback(index),)
+        let index = this.size
+        while (--index > 0)
+            if (callback(index,))
+                return this[index]!
+        return null
     }
 
     public findLastIndex(callback: BooleanCallback<T>,): NullOr<number> {
-        const indexFound = this._array.findLastIndex((value, index,) => callback(value, index,),)
-        return indexFound == -1 ? null : indexFound
+        let index = this.size
+        while (--index > 0)
+            if (callback(this[index]!, index,))
+                return index
+        return null
     }
 
     public findLastIndexByIndex(callback: BooleanIndexCallback,): NullOr<number> {
-        return this.findLastIndex((_, index,) => callback(index,),)
+        let index = this.size
+        while (--index > 0)
+            if (callback(index,))
+                return index
+        return null
     }
 
     //#endregion -------------------- Find methods --------------------
@@ -276,48 +427,113 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     public forEach(callback: ForEachCallback<T>,): this {
-        this._array.forEach((value, index,) => callback(value, index,),)
+        const size = this.size
+        let index = -1
+        while (++index < size)
+            callback(this[index]!, index,)
         return this
     }
 
     public forEachIndex(callback: ForEachIndexCallback,): this {
-        this._array.forEach((_, index,) => callback(index,),)
+        const size = this.size
+        let index = -1
+        while (++index < size)
+            callback(index,)
         return this
+    }
+
+
+    public reverse(fromIndex: Nullable<number> = null, toIndex: Nullable<number> = null,): CollectionHolder<T> {
+        const size = this.size
+        let startingIndex = fromIndex ?? 0,
+            endingIndex = toIndex ?? size
+
+        if (fromIndex != null) {
+            if (startingIndex < 0)
+                startingIndex = size + startingIndex
+            if (startingIndex < 0)
+                throw new RangeError(`The starting index "${fromIndex}" is under 0 after calculation from "${size} - ${Math.abs(fromIndex)}".`,)
+            if (startingIndex > size)
+                throw new RangeError(`The starting index "${fromIndex}" is over the collection size "${size}".`,)
+        }
+        if (toIndex != null) {
+            if (endingIndex < 0)
+                endingIndex = size + endingIndex
+            if (endingIndex < 0)
+                throw new RangeError(`The ending index "${toIndex}" is under 0 after calculation from "${size} - ${Math.abs(toIndex)}".`,)
+            if (endingIndex > size)
+                throw new RangeError(`The ending index "${toIndex}" is over the collection size "${size}".`,)
+        }
+        if (endingIndex < startingIndex)
+            throw new RangeError(`The ending index "${toIndex}"${(toIndex == startingIndex ? '' : ` ("${startingIndex}" after calculation)`)} is over the starting index "${fromIndex}"${fromIndex == endingIndex ? '' : `("${endingIndex}" after calculation)`}.`,)
+
+        const $this = this
+        return this._new({
+            * [Symbol.iterator]() {
+                let index = endingIndex
+                while (--index >= startingIndex)
+                    yield $this[index]!
+            },
+        },)
     }
 
     //#endregion -------------------- Loop methods --------------------
     //#region -------------------- Iterator methods --------------------
 
     public* [Symbol.iterator](): IterableIterator<T> {
-        yield* this._iterable
+        const size = this.size
+        let index = -1
+        while (++index < size)
+            yield this[index]!
     }
 
     //#endregion -------------------- Iterator methods --------------------
     //#region -------------------- Conversion methods --------------------
 
     public toArray(): readonly T[] {
-        return Object.freeze([...this,])
+        return this._array
     }
 
     public toMutableArray(): T[] {
-        return [...this,]
+        const size = this.size
+        const array = new Array<T>(size,)
+        let index = size
+        while (index-- > 0)
+            array[index] = this[index]!
+        return array
     }
 
     public toSet(): ReadonlySet<T> {
-        return Object.freeze(new Set(this,),)
+        return this.#set ??= Object.freeze(new Set(this,),)
     }
 
     public toMutableSet(): Set<T> {
         return new Set(this,)
     }
 
+    public toWeakSet(): Readonly<WeakSet<& T & object>> {
+        return this.#weakSet ??= Object.freeze(this.toMutableWeakSet())
+    }
+
+    public toMutableWeakSet(): WeakSet<& T & object> {
+        const size = this.size,
+            $this = this
+        return new WeakSet({
+            * [Symbol.iterator](): IterableIterator<& T & object> {
+                let index = -1
+                while (++index < size)
+                    yield Object($this[index]!)
+            }
+        },)
+    }
+
 
     public toString(): string {
-        return this._array.toString()
+        return this.join(null, '[', ']',)
     }
 
     public toLocaleString(): string {
-        return this._array.toLocaleString()
+        return this.join(null, '[', ']', null, null, it => it?.toLocaleString() ?? `${it}`,)
     }
 
     //#endregion -------------------- Conversion methods --------------------

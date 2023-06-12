@@ -1,5 +1,5 @@
-import {A_NULL_B_UNDEFINED, AB, AB12, ABCD, ABCD_ABCD, ABCD_NULL, ABCD_UNDEFINED, EMPTY, NULL_ABCD, UNDEFINED_ABCD} from "./constantCollections"
-import {nonPresentItem, sizeValues, templateCollection, templateItems}                                              from "./constantValues"
+import {A_NULL_B_UNDEFINED, AB, AB12, AB_OBJECT, ABCD, ABCD_ABCD, ABCD_NULL, ABCD_UNDEFINED, ABCDEFGHIJ, EMPTY, NULL_ABCD, UNDEFINED_ABCD} from "./constantCollections"
+import {nonPresentItem, sizeValues, templateCollection, templateItems}                                                                     from "./constantValues"
 
 describe("CollectionHolderTest", () => {
     describe("size", () => describe.each(sizeValues,)("%s", ({value: {collection: it, size,},},) => {
@@ -29,7 +29,7 @@ describe("CollectionHolderTest", () => {
             test("[a,b,c,d,null].first() == a", () => expect(ABCD_NULL.first(),).toBe('a',),)
             describe("[undefined,a,b,c,d].first() == throw|null", () => {
                 test("throw", () => expect(() => UNDEFINED_ABCD.first(),).toThrow(ReferenceError,),)
-                test("or null", () => expect(UNDEFINED_ABCD.firstOrNull(),).toBeNull(),)
+                test("or null", () => expect(UNDEFINED_ABCD.firstOrNull(),).toBeUndefined(),)
             },)
             test("[a,b,c,d,undefined].first() == a", () => expect(ABCD_UNDEFINED.first(),).toBe('a',),)
 
@@ -60,7 +60,7 @@ describe("CollectionHolderTest", () => {
             test("[undefined,a,b,c,d].last() == d", () => expect(UNDEFINED_ABCD.last(),).toBe('d',),)
             describe("[a,b,c,d,undefined].last() == throw|null", () => {
                 test("throw", () => expect(() => ABCD_UNDEFINED.last(),).toThrow(ReferenceError,),)
-                test("or null", () => expect(ABCD_UNDEFINED.lastOrNull(),).toBeNull(),)
+                test("or null", () => expect(ABCD_UNDEFINED.lastOrNull(),).toBeUndefined(),)
             },)
 
             test("[a,b,c,d].last(!d) == c", () => expect(ABCD.last(it => it !== 'd',),).toBe('c',),)
@@ -72,8 +72,19 @@ describe("CollectionHolderTest", () => {
             test("[undefined,a,b,c,d].last(!d) == c", () => expect(UNDEFINED_ABCD.last(it => it !== 'd',),).toBe('c',),)
             describe("[a,b,c,d,undefined].last(!d) == throw|null", () => {
                 test("throw", () => expect(() => ABCD_UNDEFINED.last(it => it !== 'd',),).toThrow(ReferenceError,),)
-                test("or null", () => expect(ABCD_UNDEFINED.lastOrNull(it => it !== 'd',),).toBeNull(),)
+                test("or null", () => expect(ABCD_UNDEFINED.lastOrNull(it => it !== 'd',),).toBeUndefined(),)
             },)
+        },)
+    },)
+    describe('has …', () => {
+        describe('null', () => {
+            test('[a,b] == false', () => expect(AB.hasNull,).toBeFalse(),)
+            test('[a,b,null,c,d,undefined] == true', () => expect(A_NULL_B_UNDEFINED.hasNull,).toBeTrue(),)
+            test('[a,b,1,2] == false', () => expect(AB12.hasNull,).toBeFalse(),)
+            test('[null,a,b,c,d] == true', () => expect(ABCD_NULL.hasNull,).toBeTrue(),)
+            test('[a,b,c,d,null] == true', () => expect(ABCD_NULL.hasNull,).toBeTrue(),)
+            test('[undefined,a,b,c,d] == true', () => expect(UNDEFINED_ABCD.hasNull,).toBeTrue(),)
+            test('[a,b,c,d,undefined] == true', () => expect(ABCD_UNDEFINED.hasNull,).toBeTrue(),)
         },)
     },)
     describe("has / includes / contains", () => {
@@ -82,47 +93,63 @@ describe("CollectionHolderTest", () => {
             test("includes", () => expect(templateCollection.includesOne(it,),).toBeTrue(),)
             test("contains", () => expect(templateCollection.containsOne(it,),).toBeTrue(),)
 
-            test("has with not present", () => expect(templateCollection.hasOne(it, nonPresentItem,),).toBeTrue(),)
-            test("includes with not present", () => expect(templateCollection.includesOne(it, nonPresentItem,),).toBeTrue(),)
-            test("contains with not present", () => expect(templateCollection.containsOne(it, nonPresentItem,),).toBeTrue(),)
-
-            test('has not Object(value)', () => expect(templateCollection.hasOne(Object(it,),),).toBeFalse(),)
-            test('includes not Object(value)', () => expect(templateCollection.includesOne(Object(it,),),).toBeFalse(),)
-            test('contains not Object(value)', () => expect(templateCollection.containsAll(Object(it,),),).toBeFalse(),)
-
-            test('has not [value]', () => expect(templateCollection.hasOne([it,],),).toBeFalse(),)
-            test('includes not [value]', () => expect(templateCollection.includesOne([it,],),).toBeFalse(),)
-            test('contains not [value]', () => expect(templateCollection.containsOne([it,],),).toBeFalse(),)
-
-            test('has not {value}', () => expect(templateCollection.hasOne({it,},),).toBeFalse(),)
-            test('includes not {value}', () => expect(templateCollection.includesOne({it,},),).toBeFalse(),)
-            test('contains not {value}', () => expect(templateCollection.containsOne({it,},),).toBeFalse(),)
+            describe('value + nonPresentItem', () => {
+                test("has", () => expect(templateCollection.hasOne(it, nonPresentItem,),).toBeTrue(),)
+                test("includes", () => expect(templateCollection.includesOne(it, nonPresentItem,),).toBeTrue(),)
+                test("contains", () => expect(templateCollection.containsOne(it, nonPresentItem,),).toBeTrue(),)
+            },)
+            describe('Object(value)', () => {
+                test('has not', () => expect(templateCollection.hasOne(Object(it,),),).toBeFalse(),)
+                test('includes', () => expect(templateCollection.includesOne(Object(it,),),).toBeFalse(),)
+                test('contains', () => expect(templateCollection.containsOne(Object(it,),),).toBeFalse(),)
+            },)
+            describe('[value]', () => {
+                test('has', () => expect(templateCollection.hasOne([it,],),).toBeFalse(),)
+                test('includes', () => expect(templateCollection.includesOne([it,],),).toBeFalse(),)
+                test('contains', () => expect(templateCollection.containsOne([it,],),).toBeFalse(),)
+            },)
+            describe('{value}', () => {
+                test('has', () => expect(templateCollection.hasOne({it,},),).toBeFalse(),)
+                test('includes', () => expect(templateCollection.includesOne({it,},),).toBeFalse(),)
+                test('contains', () => expect(templateCollection.containsOne({it,},),).toBeFalse(),)
+            },)
         },),)
         describe("all", () => describe.each(templateItems,)("%s", it => {
             test("has", () => expect(templateCollection.hasAll(it,),).toBeTrue(),)
             test("includes", () => expect(templateCollection.includesAll(it,),).toBeTrue(),)
             test("contains", () => expect(templateCollection.containsAll(it,),).toBeTrue(),)
 
-            test("has not with not present", () => expect(templateCollection.hasAll(it, nonPresentItem,),).toBeFalse(),)
-            test("includes not with not present", () => expect(templateCollection.includesAll(it, nonPresentItem,),).toBeFalse(),)
-            test("contains not with not present", () => expect(templateCollection.containsAll(it, nonPresentItem,),).toBeFalse(),)
-
-            test('has not Object(value)', () => expect(templateCollection.hasAll(Object(it,),),).toBeFalse(),)
-            test('includes not Object(value)', () => expect(templateCollection.includesAll(Object(it,),),).toBeFalse(),)
-            test('contains not Object(value)', () => expect(templateCollection.containsAll(Object(it,),),).toBeFalse(),)
-
-            test('has not [value]', () => expect(templateCollection.hasAll([it,],),).toBeFalse(),)
-            test('includes not [value]', () => expect(templateCollection.includesAll([it,],),).toBeFalse(),)
-            test('contains not [value]', () => expect(templateCollection.containsAll([it,],),).toBeFalse(),)
-
-            test('has not {value}', () => expect(templateCollection.hasAll({it,},),).toBeFalse(),)
-            test('includes not {value}', () => expect(templateCollection.includesAll({it,},),).toBeFalse(),)
-            test('contains not {value}', () => expect(templateCollection.containsAll({it,},),).toBeFalse(),)
+            describe('value + nonPresentItem', () => {
+                test("has", () => expect(templateCollection.hasAll(it, nonPresentItem,),).toBeFalse(),)
+                test("includes", () => expect(templateCollection.includesAll(it, nonPresentItem,),).toBeFalse(),)
+                test("contains", () => expect(templateCollection.containsAll(it, nonPresentItem,),).toBeFalse(),)
+            },)
+            describe('Object(value)', () => {
+                test('has not', () => expect(templateCollection.hasAll(Object(it,),),).toBeFalse(),)
+                test('includes', () => expect(templateCollection.includesAll(Object(it,),),).toBeFalse(),)
+                test('contains', () => expect(templateCollection.containsAll(Object(it,),),).toBeFalse(),)
+            },)
+            describe('[value]', () => {
+                test('has', () => expect(templateCollection.hasAll([it,],),).toBeFalse(),)
+                test('includes', () => expect(templateCollection.includesAll([it,],),).toBeFalse(),)
+                test('contains', () => expect(templateCollection.containsAll([it,],),).toBeFalse(),)
+            },)
+            describe('{value}', () => {
+                test('has', () => expect(templateCollection.hasAll({it,},),).toBeFalse(),)
+                test('includes', () => expect(templateCollection.includesAll({it,},),).toBeFalse(),)
+                test('contains', () => expect(templateCollection.containsAll({it,},),).toBeFalse(),)
+            },)
         },),)
     },)
     describe("join", () => {
-        test("a,b", () => expect(AB.join(),).toBe("a,b"),)
-        test("a;b", () => expect(AB.join(';',),).toBe("a;b"),)
+        test("[a,b].join()", () => expect(AB.join(),).toBe("[a, b]",),)
+        test("[a,b].join(;)", () => expect(AB.join(';',),).toBe("[a;b]",),)
+        test("[a,b].join(null, <)", () => expect(AB.join(null,'<', null,),).toBe("<a, b]",),)
+        test("[a,b].join(null, null, >)", () => expect(AB.join(null,null, '>',),).toBe("[a, b>",),)
+        test("[a,b].join(null, null, null, 1)", () => expect(AB.join(null,null, null, 1,),).toBe("[a, …]",),)
+        test("[a,b].join(null, null, null, null, \"...\")", () => expect(AB.join(null,null, null, null, "...",),).toBe("[a, b]",),)
+        test("[a,b].join(null, null, null, 1, \"...\")", () => expect(AB.join(null,null, null, 1, "...",),).toBe("[a, ...]",),)
+        test("[a,b].join(null, null, null, null, () => toUpperCase)", () => expect(AB.join(null,null, null, null, null, it => it.toUpperCase(),),).toBe("[A, B]",),)
     },)
     describe("filter", () => {
         test("[a,b,c,d].filter(d) == [d]", () => expect(ABCD.filter(it => it === 'd',).toArray(),).toStrictEqual(['d',],),)
@@ -133,14 +160,14 @@ describe("CollectionHolderTest", () => {
         test("[a,b,1,2].filterNot(number) == [a,b]", () => expect(AB12.filterNot((it): it is (| 1 | 2) => typeof it == 'number',).toArray(),).toStrictEqual(['a', 'b',],),)
         test("[a,null,b,undefined].filterNotNull() == [a,b]", () => expect(A_NULL_B_UNDEFINED.filterNonNull().toArray(),).toStrictEqual(['a', 'b',],),)
         test("[a,null,b,undefined].filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED.filterNonNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
-        test("[a,null,b,undefined].filterNot(null).filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED.filterNot((it): it is null => it === null).filterNonNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
-        test("[a,null,b,undefined].filterNot(undefined).filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED.filterNot((it): it is undefined => it === undefined).filterNonNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
+        test("[a,null,b,undefined].filterNot(null).filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED.filterNot(it => it === null).filterNonNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
+        test("[a,null,b,undefined].filterNot(undefined).filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED.filterNot(it => it === undefined).filterNonNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
         test("[a,null,b,undefined].filterNot(undefined).filterNot(null).filterNotNull() == last iteration", () => {
-            const lastIteration = A_NULL_B_UNDEFINED.filterNot((it): it is undefined => it === undefined).filterNot((it): it is null => it === null)
+            const lastIteration = A_NULL_B_UNDEFINED.filterNot(it => it === undefined).filterNot((it): it is null => it === null)
             expect(lastIteration.filterNonNull(),).toStrictEqual(lastIteration,)
         },)
         test("[a,null,b,undefined].filterNot(null).filterNot(undefined).filterNotNull() == last iteration", () => {
-            const lastIteration = A_NULL_B_UNDEFINED.filterNot((it): it is null => it === null).filterNot((it): it is undefined => it === undefined)
+            const lastIteration = A_NULL_B_UNDEFINED.filterNot(it => it === null).filterNot((it): it is undefined => it === undefined)
             expect(lastIteration.filterNonNull(),).toStrictEqual(lastIteration,)
         },)
         test("[a,b].filterNotNull() == this", () => expect(AB.filterNonNull(),).toStrictEqual(AB,),)
@@ -170,6 +197,30 @@ describe("CollectionHolderTest", () => {
         test("[a,b,c,d,A,B,C,D].findLastIndexByIndex(odd) == 7", () => expect(ABCD_ABCD.findLastIndexByIndex(it => it % 2 === 1,),).toBe(7,),)
         test("[a,b,c,d,A,B,C,D].findLastIndexByIndex(26) == null", () => expect(ABCD_ABCD.findLastIndexByIndex(it => it === 26,),).toBeNull(),)
     },)
+    describe("reverse", () => {
+        test("[a,b,c,d,e,f,g,h,i,j].reverse() == [j,i,h,g,f,e,d,c,b,a]", () => expect(ABCDEFGHIJ.reverse().toArray(),).toStrictEqual(['j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a',],),)
+
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(2) == [j,i,h,g,f,e,d,c]", () => expect(ABCDEFGHIJ.reverse(2,).toArray(),).toStrictEqual(['j', 'i', 'h', 'g', 'f', 'e', 'd', 'c',],),)
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(null, 2) == [j,i]", () => expect(ABCDEFGHIJ.reverse(null, 2,).toArray(),).toStrictEqual(['b', 'a',],),)
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(2, 5) == [e,d,c]", () => expect(ABCDEFGHIJ.reverse(2, 5,).toArray(),).toStrictEqual(['e', 'd', 'c',],),)
+
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(-2) == [j,i]", () => expect(ABCDEFGHIJ.reverse(-2,).toArray(),).toStrictEqual(['j', 'i',],),)
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(null, -2) == [h,g,f,e,d,c,b,a]", () => expect(ABCDEFGHIJ.reverse(null, -2,).toArray(),).toStrictEqual(['h', 'g', 'f', 'e', 'd', 'c', 'b', 'a',],),)
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(-5, -2) == [g,f,e,d,c]", () => expect(ABCDEFGHIJ.reverse(-5, -2,).toArray(),).toStrictEqual(['h', 'g', 'f',],),)
+
+        test('[a,b,c,d,e,f,g,h,i,j].reverse(2, 1) => error', () => expect(() => ABCDEFGHIJ.reverse(2, 1,),).toThrow(RangeError,),)
+
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(400) => error", () => expect(() => ABCDEFGHIJ.reverse(400,),).toThrow(RangeError,),)
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(-400) => error", () => expect(() => ABCDEFGHIJ.reverse(-400,),).toThrow(RangeError,),)
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(null, 400) => error", () => expect(() => ABCDEFGHIJ.reverse(null, 400,),).toThrow(RangeError,),)
+        test("[a,b,c,d,e,f,g,h,i,j].reverse(null, -400) => error", () => expect(() => ABCDEFGHIJ.reverse(null, -400,),).toThrow(RangeError,),)
+    },)
+    describe("iterator", () => {
+        const iterator = AB[Symbol.iterator]()
+        test("1st: a", () => expect(iterator.next().value,).toBe('a',),)
+        test("2nd: b", () => expect(iterator.next().value,).toBe('b',),)
+        test("3rd: done", () => expect(iterator.next().done,).toBe(true,),)
+    },)
     describe("conversion", () => {
         describe("to array", () => {
             test("basic", () => expect(AB.toArray(),).toStrictEqual(['a', 'b',],),)
@@ -181,11 +232,19 @@ describe("CollectionHolderTest", () => {
         })
         describe("to set", () => {
             test("basic", () => expect(AB.toSet(),).toStrictEqual(new Set(['a', 'b',],),),)
-            test("frozen", () => expect(AB.toArray(),).toBeFrozen(),)
+            test("frozen", () => expect(AB.toSet(),).toBeFrozen(),)
         })
         describe("to mutable set", () => {
             test("basic", () => expect(AB.toMutableSet(),).toStrictEqual(new Set(['a', 'b',],),),)
             test("frozen", () => expect(AB.toMutableSet(),).not.toBeFrozen(),)
+        })
+        describe("to weak set", () => {
+            test("basic", () => expect(AB_OBJECT.toWeakSet(),).toStrictEqual(new WeakSet([AB_OBJECT[0]!, AB_OBJECT[1]!,],),),)
+            test("frozen", () => expect(AB.toWeakSet(),).toBeFrozen(),)
+        })
+        describe("to mutable weak set", () => {
+            test("basic", () => expect(AB_OBJECT.toMutableWeakSet(),).toStrictEqual(new WeakSet([AB_OBJECT[0]!, AB_OBJECT[1]!,],),),)
+            test("frozen", () => expect(AB.toMutableWeakSet(),).not.toBeFrozen(),)
         })
     },)
 },)
