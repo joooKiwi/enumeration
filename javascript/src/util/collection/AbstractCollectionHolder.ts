@@ -152,11 +152,11 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this.#hasNull
     }
 
-    public get includesNull() {
+    public get includesNull(): this['hasNull'] {
         return this.hasNull
     }
 
-    public get containsNull() {
+    public get containsNull(): this['hasNull'] {
         return this.hasNull
     }
 
