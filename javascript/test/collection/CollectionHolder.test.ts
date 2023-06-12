@@ -93,10 +93,10 @@ describe("CollectionHolderTest", () => {
             test("includes", () => expect(templateCollection.includesOne(it,),).toBeTrue(),)
             test("contains", () => expect(templateCollection.containsOne(it,),).toBeTrue(),)
 
-            describe('with not present', () => {
-                test("has", () => expect(templateCollection.hasOne(it, nonPresentItem,),).toBeFalse(),)
-                test("includes", () => expect(templateCollection.includesOne(it, nonPresentItem,),).toBeFalse(),)
-                test("contains", () => expect(templateCollection.containsOne(it, nonPresentItem,),).toBeFalse(),)
+            describe('value + nonPresentItem', () => {
+                test("has", () => expect(templateCollection.hasOne(it, nonPresentItem,),).toBeTrue(),)
+                test("includes", () => expect(templateCollection.includesOne(it, nonPresentItem,),).toBeTrue(),)
+                test("contains", () => expect(templateCollection.containsOne(it, nonPresentItem,),).toBeTrue(),)
             },)
             describe('Object(value)', () => {
                 test('has not', () => expect(templateCollection.hasOne(Object(it,),),).toBeFalse(),)
@@ -119,7 +119,7 @@ describe("CollectionHolderTest", () => {
             test("includes", () => expect(templateCollection.includesAll(it,),).toBeTrue(),)
             test("contains", () => expect(templateCollection.containsAll(it,),).toBeTrue(),)
 
-            describe('with not present', () => {
+            describe('value + nonPresentItem', () => {
                 test("has", () => expect(templateCollection.hasAll(it, nonPresentItem,),).toBeFalse(),)
                 test("includes", () => expect(templateCollection.includesAll(it, nonPresentItem,),).toBeFalse(),)
                 test("contains", () => expect(templateCollection.containsAll(it, nonPresentItem,),).toBeFalse(),)
