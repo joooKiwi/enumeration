@@ -41,7 +41,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
             this.#isEmpty = false as IsEmpty<this>
             if (size == 1) {
-                const value = this.#first = this.#last = iterable[0]
+                const value = this.#first = this.#last = this[0] = iterable[0]
                 this.#array = Object.freeze([value,],)
                 return
             }
@@ -68,7 +68,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
             this.#isEmpty = false as IsEmpty<this>
             if (size == 1) {
-                const value = this.#first = this.#last = iterable[Symbol.iterator]().next().value
+                const value = this.#first = this.#last = this[0] = iterable[Symbol.iterator]().next().value
                 this.#array = Object.freeze([value,],)
                 return
             }
