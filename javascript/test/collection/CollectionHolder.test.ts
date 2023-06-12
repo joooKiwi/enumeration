@@ -76,6 +76,17 @@ describe("CollectionHolderTest", () => {
             },)
         },)
     },)
+    describe('has …', () => {
+        describe('null', () => {
+            test('[a,b] == false', () => expect(AB.hasNull,).toBeFalse(),)
+            test('[a,b,null,c,d,undefined] == true', () => expect(A_NULL_B_UNDEFINED.hasNull,).toBeTrue(),)
+            test('[a,b,1,2] == false', () => expect(AB12.hasNull,).toBeFalse(),)
+            test('[null,a,b,c,d] == true', () => expect(ABCD_NULL.hasNull,).toBeTrue(),)
+            test('[a,b,c,d,null] == true', () => expect(ABCD_NULL.hasNull,).toBeTrue(),)
+            test('[undefined,a,b,c,d] == true', () => expect(UNDEFINED_ABCD.hasNull,).toBeTrue(),)
+            test('[a,b,c,d,undefined] == true', () => expect(ABCD_UNDEFINED.hasNull,).toBeTrue(),)
+        },)
+    },)
     describe("has / includes / contains", () => {
         describe("one", () => describe.each(templateItems,)("%s", it => {
             test("has", () => expect(templateCollection.hasOne(it,),).toBeTrue(),)
