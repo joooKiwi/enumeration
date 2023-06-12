@@ -26,6 +26,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     //#region -------------------- Constructor --------------------
 
     protected constructor(iterable: Iterable<T>,) {
+        //TODO implement the proxy pattern to have the index retrieved only when needed
         this.#reference = iterable
 
         if (iterable instanceof Array) {
