@@ -1,6 +1,6 @@
 {
   "name": "@joookiwi/enumerable",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "A Javascript implementation of an enum class",
 
   "scripts": {
@@ -141,7 +141,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^29.5.2",
-    "@types/node": "^20.2.5",
+    "@types/node": "^20.3.0",
     "del-cli": "^5.0.0",
     "jest-environment-jsdom": "^29.5.0",
     "jest-extended": "^4.0.0",
