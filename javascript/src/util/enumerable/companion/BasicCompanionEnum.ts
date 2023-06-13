@@ -166,8 +166,8 @@ export class BasicCompanionEnum<const ENUMERABLE extends Enumerable,
 
         const everyFieldsSize = everyFields.length
         let currentOrdinal = 0
-        let everyFieldsIndex = everyFieldsSize
-        while (--everyFieldsIndex > 0) {
+        let everyFieldsIndex = -1
+        while (++everyFieldsIndex < everyFieldsSize) {
             const [name, property,] = everyFields[everyFieldsIndex]!
             if (property.get != null)
                 continue
