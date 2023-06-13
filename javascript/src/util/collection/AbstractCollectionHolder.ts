@@ -261,7 +261,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
             return true
 
         const array = this._array
-        if(size === 1)
+        if(valueSize === 1)
             return array.includes(values[0] as never,)
 
         let valueIndex = -1
@@ -290,7 +290,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
             return true
 
         const array = this._array
-        if(size === 1)
+        if(valueSize === 1)
             return array.includes(values[0] as never,)
 
         let valueIndex = -1
