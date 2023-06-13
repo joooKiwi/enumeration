@@ -76,15 +76,35 @@ describe("CollectionHolderTest", () => {
             },)
         },)
     },)
-    describe('has …', () => {
-        describe('null', () => {
-            test('[a,b] == false', () => expect(AB.hasNull,).toBeFalse(),)
-            test('[a,b,null,c,d,undefined] == true', () => expect(A_NULL_B_UNDEFINED.hasNull,).toBeTrue(),)
-            test('[a,b,1,2] == false', () => expect(AB12.hasNull,).toBeFalse(),)
-            test('[null,a,b,c,d] == true', () => expect(ABCD_NULL.hasNull,).toBeTrue(),)
-            test('[a,b,c,d,null] == true', () => expect(ABCD_NULL.hasNull,).toBeTrue(),)
-            test('[undefined,a,b,c,d] == true', () => expect(UNDEFINED_ABCD.hasNull,).toBeTrue(),)
-            test('[a,b,c,d,undefined] == true', () => expect(ABCD_UNDEFINED.hasNull,).toBeTrue(),)
+    describe("has / includes / contains …", () => {
+        describe("null", () => {
+            describe("has", () => {
+                test("[a,b] == false", () => expect(AB.hasNull,).toBeFalse(),)
+                test("[a,b,null,c,d,undefined] == true", () => expect(A_NULL_B_UNDEFINED.hasNull,).toBeTrue(),)
+                test("[a,b,1,2] == false", () => expect(AB12.hasNull,).toBeFalse(),)
+                test("[null,a,b,c,d] == true", () => expect(ABCD_NULL.hasNull,).toBeTrue(),)
+                test("[a,b,c,d,null] == true", () => expect(ABCD_NULL.hasNull,).toBeTrue(),)
+                test("[undefined,a,b,c,d] == true", () => expect(UNDEFINED_ABCD.hasNull,).toBeTrue(),)
+                test("[a,b,c,d,undefined] == true", () => expect(ABCD_UNDEFINED.hasNull,).toBeTrue(),)
+            },)
+            describe("includes", () => {
+                test("[a,b] == false", () => expect(AB.includesNull,).toBeFalse(),)
+                test("[a,b,null,c,d,undefined] == true", () => expect(A_NULL_B_UNDEFINED.includesNull,).toBeTrue(),)
+                test("[a,b,1,2] == false", () => expect(AB12.includesNull,).toBeFalse(),)
+                test("[null,a,b,c,d] == true", () => expect(ABCD_NULL.includesNull,).toBeTrue(),)
+                test("[a,b,c,d,null] == true", () => expect(ABCD_NULL.includesNull,).toBeTrue(),)
+                test("[undefined,a,b,c,d] == true", () => expect(UNDEFINED_ABCD.includesNull,).toBeTrue(),)
+                test("[a,b,c,d,undefined] == true", () => expect(ABCD_UNDEFINED.includesNull,).toBeTrue(),)
+            },)
+            describe("contains", () => {
+                test("[a,b] == false", () => expect(AB.containsNull,).toBeFalse(),)
+                test("[a,b,null,c,d,undefined] == true", () => expect(A_NULL_B_UNDEFINED.containsNull,).toBeTrue(),)
+                test("[a,b,1,2] == false", () => expect(AB12.containsNull,).toBeFalse(),)
+                test("[null,a,b,c,d] == true", () => expect(ABCD_NULL.containsNull,).toBeTrue(),)
+                test("[a,b,c,d,null] == true", () => expect(ABCD_NULL.containsNull,).toBeTrue(),)
+                test("[undefined,a,b,c,d] == true", () => expect(UNDEFINED_ABCD.containsNull,).toBeTrue(),)
+                test("[a,b,c,d,undefined] == true", () => expect(ABCD_UNDEFINED.containsNull,).toBeTrue(),)
+            },)
         },)
     },)
     describe("has / includes / contains", () => {
