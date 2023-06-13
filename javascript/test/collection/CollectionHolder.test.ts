@@ -1,5 +1,5 @@
-import {A_NULL_B_UNDEFINED, AB, AB12, AB_OBJECT, ABCD, ABCD_ABCD, ABCD_NULL, ABCD_UNDEFINED, ABCDEFGHIJ, EMPTY, NULL_ABCD, UNDEFINED_ABCD} from "./constantCollections"
-import {nonPresentItem, sizeValues, templateCollection, templateItems}                                                                     from "./constantValues"
+import {A, A_NULL_B_UNDEFINED, AB, AB12, AB_OBJECT, ABCD, ABCD_ABCD, ABCD_NULL, ABCD_UNDEFINED, ABCDEFGHIJ, EMPTY, NULL_ABCD, UNDEFINED_ABCD} from "./constantCollections"
+import {nonPresentItem, sizeValues, templateCollection, templateItems}                                                                        from "./constantValues"
 
 describe("CollectionHolderTest", () => {
     describe("size", () => describe.each(sizeValues,)("%s", ({value: {collection: it, size,},},) => {
