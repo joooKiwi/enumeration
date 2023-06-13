@@ -1,6 +1,7 @@
 import {GenericCollectionHolder} from "../../src/util/collection/GenericCollectionHolder"
 
 export const EMPTY = new GenericCollectionHolder([],),
+    A = new GenericCollectionHolder(['a',],),
     AB = new GenericCollectionHolder(['a', 'b',],),
     AB_OBJECT = new GenericCollectionHolder([new String('a',), new String('b',),],),
     A_NULL_B_UNDEFINED = new GenericCollectionHolder(['a', null, 'b', undefined,],),

@@ -98,10 +98,10 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
         const array = []
         this.#isEmpty = false as IsEmpty<this>
-        this.#first = this[0] = array[0] = value.value
+        const first = this.#first = this[0] = array[0] = value.value
         value = iterator.next()
         let size = 1,
-            last = null as NullOr<T>
+            last = first as NullOr<T>
         while (!value.done) {
             this[size] = array[size] = last = value.value
             value = iterator.next()
@@ -261,7 +261,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
             return true
 
         const array = this._array
-        if(size === 1)
+        if(valueSize === 1)
             return array.includes(values[0] as never,)
 
         let valueIndex = -1
@@ -290,7 +290,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
             return true
 
         const array = this._array
-        if(size === 1)
+        if(valueSize === 1)
             return array.includes(values[0] as never,)
 
         let valueIndex = -1

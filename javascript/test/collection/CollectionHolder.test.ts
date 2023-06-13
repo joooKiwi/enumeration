@@ -1,5 +1,5 @@
-import {A_NULL_B_UNDEFINED, AB, AB12, AB_OBJECT, ABCD, ABCD_ABCD, ABCD_NULL, ABCD_UNDEFINED, ABCDEFGHIJ, EMPTY, NULL_ABCD, UNDEFINED_ABCD} from "./constantCollections"
-import {nonPresentItem, sizeValues, templateCollection, templateItems}                                                                     from "./constantValues"
+import {A, A_NULL_B_UNDEFINED, AB, AB12, AB_OBJECT, ABCD, ABCD_ABCD, ABCD_NULL, ABCD_UNDEFINED, ABCDEFGHIJ, EMPTY, NULL_ABCD, UNDEFINED_ABCD} from "./constantCollections"
+import {nonPresentItem, sizeValues, templateCollection, templateItems}                                                                        from "./constantValues"
 
 describe("CollectionHolderTest", () => {
     describe("size", () => describe.each(sizeValues,)("%s", ({value: {collection: it, size,},},) => {
@@ -76,70 +76,140 @@ describe("CollectionHolderTest", () => {
             },)
         },)
     },)
-    describe('has …', () => {
-        describe('null', () => {
-            test('[a,b] == false', () => expect(AB.hasNull,).toBeFalse(),)
-            test('[a,b,null,c,d,undefined] == true', () => expect(A_NULL_B_UNDEFINED.hasNull,).toBeTrue(),)
-            test('[a,b,1,2] == false', () => expect(AB12.hasNull,).toBeFalse(),)
-            test('[null,a,b,c,d] == true', () => expect(ABCD_NULL.hasNull,).toBeTrue(),)
-            test('[a,b,c,d,null] == true', () => expect(ABCD_NULL.hasNull,).toBeTrue(),)
-            test('[undefined,a,b,c,d] == true', () => expect(UNDEFINED_ABCD.hasNull,).toBeTrue(),)
-            test('[a,b,c,d,undefined] == true', () => expect(ABCD_UNDEFINED.hasNull,).toBeTrue(),)
+    describe("has / includes / contains …", () => {
+        describe("null", () => {
+            describe("has", () => {
+                test("[a,b] == false", () => expect(AB.hasNull,).toBeFalse(),)
+                test("[a,b,null,c,d,undefined] == true", () => expect(A_NULL_B_UNDEFINED.hasNull,).toBeTrue(),)
+                test("[a,b,1,2] == false", () => expect(AB12.hasNull,).toBeFalse(),)
+                test("[null,a,b,c,d] == true", () => expect(ABCD_NULL.hasNull,).toBeTrue(),)
+                test("[a,b,c,d,null] == true", () => expect(ABCD_NULL.hasNull,).toBeTrue(),)
+                test("[undefined,a,b,c,d] == true", () => expect(UNDEFINED_ABCD.hasNull,).toBeTrue(),)
+                test("[a,b,c,d,undefined] == true", () => expect(ABCD_UNDEFINED.hasNull,).toBeTrue(),)
+            },)
+            describe("includes", () => {
+                test("[a,b] == false", () => expect(AB.includesNull,).toBeFalse(),)
+                test("[a,b,null,c,d,undefined] == true", () => expect(A_NULL_B_UNDEFINED.includesNull,).toBeTrue(),)
+                test("[a,b,1,2] == false", () => expect(AB12.includesNull,).toBeFalse(),)
+                test("[null,a,b,c,d] == true", () => expect(ABCD_NULL.includesNull,).toBeTrue(),)
+                test("[a,b,c,d,null] == true", () => expect(ABCD_NULL.includesNull,).toBeTrue(),)
+                test("[undefined,a,b,c,d] == true", () => expect(UNDEFINED_ABCD.includesNull,).toBeTrue(),)
+                test("[a,b,c,d,undefined] == true", () => expect(ABCD_UNDEFINED.includesNull,).toBeTrue(),)
+            },)
+            describe("contains", () => {
+                test("[a,b] == false", () => expect(AB.containsNull,).toBeFalse(),)
+                test("[a,b,null,c,d,undefined] == true", () => expect(A_NULL_B_UNDEFINED.containsNull,).toBeTrue(),)
+                test("[a,b,1,2] == false", () => expect(AB12.containsNull,).toBeFalse(),)
+                test("[null,a,b,c,d] == true", () => expect(ABCD_NULL.containsNull,).toBeTrue(),)
+                test("[a,b,c,d,null] == true", () => expect(ABCD_NULL.containsNull,).toBeTrue(),)
+                test("[undefined,a,b,c,d] == true", () => expect(UNDEFINED_ABCD.containsNull,).toBeTrue(),)
+                test("[a,b,c,d,undefined] == true", () => expect(ABCD_UNDEFINED.containsNull,).toBeTrue(),)
+            },)
         },)
     },)
     describe("has / includes / contains", () => {
-        describe("one", () => describe.each(templateItems,)("%s", it => {
-            test("has", () => expect(templateCollection.hasOne(it,),).toBeTrue(),)
-            test("includes", () => expect(templateCollection.includesOne(it,),).toBeTrue(),)
-            test("contains", () => expect(templateCollection.containsOne(it,),).toBeTrue(),)
+        describe("one", () => {
+            describe("singular item", () => {
+                describe('a', () => {
+                    test("has", () => expect(A.hasOne('a',),).toBeTrue(),)
+                    test("includes", () => expect(A.includesOne('a',),).toBeTrue(),)
+                    test("contains", () => expect(A.containsOne('a',),).toBeTrue(),)
+                },)
+                describe('b', () => {
+                    test("has", () => expect(A.hasOne('b',),).toBeFalse(),)
+                    test("includes", () => expect(A.includesOne('b',),).toBeFalse(),)
+                    test("contains", () => expect(A.containsOne('b',),).toBeFalse(),)
+                },)
+                describe("a,b", () => {
+                    test("has", () => expect(A.hasOne('a', 'b',),).toBeTrue(),)
+                    test("includes", () => expect(A.includesOne('a', 'b',),).toBeTrue(),)
+                    test("contains", () => expect(A.containsOne('a', 'b',),).toBeTrue(),)
+                },)
+                describe("b,a", () => {
+                    test("has", () => expect(A.hasOne('b', 'a',),).toBeTrue(),)
+                    test("includes", () => expect(A.includesOne('b', 'a',),).toBeTrue(),)
+                    test("contains", () => expect(A.containsOne('b', 'a',),).toBeTrue(),)
+                },)
+            },)
+            describe.each(templateItems,)("%s", it => {
+                test("has", () => expect(templateCollection.hasOne(it,),).toBeTrue(),)
+                test("includes", () => expect(templateCollection.includesOne(it,),).toBeTrue(),)
+                test("contains", () => expect(templateCollection.containsOne(it,),).toBeTrue(),)
 
-            describe('value + nonPresentItem', () => {
-                test("has", () => expect(templateCollection.hasOne(it, nonPresentItem,),).toBeTrue(),)
-                test("includes", () => expect(templateCollection.includesOne(it, nonPresentItem,),).toBeTrue(),)
-                test("contains", () => expect(templateCollection.containsOne(it, nonPresentItem,),).toBeTrue(),)
+                describe("value + nonPresentItem", () => {
+                    test("has", () => expect(templateCollection.hasOne(it, nonPresentItem,),).toBeTrue(),)
+                    test("includes", () => expect(templateCollection.includesOne(it, nonPresentItem,),).toBeTrue(),)
+                    test("contains", () => expect(templateCollection.containsOne(it, nonPresentItem,),).toBeTrue(),)
+                },)
+                describe("Object(value)", () => {
+                    test("has not", () => expect(templateCollection.hasOne(Object(it,),),).toBeFalse(),)
+                    test("includes", () => expect(templateCollection.includesOne(Object(it,),),).toBeFalse(),)
+                    test("contains", () => expect(templateCollection.containsOne(Object(it,),),).toBeFalse(),)
+                },)
+                describe("[value]", () => {
+                    test("has", () => expect(templateCollection.hasOne([it,],),).toBeFalse(),)
+                    test("includes", () => expect(templateCollection.includesOne([it,],),).toBeFalse(),)
+                    test("contains", () => expect(templateCollection.containsOne([it,],),).toBeFalse(),)
+                },)
+                describe("{value}", () => {
+                    test("has", () => expect(templateCollection.hasOne({it,},),).toBeFalse(),)
+                    test("includes", () => expect(templateCollection.includesOne({it,},),).toBeFalse(),)
+                    test("contains", () => expect(templateCollection.containsOne({it,},),).toBeFalse(),)
+                },)
             },)
-            describe('Object(value)', () => {
-                test('has not', () => expect(templateCollection.hasOne(Object(it,),),).toBeFalse(),)
-                test('includes', () => expect(templateCollection.includesOne(Object(it,),),).toBeFalse(),)
-                test('contains', () => expect(templateCollection.containsOne(Object(it,),),).toBeFalse(),)
+        },)
+        describe("all", () => {
+            describe('singular item', () => {
+                describe('singular item', () => {
+                    describe('a', () => {
+                        test("has", () => expect(A.hasAll('a',),).toBeTrue(),)
+                        test("includes", () => expect(A.includesAll('a',),).toBeTrue(),)
+                        test("contains", () => expect(A.containsAll('a',),).toBeTrue(),)
+                    },)
+                    describe('b', () => {
+                        test("has", () => expect(A.hasAll('b',),).toBeFalse(),)
+                        test("includes", () => expect(A.includesAll('b',),).toBeFalse(),)
+                        test("contains", () => expect(A.containsAll('b',),).toBeFalse(),)
+                    },)
+                    describe("a,b", () => {
+                        test("has", () => expect(A.hasAll('a', 'b',),).toBeFalse(),)
+                        test("includes", () => expect(A.includesAll('a', 'b',),).toBeFalse(),)
+                        test("contains", () => expect(A.containsAll('a', 'b',),).toBeFalse(),)
+                    },)
+                    describe("b,a", () => {
+                        test("has", () => expect(A.hasAll('b', 'a',),).toBeFalse(),)
+                        test("includes", () => expect(A.includesAll('b', 'a',),).toBeFalse(),)
+                        test("contains", () => expect(A.containsAll('b', 'a',),).toBeFalse(),)
+                    },)
+                },)
             },)
-            describe('[value]', () => {
-                test('has', () => expect(templateCollection.hasOne([it,],),).toBeFalse(),)
-                test('includes', () => expect(templateCollection.includesOne([it,],),).toBeFalse(),)
-                test('contains', () => expect(templateCollection.containsOne([it,],),).toBeFalse(),)
-            },)
-            describe('{value}', () => {
-                test('has', () => expect(templateCollection.hasOne({it,},),).toBeFalse(),)
-                test('includes', () => expect(templateCollection.includesOne({it,},),).toBeFalse(),)
-                test('contains', () => expect(templateCollection.containsOne({it,},),).toBeFalse(),)
-            },)
-        },),)
-        describe("all", () => describe.each(templateItems,)("%s", it => {
-            test("has", () => expect(templateCollection.hasAll(it,),).toBeTrue(),)
-            test("includes", () => expect(templateCollection.includesAll(it,),).toBeTrue(),)
-            test("contains", () => expect(templateCollection.containsAll(it,),).toBeTrue(),)
+            describe.each(templateItems,)("%s", it => {
+                test("has", () => expect(templateCollection.hasAll(it,),).toBeTrue(),)
+                test("includes", () => expect(templateCollection.includesAll(it,),).toBeTrue(),)
+                test("contains", () => expect(templateCollection.containsAll(it,),).toBeTrue(),)
 
-            describe('value + nonPresentItem', () => {
-                test("has", () => expect(templateCollection.hasAll(it, nonPresentItem,),).toBeFalse(),)
-                test("includes", () => expect(templateCollection.includesAll(it, nonPresentItem,),).toBeFalse(),)
-                test("contains", () => expect(templateCollection.containsAll(it, nonPresentItem,),).toBeFalse(),)
+                describe("value + nonPresentItem", () => {
+                    test("has", () => expect(templateCollection.hasAll(it, nonPresentItem,),).toBeFalse(),)
+                    test("includes", () => expect(templateCollection.includesAll(it, nonPresentItem,),).toBeFalse(),)
+                    test("contains", () => expect(templateCollection.containsAll(it, nonPresentItem,),).toBeFalse(),)
+                },)
+                describe("Object(value)", () => {
+                    test("has not", () => expect(templateCollection.hasAll(Object(it,),),).toBeFalse(),)
+                    test("includes", () => expect(templateCollection.includesAll(Object(it,),),).toBeFalse(),)
+                    test("contains", () => expect(templateCollection.containsAll(Object(it,),),).toBeFalse(),)
+                },)
+                describe("[value]", () => {
+                    test("has", () => expect(templateCollection.hasAll([it,],),).toBeFalse(),)
+                    test("includes", () => expect(templateCollection.includesAll([it,],),).toBeFalse(),)
+                    test("contains", () => expect(templateCollection.containsAll([it,],),).toBeFalse(),)
+                },)
+                describe("{value}", () => {
+                    test("has", () => expect(templateCollection.hasAll({it,},),).toBeFalse(),)
+                    test("includes", () => expect(templateCollection.includesAll({it,},),).toBeFalse(),)
+                    test("contains", () => expect(templateCollection.containsAll({it,},),).toBeFalse(),)
+                },)
             },)
-            describe('Object(value)', () => {
-                test('has not', () => expect(templateCollection.hasAll(Object(it,),),).toBeFalse(),)
-                test('includes', () => expect(templateCollection.includesAll(Object(it,),),).toBeFalse(),)
-                test('contains', () => expect(templateCollection.containsAll(Object(it,),),).toBeFalse(),)
-            },)
-            describe('[value]', () => {
-                test('has', () => expect(templateCollection.hasAll([it,],),).toBeFalse(),)
-                test('includes', () => expect(templateCollection.includesAll([it,],),).toBeFalse(),)
-                test('contains', () => expect(templateCollection.containsAll([it,],),).toBeFalse(),)
-            },)
-            describe('{value}', () => {
-                test('has', () => expect(templateCollection.hasAll({it,},),).toBeFalse(),)
-                test('includes', () => expect(templateCollection.includesAll({it,},),).toBeFalse(),)
-                test('contains', () => expect(templateCollection.containsAll({it,},),).toBeFalse(),)
-            },)
-        },),)
+        },)
     },)
     describe("join", () => {
         test("[a,b].join()", () => expect(AB.join(),).toBe("[a, b]",),)
@@ -156,18 +226,18 @@ describe("CollectionHolderTest", () => {
         test("[a,b,c,d].filterByIndex(3) == [d]", () => expect(ABCD.filterByIndex(it => it === 3,).toArray(),).toStrictEqual(['d',],),)
         test("[a,b,c,d].filterNot(d) == [a,c,c]", () => expect(ABCD.filterNot(it => it === 'd',).toArray(),).toStrictEqual(['a', 'b', 'c',],),)
         test("[a,b,c,d].filterNotByIndex(3) == [a,c,c]", () => expect(ABCD.filterNotByIndex(it => it === 3,).toArray(),).toStrictEqual(['a', 'b', 'c',],),)
-        test("[a,b,1,2].filter(number) == [1,2]", () => expect(AB12.filter((it): it is (| 1 | 2) => typeof it == 'number',).toArray(),).toStrictEqual([1, 2,],),)
-        test("[a,b,1,2].filterNot(number) == [a,b]", () => expect(AB12.filterNot((it): it is (| 1 | 2) => typeof it == 'number',).toArray(),).toStrictEqual(['a', 'b',],),)
+        test("[a,b,1,2].filter(number) == [1,2]", () => expect(AB12.filter(it => typeof it == "number",).toArray(),).toStrictEqual([1, 2,],),)
+        test("[a,b,1,2].filterNot(number) == [a,b]", () => expect(AB12.filterNot(it => typeof it == "number",).toArray(),).toStrictEqual(['a', 'b',],),)
         test("[a,null,b,undefined].filterNotNull() == [a,b]", () => expect(A_NULL_B_UNDEFINED.filterNonNull().toArray(),).toStrictEqual(['a', 'b',],),)
         test("[a,null,b,undefined].filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED.filterNonNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
         test("[a,null,b,undefined].filterNot(null).filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED.filterNot(it => it === null).filterNonNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
         test("[a,null,b,undefined].filterNot(undefined).filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED.filterNot(it => it === undefined).filterNonNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
         test("[a,null,b,undefined].filterNot(undefined).filterNot(null).filterNotNull() == last iteration", () => {
-            const lastIteration = A_NULL_B_UNDEFINED.filterNot(it => it === undefined).filterNot((it): it is null => it === null)
+            const lastIteration = A_NULL_B_UNDEFINED.filterNot(it => it === undefined).filterNot(it => it === null)
             expect(lastIteration.filterNonNull(),).toStrictEqual(lastIteration,)
         },)
         test("[a,null,b,undefined].filterNot(null).filterNot(undefined).filterNotNull() == last iteration", () => {
-            const lastIteration = A_NULL_B_UNDEFINED.filterNot(it => it === null).filterNot((it): it is undefined => it === undefined)
+            const lastIteration = A_NULL_B_UNDEFINED.filterNot(it => it === null).filterNot(it => it === undefined)
             expect(lastIteration.filterNonNull(),).toStrictEqual(lastIteration,)
         },)
         test("[a,b].filterNotNull() == this", () => expect(AB.filterNonNull(),).toStrictEqual(AB,),)
