@@ -5,8 +5,8 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                            from "../../general type"
-import type {BooleanCallback, BooleanIndexCallback, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder.types"
+import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                  from "../../general type"
+import type {BooleanCallback, BooleanIndexCallback, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback, CollectionHolderName} from "./CollectionHolder.types"
 
 /**
  * A collection to hold another collection and do some generic stuff if applicable.
@@ -458,12 +458,19 @@ export interface CollectionHolder<T = unknown, > {
     reverse(fromIndex?: Nullable<number>, toIndex?: Nullable<number>,): CollectionHolder<T>
 
     //#endregion -------------------- Loop methods --------------------
-    //#region -------------------- Iterator methods --------------------
+    //#region -------------------- Javascript methods --------------------
 
     /** A Javascript way to implements a "for‥of" over the {@link CollectionHolder collection} */
     [Symbol.iterator](): IterableIterator<T>
 
-    //#endregion -------------------- Iterator methods --------------------
+    /**
+     * Give an output for the call from {@link ObjectConstructor.toString.call} [object CollectionHolder] instead of [object Object]
+     *
+     * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toStringTag
+     */
+    readonly [Symbol.toStringTag]: CollectionHolderName
+
+    //#endregion -------------------- Javascript methods --------------------
     //#region -------------------- Conversion methods --------------------
 
     /** Convert the current {@link CollectionHolder collection} to a new {@link ReadonlyArray array} */

@@ -5,9 +5,9 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                            from "../../general type"
-import type {CollectionHolder}                                                                                                                                                                         from "./CollectionHolder"
-import type {BooleanCallback, BooleanIndexCallback, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder.types"
+import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                  from "../../general type"
+import type {CollectionHolder}                                                                                                                                                                                               from "./CollectionHolder"
+import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder.types"
 
 export abstract class AbstractCollectionHolder<const T = unknown, >
     implements CollectionHolder<T> {
@@ -485,7 +485,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     //#endregion -------------------- Loop methods --------------------
-    //#region -------------------- Iterator methods --------------------
+    //#region -------------------- Javascript methods --------------------
 
     public* [Symbol.iterator](): IterableIterator<T> {
         const size = this.size
@@ -494,7 +494,11 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
             yield this[index]!
     }
 
-    //#endregion -------------------- Iterator methods --------------------
+    public get [Symbol.toStringTag](): CollectionHolderName {
+        return "CollectionHolder"
+    }
+
+    //#endregion -------------------- Javascript methods --------------------
     //#region -------------------- Conversion methods --------------------
 
     public toArray(): readonly T[] {
