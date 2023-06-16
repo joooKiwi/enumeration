@@ -8,7 +8,7 @@
 import type {CollectionHolder} from "./CollectionHolder"
 
 /** A simple {@link Symbol.toStringTag} of a {@link CollectionHolder} */
-export type CollectionHolderName = 'CollectionHolder'
+export type CollectionHolderName = "CollectionHolder"
 
 export type BooleanCallback<T, > = (value: T, index: number,) => boolean
 export type ReverseBooleanCallback<T, > = (index: number, value: T,) => boolean
