@@ -5,8 +5,8 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                  from "../../general type"
-import type {BooleanCallback, BooleanIndexCallback, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback, CollectionHolderName} from "./CollectionHolder.types"
+import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                                                                            from "../../general type"
+import type {BooleanCallback, BooleanIndexCallback, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback, CollectionHolderName, ReverseBooleanCallback, ReverseRestrainedBooleanCallback} from "./CollectionHolder.types"
 
 /**
  * A collection to hold another collection and do some generic stuff if applicable.
@@ -302,9 +302,18 @@ export interface CollectionHolder<T = unknown, > {
      * @see ReadonlyArray.filter
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-indexed.html Kotlin filterIndexed(predicate)
      * @see filterNotByIndex
-     * @todo use a reversed boolean callback & reverse restrained boolean callback
      */
-    filterByIndex(callback: BooleanIndexCallback,): CollectionHolder<T>
+    filterByIndex<const S extends T,>(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<T>
+
+    /**
+     * Get a new {@link CollectionHolder collection} from the condition returned by the index callback.
+     *
+     * @param callback The filter index callback
+     * @see ReadonlyArray.filter
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-indexed.html Kotlin filterIndexed(predicate)
+     * @see filterNotByIndex
+     */
+    filterByIndex(callback: ReverseBooleanCallback<T>,): CollectionHolder<T>
 
 
     /**
@@ -334,7 +343,16 @@ export interface CollectionHolder<T = unknown, > {
      * @see ReadonlyArray.filter
      * @see filterByIndex
      */
-    filterNotByIndex(callback: BooleanIndexCallback,): CollectionHolder<T>
+    filterNotByIndex<const S extends T,>(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<T>
+
+    /**
+     * Get a new {@link CollectionHolder collection} from the reversed condition returned by the index callback.
+     *
+     * @param callback The filter index callback
+     * @see ReadonlyArray.filter
+     * @see filterByIndex
+     */
+    filterNotByIndex(callback: ReverseBooleanCallback<T>,): CollectionHolder<T>
 
 
     /**
@@ -373,7 +391,15 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The find index callback
      * @see ReadonlyArray.find
      */
-    findByIndex(callback: BooleanIndexCallback,): NullOr<T>
+    findByIndex<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): NullOr<S>
+
+    /**
+     * Get the first item found or <b>null</b> if nothing was found
+     *
+     * @param callback The find index callback
+     * @see ReadonlyArray.find
+     */
+    findByIndex(callback: ReverseBooleanCallback<T>,): NullOr<T>
 
     /**
      * Get the first index found or <b>null</b> if nothing was found

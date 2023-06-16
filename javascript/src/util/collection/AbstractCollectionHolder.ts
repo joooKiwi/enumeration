@@ -6,8 +6,8 @@
  ******************************************************************************/
 
 import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                  from "../../general type"
-import type {CollectionHolder}                                                                                                                                                                                               from "./CollectionHolder"
-import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder.types"
+import type {CollectionHolder}                                                                                                                                                                                                                                                         from "./CollectionHolder"
+import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback, ReverseBooleanCallback, ReverseRestrainedBooleanCallback} from "./CollectionHolder.types"
 
 export abstract class AbstractCollectionHolder<const T = unknown, >
     implements CollectionHolder<T> {
@@ -341,8 +341,10 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this._new(this._array.filter((value, index,) => callback(value, index,),),)
     }
 
-    public filterByIndex(callback: BooleanIndexCallback,): CollectionHolder<T> {
-        return this._new(this._array.filter((_, index,) => callback(index,),),)
+    public filterByIndex<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<S>
+    public filterByIndex(callback: ReverseBooleanCallback<T>,): CollectionHolder<T>
+    public filterByIndex<const S extends T, >(callback: | ReverseRestrainedBooleanCallback<T, S> | ReverseBooleanCallback<T>,) {
+        return this._new(this._array.filter((value, index,) => callback(index, value,),),)
     }
 
 
@@ -352,8 +354,10 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this._new(this._array.filter((value, index,) => !callback(value, index,),),)
     }
 
-    public filterNotByIndex(callback: BooleanIndexCallback,): CollectionHolder<T> {
-        return this._new(this._array.filter((_, index,) => !callback(index,),),)
+    public filterNotByIndex<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<S>
+    public filterNotByIndex(callback: ReverseBooleanCallback<T>,): CollectionHolder<T>
+    public filterNotByIndex<const S extends T, >(callback: | ReverseRestrainedBooleanCallback<T, S> | ReverseBooleanCallback<T>,) {
+        return this._new(this._array.filter((value, index,) => !callback(index, value,),),)
     }
 
 
@@ -371,8 +375,10 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this._array.find((value, index,) => callback(value, index,),) ?? null
     }
 
-    public findByIndex(callback: BooleanIndexCallback,): NullOr<T> {
-        return this._array.find((_, index,) => callback(index,),) ?? null
+    public findByIndex<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): NullOr<S>
+    public findByIndex(callback: ReverseBooleanCallback<T>,): NullOr<T>
+    public findByIndex<const S extends T, >(callback: | ReverseRestrainedBooleanCallback<T, S> | ReverseBooleanCallback<T>,) {
+        return this._array.find((value, index,) => callback(index, value,),) ?? null
     }
 
 

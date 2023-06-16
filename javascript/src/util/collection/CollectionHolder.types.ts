@@ -11,8 +11,10 @@ import type {CollectionHolder} from "./CollectionHolder"
 export type CollectionHolderName = 'CollectionHolder'
 
 export type BooleanCallback<T, > = (value: T, index: number,) => boolean
+export type ReverseBooleanCallback<T, > = (index: number, value: T,) => boolean
 export type BooleanIndexCallback = (index: number,) => boolean
 export type RestrainedBooleanCallback<T, S extends T, > = (value: T, index: number,) => value is S
+export type ReverseRestrainedBooleanCallback<T, S extends T, > = (index: number, value: T,) => value is S
 
 export type JoinCallback<T, > = (value: T,) => string
 
