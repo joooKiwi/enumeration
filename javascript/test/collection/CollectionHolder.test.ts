@@ -1,3 +1,10 @@
+/******************************************************************************
+ * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
+ *                                                                            *
+ * This project is free to use.                                               *
+ * All the right is reserved to the author of this project.                   *
+ ******************************************************************************/
+
 import {A, A_NULL_B_UNDEFINED, AB, AB12, AB_OBJECT, ABCD, ABCD_ABCD, ABCD_NULL, ABCD_UNDEFINED, ABCDEFGHIJ, EMPTY, NULL_ABCD, UNDEFINED_ABCD} from "./constantCollections"
 import {nonPresentItem, sizeValues, templateCollection, templateItems}                                                                        from "./constantValues"
 

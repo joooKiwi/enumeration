@@ -1,3 +1,10 @@
+/******************************************************************************
+ * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
+ *                                                                            *
+ * This project is free to use.                                               *
+ * All the right is reserved to the author of this project.                   *
+ ******************************************************************************/
+
 import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                            from "../../general type"
 import type {CollectionHolder}                                                                                                                                                                         from "./CollectionHolder"
 import type {BooleanCallback, BooleanIndexCallback, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder.types"
