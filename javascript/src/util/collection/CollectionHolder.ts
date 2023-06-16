@@ -39,6 +39,7 @@ export interface CollectionHolder<T = unknown, > {
     /**
      * The {@link CollectionHolder collection} has no values
      *
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/is-empty.html Kotlin isEmpty()
      * @see isNotEmpty
      */
     get isEmpty(): IsEmpty<this>
@@ -46,6 +47,7 @@ export interface CollectionHolder<T = unknown, > {
     /**
      * The {@link CollectionHolder collection} has at least one value
      *
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/is-not-empty.html Kotlin isNotEmpty()
      * @see isEmpty
      */
     get isNotEmpty(): IsNotEmpty<this>
@@ -83,6 +85,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
      * @throws {ReferenceError} The element was <b>null</b> or <b>undefined</b>
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/first.html Kotlin first()
      */
     first(): NonNullable<T>
 
@@ -91,6 +94,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The matching callback
      * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/first.html Kotlin first(predicate)
      */
     first(callback: BooleanCallback<T>,): NonNullable<T>
 
@@ -99,11 +103,16 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The matching callback
      * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/first.html Kotlin first(predicate)
      */
     first<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
 
 
-    /** Get the first element or <b>null</b> is the {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty} */
+    /**
+     * Get the first element or <b>null</b> is the {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     *
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/first-or-null.html Kotlin firstOrNull()
+     */
     firstOrNull(): NullOr<T>
 
     /**
@@ -111,6 +120,7 @@ export interface CollectionHolder<T = unknown, > {
      * or no element was found
      *
      * @param callback The matching callback
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/first-or-null.html Kotlin firstOrNull(predicate)
      */
     firstOrNull(callback: BooleanCallback<T>,): NullOr<T>
 
@@ -119,6 +129,7 @@ export interface CollectionHolder<T = unknown, > {
      * or no element was found
      *
      * @param callback The matching callback
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/first-or-null.html Kotlin firstOrNull(predicate)
      */
     firstOrNull<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
 
@@ -128,6 +139,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
      * @throws {ReferenceError} The element was <b>null</b> or <b>undefined</b>
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/last.html Kotlin last()
      */
     last(): NonNullable<T>
 
@@ -136,6 +148,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The matching callback
      * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/last.html Kotlin last(predicate)
      */
     last(callback: BooleanCallback<T>,): NonNullable<T>
 
@@ -144,11 +157,16 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The matching callback
      * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/last.html Kotlin last(predicate)
      */
     last<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
 
 
-    /** Get the last element or <b>null</b> is the {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty} */
+    /**
+     * Get the last element or <b>null</b> is the {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
+     *
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/last-or-null.html Kotlin lastOrNull()
+     */
     lastOrNull(): NullOr<T>
 
     /**
@@ -156,6 +174,7 @@ export interface CollectionHolder<T = unknown, > {
      * or no element was found
      *
      * @param callback The matching callback
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/last-or-null.html Kotlin lastOrNull(predicate)
      */
     lastOrNull(callback: BooleanCallback<T>,): NullOr<T>
 
@@ -164,6 +183,7 @@ export interface CollectionHolder<T = unknown, > {
      * or no element was found
      *
      * @param callback The matching callback
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/last-or-null.html Kotlin lastOrNull(predicate)
      */
     lastOrNull<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
 
@@ -180,6 +200,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see containsOne
      * @see ReadonlyArray.includes
      * @see ReadonlySet.has
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/contains.html Kotlin contains(element)
      */
     hasOne(...values: readonly unknown[]): boolean
 
@@ -210,6 +231,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see containsAll
      * @see ReadonlyArray.includes
      * @see ReadonlySet.has
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/contains-all.html Kotlin containsAll(elements)
      */
     hasAll(...values: readonly unknown[]): boolean
 
@@ -258,6 +280,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The restrained filter callback
      * @see ReadonlyArray.filter
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter.html Kotlin filter(predicate)
      * @see filterNot
      */
     filter<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<S>
@@ -267,6 +290,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The filter callback
      * @see ReadonlyArray.filter
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter.html Kotlin filter(predicate)
      * @see filterNot
      */
     filter(callback: BooleanCallback<T>,): CollectionHolder<T>
@@ -276,7 +300,9 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The filter index callback
      * @see ReadonlyArray.filter
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-indexed.html Kotlin filterIndexed(predicate)
      * @see filterNotByIndex
+     * @todo use a reversed boolean callback & reverse restrained boolean callback
      */
     filterByIndex(callback: BooleanIndexCallback,): CollectionHolder<T>
 
@@ -286,6 +312,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The restrained filter callback
      * @see ReadonlyArray.filter
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-not.html Kotlin filterNot(predicate)
      * @see filter
      */
     filterNot<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<Exclude<T, S>>
@@ -295,6 +322,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The filter callback
      * @see ReadonlyArray.filter
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-not.html Kotlin filterNot(predicate)
      * @see filter
      */
     filterNot(callback: BooleanCallback<T>,): CollectionHolder<T>
@@ -314,6 +342,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * If no <b>null</b> or <b>undefined</b> are found, the current instance will be returned.
      * @see ReadonlyArray.filter
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-not-null.html Kotlin filterNotNull()
      */
     filterNonNull(): FilterNonNull<T, this>
 
@@ -325,6 +354,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The restrained find callback
      * @see ReadonlyArray.find
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/find.html Kotlin find(predicate)
      */
     find<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
 
@@ -333,6 +363,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The find callback
      * @see ReadonlyArray.find
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/find.html Kotlin find(predicate)
      */
     find(callback: BooleanCallback<T>,): NullOr<T>
 
@@ -366,6 +397,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The restrained find callback
      * @see ReadonlyArray.findLast
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/find-last.html Kotlin findLast(predicate)
      */
     findLast<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
 
@@ -374,6 +406,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The find callback
      * @see ReadonlyArray.findLast
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/find-last.html Kotlin findLast(predicate)
      */
     findLast(callback: BooleanCallback<T>,): NullOr<T>
 
@@ -410,6 +443,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The callback to retrieve the result
      * @see ReadonlyArray.map
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map.html Kotlin map(transform)
      */
     map<const U, >(callback: MapCallback<T, U>,): CollectionHolder<U>
 
@@ -419,6 +453,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The callback to retrieve the result
      * @see ReadonlyArray.map
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map-indexed.html Kotlin mapIndexed(transform)
      */
     mapIndex<const U, >(callback: MapIndexCallback<U>,): CollectionHolder<U>
 
@@ -430,6 +465,8 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The callback for each element
      * @see ReadonlyArray.forEach
      * @see ReadonlySet.forEach
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/on-each.html Kotlin onEach
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/for-each.html Kotlin forEach
      */
     forEach(callback: ForEachCallback<T>,): this
 
@@ -440,6 +477,8 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The callback for each element
      * @see ReadonlyArray.forEach
      * @see ReadonlySet.forEach
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/on-each-indexed.html Kotlin onEachIndexed
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/for-each-indexed.html Kotlin forEachIndexed
      */
     forEachIndex(callback: ForEachIndexCallback,): this
 
@@ -453,7 +492,7 @@ export interface CollectionHolder<T = unknown, > {
      * @canReceiveNegativeValue
      * @throws {RangeError} The indexes "from" and "to" are not within a valid range
      * @see Array.reverse
-     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/reverse.html Kotlin reverse
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/reverse.html Kotlin reverse()
      */
     reverse(fromIndex?: Nullable<number>, toIndex?: Nullable<number>,): CollectionHolder<T>
 
