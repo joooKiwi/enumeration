@@ -536,11 +536,11 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
 
     public toString(): string {
-        return this.join(null, '[', ']',)
+        return this.join()
     }
 
     public toLocaleString(): string {
-        return this.join(null, '[', ']', null, null, it => it?.toLocaleString() ?? `${it}`,)
+        return this.join(null, null, null, null, null, it => it?.toLocaleString() ?? `${it}`,)
     }
 
     //#endregion -------------------- Conversion methods --------------------
