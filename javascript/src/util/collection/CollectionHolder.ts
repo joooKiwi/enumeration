@@ -187,10 +187,8 @@ export interface CollectionHolder<T = unknown, > {
      * Tell whenever at least one value exist in the current {@link CollectionHolder}
      *
      * @param values The values to compare
-     * @see hasOne
-     * @see containsOne
-     * @see ReadonlyArray.includes
-     * @see ReadonlySet.has
+     *
+     * @alias {@link hasOne}
      */
     includesOne(...values: readonly unknown[]): boolean
 
@@ -198,10 +196,8 @@ export interface CollectionHolder<T = unknown, > {
      * Tell whenever at least one value exist in the current {@link CollectionHolder}
      *
      * @param values The values to compare
-     * @see hasOne
-     * @see includesOne
-     * @see ReadonlyArray.includes
-     * @see ReadonlySet.has
+     *
+     * @alias {@link hasOne}
      */
     containsOne(...values: readonly unknown[]): boolean
 
@@ -221,10 +217,8 @@ export interface CollectionHolder<T = unknown, > {
      * Tell that every value received in the current {@link CollectionHolder}
      *
      * @param values The values to compare
-     * @see hasAll
-     * @see containsAll
-     * @see ReadonlyArray.includes
-     * @see ReadonlySet.has
+     *
+     * @alias {@link hasAll}
      */
     includesAll(...values: readonly unknown[]): boolean
 
@@ -232,10 +226,8 @@ export interface CollectionHolder<T = unknown, > {
      * Tell that every value received in the current {@link CollectionHolder}
      *
      * @param values The values to compare
-     * @see hasAll
-     * @see includesAll
-     * @see ReadonlyArray.includes
-     * @see ReadonlySet.has
+     *
+     * @alias {@link hasAll}
      */
     containsAll(...values: readonly unknown[]): boolean
 
@@ -496,14 +488,14 @@ export interface CollectionHolder<T = unknown, > {
 
 
     /**
-     * Convert the current {@link CollectionHolder collection} to string using the {@link Array.toString} method
+     * Convert the current {@link CollectionHolder collection} to {@link String} using the {@link join} method
      *
      * @see Array.toString
      */
     toString(): string
 
     /**
-     * Convert the current {@link CollectionHolder collection} to string using the {@link Array.toLocaleString} method
+     * Convert the current {@link CollectionHolder collection} to {@link String} using the {@link join} method and calling {@link Object.toLocaleString}
      *
      * @see Array.toLocaleString
      */
