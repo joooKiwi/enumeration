@@ -32,6 +32,9 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------
 
+    protected constructor(array: readonly T[],)
+    protected constructor(set: ReadonlySet<T>,)
+    protected constructor(iterable: Iterable<T>,)
     protected constructor(iterable: Iterable<T>,) {
         //TODO implement the proxy pattern to have the index retrieved only when needed
         this.#reference = iterable

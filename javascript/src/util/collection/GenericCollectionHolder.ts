@@ -12,6 +12,9 @@ import {AbstractCollectionHolder} from "./AbstractCollectionHolder"
 export class GenericCollectionHolder<const T = unknown, >
     extends AbstractCollectionHolder<T> {
 
+    public constructor(array: readonly T[],)
+    public constructor(set: ReadonlySet<T>,)
+    public constructor(iterable: Iterable<T>,)
     public constructor(iterable: Iterable<T>,) {
         super(iterable,)
     }
