@@ -160,11 +160,11 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this.#hasNull
     }
 
-    public get includesNull(): this['hasNull'] {
+    public get includesNull(): this["hasNull"] {
         return this.hasNull
     }
 
-    public get containsNull(): this['hasNull'] {
+    public get containsNull(): this["hasNull"] {
         return this.hasNull
     }
 
@@ -318,12 +318,12 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
             return true
 
         const array = this._array
-        if(valueSize === 1)
+        if (valueSize === 1)
             return array.includes(values[0] as never,)
 
         let valueIndex = -1
         while (++valueIndex < valueSize)
-            if(array.includes(values[valueIndex] as never,))
+            if (array.includes(values[valueIndex] as never,))
                 return true
         return false
     }
@@ -347,12 +347,12 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
             return true
 
         const array = this._array
-        if(valueSize === 1)
+        if (valueSize === 1)
             return array.includes(values[0] as never,)
 
         let valueIndex = -1
         while (++valueIndex < valueSize)
-            if(!array.includes(values[valueIndex] as never,))
+            if (!array.includes(values[valueIndex] as never,))
                 return false
         return true
     }
