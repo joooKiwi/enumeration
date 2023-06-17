@@ -5,6 +5,7 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
+export *                                             from "./declaration/index"
 export *                                             from "./generic/index"
 export {ForbiddenInheritedEnumerableMemberException} from "./ForbiddenInheritedEnumerableMemberException"
 export {ForbiddenNumericException}                   from "./ForbiddenNumericException"
