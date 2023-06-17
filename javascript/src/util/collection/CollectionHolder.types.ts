@@ -27,22 +27,6 @@ export type IndexValueWithReturnCallback<T, U, > = (index: number, value: T,) =>
 
 export type ValueWithStringReturnCallback<T, > = (value: T,) => string
 
-//#region -------------------- Validation type --------------------
-
-/** A simple representation type to tell that a {@link CollectionHolder.size} is of 0 */
-export type IsEmpty<T extends CollectionHolder, > = T["size"] extends 0 ? true : false
-/** A simple representation type to tell that a {@link CollectionHolder.size} is not of 0 */
-export type IsNotEmpty<T extends CollectionHolder, > = T["size"] extends 0 ? false : true
-
-/**
- * A simple type representation to tell if the {@link CollectionHolder.hasNull},
- *  then the current instance is returned,
- *  otherwise, it is a new {@link CollectionHolder} with {@link NonNullable} values
- */
-export type NonNullableCollection<T, COLLECTION extends CollectionHolder<T>, > = COLLECTION["hasNull"] extends false ? COLLECTION : CollectionHolder<NonNullable<T>>
-
-//#endregion -------------------- Validation type --------------------
-
 /** A simple object encapsulation of a value */
 export type ObjectOf<T, > =
     | (T extends string ? String : never)

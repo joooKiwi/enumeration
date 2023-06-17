@@ -332,6 +332,16 @@ describe("CollectionHolderTest", () => {
         },)
         test("[a,b].filterNotNull() == this", () => expect(AB.filterNonNull(),).toStrictEqual(AB,),)
     },)
+    describe("requireNonNull", () => {
+        test("[a,null,b,undefined].requireNotNull() → throw", () => expect(() => A_NULL_B_UNDEFINED.requireNonNull(),).toThrow(TypeError,),)
+        test("[a,null,b,undefined].filterNot(null).requireNotNull() → throw", () => expect(() => A_NULL_B_UNDEFINED.filterNot(it => it === null).requireNonNull(),).toThrow(TypeError,),)
+        test("[a,null,b,undefined].filterNot(undefined).requireNotNull() → throw", () => expect(() => A_NULL_B_UNDEFINED.filterNot(it => it === undefined).requireNonNull(),).toThrow(TypeError),)
+        test("[a,null,b,undefined].filterNonNull().requireNotNull() == last iteration", () => {
+            const lastIteration = A_NULL_B_UNDEFINED.filterNonNull()
+            expect(lastIteration.requireNonNull(),).toStrictEqual(lastIteration,)
+        },)
+        test("[a,b].requireNotNull() == this", () => expect(AB.requireNonNull(),).toStrictEqual(AB,),)
+    },)
     describe("find", () => {
         test("[a,b,c,d,A,B,C,D].find(anyCase b) == b", () => expect(ABCD_ABCD.find(it => it.toLowerCase() === 'b',),).toBe('b',),)
         test("[a,b,c,d,A,B,C,D].find(anyCase e) == null", () => expect(ABCD_ABCD.find(it => it.toLowerCase() === 'e',),).toBeNull(),)

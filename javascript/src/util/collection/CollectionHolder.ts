@@ -5,8 +5,8 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                                                                                                                                                                      from "../../general type"
-import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, NonNullableCollection, IndexValueCallback, IndexValueWithReturnCallback, IndexWithReturnCallback, IsEmpty, IsNotEmpty, ValueWithStringReturnCallback, RestrainedBooleanCallback, ReverseBooleanCallback, ReverseRestrainedBooleanCallback, ValueIndexCallback, ValueIndexWithReturnCallback, ObjectOf} from "./CollectionHolder.types"
+import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                                                                                                                          from "../../general type"
+import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, IndexValueCallback, IndexValueWithReturnCallback, IndexWithReturnCallback, ObjectOf, RestrainedBooleanCallback, ReverseBooleanCallback, ReverseRestrainedBooleanCallback, ValueIndexCallback, ValueIndexWithReturnCallback, ValueWithStringReturnCallback} from "./CollectionHolder.types"
 
 /**
  * A collection to hold another collection and do some generic stuff if applicable.
@@ -42,7 +42,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/is-empty.html Kotlin isEmpty()
      * @see isNotEmpty
      */
-    get isEmpty(): IsEmpty<this>
+    get isEmpty(): boolean
 
     /**
      * The {@link CollectionHolder collection} has at least one value
@@ -50,7 +50,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/is-not-empty.html Kotlin isNotEmpty()
      * @see isEmpty
      */
-    get isNotEmpty(): IsNotEmpty<this>
+    get isNotEmpty(): boolean
 
     //#endregion -------------------- Size methods --------------------
     //#region -------------------- Has null methods --------------------
@@ -468,8 +468,17 @@ export interface CollectionHolder<T = unknown, > {
      * If no <b>null</b> or <b>undefined</b> are found, the current instance will be returned.
      * @see ReadonlyArray.filter
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-not-null.html Kotlin filterNotNull()
+     * @see requireNonNull
      */
-    filterNonNull(): NonNullableCollection<T, this>
+    filterNonNull(): CollectionHolder<NonNullable<T>>
+
+    /**
+     * Require that no items are <b>null</b> or <b>undefined</b> in the current {@link CollectionHolder collection}
+     * @throws {TypeError} There is <b>null</b> or <b>undefined</b> value in the current collection
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/require-not-null.html Kotlin requireNotNull()
+     * @see filterNonNull
+     */
+    requireNonNull(): CollectionHolder<NonNullable<T>>
 
     //#endregion -------------------- Filter methods --------------------
     //#region -------------------- Find methods --------------------

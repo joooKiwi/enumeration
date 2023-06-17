@@ -5,9 +5,9 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                                                                                                                                                                      from "../../general type"
-import type {CollectionHolder}                                                                                                                                                                                                                                                                                                                                                   from "./CollectionHolder"
-import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, NonNullableCollection, IndexValueCallback, IndexValueWithReturnCallback, IndexWithReturnCallback, IsEmpty, IsNotEmpty, ObjectOf, RestrainedBooleanCallback, ReverseBooleanCallback, ReverseRestrainedBooleanCallback, ValueIndexCallback, ValueIndexWithReturnCallback, ValueWithStringReturnCallback} from "./CollectionHolder.types"
+import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                                                                                                                          from "../../general type"
+import type {CollectionHolder}                                                                                                                                                                                                                                                                                                       from "./CollectionHolder"
+import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, IndexValueCallback, IndexValueWithReturnCallback, IndexWithReturnCallback, ObjectOf, RestrainedBooleanCallback, ReverseBooleanCallback, ReverseRestrainedBooleanCallback, ValueIndexCallback, ValueIndexWithReturnCallback, ValueWithStringReturnCallback} from "./CollectionHolder.types"
 
 export abstract class AbstractCollectionHolder<const T = unknown, >
     implements CollectionHolder<T> {
@@ -17,7 +17,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     [index: number]: UndefinedOr<T>
 
     readonly #size: number
-    readonly #isEmpty: IsEmpty<this>
+    readonly #isEmpty: boolean
 
     readonly #reference: Iterable<T>
     readonly #array: readonly T[]
@@ -42,14 +42,14 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         if (iterable instanceof Array) {
             const size = this.#size = iterable.length
             if (size == 0) {
-                this.#isEmpty = true as IsEmpty<this>
+                this.#isEmpty = true
                 this.#hasNull = false
                 this.#first = this.#last = null
                 this.#array = Object.freeze([],)
                 return
             }
 
-            this.#isEmpty = false as IsEmpty<this>
+            this.#isEmpty = false
             if (size == 1) {
                 const value = this.#first = this.#last = this[0] = iterable[0]
                 this.#array = Object.freeze([value,],)
@@ -69,14 +69,14 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         if (iterable instanceof Set) {
             const size: number = this.#size = iterable.size
             if (size == 0) {
-                this.#isEmpty = true as IsEmpty<this>
+                this.#isEmpty = true
                 this.#hasNull = false
                 this.#first = this.#last = null
                 this.#array = Object.freeze([],)
                 return
             }
 
-            this.#isEmpty = false as IsEmpty<this>
+            this.#isEmpty = false
             if (size == 1) {
                 const value = this.#first = this.#last = this[0] = iterable[Symbol.iterator]().next().value
                 this.#array = Object.freeze([value,],)
@@ -99,7 +99,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         let value = iterator.next()
         if (value.done) {
             this.#size = 0
-            this.#isEmpty = true as IsEmpty<this>
+            this.#isEmpty = true
             this.#hasNull = false
             this.#first = this.#last = null
             this.#array = Object.freeze([],)
@@ -107,7 +107,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         }
 
         const array = []
-        this.#isEmpty = false as IsEmpty<this>
+        this.#isEmpty = false
         const first = this.#first = this[0] = array[0] = value.value
         value = iterator.next()
         let size = 1,
@@ -140,12 +140,12 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
 
-    public get isEmpty(): IsEmpty<this> {
+    public get isEmpty(): boolean {
         return this.#isEmpty
     }
 
-    public get isNotEmpty(): IsNotEmpty<this> {
-        return !this.isEmpty as IsNotEmpty<this>
+    public get isNotEmpty(): boolean {
+        return !this.isEmpty
     }
 
     //#endregion -------------------- Size methods --------------------
@@ -419,9 +419,16 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
 
-    public filterNonNull(): NonNullableCollection<T, this>
+    public filterNonNull(): CollectionHolder<NonNullable<T>>
     public filterNonNull() {
         return this.hasNull ? this._new(this._array.filter(it => it != null)) : this
+    }
+
+    public requireNonNull(): CollectionHolder<NonNullable<T>>
+    public requireNonNull() {
+        if (this.hasNull)
+            throw new TypeError('The current collection contains null values.',)
+        return this as CollectionHolder<NonNullable<T>>
     }
 
     //#endregion -------------------- Filter methods --------------------
