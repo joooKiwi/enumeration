@@ -39,7 +39,7 @@ export type IsNotEmpty<T extends CollectionHolder, > = T["size"] extends 0 ? fal
  *  then the current instance is returned,
  *  otherwise, it is a new {@link CollectionHolder} with {@link NonNullable} values
  */
-export type FilterNonNull<T, COLLECTION extends CollectionHolder<T>, > = COLLECTION["hasNull"] extends false ? COLLECTION : CollectionHolder<NonNullable<T>>
+export type NonNullableCollection<T, COLLECTION extends CollectionHolder<T>, > = COLLECTION["hasNull"] extends false ? COLLECTION : CollectionHolder<NonNullable<T>>
 
 //#endregion -------------------- Validation type --------------------
 

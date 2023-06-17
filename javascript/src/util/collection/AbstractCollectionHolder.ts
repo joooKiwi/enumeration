@@ -5,9 +5,9 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                                                                                                                                                              from "../../general type"
-import type {CollectionHolder}                                                                                                                                                                                                                                                                                                                                           from "./CollectionHolder"
-import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, FilterNonNull, IndexValueCallback, IndexValueWithReturnCallback, IndexWithReturnCallback, IsEmpty, IsNotEmpty, ObjectOf, RestrainedBooleanCallback, ReverseBooleanCallback, ReverseRestrainedBooleanCallback, ValueIndexCallback, ValueIndexWithReturnCallback, ValueWithStringReturnCallback} from "./CollectionHolder.types"
+import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                                                                                                                                                                      from "../../general type"
+import type {CollectionHolder}                                                                                                                                                                                                                                                                                                                                                   from "./CollectionHolder"
+import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, NonNullableCollection, IndexValueCallback, IndexValueWithReturnCallback, IndexWithReturnCallback, IsEmpty, IsNotEmpty, ObjectOf, RestrainedBooleanCallback, ReverseBooleanCallback, ReverseRestrainedBooleanCallback, ValueIndexCallback, ValueIndexWithReturnCallback, ValueWithStringReturnCallback} from "./CollectionHolder.types"
 
 export abstract class AbstractCollectionHolder<const T = unknown, >
     implements CollectionHolder<T> {
@@ -416,7 +416,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
 
-    public filterNonNull(): FilterNonNull<T, this>
+    public filterNonNull(): NonNullableCollection<T, this>
     public filterNonNull() {
         return this.hasNull ? this._new(this._array.filter(it => it != null)) : this
     }
