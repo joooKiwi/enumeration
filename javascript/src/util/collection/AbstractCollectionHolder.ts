@@ -241,6 +241,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     //#endregion -------------------- Get / at methods --------------------
+    //#region -------------------- First methods --------------------
 
     public first(): NonNullable<T>
     public first<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
@@ -272,6 +273,8 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this.#first
     }
 
+    //#endregion -------------------- First methods --------------------
+    //#region -------------------- Last methods --------------------
 
     public last(): NonNullable<T>
     public last<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
@@ -302,6 +305,8 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
         return this.#last
     }
+
+    //#endregion -------------------- Last methods --------------------
 
     //#endregion -------------------- Value methods --------------------
     //#region -------------------- Loop methods --------------------
@@ -480,6 +485,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     //#endregion -------------------- Find methods --------------------
+    //#region -------------------- Map methods --------------------
 
     public map<const U, >(callback: ValueIndexWithReturnCallback<T, U>,): CollectionHolder<U> {
         return this._new(this._array.map((value, index,) => callback(value, index,),),)
@@ -488,6 +494,9 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public mapIndex<const U, >(callback: IndexValueWithReturnCallback<T, U>,): CollectionHolder<U> {
         return this._new(this._array.map((value, index,) => callback(index, value,),),)
     }
+
+    //#endregion -------------------- Map methods --------------------
+    //#region -------------------- ForEach methods --------------------
 
     public forEach(callback: ValueIndexCallback<T>,): this {
         const size = this.size
@@ -505,6 +514,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this
     }
 
+    //#endregion -------------------- ForEach methods --------------------
 
     public reverse(fromIndex: Nullable<number> = null, toIndex: Nullable<number> = null,): CollectionHolder<T> {
         const size = this.size

@@ -181,6 +181,7 @@ export interface CollectionHolder<T = unknown, > {
     atOrNull(index: number,): NullOr<T>
 
     //#endregion -------------------- Get / at methods --------------------
+    //#region -------------------- First methods --------------------
 
     /**
      * Get the first element
@@ -235,6 +236,8 @@ export interface CollectionHolder<T = unknown, > {
      */
     firstOrNull<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
 
+    //#endregion -------------------- First methods --------------------
+    //#region -------------------- Last methods --------------------
 
     /**
      * Get the last element
@@ -288,6 +291,8 @@ export interface CollectionHolder<T = unknown, > {
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/last-or-null.html Kotlin lastOrNull(predicate)
      */
     lastOrNull<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
+
+    //#endregion -------------------- Last methods --------------------
 
     //#endregion -------------------- Value methods --------------------
     //#region -------------------- Loop methods --------------------
@@ -564,6 +569,7 @@ export interface CollectionHolder<T = unknown, > {
     findLastIndexByIndex(callback: BooleanIndexCallback,): NullOr<number>
 
     //#endregion -------------------- Find methods --------------------
+    //#region -------------------- Map methods --------------------
 
     /**
      * Loop over the {@link CollectionHolder}
@@ -585,6 +591,8 @@ export interface CollectionHolder<T = unknown, > {
      */
     mapIndex<const U, >(callback: IndexValueWithReturnCallback<T, U>,): CollectionHolder<U>
 
+    //#endregion -------------------- Map methods --------------------
+    //#region -------------------- ForEach methods --------------------
 
     /**
      * Loop over the {@link CollectionHolder collection}
@@ -610,6 +618,7 @@ export interface CollectionHolder<T = unknown, > {
      */
     forEachIndex(callback: IndexValueCallback<T>,): this
 
+    //#endregion -------------------- ForEach methods --------------------
 
     /**
      * Reverse the current collection from a range (if provided)
