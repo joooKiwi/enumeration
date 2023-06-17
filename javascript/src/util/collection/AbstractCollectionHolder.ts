@@ -192,6 +192,56 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
     //#region -------------------- Value methods --------------------
 
+    //#region -------------------- Get / at methods --------------------
+
+    public get(index: number,): T {
+        if (this.isEmpty)
+            throw new ReferenceError("No element at any index could be found since it it empty.",)
+        const size = this.size,
+            indexToRetrieve = index < 0 ? size + index : index
+        if (indexToRetrieve < 0)
+            throw new ReferenceError(`The index ${index}${index === indexToRetrieve ? "" : ` (${indexToRetrieve} after calculation)`} is under 0.`,)
+        if (indexToRetrieve > size)
+            throw new ReferenceError(`The index ${index}${index === indexToRetrieve ? "" : ` (${indexToRetrieve} after calculation)`} is over the size of the collection (${size}).`,)
+        return this[indexToRetrieve]!
+    }
+
+    public at(index: number,): T {
+        return this.get(index,)
+    }
+
+
+    public getOrElse<U, >(index: number, defaultValue: IndexWithReturnCallback<U>,): | T | U
+    public getOrElse(index: number, defaultValue: IndexWithReturnCallback<T>,): T
+    public getOrElse(index: number, defaultValue: IndexWithReturnCallback<T>,) {
+        if (this.isEmpty)
+            return defaultValue(index < 0 ? this.size + index : index)
+        const size = this.size,
+            indexToRetrieve = index < 0 ? size + index : index
+        return indexToRetrieve > size || indexToRetrieve < 0 ? defaultValue(indexToRetrieve,) : this[indexToRetrieve]
+    }
+
+    public atOrElse<U, >(index: number, defaultValue: IndexWithReturnCallback<U>,): | T | U
+    public atOrElse(index: number, defaultValue: IndexWithReturnCallback<T>,): T
+    public atOrElse(index: number, defaultValue: IndexWithReturnCallback<T>,) {
+        return this.getOrElse(index, defaultValue,)
+    }
+
+
+    public getOrNull(index: number,): NullOr<T> {
+        if (this.isEmpty)
+            return null
+        const size = this.size,
+            indexToRetrieve = index < 0 ? size + index : index
+        return indexToRetrieve > size || indexToRetrieve < 0 ? null : this[indexToRetrieve]!
+    }
+
+    public atOrNull(index: number,): NullOr<T> {
+        return this.getOrNull(index,)
+    }
+
+    //#endregion -------------------- Get / at methods --------------------
+
     public first(): NonNullable<T>
     public first<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
     public first(callback: BooleanCallback<T>,): NonNullable<T>

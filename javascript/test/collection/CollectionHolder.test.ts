@@ -22,6 +22,89 @@ describe("CollectionHolderTest", () => {
         }
     },),)
     describe("value", () => {
+        describe("get / at", () => {
+            describe("simple", () => {
+                describe("[](0)", () => {
+                    test("get", () => expect(() => EMPTY.get(0,),).toThrow(ReferenceError,),)
+                    test("at", () => expect(() => EMPTY.at(0,),).toThrow(ReferenceError,),)
+                },)
+                describe("[a,b](0)", () => {
+                    test("get", () => expect(AB.get(0,),).toEqual('a',),)
+                    test("at", () => expect(AB.at(0,),).toEqual('a',),)
+                },)
+                describe("[a,b](3)", () => {
+                    test("get", () => expect(() => AB.get(3,),).toThrow(ReferenceError,),)
+                    test("at", () => expect(() => AB.at(3,),).toThrow(ReferenceError,),)
+                },)
+                describe("[a,b,c,d](1)", () => {
+                    test("get", () => expect(ABCD.get(1,),).toEqual('b',),)
+                    test("at", () => expect(ABCD.at(1,),).toEqual('b',),)
+                },)
+                describe("[a,b,c,d](-1)", () => {
+                    test("get", () => expect(ABCD.get(-1,),).toEqual('d',),)
+                    test("at", () => expect(ABCD.at(-1,),).toEqual('d',),)
+                },)
+                describe("[a,b,c,d](-5)", () => {
+                    test("get", () => expect(() => ABCD.get(-5,),).toThrow(ReferenceError,),)
+                    test("at", () => expect(() => ABCD.at(-5,),).toThrow(ReferenceError,),)
+                },)
+            },)
+            describe("or else", () => {
+                const value = Infinity,
+                    callback = () => Infinity
+
+                describe("[].orElse(0, () => ∞)", () => {
+                    test("get", () => expect(EMPTY.getOrElse(0, callback,),).toEqual(value,),)
+                    test("at", () => expect(EMPTY.atOrElse(0, callback,),).toEqual(value,),)
+                },)
+                describe("[a,b].orElse(0, () => ∞)", () => {
+                    test("get", () => expect(AB.getOrElse(0, callback,),).toEqual('a',),)
+                    test("at", () => expect(AB.atOrElse(0, callback,),).toEqual('a',),)
+                },)
+                describe("[a,b].orElse(3, () => ∞)", () => {
+                    test("get", () => expect(AB.getOrElse(3, callback,),).toEqual(value,),)
+                    test("at", () => expect(AB.atOrElse(3, callback,),).toEqual(value,),)
+                },)
+                describe("[a,b,c,d].orElse(1, () => ∞)", () => {
+                    test("get", () => expect(ABCD.getOrElse(1, callback,),).toEqual('b',),)
+                    test("at", () => expect(ABCD.atOrElse(1, callback,),).toEqual('b',),)
+                },)
+                describe("[a,b,c,d].orElse(-1, () => ∞)", () => {
+                    test("get", () => expect(ABCD.getOrElse(-1, callback,),).toEqual('d',),)
+                    test("at", () => expect(ABCD.atOrElse(-1, callback,),).toEqual('d',),)
+                },)
+                describe("[a,b,c,d].orElse(-5, () => ∞)", () => {
+                    test("get", () => expect(ABCD.getOrElse(-5, callback,),).toEqual(value,),)
+                    test("at", () => expect(ABCD.atOrElse(-5, callback,),).toEqual(value,),)
+                },)
+            },)
+            describe("or null", () => {
+                describe("[].orNull(0)", () => {
+                    test("get", () => expect(EMPTY.getOrNull(0,),).toBeNull(),)
+                    test("at", () => expect(EMPTY.atOrNull(0,),).toBeNull(),)
+                },)
+                describe("[a,b].orNull(0)", () => {
+                    test("get", () => expect(AB.getOrNull(0,),).toEqual('a',),)
+                    test("at", () => expect(AB.atOrNull(0,),).toEqual('a',),)
+                },)
+                describe("[a,b].orNull(3)", () => {
+                    test("get", () => expect(AB.getOrNull(3,),).toBeNull(),)
+                    test("at", () => expect(AB.atOrNull(3,),).toBeNull(),)
+                },)
+                describe("[a,b,c,d].orNull(1)", () => {
+                    test("get", () => expect(ABCD.getOrNull(1,),).toEqual('b',),)
+                    test("at", () => expect(ABCD.atOrNull(1,),).toEqual('b',),)
+                },)
+                describe("[a,b,c,d].orNull(-1)", () => {
+                    test("get", () => expect(ABCD.getOrNull(-1,),).toEqual('d',),)
+                    test("at", () => expect(ABCD.atOrNull(-1,),).toEqual('d',),)
+                },)
+                describe("[a,b,c,d].orNull(-5)", () => {
+                    test("get", () => expect(ABCD.getOrNull(-5,),).toBeNull(),)
+                    test("at", () => expect(ABCD.atOrNull(-5,),).toBeNull(),)
+                },)
+            },)
+        },)
         describe("first",() => {
             describe("[].first() == throw|null", () => {
                 test("throw", () => expect(() => EMPTY.first(),).toThrow(ReferenceError,),)

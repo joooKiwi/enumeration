@@ -80,6 +80,108 @@ export interface CollectionHolder<T = unknown, > {
     //#endregion -------------------- Has null methods --------------------
     //#region -------------------- Value methods --------------------
 
+    //#region -------------------- Get / at methods --------------------
+
+    /**
+     * Get the element at the specified index in the {@link CollectionHolder collection}
+     *
+     * @param index The index to retrieve a value
+     *
+     * @canReceiveNegativeValue
+     * @throws {ReferenceError} The index calculated is over the {@link size}
+     * @see ReadonlyArray.at
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/get.html Kotlin get(index)
+     * @see getOrElse
+     * @see getOrNull
+     */
+    get(index: number,): T
+
+    /**
+     * Get the element at the specified index in the {@link CollectionHolder collection}
+     *
+     * @param index The index to retrieve a value
+     *
+     * @alias {@link get}
+     */
+    at(index: number,): T
+
+
+    /**
+     * Get the element at the specified index in the {@link CollectionHolder collection}
+     * or the return value of the {@link defaultValue callback}
+     *
+     * @param index The index to retrieve a value
+     * @param defaultValue The callback to retrieve the default value if it is over the {@link size}
+     *
+     * @canReceiveNegativeValue
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/get-or-else.html Kotlin getOrElse(key, defaultValue)
+     * @see get
+     * @see getOrNull
+     */
+    getOrElse<U, >(index: number, defaultValue: IndexWithReturnCallback<U>,): | T | U
+
+    /**
+     * Get the element at the specified index in the {@link CollectionHolder collection}
+     * or the return value of the {@link defaultValue callback}
+     *
+     * @param index The index to retrieve a value
+     * @param defaultValue The callback to retrieve the default value if it is over the {@link size} (after calculation)
+     *
+     * @alias {@link getOrElse}
+     */
+    atOrElse<U, >(index: number, defaultValue: IndexWithReturnCallback<U>,): | T | U
+
+    /**
+     * Get the element at the specified index in the {@link CollectionHolder collection}
+     * or the return value of the {@link defaultValue callback}
+     *
+     * @param index The index to retrieve a value
+     * @param defaultValue The callback to retrieve the default value if it is over the {@link size} (after calculation)
+     *
+     * @canReceiveNegativeValue
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/get-or-else.html Kotlin getOrElse(key, defaultValue)
+     * @see get
+     * @see getOrNull
+     */
+    getOrElse(index: number, defaultValue: IndexWithReturnCallback<T>,): T
+
+    /**
+     * Get the element at the specified index in the {@link CollectionHolder collection}
+     * or the return value of the {@link defaultValue callback}
+     *
+     * @param index The index to retrieve a value
+     * @param defaultValue The callback to retrieve the default value if it is over the {@link size} (after calculation)
+     *
+     * @alias {@link getOrElse}
+     */
+    atOrElse(index: number, defaultValue: IndexWithReturnCallback<T>,): T
+
+
+    /**
+     * Get the element at the specified index in the {@link CollectionHolder collection}
+     * or <b>null</b> if it is over the {@link size}
+     *
+     * @param index The index to retrieve a value
+     *
+     * @canReceiveNegativeValue
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/get-or-null.html Kotlin getOrNull(key)
+     * @see get
+     * @see getOrElse
+     */
+    getOrNull(index: number,): NullOr<T>
+
+    /**
+     * Get the element at the specified index in the {@link CollectionHolder collection}
+     * or <b>null</b> if it is over the {@link size}
+     *
+     * @param index The index to retrieve a value
+     *
+     * @alias {@link getOrNull}
+     */
+    atOrNull(index: number,): NullOr<T>
+
+    //#endregion -------------------- Get / at methods --------------------
+
     /**
      * Get the first element
      *
