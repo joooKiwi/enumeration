@@ -4,13 +4,13 @@
   "description": "A Javascript implementation of an enum class",
 
   "scripts": {
-    "precompile": "del-cli dist/",
-    "compile": "npm-run-all --parallel compile-*",
-    "compile-esm":   "tsc --project tsconfig.esm.json",
-    "compile-cjs":   "tsc --project tsconfig.cjs.json",
-    "compile-amd":   "tsc --project tsconfig.amd.json",
-    "compile-umd":   "tsc --project tsconfig.umd.json",
-    "compile-types": "tsc --project tsconfig.types.json",
+    "prebuild": "del-cli dist/",
+    "build": "npm-run-all --parallel build-*",
+    "build-esm":   "tsc --project tsconfig.esm.json",
+    "build-cjs":   "tsc --project tsconfig.cjs.json",
+    "build-amd":   "tsc --project tsconfig.amd.json",
+    "build-umd":   "tsc --project tsconfig.umd.json",
+    "build-types": "tsc --project tsconfig.types.json",
 
     "test": "jest --collect-coverage",
     "test-general-enum":   "jest --testNamePattern=GeneralEnumTest",
@@ -23,10 +23,10 @@
 
     "pack": "npm pack",
 
-    "prelocal-publish": "npm run compile",
+    "prelocal-publish": "npm run build",
     "local-publish":    "npm link",
 
-    "prepublish": "npm-run-all compile test",
+    "prepublish": "npm-run-all build test",
     "publish":    "npm publish --access=public"
   },
 

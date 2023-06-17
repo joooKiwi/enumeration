@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Compile (Common Javascript)" type="js.build_tools.npm" folderName="Compile">
+  <configuration default="false" name="Build (Asychronous module definition)" type="js.build_tools.npm" folderName="Build">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="compile-cjs" />
+      <script value="build-amd" />
     </scripts>
     <node-interpreter value="project" />
     <envs />
