@@ -399,9 +399,9 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this._new(this._array.filter((value, index,) => callback(value, index,),),)
     }
 
-    public filterByIndex<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<S>
-    public filterByIndex(callback: ReverseBooleanCallback<T>,): CollectionHolder<T>
-    public filterByIndex<const S extends T, >(callback: | ReverseRestrainedBooleanCallback<T, S> | ReverseBooleanCallback<T>,) {
+    public filterIndexed<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<S>
+    public filterIndexed(callback: ReverseBooleanCallback<T>,): CollectionHolder<T>
+    public filterIndexed<const S extends T, >(callback: | ReverseRestrainedBooleanCallback<T, S> | ReverseBooleanCallback<T>,) {
         return this._new(this._array.filter((value, index,) => callback(index, value,),),)
     }
 
@@ -412,9 +412,9 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this._new(this._array.filter((value, index,) => !callback(value, index,),),)
     }
 
-    public filterNotByIndex<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<S>
-    public filterNotByIndex(callback: ReverseBooleanCallback<T>,): CollectionHolder<T>
-    public filterNotByIndex<const S extends T, >(callback: | ReverseRestrainedBooleanCallback<T, S> | ReverseBooleanCallback<T>,) {
+    public filterIndexedNot<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<S>
+    public filterIndexedNot(callback: ReverseBooleanCallback<T>,): CollectionHolder<T>
+    public filterIndexedNot<const S extends T, >(callback: | ReverseRestrainedBooleanCallback<T, S> | ReverseBooleanCallback<T>,) {
         return this._new(this._array.filter((value, index,) => !callback(index, value,),),)
     }
 
@@ -501,7 +501,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this._new(this._array.map((value, index,) => callback(value, index,),),)
     }
 
-    public mapIndex<const U, >(callback: IndexValueWithReturnCallback<T, U>,): CollectionHolder<U> {
+    public mapIndexed<const U, >(callback: IndexValueWithReturnCallback<T, U>,): CollectionHolder<U> {
         return this._new(this._array.map((value, index,) => callback(index, value,),),)
     }
 
@@ -516,7 +516,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this
     }
 
-    public forEachIndex(callback: IndexValueCallback<T>,): this {
+    public forEachIndexed(callback: IndexValueCallback<T>,): this {
         const size = this.size
         let index = -1
         while (++index < size)

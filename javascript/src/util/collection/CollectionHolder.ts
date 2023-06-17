@@ -408,9 +408,9 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The filter index callback
      * @see ReadonlyArray.filter
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-indexed.html Kotlin filterIndexed(predicate)
-     * @see filterNotByIndex
+     * @see filterIndexedNot
      */
-    filterByIndex<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<T>
+    filterIndexed<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<T>
 
     /**
      * Get a new {@link CollectionHolder collection} from the condition returned by the index callback.
@@ -418,9 +418,9 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The filter index callback
      * @see ReadonlyArray.filter
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-indexed.html Kotlin filterIndexed(predicate)
-     * @see filterNotByIndex
+     * @see filterIndexedNot
      */
-    filterByIndex(callback: ReverseBooleanCallback<T>,): CollectionHolder<T>
+    filterIndexed(callback: ReverseBooleanCallback<T>,): CollectionHolder<T>
 
 
     /**
@@ -448,18 +448,18 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The filter index callback
      * @see ReadonlyArray.filter
-     * @see filterByIndex
+     * @see filterIndexed
      */
-    filterNotByIndex<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<T>
+    filterIndexedNot<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<T>
 
     /**
      * Get a new {@link CollectionHolder collection} from the reversed condition returned by the index callback.
      *
      * @param callback The filter index callback
      * @see ReadonlyArray.filter
-     * @see filterByIndex
+     * @see filterIndexed
      */
-    filterNotByIndex(callback: ReverseBooleanCallback<T>,): CollectionHolder<T>
+    filterIndexedNot(callback: ReverseBooleanCallback<T>,): CollectionHolder<T>
 
 
     /**
@@ -598,7 +598,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see ReadonlyArray.map
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map-indexed.html Kotlin mapIndexed(transform)
      */
-    mapIndex<const U, >(callback: IndexValueWithReturnCallback<T, U>,): CollectionHolder<U>
+    mapIndexed<const U, >(callback: IndexValueWithReturnCallback<T, U>,): CollectionHolder<U>
 
     //#endregion -------------------- Map methods --------------------
     //#region -------------------- ForEach methods --------------------
@@ -625,7 +625,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/on-each-indexed.html Kotlin onEachIndexed
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/for-each-indexed.html Kotlin forEachIndexed
      */
-    forEachIndex(callback: IndexValueCallback<T>,): this
+    forEachIndexed(callback: IndexValueCallback<T>,): this
 
     //#endregion -------------------- ForEach methods --------------------
 
