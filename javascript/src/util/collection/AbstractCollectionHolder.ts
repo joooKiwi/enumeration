@@ -419,13 +419,13 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
 
-    public filterNonNull(): CollectionHolder<NonNullable<T>>
-    public filterNonNull() {
+    public filterNotNull(): CollectionHolder<NonNullable<T>>
+    public filterNotNull() {
         return this.hasNull ? this._new(this._array.filter(it => it != null)) : this
     }
 
-    public requireNonNull(): CollectionHolder<NonNullable<T>>
-    public requireNonNull() {
+    public requireNoNulls(): CollectionHolder<NonNullable<T>>
+    public requireNoNulls() {
         if (this.hasNull)
             throw new TypeError('The current collection contains null values.',)
         return this as CollectionHolder<NonNullable<T>>

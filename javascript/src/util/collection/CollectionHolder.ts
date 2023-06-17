@@ -468,17 +468,17 @@ export interface CollectionHolder<T = unknown, > {
      * If no <b>null</b> or <b>undefined</b> are found, the current instance will be returned.
      * @see ReadonlyArray.filter
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-not-null.html Kotlin filterNotNull()
-     * @see requireNonNull
+     * @see requireNoNulls
      */
-    filterNonNull(): CollectionHolder<NonNullable<T>>
+    filterNotNull(): CollectionHolder<NonNullable<T>>
 
     /**
      * Require that no items are <b>null</b> or <b>undefined</b> in the current {@link CollectionHolder collection}
      * @throws {TypeError} There is <b>null</b> or <b>undefined</b> value in the current collection
-     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/require-not-null.html Kotlin requireNotNull()
-     * @see filterNonNull
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/require-no-nulls.html Kotlin requireNoNulls()
+     * @see filterNotNull
      */
-    requireNonNull(): CollectionHolder<NonNullable<T>>
+    requireNoNulls(): CollectionHolder<NonNullable<T>>
 
     //#endregion -------------------- Filter methods --------------------
     //#region -------------------- Find methods --------------------
