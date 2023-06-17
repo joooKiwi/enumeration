@@ -5,8 +5,8 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                                                                                                                                                    from "../../general type"
-import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, FilterNonNull, IndexValueCallback, IndexValueWithReturnCallback, IndexWithReturnCallback, IsEmpty, IsNotEmpty, ValueWithStringReturnCallback, RestrainedBooleanCallback, ReverseBooleanCallback, ReverseRestrainedBooleanCallback, ValueIndexCallback, ValueIndexWithReturnCallback} from "./CollectionHolder.types"
+import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                                                                                                                                                              from "../../general type"
+import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, FilterNonNull, IndexValueCallback, IndexValueWithReturnCallback, IndexWithReturnCallback, IsEmpty, IsNotEmpty, ValueWithStringReturnCallback, RestrainedBooleanCallback, ReverseBooleanCallback, ReverseRestrainedBooleanCallback, ValueIndexCallback, ValueIndexWithReturnCallback, ObjectOf} from "./CollectionHolder.types"
 
 /**
  * A collection to hold another collection and do some generic stuff if applicable.
@@ -664,10 +664,10 @@ export interface CollectionHolder<T = unknown, > {
 
 
     /** Convert the current {@link CollectionHolder collection} to a new {@link WeakSet weak set} */
-    toWeakSet(): Readonly<WeakSet<& T & object>>
+    toWeakSet(): Readonly<WeakSet<ObjectOf<T>>>
 
     /** Convert the current {@link CollectionHolder collection} to a new {@link WeakSet mutable weak set} */
-    toMutableWeakSet(): WeakSet<& T & object>
+    toMutableWeakSet(): WeakSet<ObjectOf<T>>
 
 
     /**

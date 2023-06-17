@@ -42,3 +42,14 @@ export type IsNotEmpty<T extends CollectionHolder, > = T["size"] extends 0 ? fal
 export type FilterNonNull<T, COLLECTION extends CollectionHolder<T>, > = COLLECTION["hasNull"] extends false ? COLLECTION : CollectionHolder<NonNullable<T>>
 
 //#endregion -------------------- Validation type --------------------
+
+/** A simple object encapsulation of a value */
+export type ObjectOf<T, > =
+    | (T extends string ? String : never)
+    | (T extends boolean ? Boolean : never)
+    | (T extends number ? Number : never)
+    | (T extends bigint ? BigInt : never)
+    | (T extends null ? {} : never)
+    | (T extends undefined ? {} : never)
+    | (T extends symbol ? Symbol : never)
+    | (& T & object)

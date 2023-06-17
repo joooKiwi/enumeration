@@ -5,9 +5,9 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                                                                                                                                                    from "../../general type"
-import type {CollectionHolder}                                                                                                                                                                                                                                                                                                                                 from "./CollectionHolder"
-import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, FilterNonNull, IndexValueCallback, IndexValueWithReturnCallback, IndexWithReturnCallback, IsEmpty, IsNotEmpty, RestrainedBooleanCallback, ReverseBooleanCallback, ReverseRestrainedBooleanCallback, ValueIndexCallback, ValueIndexWithReturnCallback, ValueWithStringReturnCallback} from "./CollectionHolder.types"
+import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                                                                                                                                                              from "../../general type"
+import type {CollectionHolder}                                                                                                                                                                                                                                                                                                                                           from "./CollectionHolder"
+import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, FilterNonNull, IndexValueCallback, IndexValueWithReturnCallback, IndexWithReturnCallback, IsEmpty, IsNotEmpty, ObjectOf, RestrainedBooleanCallback, ReverseBooleanCallback, ReverseRestrainedBooleanCallback, ValueIndexCallback, ValueIndexWithReturnCallback, ValueWithStringReturnCallback} from "./CollectionHolder.types"
 
 export abstract class AbstractCollectionHolder<const T = unknown, >
     implements CollectionHolder<T> {
@@ -588,11 +588,11 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return new Set(this,)
     }
 
-    public toWeakSet(): Readonly<WeakSet<& T & object>> {
+    public toWeakSet(): Readonly<WeakSet<ObjectOf<T>>> {
         return this.#weakSet ??= Object.freeze(this.toMutableWeakSet())
     }
 
-    public toMutableWeakSet(): WeakSet<& T & object> {
+    public toMutableWeakSet(): WeakSet<ObjectOf<T>> {
         const size = this.size,
             $this = this
         return new WeakSet({
