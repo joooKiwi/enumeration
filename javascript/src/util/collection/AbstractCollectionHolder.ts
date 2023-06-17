@@ -67,7 +67,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         }
 
         if (iterable instanceof Set) {
-            const size: number = this.#size = iterable.size
+            const size = this.#size = iterable.size
             if (size == 0) {
                 this.#isEmpty = true
                 this.#hasNull = false
