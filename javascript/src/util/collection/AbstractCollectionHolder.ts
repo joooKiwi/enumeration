@@ -5,9 +5,9 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                  from "../../general type"
-import type {CollectionHolder}                                                                                                                                                                                                                                                         from "./CollectionHolder"
-import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback, ReverseBooleanCallback, ReverseRestrainedBooleanCallback} from "./CollectionHolder.types"
+import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                                                                                                                                                    from "../../general type"
+import type {CollectionHolder}                                                                                                                                                                                                                                                                                                                                 from "./CollectionHolder"
+import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, FilterNonNull, IndexValueCallback, IndexValueWithReturnCallback, IndexWithReturnCallback, IsEmpty, IsNotEmpty, ValueWithStringReturnCallback, RestrainedBooleanCallback, ReverseBooleanCallback, ReverseRestrainedBooleanCallback, ValueIndexCallback, ValueIndexWithReturnCallback} from "./CollectionHolder.types"
 
 export abstract class AbstractCollectionHolder<const T = unknown, >
     implements CollectionHolder<T> {
@@ -318,7 +318,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     //#endregion -------------------- Has / includes / contains methods --------------------
     //#region -------------------- Join methods --------------------
 
-    public join(separator: Nullable<string> = null, prefix: Nullable<string> = null, postfix: Nullable<string> = null, limit: Nullable<number> = null, truncated: Nullable<string> = null, transform: Nullable<JoinCallback<T>> = null,): string {
+    public join(separator: Nullable<string> = null, prefix: Nullable<string> = null, postfix: Nullable<string> = null, limit: Nullable<number> = null, truncated: Nullable<string> = null, transform: Nullable<ValueWithStringReturnCallback<T>> = null,): string {
         const size = this.size
         separator ??= ", "
         transform ??= it => `${it}`
@@ -431,15 +431,15 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
     //#endregion -------------------- Find methods --------------------
 
-    public map<const U, >(callback: MapCallback<T, U>,): CollectionHolder<U> {
+    public map<const U, >(callback: ValueIndexWithReturnCallback<T, U>,): CollectionHolder<U> {
         return this._new(this._array.map((value, index,) => callback(value, index,),),)
     }
 
-    public mapIndex<const U, >(callback: MapIndexCallback<U>,): CollectionHolder<U> {
-        return this._new(this._array.map((_, index,) => callback(index,),),)
+    public mapIndex<const U, >(callback: IndexValueWithReturnCallback<T, U>,): CollectionHolder<U> {
+        return this._new(this._array.map((value, index,) => callback(index, value,),),)
     }
 
-    public forEach(callback: ForEachCallback<T>,): this {
+    public forEach(callback: ValueIndexCallback<T>,): this {
         const size = this.size
         let index = -1
         while (++index < size)
@@ -447,11 +447,11 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this
     }
 
-    public forEachIndex(callback: ForEachIndexCallback,): this {
+    public forEachIndex(callback: IndexValueCallback<T>,): this {
         const size = this.size
         let index = -1
         while (++index < size)
-            callback(index,)
+            callback(index, this[index]!,)
         return this
     }
 

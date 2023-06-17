@@ -16,13 +16,16 @@ export type BooleanIndexCallback = (index: number,) => boolean
 export type RestrainedBooleanCallback<T, S extends T, > = (value: T, index: number,) => value is S
 export type ReverseRestrainedBooleanCallback<T, S extends T, > = (index: number, value: T,) => value is S
 
-export type JoinCallback<T, > = (value: T,) => string
+export type IndexWithReturnCallback<U, > = (index: number,) => U
 
-export type MapCallback<T, U> = (value: T, index: number,) => U
-export type MapIndexCallback<U> = (index: number,) => U
+export type ValueIndexCallback<T, > = (value: T, index: number,) => void
+export type IndexValueCallback<T, > = (index: number, value: T,) => void
 
-export type ForEachCallback<T> = (value: T, index: number,) => void
-export type ForEachIndexCallback = (index: number,) => void
+export type ValueIndexWithReturnCallback<T, U, > = (value: T, index: number,) => U
+export type IndexValueWithReturnCallback<T, U, > = (index: number, value: T,) => U
+
+
+export type ValueWithStringReturnCallback<T, > = (value: T,) => string
 
 //#region -------------------- Validation type --------------------
 

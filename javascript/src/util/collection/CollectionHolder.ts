@@ -5,8 +5,8 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                                                                            from "../../general type"
-import type {BooleanCallback, BooleanIndexCallback, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback, CollectionHolderName, ReverseBooleanCallback, ReverseRestrainedBooleanCallback} from "./CollectionHolder.types"
+import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                                                                                                                                                    from "../../general type"
+import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, FilterNonNull, IndexValueCallback, IndexValueWithReturnCallback, IndexWithReturnCallback, IsEmpty, IsNotEmpty, ValueWithStringReturnCallback, RestrainedBooleanCallback, ReverseBooleanCallback, ReverseRestrainedBooleanCallback, ValueIndexCallback, ValueIndexWithReturnCallback} from "./CollectionHolder.types"
 
 /**
  * A collection to hold another collection and do some generic stuff if applicable.
@@ -270,7 +270,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see ReadonlyArray.join
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/join-to-string.html Kotlin joinToString()
      */
-    join(separator?: Nullable<string>, prefix?: Nullable<string>, postfix?: Nullable<string>, limit?: Nullable<number>, truncated?: Nullable<string>, transform?: Nullable<JoinCallback<T>>,): string
+    join(separator?: Nullable<string>, prefix?: Nullable<string>, postfix?: Nullable<string>, limit?: Nullable<number>, truncated?: Nullable<string>, transform?: Nullable<ValueWithStringReturnCallback<T>>,): string
 
     //#endregion -------------------- Join methods --------------------
     //#region -------------------- Filter methods --------------------
@@ -303,7 +303,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-indexed.html Kotlin filterIndexed(predicate)
      * @see filterNotByIndex
      */
-    filterByIndex<const S extends T,>(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<T>
+    filterByIndex<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<T>
 
     /**
      * Get a new {@link CollectionHolder collection} from the condition returned by the index callback.
@@ -343,7 +343,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see ReadonlyArray.filter
      * @see filterByIndex
      */
-    filterNotByIndex<const S extends T,>(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<T>
+    filterNotByIndex<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<T>
 
     /**
      * Get a new {@link CollectionHolder collection} from the reversed condition returned by the index callback.
@@ -471,7 +471,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see ReadonlyArray.map
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map.html Kotlin map(transform)
      */
-    map<const U, >(callback: MapCallback<T, U>,): CollectionHolder<U>
+    map<const U, >(callback: ValueIndexWithReturnCallback<T, U>,): CollectionHolder<U>
 
     /**
      * Loop over the {@link CollectionHolder collection} using only the index
@@ -481,7 +481,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see ReadonlyArray.map
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map-indexed.html Kotlin mapIndexed(transform)
      */
-    mapIndex<const U, >(callback: MapIndexCallback<U>,): CollectionHolder<U>
+    mapIndex<const U, >(callback: IndexValueWithReturnCallback<T, U>,): CollectionHolder<U>
 
 
     /**
@@ -494,7 +494,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/on-each.html Kotlin onEach
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/for-each.html Kotlin forEach
      */
-    forEach(callback: ForEachCallback<T>,): this
+    forEach(callback: ValueIndexCallback<T>,): this
 
     /**
      * Loop over the {@link CollectionHolder collection} using only the index
@@ -506,7 +506,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/on-each-indexed.html Kotlin onEachIndexed
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/for-each-indexed.html Kotlin forEachIndexed
      */
-    forEachIndex(callback: ForEachIndexCallback,): this
+    forEachIndex(callback: IndexValueCallback<T>,): this
 
 
     /**
