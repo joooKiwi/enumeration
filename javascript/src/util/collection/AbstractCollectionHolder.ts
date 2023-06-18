@@ -23,6 +23,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     readonly #array: readonly T[]
     #set?: ReadonlySet<T>
     #weakSet?: Readonly<WeakSet<ObjectOf<T>>>
+    #map?: ReadonlyMap<number, T>
 
     #hasNull?: boolean
 
