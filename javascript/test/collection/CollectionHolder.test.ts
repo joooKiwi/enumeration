@@ -420,18 +420,22 @@ describe("CollectionHolderTest", () => {
         describe("to array", () => {
             test("basic", () => expect(AB.toArray(),).toStrictEqual(['a', 'b',],),)
             test("frozen", () => expect(AB.toArray(),).toBeFrozen(),)
+            test("size", () => expect(AB.toArray(),).toHaveLength(2,),)
         })
         describe("to mutable array", () => {
             test("basic", () => expect(AB.toMutableArray(),).toStrictEqual(['a', 'b',],),)
             test("frozen", () => expect(AB.toMutableArray(),).not.toBeFrozen(),)
+            test("size", () => expect(AB.toMutableArray(),).toHaveLength(2,),)
         })
         describe("to set", () => {
             test("basic", () => expect(AB.toSet(),).toStrictEqual(new Set(['a', 'b',],),),)
             test("frozen", () => expect(AB.toSet(),).toBeFrozen(),)
+            test("size", () => expect(AB.toSet().size,).toBe(2,),)
         })
         describe("to mutable set", () => {
             test("basic", () => expect(AB.toMutableSet(),).toStrictEqual(new Set(['a', 'b',],),),)
             test("frozen", () => expect(AB.toMutableSet(),).not.toBeFrozen(),)
+            test("size", () => expect(AB.toMutableSet().size,).toBe(2,),)
         })
         describe("to weak set", () => {
             test("basic", () => expect(AB_OBJECT.toWeakSet(),).toStrictEqual(new WeakSet([AB_OBJECT[0]!, AB_OBJECT[1]!,],),),)
