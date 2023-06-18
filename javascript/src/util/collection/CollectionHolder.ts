@@ -40,10 +40,18 @@ export interface CollectionHolder<T = unknown, > {
      */
     get size(): number
 
-    /** Get the length ({@link CollectionHolder.size size} or {@link CollectionHolder.count count}) of the current {@link CollectionHolder collection} */
+    /**
+     * Get the length ({@link CollectionHolder.size size} or {@link CollectionHolder.count count}) of the current {@link CollectionHolder collection}
+     *
+     * @alias {@link size}
+     */
     get length(): this["size"]
 
-    /** Get the count ({@link CollectionHolder.length length} or {@link CollectionHolder.count count}) of the current {@link CollectionHolder collection} */
+    /**
+     * Get the count ({@link CollectionHolder.length length} or {@link CollectionHolder.count count}) of the current {@link CollectionHolder collection}
+     *
+     * @alias {@link size}
+     */
     get count(): this["size"]
 
     /**
