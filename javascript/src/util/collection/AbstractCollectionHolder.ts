@@ -22,7 +22,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     readonly #reference: Iterable<T>
     readonly #array: readonly T[]
     #set?: ReadonlySet<T>
-    #weakSet?: Readonly<WeakSet<&T & object>>
+    #weakSet?: Readonly<WeakSet<ObjectOf<T>>>
 
     #hasNull?: boolean
 
@@ -652,8 +652,8 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public toMutableWeakSet(): WeakSet<ObjectOf<T>> {
         const size = this.size,
             $this = this
-        return new WeakSet({
-            * [Symbol.iterator](): IterableIterator<& T & object> {
+        return new WeakSet<ObjectOf<T>>({
+            * [Symbol.iterator]() {
                 let index = -1
                 while (++index < size)
                     yield Object($this[index]!)
