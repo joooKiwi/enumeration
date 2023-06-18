@@ -742,7 +742,11 @@ export interface CollectionHolder<T = unknown, > {
     //#endregion -------------------- Loop methods --------------------
     //#region -------------------- Javascript methods --------------------
 
-    /** A Javascript way to implements a "for‥of" over the {@link CollectionHolder collection} */
+    /**
+     * A Javascript way to implement a "for‥of" over the {@link CollectionHolder collection
+     *
+     * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator
+     */
     [Symbol.iterator](): IterableIterator<T>
 
     /**
