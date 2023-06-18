@@ -314,6 +314,53 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     //#endregion -------------------- Value methods --------------------
     //#region -------------------- Loop methods --------------------
 
+    //#region -------------------- All / any / none methods --------------------
+
+    public all(callback: BooleanCallback<T>,): boolean {
+        if (this.isEmpty)
+            return false
+
+        const size = this.size
+        let index = -1
+        while (++index < size)
+            if (!callback(this[index]!, index,))
+                return false
+        return true
+    }
+
+    public any(): this["isNotEmpty"]
+    public any(callback: BooleanCallback<T>,): boolean
+    public any(callback?: BooleanCallback<T>,): boolean {
+        if (callback == null)
+            return this.isNotEmpty
+        if (this.isEmpty)
+            return false
+
+        const size = this.size
+        let index = -1
+        while (++index < size)
+            if (callback(this[index]!, index,))
+                return true
+        return false
+    }
+
+    public none(): this["isEmpty"]
+    public none(callback: BooleanCallback<T>,): boolean
+    public none(callback?: BooleanCallback<T>,): boolean {
+        if (callback == null)
+            return this.isEmpty
+        if (this.isEmpty)
+            return true
+
+        const size = this.size
+        let index = -1
+        while (++index < size)
+            if (callback(this[index]!, index,))
+                return false
+        return true
+    }
+
+    //#endregion -------------------- All / any / none methods --------------------
     //#region -------------------- Has / includes / contains methods --------------------
 
     public hasOne(...values: readonly unknown[]): boolean {

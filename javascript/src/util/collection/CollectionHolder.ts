@@ -297,6 +297,52 @@ export interface CollectionHolder<T = unknown, > {
     //#endregion -------------------- Value methods --------------------
     //#region -------------------- Loop methods --------------------
 
+    //#region -------------------- All / any / none methods --------------------
+
+    /**
+     * Check if <b>every</b> element in the {@link CollectionHolder collection} match the given {@link callback}
+     *
+     * @param callback The condition to check on each value
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/all.html Kotlin all()
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.all C# All()
+     */
+    all(callback: BooleanCallback<T>,): boolean
+
+
+    /**
+     * Tell if the {@link CollectionHolder collection} {@link isNotEmpty is not empty}
+     *
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/any.html Kotlin any()
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.any C# Any()
+     */
+    any(): this["isNotEmpty"]
+
+    /**
+     * Check if <b>one</b> of the elements in the {@link CollectionHolder collection} match the given {@link callback}
+     *
+     * @param callback The condition to check on each value
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/any.html Kotlin any(predicate)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.any C# Any(predicate)
+     */
+    any(callback: BooleanCallback<T>,): boolean
+
+
+    /**
+     * Tell if the {@link CollectionHolder collection} {@link isEmpty is empty}
+     *
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/none.html Kotlin none()
+     */
+    none(): this["isEmpty"]
+
+    /**
+     * Check if <b>no</b> element in the {@link CollectionHolder collection} match the given {@link callback}
+     *
+     * @param callback The condition to check on each value
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/none.html Kotlin none(predicate)
+     */
+    none(callback: BooleanCallback<T>,): boolean
+
+    //#endregion -------------------- All / any / none methods --------------------
     //#region -------------------- Has / includes / contains methods --------------------
 
     /**

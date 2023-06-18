@@ -197,6 +197,29 @@ describe("CollectionHolderTest", () => {
             },)
         },)
     },)
+    describe("all / any / none", () => {
+        describe("all", () => {
+            test("[a,b].all(a|b) == true", () => expect(AB.all(it => it === 'a' || it === 'b'),).toBeTrue(),)
+            test("[a,b].all(c|d) == false", () => expect(AB.all((it: string) => it === 'c' || it === 'd'),).toBeFalse(),)
+            test("[a,b,c,d].all(a|b) == false", () => expect(ABCD.all(it => it === 'a' || it === 'b'),).toBeFalse(),)
+        },)
+        describe("any", () => {
+            test("[].any() == false", () => expect(EMPTY.any(),).toBeFalse(),)
+            test("[a,b].any() == true", () => expect(AB.any(),).toBeTrue(),)
+
+            test("[a,b].any(a|b) == true", () => expect(AB.any(it => it === 'a' || it === 'b'),).toBeTrue(),)
+            test("[a,b].any(c|d) == false", () => expect(AB.any((it: string) => it === 'c' || it === 'd'),).toBeFalse(),)
+            test("[a,b,c,d].any(a|b) == true", () => expect(ABCD.any(it => it === 'a' || it === 'b'),).toBeTrue(),)
+        },)
+        describe("none", () => {
+            test("[].none() == true", () => expect(EMPTY.none(),).toBeTrue(),)
+            test("[a,b].none() == false", () => expect(AB.none(),).toBeFalse(),)
+
+            test("[a,b].none(a|b) == false", () => expect(AB.none(it => it === 'a' || it === 'b'),).toBeFalse(),)
+            test("[a,b].none(c|d) == true", () => expect(AB.none((it: string) => it === 'c' || it === 'd'),).toBeTrue(),)
+            test("[a,b,c,d].none(a|b) == false", () => expect(ABCD.none(it => it === 'a' || it === 'b'),).toBeFalse(),)
+        },)
+    },)
     describe("has / includes / contains", () => {
         describe("one", () => {
             describe("singular item", () => {
