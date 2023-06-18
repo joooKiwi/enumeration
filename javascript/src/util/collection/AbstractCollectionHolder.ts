@@ -655,25 +655,28 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
     public reverse(fromIndex: Nullable<number> = null, toIndex: Nullable<number> = null,): CollectionHolder<T> {
         const size = this.size
-        let startingIndex = fromIndex ?? 0,
-            endingIndex = toIndex ?? size
+
+        let startingIndex = fromIndex ?? 0
 
         if (fromIndex != null) {
             if (startingIndex < 0)
-                startingIndex = size + startingIndex
+                startingIndex += size
             if (startingIndex < 0)
                 throw new RangeError(`The starting index "${fromIndex}" is under 0 after calculation from "${size} - ${Math.abs(fromIndex)}".`,)
             if (startingIndex > size)
                 throw new RangeError(`The starting index "${fromIndex}" is over the collection size "${size}".`,)
         }
+
+        let endingIndex = toIndex ?? size
         if (toIndex != null) {
             if (endingIndex < 0)
-                endingIndex = size + endingIndex
+                endingIndex += size
             if (endingIndex < 0)
                 throw new RangeError(`The ending index "${toIndex}" is under 0 after calculation from "${size} - ${Math.abs(toIndex)}".`,)
             if (endingIndex > size)
                 throw new RangeError(`The ending index "${toIndex}" is over the collection size "${size}".`,)
         }
+
         if (endingIndex < startingIndex)
             throw new RangeError(`The ending index "${toIndex}"${(toIndex == startingIndex ? '' : ` ("${startingIndex}" after calculation)`)} is over the starting index "${fromIndex}"${fromIndex == endingIndex ? '' : `("${endingIndex}" after calculation)`}.`,)
 
