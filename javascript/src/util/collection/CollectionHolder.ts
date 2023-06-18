@@ -456,6 +456,8 @@ export interface CollectionHolder<T = unknown, > {
      * Get a new {@link CollectionHolder collection} from the condition returned by the callback
      *
      * @param callback The restrained filter callback
+     *
+     * @typescriptDefinition
      * @see ReadonlyArray.filter
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter.html Kotlin filter(predicate)
      * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.where C# Where(predicate)
@@ -519,6 +521,8 @@ export interface CollectionHolder<T = unknown, > {
      * Get a new {@link CollectionHolder collection} from the reversed condition returned by the index callback.
      *
      * @param callback The filter index callback
+     *
+     * @typescriptDefinition
      * @see ReadonlyArray.filter
      * @see filterIndexed
      */
@@ -559,6 +563,8 @@ export interface CollectionHolder<T = unknown, > {
      * Get the first item found or <b>null</b> if nothing was found
      *
      * @param callback The restrained find callback
+     *
+     * @typescriptDefinition
      * @see ReadonlyArray.find
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/find.html Kotlin find(predicate)
      * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.firstordefault C# FirstOrDefault(predicate)
@@ -579,6 +585,8 @@ export interface CollectionHolder<T = unknown, > {
      * Get the first item found or <b>null</b> if nothing was found
      *
      * @param callback The find index callback
+     *
+     * @typescriptDefinition
      * @see ReadonlyArray.find
      */
     findByIndex<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): NullOr<S>
@@ -612,6 +620,8 @@ export interface CollectionHolder<T = unknown, > {
      * Get the last item found or <b>null</b> if nothing was found
      *
      * @param callback The restrained find callback
+     *
+     * @typescriptDefinition
      * @see ReadonlyArray.findLast
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/find-last.html Kotlin findLast(predicate)
      * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.lastordefault C# LastOrDefault(predicate)
