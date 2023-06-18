@@ -510,7 +510,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public findLast(callback: BooleanCallback<T>,): NullOr<T>
     public findLast<const S extends T, >(callback: | RestrainedBooleanCallback<T, S> | BooleanCallback<T>,) {
         let index = this.size
-        while (--index > 0) {
+        while (index-- > 0) {
             const value = this[index]!
             if (callback(value, index,))
                 return value
@@ -520,7 +520,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
     public findLastByIndex(callback: BooleanIndexCallback,): NullOr<T> {
         let index = this.size
-        while (--index > 0)
+        while (index-- > 0)
             if (callback(index,))
                 return this[index]!
         return null
@@ -528,7 +528,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
     public findLastIndex(callback: BooleanCallback<T>,): NullOr<number> {
         let index = this.size
-        while (--index > 0)
+        while (index-- > 0)
             if (callback(this[index]!, index,))
                 return index
         return null
@@ -536,7 +536,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
     public findLastIndexByIndex(callback: BooleanIndexCallback,): NullOr<number> {
         let index = this.size
-        while (--index > 0)
+        while (index-- > 0)
             if (callback(index,))
                 return index
         return null

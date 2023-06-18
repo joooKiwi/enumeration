@@ -369,27 +369,43 @@ describe("CollectionHolderTest", () => {
     },)
     describe("find", () => {
         test("[a,b,c,d,A,B,C,D].find(anyCase b) == b", () => expect(ABCD_ABCD.find(it => it.toLowerCase() === 'b',),).toBe('b',),)
+        test("[a,b,c,d,A,B,C,D].find(a) == a", () => expect(ABCD_ABCD.find(it => it === 'a',),).toBe('a',),)
+        test("[a,b,c,d,A,B,C,D].find(D) == D", () => expect(ABCD_ABCD.find(it => it === 'D',),).toBe('D',),)
         test("[a,b,c,d,A,B,C,D].find(anyCase e) == null", () => expect(ABCD_ABCD.find(it => it.toLowerCase() === 'e',),).toBeNull(),)
 
         test("[a,b,c,d,A,B,C,D].findByIndex(odd) == b", () => expect(ABCD_ABCD.findByIndex(it => it % 2 === 1,),).toBe('b',),)
+        test("[a,b,c,d,A,B,C,D].findByIndex(0) == a", () => expect(ABCD_ABCD.findByIndex(it => it === 0,),).toBe('a',),)
+        test("[a,b,c,d,A,B,C,D].findByIndex(7) == D", () => expect(ABCD_ABCD.findByIndex(it => it === 7,),).toBe('D',),)
         test("[a,b,c,d,A,B,C,D].findByIndex(26) == null", () => expect(ABCD_ABCD.findByIndex(it => it === 26,),).toBeNull(),)
 
         test("[a,b,c,d,A,B,C,D].findIndex(anyCase b) == 1", () => expect(ABCD_ABCD.findIndex(it => it.toLowerCase() === 'b',),).toBe(1,),)
+        test("[a,b,c,d,A,B,C,D].findIndex(a) == 0", () => expect(ABCD_ABCD.findIndex(it => it === 'a',),).toBe(0,),)
+        test("[a,b,c,d,A,B,C,D].findIndex(D) == 7", () => expect(ABCD_ABCD.findIndex(it => it === 'D',),).toBe(7,),)
         test("[a,b,c,d,A,B,C,D].findIndex(anyCase e) == null", () => expect(ABCD_ABCD.findIndex(it => it.toLowerCase() === 'e',),).toBeNull(),)
 
         test("[a,b,c,d,A,B,C,D].findIndexByIndex(odd) == 1", () => expect(ABCD_ABCD.findIndexByIndex(it => it % 2 === 1,),).toBe(1,),)
+        test("[a,b,c,d,A,B,C,D].findIndexByIndex(0) == 0", () => expect(ABCD_ABCD.findIndexByIndex(it => it === 0,),).toBe(0,),)
+        test("[a,b,c,d,A,B,C,D].findIndexByIndex(7) == 7", () => expect(ABCD_ABCD.findIndexByIndex(it => it === 7,),).toBe(7,),)
         test("[a,b,c,d,A,B,C,D].findIndexByIndex(26) == null", () => expect(ABCD_ABCD.findIndexByIndex(it => it === 26,),).toBeNull(),)
 
         test("[a,b,c,d,A,B,C,D].findLast(anyCase B) == B", () => expect(ABCD_ABCD.findLast(it => it.toUpperCase() === 'B',),).toBe('B',),)
+        test("[a,b,c,d,A,B,C,D].findLast(a) == a", () => expect(ABCD_ABCD.findLast(it => it === 'a',),).toBe('a',),)
+        test("[a,b,c,d,A,B,C,D].findLast(D) == D", () => expect(ABCD_ABCD.findLast(it => it === 'D',),).toBe('D',),)
         test("[a,b,c,d,A,B,C,D].findLast(anyCase E) == null", () => expect(ABCD_ABCD.findLast(it => it.toUpperCase() === 'E',),).toBeNull(),)
 
         test("[a,b,c,d,A,B,C,D].findLastByIndex(odd) == D", () => expect(ABCD_ABCD.findLastByIndex(it => it % 2 === 1,),).toBe('D',),)
+        test("[a,b,c,d,A,B,C,D].findLastByIndex(0) == a", () => expect(ABCD_ABCD.findLastByIndex(it => it === 0,),).toBe('a',),)
+        test("[a,b,c,d,A,B,C,D].findLastByIndex(7) == D", () => expect(ABCD_ABCD.findLastByIndex(it => it === 7,),).toBe('D',),)
         test("[a,b,c,d,A,B,C,D].findLastByIndex(26) == null", () => expect(ABCD_ABCD.findLastByIndex(it => it === 26,),).toBeNull(),)
 
         test("[a,b,c,d,A,B,C,D].findLastIndex(anyCase B) == 5", () => expect(ABCD_ABCD.findLastIndex(it => it.toUpperCase() === 'B',),).toBe(5,),)
+        test("[a,b,c,d,A,B,C,D].findLastIndex(a) == 0", () => expect(ABCD_ABCD.findLastIndex(it => it === 'a',),).toBe(0,),)
+        test("[a,b,c,d,A,B,C,D].findLastIndex(D) == 7", () => expect(ABCD_ABCD.findLastIndex(it => it === 'D',),).toBe(7,),)
         test("[a,b,c,d,A,B,C,D].findLastIndex(anyCase E) == null", () => expect(ABCD_ABCD.findLastIndex(it => it.toUpperCase() === 'E',),).toBeNull(),)
 
         test("[a,b,c,d,A,B,C,D].findLastIndexByIndex(odd) == 7", () => expect(ABCD_ABCD.findLastIndexByIndex(it => it % 2 === 1,),).toBe(7,),)
+        test("[a,b,c,d,A,B,C,D].findLastIndexByIndex(0) == 0", () => expect(ABCD_ABCD.findLastIndexByIndex(it => it === 0,),).toBe(0,),)
+        test("[a,b,c,d,A,B,C,D].findLastIndexByIndex(7) == 7", () => expect(ABCD_ABCD.findLastIndexByIndex(it => it === 7,),).toBe(7,),)
         test("[a,b,c,d,A,B,C,D].findLastIndexByIndex(26) == null", () => expect(ABCD_ABCD.findLastIndexByIndex(it => it === 26,),).toBeNull(),)
     },)
     describe("reverse", () => {
