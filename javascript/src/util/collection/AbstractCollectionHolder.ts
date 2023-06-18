@@ -245,6 +245,85 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     //#endregion -------------------- Get / at methods --------------------
+    //#region -------------------- Index of methods --------------------
+
+    public indexOf(element: unknown, fromIndex: Nullable<number> = null, toIndex: Nullable<number> = null,): NullOr<number> {
+        if (this.isEmpty)
+            return null
+        if (fromIndex == null && toIndex == null) {
+            const indexFound = this._array.indexOf(element as never,)
+            return indexFound === -1 ? null : indexFound
+        }
+
+        const size = this.size
+
+        let startingIndex = fromIndex ?? 0
+        if (fromIndex != null) {
+            if (startingIndex > size)
+                return null
+            if (startingIndex < 0)
+                startingIndex += size
+            if (startingIndex < 0)
+                startingIndex = 0
+        }
+
+        let endingIndex = toIndex ?? size
+        if (endingIndex != null) {
+            if (endingIndex < 0)
+                endingIndex += size
+            if (endingIndex < 0)
+                return null
+            else if (endingIndex > size)
+                endingIndex = size
+        }
+
+        if (endingIndex < startingIndex)
+            return null
+
+        let index = startingIndex - 1
+        while (++index < endingIndex)
+            if (this[index] === element)
+                return index
+        return null
+    }
+
+    public lastIndexOf(element: unknown, fromIndex: Nullable<number> = null, toIndex: Nullable<number> = null,): NullOr<number> {
+        if (this.isEmpty)
+            return null
+
+        const size = this.size
+
+        let startingIndex = fromIndex ?? 0
+        if (fromIndex != null) {
+            if (startingIndex > size)
+                return null
+            if (startingIndex < 0)
+                startingIndex += size
+            if (startingIndex < 0)
+                startingIndex = 0
+        }
+
+        let endingIndex = toIndex ?? size
+        if (endingIndex != null) {
+            if (endingIndex < 0)
+                endingIndex += size
+            if (endingIndex < 0)
+                return null
+            else if (endingIndex > size)
+                endingIndex = size
+        }
+
+        if (endingIndex < startingIndex)
+            return null
+
+        let index = endingIndex
+        while (index-- > startingIndex)
+            if (this[index] === element)
+                return index
+        return null
+    }
+
+    //#endregion -------------------- Index of methods --------------------
     //#region -------------------- First methods --------------------
 
     public first(): NonNullable<T>

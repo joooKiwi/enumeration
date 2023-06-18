@@ -5,8 +5,8 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import {A, A_NULL_B_UNDEFINED, AB, AB12, AB_OBJECT, ABCD, ABCD_ABCD, ABCD_NULL, ABCD_UNDEFINED, ABCDEFGHIJ, EMPTY, NULL_ABCD, UNDEFINED_ABCD} from "./constantCollections"
-import {nonPresentItem, sizeValues, templateCollection, templateItems}                                                                        from "./constantValues"
+import {A, A_NULL_B_UNDEFINED, AB, AB12, AB_OBJECT, ABAB, ABCD, ABCD_ABCD, ABCD_NULL, ABCD_UNDEFINED, ABCDEFGHIJ, EMPTY, NULL_ABCD, UNDEFINED_ABCD} from "./constantCollections"
+import {nonPresentItem, sizeValues, templateCollection, templateItems}                                                                              from "./constantValues"
 
 describe("CollectionHolderTest", () => {
     describe("size", () => describe.each(sizeValues,)("%s", ({value: {collection: it, size,},},) => {
@@ -103,6 +103,78 @@ describe("CollectionHolderTest", () => {
                     test("get", () => expect(ABCD.getOrNull(-5,),).toBeNull(),)
                     test("at", () => expect(ABCD.atOrNull(-5,),).toBeNull(),)
                 },)
+            },)
+        },)
+        describe("index of", () => {
+            describe("index of", () => {
+                test("[].(a) == null", () => expect(EMPTY.indexOf('a',),).toBeNull(),)
+
+                test("[a,b].(a) == 0", () => expect(AB.indexOf('a',),).toBe(0,),)
+                test("[a,b].(b) == 1", () => expect(AB.indexOf('b',),).toBe(1,),)
+                test("[a,b].(c) == null", () => expect(AB.indexOf('c',),).toBeNull(),)
+
+                test("[a,b,c,d].(a,2) == null", () => expect(ABCD.indexOf('a', 2,),).toBeNull(),)
+                test("[a,b,c,d].(b,2) == null", () => expect(ABCD.indexOf('b', 2,),).toBeNull(),)
+                test("[a,b,c,d].(c,2) == 2", () => expect(ABCD.indexOf('c', 2,),).toBe(2,),)
+                test("[a,b,c,d].(d,2) == 3", () => expect(ABCD.indexOf('d', 2,),).toBe(3,),)
+
+                test("[a,b,c,d].(a,null,2) == 0", () => expect(ABCD.indexOf('a', null, 2,),).toBe(0,),)
+                test("[a,b,c,d].(b,null,2) == 1", () => expect(ABCD.indexOf('b', null, 2,),).toBe(1,),)
+                test("[a,b,c,d].(c,null,2) == null", () => expect(ABCD.indexOf('c', null, 2,),).toBeNull(),)
+                test("[a,b,c,d].(d,null,2) == null", () => expect(ABCD.indexOf('d', null, 2,),).toBeNull(),)
+
+
+                test("[a,b,a,b].(a) == 0", () => expect(ABAB.indexOf('a',),).toBe(0,),)
+                test("[a,b,a,b].(b) == 1", () => expect(ABAB.indexOf('b',),).toBe(1,),)
+
+                test("[a,b,a,b].(a,2) == 2", () => expect(ABAB.indexOf('a', 2,),).toBe(2,),)
+                test("[a,b,a,b].(b,2) == 3", () => expect(ABAB.indexOf('b', 2,),).toBe(3,),)
+
+                test("[a,b,a,b].(a,null,2) == null", () => expect(ABCD.indexOf('a', null, 2,),).toBe(0,),)
+                test("[a,b,a,b].(b,null,2) == null", () => expect(ABCD.indexOf('b', null, 2,),).toBe(1,),)
+
+
+                test("[a,b].(a,500) == null", () => expect(AB.indexOf('a', 500,),).toBeNull(),)
+                test("[a,b].(a,-500) == 0", () => expect(AB.indexOf('a', -500,),).toBe(0,),)
+                test("[a,b].(a,null,500) == 0", () => expect(AB.indexOf('a', null, 500,),).toBe(0,),)
+                test("[a,b].(a,null,-500) == 0", () => expect(AB.indexOf('a', null, -500,),).toBeNull(),)
+                test("[a,b,c,d].(a,-2) == null", () => expect(ABCD.indexOf('a', -2,),).toBeNull(),)
+                test("[a,b,c,d].(a,null,-2) == 0", () => expect(ABCD.indexOf('a', null, -2,),).toBe(0,),)
+            },)
+            describe("last index of", () => {
+                test("[].(a) == null", () => expect(EMPTY.lastIndexOf('a',),).toBeNull(),)
+
+                test("[a,b].(a) == 0", () => expect(AB.lastIndexOf('a',),).toBe(0,),)
+                test("[a,b].(b) == 1", () => expect(AB.lastIndexOf('b',),).toBe(1,),)
+                test("[a,b].(c) == null", () => expect(AB.lastIndexOf('c',),).toBeNull(),)
+
+                test("[a,b,c,d].(a,2) == null", () => expect(ABCD.lastIndexOf('a', 2,),).toBeNull(),)
+                test("[a,b,c,d].(b,2) == null", () => expect(ABCD.lastIndexOf('b', 2,),).toBeNull(),)
+                test("[a,b,c,d].(c,2) == 2", () => expect(ABCD.lastIndexOf('c', 2,),).toBe(2,),)
+                test("[a,b,c,d].(d,2) == 3", () => expect(ABCD.lastIndexOf('d', 2,),).toBe(3,),)
+
+                test("[a,b,c,d].(a,null,2) == 0", () => expect(ABCD.lastIndexOf('a', null, 2,),).toBe(0,),)
+                test("[a,b,c,d].(b,null,2) == 1", () => expect(ABCD.lastIndexOf('b', null, 2,),).toBe(1,),)
+                test("[a,b,c,d].(c,null,2) == null", () => expect(ABCD.lastIndexOf('c', null, 2,),).toBeNull(),)
+                test("[a,b,c,d].(d,null,2) == null", () => expect(ABCD.lastIndexOf('d', null, 2,),).toBeNull(),)
+
+
+                test("[a,b,a,b].(a) == 2", () => expect(ABAB.lastIndexOf('a',),).toBe(2,),)
+                test("[a,b,a,b].(b) == 3", () => expect(ABAB.lastIndexOf('b',),).toBe(3,),)
+
+                test("[a,b,a,b].(a,2) == 2", () => expect(ABAB.lastIndexOf('a', 2,),).toBe(2,),)
+                test("[a,b,a,b].(b,2) == 3", () => expect(ABAB.lastIndexOf('b', 2,),).toBe(3,),)
+
+                test("[a,b,a,b].(a,null,2) == null", () => expect(ABAB.lastIndexOf('a', null, 2,),).toBe(0,),)
+                test("[a,b,a,b].(b,null,2) == null", () => expect(ABAB.lastIndexOf('b', null, 2,),).toBe(1,),)
+
+
+                test("[a,b].(a,500) == null", () => expect(AB.lastIndexOf('a', 500,),).toBeNull(),)
+                test("[a,b].(a,-500) == 0", () => expect(AB.lastIndexOf('a', -500,),).toBe(0,),)
+                test("[a,b].(a,null,500) == 0", () => expect(AB.lastIndexOf('a', null, 500,),).toBe(0,),)
+                test("[a,b].(a,null,-500) == null", () => expect(AB.lastIndexOf('a', null, -500,),).toBeNull(),)
+                test("[a,b,c,d].(a,-2) == null", () => expect(ABCD.lastIndexOf('a', -2,),).toBeNull(),)
+                test("[a,b,c,d].(a,null,-2) == 0", () => expect(ABCD.lastIndexOf('a', null, -2,),).toBe(0,),)
             },)
         },)
         describe("first",() => {

@@ -199,6 +199,41 @@ export interface CollectionHolder<T = unknown, > {
     atOrNull(index: number,): NullOr<T>
 
     //#endregion -------------------- Get / at methods --------------------
+    //#region -------------------- Index of methods --------------------
+
+    /**
+     * Get the <b>first</b> occurrence equivalent to the value received
+     * or <b>null</b> if it was not in the current {@link CollectionHolder collection}
+     * from a range (if provided)
+     *
+     * @param element The element to find
+     * @param fromIndex The inclusive starting index
+     * @param toIndex The exclusive ending index
+     *
+     * @canReceiveNegativeValue
+     * @see ReadonlyArray.indexOf
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index-of.html Kotlin indexOf(element)
+     * @see https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1.indexof C# IndexOf(item)
+     */
+    indexOf(element: unknown, fromIndex?: Nullable<number>, toIndex?:Nullable<number>,): NullOr<number>
+
+    /**
+     * Get the <b>last</b> occurrence equivalent to the value received
+     * or <b>null</b> if it was not in the current {@link CollectionHolder collection}
+     * from a range (if provided)
+     *
+     * @param element The element to find
+     * @param fromIndex The inclusive starting index
+     * @param toIndex The exclusive ending index
+     *
+     * @canReceiveNegativeValue
+     * @see ReadonlyArray.lastIndexOf
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/last-index-of.html Kotlin lastIndexOf(element)
+     * @see https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1.lastindexof C# LastIndexOf(item)
+     */
+    lastIndexOf(element: unknown, fromIndex?:Nullable<number>, toIndex?:Nullable<number>,): NullOr<number>
+
+    //#endregion -------------------- Index of methods --------------------
     //#region -------------------- First methods --------------------
 
     /**
