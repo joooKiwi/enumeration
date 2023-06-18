@@ -9,7 +9,6 @@ import type {PossibleBigInt}                from "../../general type"
 import type {EnumConstants}                 from "./EnumConstants"
 import type {Enumerable}                    from "./Enumerable"
 import type {EnumerableConstructor}         from "./EnumerableConstructor"
-import type {BasicCompanionEnumDeclaration} from "./companion/BasicCompanionEnum.declaration"
 
 /** The {@link Enumerable} name in a {@link Object.toString toString()} method */
 export type EnumerableName = typeof EnumConstants["ENUM_TO_STRING_TAG"]
@@ -75,44 +74,3 @@ export type EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<
 
 
 //#endregion -------------------- Enumerable by Enumerable & EnumerableConstructor --------------------
-//#region -------------------- Enumerable by EnumerableConstructor --------------------
-
-export type EnumerableByEnumerableConstructor<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, VALUE extends PossibleEnumerableValue<any>, >
-    = | (VALUE extends number ? EnumerableByEnumerableConstructorAndOrdinal<ENUMERABLE_CONSTRUCTOR, VALUE> : never)
-      | (VALUE extends `${infer ORDINAL extends number}` ? EnumerableByEnumerableConstructorAndOrdinal<ENUMERABLE_CONSTRUCTOR, ORDINAL> : never)
-      | (VALUE extends string ? EnumerableByEnumerableConstructorAndName<ENUMERABLE_CONSTRUCTOR, VALUE> : never)
-      | (VALUE extends Enumerable<any, any> ? EnumerableByEnumerableConstructorAndEnumerable<ENUMERABLE_CONSTRUCTOR, VALUE> : never)
-export type EnumerableNameByEnumerableConstructor<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, VALUE extends PossibleEnumerableValue<any>, >
-    = | (VALUE extends number ? EnumerableNameByEnumerableConstructorAndOrdinal<ENUMERABLE_CONSTRUCTOR, VALUE> : never)
-      | (VALUE extends `${infer ORDINAL extends number}` ? EnumerableNameByEnumerableConstructorAndOrdinal<ENUMERABLE_CONSTRUCTOR, ORDINAL> : never)
-      | (VALUE extends string ? EnumerableNameByEnumerableConstructorAndName<ENUMERABLE_CONSTRUCTOR, VALUE> : never)
-      | (VALUE extends Enumerable<any, any> ? EnumerableNameByEnumerableConstructorAndEnumerable<ENUMERABLE_CONSTRUCTOR, VALUE> : never)
-export type EnumerableOrdinalByEnumerableConstructor<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, VALUE extends PossibleEnumerableValue<any>, >
-    = | (VALUE extends number ? EnumerableOrdinalByEnumerableConstructorAndOrdinal<ENUMERABLE_CONSTRUCTOR, VALUE> : never)
-      | (VALUE extends `${infer ORDINAL extends number}` ? EnumerableOrdinalByEnumerableConstructorAndOrdinal<ENUMERABLE_CONSTRUCTOR, ORDINAL> : never)
-      | (VALUE extends string ? EnumerableOrdinalByEnumerableConstructorAndName<ENUMERABLE_CONSTRUCTOR, VALUE> : never)
-      | (VALUE extends Enumerable<any, any> ? EnumerableOrdinalByEnumerableConstructorAndEnumerable<ENUMERABLE_CONSTRUCTOR, VALUE> : never)
-
-
-export type EnumerableByEnumerableConstructorAndEnumerable<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUMERABLE extends Enumerable, >
-    = & ENUMERABLE_CONSTRUCTOR[& NameOf<ENUMERABLE> & keyof ENUMERABLE_CONSTRUCTOR] & ENUMERABLE
-export type EnumerableOrdinalByEnumerableConstructorAndEnumerable<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUMERABLE extends Enumerable, >
-    = OrdinalOf<EnumerableByEnumerableConstructorAndEnumerable<ENUMERABLE_CONSTRUCTOR, ENUMERABLE>>
-export type EnumerableNameByEnumerableConstructorAndEnumerable<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUMERABLE extends Enumerable, >
-    = NameOf<EnumerableByEnumerableConstructorAndEnumerable<ENUMERABLE_CONSTRUCTOR, ENUMERABLE>>
-
-export type EnumerableByEnumerableConstructorAndName<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, NAME extends string, >
-    = & ENUMERABLE_CONSTRUCTOR[& NAME & keyof ENUMERABLE_CONSTRUCTOR] & Enumerable
-export type EnumerableOrdinalByEnumerableConstructorAndName<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, NAME extends string, >
-    = & OrdinalOf<EnumerableByEnumerableConstructorAndName<ENUMERABLE_CONSTRUCTOR, NAME>>
-export type EnumerableNameByEnumerableConstructorAndName<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, NAME extends string, >
-    = & keyof ENUMERABLE_CONSTRUCTOR & NAME
-
-export type EnumerableByEnumerableConstructorAndOrdinal<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, ORDINAL extends number, >
-    = & ENUMERABLE_CONSTRUCTOR[& ORDINAL & keyof ENUMERABLE_CONSTRUCTOR] & Enumerable
-export type EnumerableOrdinalByEnumerableConstructorAndOrdinal<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, ORDINAL extends number, >
-    = & keyof ENUMERABLE_CONSTRUCTOR & ORDINAL
-export type EnumerableNameByEnumerableConstructorAndOrdinal<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, ORDINAL extends number, >
-    = NameOf<EnumerableByEnumerableConstructorAndOrdinal<ENUMERABLE_CONSTRUCTOR, ORDINAL>>
-
-//#endregion -------------------- Enumerable by EnumerableConstructor --------------------
