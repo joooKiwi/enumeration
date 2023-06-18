@@ -27,7 +27,17 @@ export interface CollectionHolder<T = unknown, > {
 
     //#region -------------------- Size methods --------------------
 
-    /** Get the size ({@link CollectionHolder.length length} or {@link CollectionHolder.count count}) of the current {@link CollectionHolder collection} */
+    /**
+     * Get the size ({@link CollectionHolder.length length} or {@link CollectionHolder.count count}) of the current {@link CollectionHolder collection}
+     *
+     * @see ReadonlyArray.length
+     * @see ReadonlySet.size
+     * @see ReadonlyMap.size
+     * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/size.html Kotlin size()
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.count C# Count()
+     * @see length
+     * @see count
+     */
     get size(): number
 
     /** Get the length ({@link CollectionHolder.size size} or {@link CollectionHolder.count count}) of the current {@link CollectionHolder collection} */
@@ -189,6 +199,7 @@ export interface CollectionHolder<T = unknown, > {
      * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
      * @throws {ReferenceError} The element was <b>null</b> or <b>undefined</b>
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/first.html Kotlin first()
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.first C# First()
      */
     first(): NonNullable<T>
 
@@ -198,6 +209,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The matching callback
      * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/first.html Kotlin first(predicate)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.first C# First(predicate)
      */
     first(callback: BooleanCallback<T>,): NonNullable<T>
 
@@ -207,6 +219,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The matching callback
      * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/first.html Kotlin first(predicate)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.first C# First(predicate)
      */
     first<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
 
@@ -215,6 +228,7 @@ export interface CollectionHolder<T = unknown, > {
      * Get the first element or <b>null</b> is the {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
      *
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/first-or-null.html Kotlin firstOrNull()
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.firstordefault C# FirstOrDefault()
      */
     firstOrNull(): NullOr<T>
 
@@ -224,6 +238,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The matching callback
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/first-or-null.html Kotlin firstOrNull(predicate)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.firstordefault C# FirstOrDefault(predicate)
      */
     firstOrNull(callback: BooleanCallback<T>,): NullOr<T>
 
@@ -233,6 +248,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The matching callback
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/first-or-null.html Kotlin firstOrNull(predicate)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.firstordefault C# FirstOrDefault(predicate)
      */
     firstOrNull<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
 
@@ -245,6 +261,7 @@ export interface CollectionHolder<T = unknown, > {
      * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
      * @throws {ReferenceError} The element was <b>null</b> or <b>undefined</b>
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/last.html Kotlin last()
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.last C# Last()
      */
     last(): NonNullable<T>
 
@@ -254,6 +271,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The matching callback
      * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/last.html Kotlin last(predicate)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.last C# Last(predicate)
      */
     last(callback: BooleanCallback<T>,): NonNullable<T>
 
@@ -263,6 +281,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The matching callback
      * @throws {ReferenceError} The {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/last.html Kotlin last(predicate)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.last C# Last(predicate)
      */
     last<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
 
@@ -271,6 +290,7 @@ export interface CollectionHolder<T = unknown, > {
      * Get the last element or <b>null</b> is the {@link CollectionHolder collection} {@link CollectionHolder.isEmpty is empty}
      *
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/last-or-null.html Kotlin lastOrNull()
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.lastordefault C# LastOrDefault()
      */
     lastOrNull(): NullOr<T>
 
@@ -280,6 +300,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The matching callback
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/last-or-null.html Kotlin lastOrNull(predicate)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.lastordefault C# LastOrDefault(predicate)
      */
     lastOrNull(callback: BooleanCallback<T>,): NullOr<T>
 
@@ -289,6 +310,7 @@ export interface CollectionHolder<T = unknown, > {
      *
      * @param callback The matching callback
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/last-or-null.html Kotlin lastOrNull(predicate)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.lastordefault C# LastOrDefault(predicate)
      */
     lastOrNull<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): S
 
@@ -354,6 +376,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see ReadonlyArray.includes
      * @see ReadonlySet.has
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/contains.html Kotlin contains(element)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.contains C# contains(value)
      */
     hasOne(...values: readonly unknown[]): boolean
 
@@ -422,6 +445,7 @@ export interface CollectionHolder<T = unknown, > {
      * @canReceiveNegativeValue
      * @see ReadonlyArray.join
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/join-to-string.html Kotlin joinToString()
+     * @see https://learn.microsoft.com/dotnet/api/system.string.join C# string.Join()
      */
     join(separator?: Nullable<string>, prefix?: Nullable<string>, postfix?: Nullable<string>, limit?: Nullable<number>, truncated?: Nullable<string>, transform?: Nullable<ValueWithStringReturnCallback<T>>,): string
 
@@ -434,6 +458,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The restrained filter callback
      * @see ReadonlyArray.filter
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter.html Kotlin filter(predicate)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.where C# Where(predicate)
      * @see filterNot
      */
     filter<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): CollectionHolder<S>
@@ -452,7 +477,8 @@ export interface CollectionHolder<T = unknown, > {
      * Get a new {@link CollectionHolder collection} from the condition returned by the index callback.
      *
      * @param callback The filter index callback
-     * @see ReadonlyArray.filter
+     *
+     * @typescriptDefinition
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-indexed.html Kotlin filterIndexed(predicate)
      * @see filterIndexedNot
      */
@@ -535,6 +561,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The restrained find callback
      * @see ReadonlyArray.find
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/find.html Kotlin find(predicate)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.firstordefault C# FirstOrDefault(predicate)
      */
     find<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
 
@@ -544,6 +571,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The find callback
      * @see ReadonlyArray.find
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/find.html Kotlin find(predicate)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.firstordefault C# FirstOrDefault(predicate)
      */
     find(callback: BooleanCallback<T>,): NullOr<T>
 
@@ -586,6 +614,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The restrained find callback
      * @see ReadonlyArray.findLast
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/find-last.html Kotlin findLast(predicate)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.lastordefault C# LastOrDefault(predicate)
      */
     findLast<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NullOr<S>
 
@@ -595,6 +624,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The find callback
      * @see ReadonlyArray.findLast
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/find-last.html Kotlin findLast(predicate)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.lastordefault C# LastOrDefault(predicate)
      */
     findLast(callback: BooleanCallback<T>,): NullOr<T>
 
@@ -633,6 +663,7 @@ export interface CollectionHolder<T = unknown, > {
      * @param callback The callback to retrieve the result
      * @see ReadonlyArray.map
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map.html Kotlin map(transform)
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.select C# Select(selector)
      */
     map<const U, >(callback: ValueIndexWithReturnCallback<T, U>,): CollectionHolder<U>
 
@@ -685,6 +716,7 @@ export interface CollectionHolder<T = unknown, > {
      * @throws {RangeError} The indexes "from" and "to" are not within a valid range
      * @see Array.reverse
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/reverse.html Kotlin reverse()
+     * @see https://learn.microsoft.com/dotnet/api/system.linq.enumerable.reverse C# Reverse()
      */
     reverse(fromIndex?: Nullable<number>, toIndex?: Nullable<number>,): CollectionHolder<T>
 
