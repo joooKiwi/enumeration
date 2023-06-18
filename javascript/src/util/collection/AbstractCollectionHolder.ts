@@ -475,7 +475,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public requireNoNulls(): CollectionHolder<NonNullable<T>>
     public requireNoNulls() {
         if (this.hasNull)
-            throw new TypeError('The current collection contains null values.',)
+            throw new TypeError("The current collection contains null values.",)
         return this as CollectionHolder<NonNullable<T>>
     }
 
@@ -638,6 +638,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return array
     }
 
+
     public toSet(): ReadonlySet<T> {
         return this.#set ??= Object.freeze(new Set(this,),)
     }
@@ -646,8 +647,9 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return new Set(this,)
     }
 
+
     public toWeakSet(): Readonly<WeakSet<ObjectOf<T>>> {
-        return this.#weakSet ??= Object.freeze(this.toMutableWeakSet())
+        return this.#weakSet ??= Object.freeze(this.toMutableWeakSet(),)
     }
 
     public toMutableWeakSet(): WeakSet<ObjectOf<T>> {
