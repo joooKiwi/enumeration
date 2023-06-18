@@ -501,7 +501,8 @@ export interface CollectionHolder<T = unknown, > {
      * Get a new {@link CollectionHolder collection} from the reversed condition returned by the callback
      *
      * @param callback The restrained filter callback
-     * @see ReadonlyArray.filter
+     *
+     * @typescriptDefinition
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-not.html Kotlin filterNot(predicate)
      * @see filter
      */
