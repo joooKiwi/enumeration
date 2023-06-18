@@ -662,6 +662,19 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
 
+    public toMap(): ReadonlyMap<number, T> {
+        return this.#map ??= Object.freeze(this.toMutableMap(),)
+    }
+
+    public toMutableMap(): Map<number, T> {
+        const map = new Map<number, T>()
+        let index = this.size
+        while (index-- > 0)
+            map.set(index, this[index]!,)
+        return map
+    }
+
+
     public toString(): string {
         return this.join()
     }

@@ -441,5 +441,15 @@ describe("CollectionHolderTest", () => {
             test("basic", () => expect(AB_OBJECT.toMutableWeakSet(),).toStrictEqual(new WeakSet([AB_OBJECT[0]!, AB_OBJECT[1]!,],),),)
             test("frozen", () => expect(AB.toMutableWeakSet(),).not.toBeFrozen(),)
         })
+        describe("to map", () => {
+            test("basic", () => expect(AB.toMap(),).toStrictEqual(new Map([[0, 'a',], [1, 'b',],],),),)
+            test("frozen", () => expect(AB.toMap(),).toBeFrozen(),)
+            test("size", () => expect(AB.toMap().size,).toBe(2,),)
+        })
+        describe("to mutable map", () => {
+            test("basic", () => expect(AB.toMutableMap(),).toStrictEqual(new Map([[0, 'a',], [1, 'b',],],),),)
+            test("frozen", () => expect(AB.toMutableMap(),).not.toBeFrozen(),)
+            test("size", () => expect(AB.toMutableMap().size,).toBe(2,),)
+        })
     },)
 },)

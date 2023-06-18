@@ -780,6 +780,13 @@ export interface CollectionHolder<T = unknown, > {
     toMutableWeakSet(): WeakSet<ObjectOf<T>>
 
 
+    /** Convert the current {@link CollectionHolder collection} to a new {@link ReadonlyMap map} */
+    toMap(): ReadonlyMap<number, T>
+
+    /** Convert the current {@link CollectionHolder collection} to a new {@link Map mutable map} */
+    toMutableMap(): Map<number, T>
+
+
     /**
      * Convert the current {@link CollectionHolder collection} to {@link String} using the {@link join} method
      *
