@@ -1,7 +1,7 @@
 # Enumerable
 
 This project is made to have an implementation of `enum class` similar in each language.
-_Or at least give a similar behaviour_
+_Or at least give a similar behaviour_.
 
 ## Implementation by language
 
@@ -21,10 +21,17 @@ And in `C#`, it uses the type system to its advantage (like for the [ValueTuple]
 
 _(This may change once the implementation is made)_
 
+## Contribution
+
+You can contribute to the project by the GitHub sponsor _(and eventually other methods)_.
+This is still an early project.
+But it can become so much more by the contributions.
+
 ## Version history
 
 | Git version | Implementation version |
 |-------------|------------------------|
+| 1.3.7       | `JS / TS`: 2.3.0       |
 | 1.3.6       | `JS / TS`: 2.2.3       |
 | 1.3.5       | `JS / TS`: 2.2.2       |
 | 1.3.4       | `JS / TS`: 2.2.1       |
