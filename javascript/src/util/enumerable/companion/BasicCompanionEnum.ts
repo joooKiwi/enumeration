@@ -105,30 +105,21 @@ export class BasicCompanionEnum<const ENUMERABLE extends Enumerable,
 
 
     public get values(): CollectionHolder<ENUMERABLE> {
-        if (this.#values == null) {
-            if (!EnumConstants.VALUES_MAP.has(this))
-                this.#initializeMaps()
-            this.#values = EnumConstants.VALUES_MAP.get(this) as CollectionHolder<ENUMERABLE>
-        }
-        return this.#values
+        if (this.#values == null && !EnumConstants.VALUES_MAP.has(this))
+            this.#initializeMaps()
+        return this.#values!
     }
 
     public get names(): CollectionHolder<NameOf<ENUMERABLE>> {
-        if (this.#names == null) {
-            if (!EnumConstants.NAMES_MAP.has(this))
-                this.#initializeMaps()
-            this.#names = EnumConstants.NAMES_MAP.get(this) as CollectionHolder<NameOf<ENUMERABLE>>
-        }
-        return this.#names
+        if (this.#names == null && !EnumConstants.NAMES_MAP.has(this))
+            this.#initializeMaps()
+        return this.#names!
     }
 
     public get ordinals(): CollectionHolder<OrdinalOf<ENUMERABLE>> {
-        if (this.#ordinals == null) {
-            if (!EnumConstants.ORDINALS_MAP.has(this))
-                this.#initializeMaps()
-            this.#ordinals = EnumConstants.ORDINALS_MAP.get(this) as CollectionHolder<OrdinalOf<ENUMERABLE>>
-        }
-        return this.#ordinals
+        if (this.#ordinals == null && !EnumConstants.ORDINALS_MAP.has(this))
+            this.#initializeMaps()
+        return this.#ordinals!
     }
 
     public get iterator(): IterableIterator<ENUMERABLE> {
@@ -145,14 +136,12 @@ export class BasicCompanionEnum<const ENUMERABLE extends Enumerable,
      *
      *
      * The initialization includes:
-     *  - {@link default} <i>(nullable & mutable)</i>
      *  - {@link values} <i>(final)</i>
      *  - {@link names} <i>(final)</i>
      *  - {@link ordinals} <i>(final)</i>
      *
      * It also initialize the individual {@link Enumerable.ordinal ordinals} & {@link Enumerable.name names} on each {@link instance instance}
      *
-     * @see EnumConstants.DEFAULT_MAP
      * @see EnumConstants.VALUES_MAP
      * @see EnumConstants.NAME_MAP
      * @see EnumConstants.NAMES_MAP
@@ -200,10 +189,9 @@ export class BasicCompanionEnum<const ENUMERABLE extends Enumerable,
         }
 
 
-        EnumConstants.ORDINALS_MAP.set(this, new GenericCollectionHolder(freeze(everyOrdinals,),),)
-        EnumConstants.NAMES_MAP.set(this, new GenericCollectionHolder(freeze(everyNames,),),)
-        EnumConstants.VALUES_MAP.set(this, new GenericCollectionHolder(freeze(everyEnumerable,),),)
-        EnumConstants.DEFAULT_MAP.set(this, this._DEFAULT ?? null,)
+        EnumConstants.ORDINALS_MAP.set(this, this.#ordinals = new GenericCollectionHolder(freeze(everyOrdinals,),) as CollectionHolder<OrdinalOf<ENUMERABLE>>,)
+        EnumConstants.NAMES_MAP.set(this, this.#names = new GenericCollectionHolder(freeze(everyNames,),) as CollectionHolder<NameOf<ENUMERABLE>>,)
+        EnumConstants.VALUES_MAP.set(this, this.#values = new GenericCollectionHolder(freeze(everyEnumerable,),) as unknown as CollectionHolder<ENUMERABLE>,)
     }
 
     //#endregion -------------------- Initialization methods --------------------
