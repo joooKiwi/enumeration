@@ -21,10 +21,16 @@ export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
     //#region -------------------- Default getter & setter methods --------------------
 
     /**
-     * Get the default value of an {@link Enumerable instance}
+     * Get the default value of an {@link Enumerable instance}.
      *
-     * @note If no default value was set (in the declaration) or by using the instance setter, an {@link NullEnumerableException exception} will be thrown.
+     * If no default value was set (in the declaration) or by using the instance setter,
+     * an {@link NullEnumerableException exception} will be thrown.
+     *
+     * It can also throw a {@link UnhandledValueException} if the default initialization could not be resolved.
+     * It can be by either an invalid type or the value is throwning an exception itself.
+     *
      * @throws {NullEnumerableException}
+     * @throws {UnhandledValueException}
      */
     get default(): ENUMERABLE
 

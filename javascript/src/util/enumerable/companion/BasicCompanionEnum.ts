@@ -43,6 +43,7 @@ export class BasicCompanionEnum<const ENUMERABLE extends Enumerable,
     #ordinals?: CollectionHolder<OrdinalOf<ENUMERABLE>>
     #default?: NullOr<ENUMERABLE>
 
+
     /**
      * The excluded names that are an instance of the current instance.
      *
@@ -53,8 +54,19 @@ export class BasicCompanionEnum<const ENUMERABLE extends Enumerable,
      * {@link BasicCompanionEnum.getName getName()} or {@link BasicCompanionEnum.names get names}
      */
     protected readonly _EXCLUDED_NAMES?: Nullable<readonly Nullable<string>[]>
-    /** The default value stored for the current instance at the initialization */
+
+    /** The default {@link Enumerable enumerable value} stored for the current instance at the initialization */
     protected readonly _DEFAULT?: Nullable<ENUMERABLE>
+    /**
+     * The default {@link Enumerable.name name value} stored for the current instance at the initialization
+     * (is ignored if there is a value on the {@link _DEFAULT})
+     */
+    protected readonly _DEFAULT_NAME?: Nullable<PossibleString>
+    /**
+     * The default {@link Enumerable.ordinal ordinal value} stored for the current instance at the initialization
+     * (is ignored if there is a value on the {@link _DEFAULT_NAME})
+     */
+    protected readonly _DEFAULT_ORDINAL?: Nullable<PossibleNumeric>
 
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------
@@ -76,20 +88,16 @@ export class BasicCompanionEnum<const ENUMERABLE extends Enumerable,
 
 
     public get default(): ENUMERABLE {
-        if (this.#default != null)
-            return this.#default
+        if (this.#default === undefined && !EnumConstants.DEFAULT_MAP.has(this,))
+            this.#initializeDefault()
 
         if (this.#default === null)
-            throw new NullEnumerableException(`The default value was set to null or removed for "${this.instance.name}".\n\tTry a calling "${this.instance.name}.CompanionEnum.get.default = value" or "EnumRetriever.get.setDefaultOn(instance, value)".`,)
-
-        const defaultValue = this._DEFAULT
-        if (defaultValue == null)
-            throw new NullEnumerableException(`Unable to get the default value. There is no default stored for "${this.instance.name}".\n\tTry using the the "_DEFAULT" (at declaration), call "${this.instance.name}.default = value" or call "Enum.setDefaultOn(instance, value)" beforehand.`,)
-        return this.#default = this._getValue(defaultValue)
+            throw new NullEnumerableException(`The default value was set to null or removed on "${this.instance.name}".\n\tTry a calling "${this.instance.name}.CompanionEnum.get.default = value" or "${this.instance.name}.CompanionEnum.get.setDefault(value)".`,)
+        return this.#default!
     }
 
     public set default(value: Nullable<PossibleEnumerableValue<ENUMERABLE>>,) {
-        this.#default = value == null ? null : this._getValue(value)
+        EnumConstants.DEFAULT_MAP.set(this, this.#default = value == null ? null : this._getValue(value),)
     }
 
     public setDefault(value: NullOrUndefined,): this
@@ -192,6 +200,147 @@ export class BasicCompanionEnum<const ENUMERABLE extends Enumerable,
         EnumConstants.ORDINALS_MAP.set(this, this.#ordinals = new GenericCollectionHolder(freeze(everyOrdinals,),) as CollectionHolder<OrdinalOf<ENUMERABLE>>,)
         EnumConstants.NAMES_MAP.set(this, this.#names = new GenericCollectionHolder(freeze(everyNames,),) as CollectionHolder<NameOf<ENUMERABLE>>,)
         EnumConstants.VALUES_MAP.set(this, this.#values = new GenericCollectionHolder(freeze(everyEnumerable,),) as unknown as CollectionHolder<ENUMERABLE>,)
+    }
+
+
+    /**
+     * Initialize the default value by retrieving the {@link _DEFAULT} first,
+     * then the {@link _DEFAULT_NAME} and finally the {@link _DEFAULT_ORDINAL}.
+     *
+     * If all of them are <b>null</b>, then a {@link NullEnumerableException} will be thrown.
+     *
+     * And if the values expected ({@link _DEFAULT}, {@link _DEFAULT_NAME} or {@link _DEFAULT_ORDINAL})
+     * are not in the expected type, then an {@link InvalidEnumerableException} is thrown.
+     *
+     * @see EnumConstants.DEFAULT_MAP
+     * @throws {NullEnumerableException}
+     * @throws {InvalidEnumerableException}
+     */
+    #initializeDefault(): void {
+        if (this.#initializeDefaultByEnumerable())
+            return
+        if (this.#initializeDefaultByName())
+            return
+        if (this.#initializeDefaultByOrdinal())
+            return
+
+        throw new NullEnumerableException(`Unable to get the default value. There is no default stored for "${this.instance.name}".\n\tTry using the the "_DEFAULT", "_DEFAULT_NAME" or "_DEFAULT_ORDINAL" (at declaration), call "${this.instance.name}.default = value" or call "Enum.setDefaultOn(instance, value)" beforehand.`,)
+    }
+
+    /**
+     * Initialize the default value from {@link _DEFAULT}
+     *
+     * @returns {boolean} The default value has been initialized
+     * @throws {NullEnumerableException}
+     * @throws {InvalidEnumerableException}
+     */
+    #initializeDefaultByEnumerable(): boolean {
+        let defaultValue: unknown // Nullable<ENUMERABLE>
+        try {
+            defaultValue = this._DEFAULT
+        } catch (exception) {
+            throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT". An exception was thrown when attempting to retrieve the value.`, exception as never,)
+        }
+        if (defaultValue != null) {
+            if (!EnumHelper.isEnum(defaultValue) && !EnumHelper.isEnumerableByStructure(defaultValue))
+                throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT) was not an Enum or in the structure of an Enumerable.`, defaultValue,)
+            try {
+                EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValueByEnumerable(defaultValue as Enumerable,),)
+                return true
+            } catch (exception) {
+                if (exception instanceof InvalidEnumerableException)
+                    throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT". The value ${defaultValue} is not a valid instance received by the companion enum.`, exception,)
+                throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT". An unknown exception was thrown.`, exception as never,)
+            }
+        }
+        return false
+    }
+
+    /**
+     * Initialize the default value from {@link _DEFAULT_NAME}
+     *
+     * @returns {boolean} The default value has been initialized
+     * @throws {NullEnumerableException}
+     * @throws {InvalidEnumerableException}
+     */
+    #initializeDefaultByName(): boolean {
+        let defaultName: unknown // Nullable<PossibleString>
+        try {
+            defaultName = this._DEFAULT_NAME
+        } catch (exception) {
+            throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". An exception was thrown when attempting to retrieve the value.`, exception as never,)
+        }
+        if (defaultName != null) {
+            if (typeof defaultName != "string" && !(defaultName instanceof String))
+                throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT_NAME) was not an string (primitive or object).`, defaultName,)
+            try {
+                if (typeof defaultName == "string") {
+                    EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValueByString(defaultName, defaultName,),)
+                    return true
+                }
+                EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValueByString(defaultName.valueOf(), defaultName,),)
+                return true
+            } catch (exception) {
+                if (exception instanceof ForbiddenInheritedEnumerableMemberException)
+                    throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value "${defaultName}" is one possible value of the inherited field name (${EnumConstants.INHERITED_ENUMERABLE_MEMBERS.map(it => `"${it}"`).join(", ")}).`, exception,)
+                if (exception instanceof ForbiddenNumericException)
+                    throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value "${defaultName}" is equivalent to ±∞ or NaN.`, exception,)
+                if (exception instanceof ImpossibleOrdinalException)
+                    throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value "${defaultName}" is an impossible ordinal value.`, exception,)
+                if (exception instanceof InvalidEnumerableException)
+                    throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value "${this.instance.name}.${defaultName}" is not a valid instance for the companion enum.`, exception,)
+                throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". An unknown exception was thrown.`, exception as never,)
+            }
+        }
+        return false
+    }
+
+    /**
+     * Initialize the default value from {@link _DEFAULT_ORDINAL}
+     *
+     * @returns {boolean} The default value has been initialized
+     * @throws {NullEnumerableException}
+     * @throws {InvalidEnumerableException}
+     */
+    #initializeDefaultByOrdinal(): boolean {
+        let defaultOrdinal: unknown // Nullable<PossibleNumeric>
+        try {
+            defaultOrdinal = this._DEFAULT_ORDINAL
+        } catch (exception) {
+            throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". An exception was thrown when attempting to retrieve the value.`, exception as never,)
+        }
+        if (defaultOrdinal != null) {
+            if (typeof defaultOrdinal != "number" && typeof defaultOrdinal != "bigint" && !(defaultOrdinal instanceof Number) && !(defaultOrdinal instanceof BigInt))
+                throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL) was not an number or bigint (primitive or object).`, defaultOrdinal,)
+            try {
+                if (typeof defaultOrdinal == "number") {
+                    EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValueByNumber(defaultOrdinal, defaultOrdinal,),)
+                    return true
+                }
+                if (typeof defaultOrdinal == "bigint") {
+                    EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValueByBigInt(defaultOrdinal, defaultOrdinal,),)
+                    return true
+                }
+                if (defaultOrdinal instanceof Number) {
+                    EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValueByNumber(defaultOrdinal.valueOf(), defaultOrdinal,),)
+                    return true
+                }
+                EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValueByBigInt(defaultOrdinal.valueOf(), defaultOrdinal,),)
+                return true
+            } catch (exception) {
+                if (exception instanceof ForbiddenNumericException)
+                    throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". The value "${defaultOrdinal}" is ±∞ or NaN.`, exception,)
+                if (exception instanceof ImpossibleOrdinalException)
+                    throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". The value "${defaultOrdinal}" is negative, over the Number.MAX_VALUE or a floating value.`, exception,)
+                if (exception instanceof InvalidEnumerableException)
+                    throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". The value "${this.instance.name}.${defaultOrdinal}" is not a valid instance for the companion enum.`, exception,)
+                if (exception instanceof InvalidInstanceException)
+                    throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". The value "${this.instance.name}.${defaultOrdinal}" is not an Enumerable valid for the companion enum.`, exception,)
+
+                throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". An unknown exception was thrown.`, exception as never,)
+            }
+        }
+        return false
     }
 
     //#endregion -------------------- Initialization methods --------------------
