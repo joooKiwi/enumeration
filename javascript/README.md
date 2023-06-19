@@ -13,6 +13,7 @@
 * [Common mistakes](#common-mistakes)
   * [Reversing the inheritance](#reversing-the-inheritance)
   * [Forgetting the type declaration on the companion enum](#forgetting-the-type-declaration-on-the-companion-enum)
+* [Contribution](#contribution)
 
 ## Installation
 
@@ -429,3 +430,6 @@ interface NestedExampleDeclaration<T> {
 }
 ```
 
+## Contribution
+You can contribute to the project by the "GitHub sponsor".
+But eventually, more ways to contribute should be present.
