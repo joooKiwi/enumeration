@@ -134,6 +134,17 @@ export type Ordinals = Enum[Names]
 By default, the **companion enum** is always implemented.
 But it will throw a `NullEnumerableException` if nothing has been set _(in the initialization)_.
 Or it may be that it has been removed _(at compile time)_.
+And it can also throw a `UnhandledValueException` if the value received is incompatible.
+
+The possible values for the fields are:
+ - `_DEFAULT` → `Enumerable` valid to the **companion enum**
+ - `_DEFAULT_NAME` → a [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+      as either a primitive or an object
+ - `_DEFAULT_ORDINAL` → a [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number) or
+      a [bigint](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
+      as a primitive or an object
+
+Keep in mind that the value will always be converted to the **companion enum** base instance in the end.
 
 <details>
 <summary>Javascript</summary>
@@ -141,7 +152,11 @@ Or it may be that it has been removed _(at compile time)_.
 ```javascript
 class CompanionEnum_Example extends BasicCompanionEnum {
 
-    _DEFAULT = Example.B
+    _DEFAULT = condition1 ? Example.B : null
+
+    _DEFAULT_NAME = condition2 ? 'C' : null
+
+    _DEFAULT_ORDINAL = condition3 ? 4 : null
 
 }
 ```
@@ -152,7 +167,11 @@ class CompanionEnum_Example extends BasicCompanionEnum {
 ```typescript
 class CompanionEnum_Example extends BasicCompanionEnum<Example, typeof Example> {
 
-    protected override readonly _DEFAULT = Example.B
+    protected override readonly _DEFAULT = condition1 ? Example.B : null
+
+    protected override readonly _DEFAULT_NAME = condition2 ? 'C' : null
+
+    protected override readonly _DEFAULT_ORDINAL = condition3 ? 4 : null
 
 }
 ```
