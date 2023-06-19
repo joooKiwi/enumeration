@@ -5,7 +5,7 @@
 * [Motivation](#motivation)
 * [Usage](#usage)
   * [The base](#the-base)
-  * [Default usage](#default-usage)
+  * [Default value](#default-value)
   * [Excluded field](#excluded-field)
   * [Inheritance by 1 to 3 parents](#inheritance-by-1-to-3-parents)
     * [Inheritance by single parent](#inheritance-by-single-parent)
@@ -129,7 +129,7 @@ export type Ordinals = Enum[Names]
 
 </details>
 
-### Default usage
+### Default value
 
 By default, the **companion enum** is always implemented.
 But it will throw a `NullEnumerableException` if nothing has been set _(in the initialization)_.
@@ -145,6 +145,10 @@ The possible values for the fields are:
       as a primitive or an object
 
 Keep in mind that the value will always be converted to the **companion enum** base instance in the end.
+
+And, you can always use the getter pattern on the default fields (`_DEFAULT`, `_DEFAULT_NAME`, `_DEFAULT_ORDINAL`).
+Utilizing the lazy implementation is not really effective for the pre-made **companion enum**
+since they can only be retrieved 1 time.
 
 <details>
 <summary>Javascript</summary>

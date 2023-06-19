@@ -55,16 +55,27 @@ export class BasicCompanionEnum<const ENUMERABLE extends Enumerable,
      */
     protected readonly _EXCLUDED_NAMES?: Nullable<readonly Nullable<string>[]>
 
-    /** The default {@link Enumerable enumerable value} stored for the current instance at the initialization */
+    /**
+     * The default {@link Enumerable enumerable value} stored for the current instance at the initialization
+     *
+     * @canUseAGetterMethodInstead
+     * @canOnlyCalledOnce
+     */
     protected readonly _DEFAULT?: Nullable<ENUMERABLE>
     /**
      * The default {@link Enumerable.name name value} stored for the current instance at the initialization
      * (is ignored if there is a value on the {@link _DEFAULT})
+     *
+     * @canUseAGetterMethodInstead
+     * @canOnlyCalledOnce
      */
     protected readonly _DEFAULT_NAME?: Nullable<PossibleString>
     /**
      * The default {@link Enumerable.ordinal ordinal value} stored for the current instance at the initialization
      * (is ignored if there is a value on the {@link _DEFAULT_NAME})
+     *
+     * @canUseAGetterMethodInstead
+     * @canOnlyCalledOnce
      */
     protected readonly _DEFAULT_ORDINAL?: Nullable<PossibleNumeric>
 
