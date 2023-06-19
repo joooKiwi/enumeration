@@ -31,20 +31,20 @@ EnumHelper.getCompanion(null,).toString()
 // @ts-expect-error
 EnumHelper.getCompanion(primitiveStringInstance,).toString()
 // @ts-expect-error
-EnumHelper.getCompanion(new window.String(),).toString()
+EnumHelper.getCompanion(new String('',),).toString()
 
 // @ts-expect-error
 EnumHelper.getCompanion(primitiveNumberInstance,).toString()
 // @ts-expect-error
-EnumHelper.getCompanion(new window.Number(),).toString()
+EnumHelper.getCompanion(new Number(0,),).toString()
 
 // @ts-expect-error
 EnumHelper.getCompanion(primitiveBigIntInstance,).toString()
 // @ts-expect-error
-EnumHelper.getCompanion(window.BigInt(0n),).toString()
+EnumHelper.getCompanion(BigInt(0n),).toString()
 
 // @ts-expect-error
-EnumHelper.getCompanion(window.Symbol(),).toString()
+EnumHelper.getCompanion(Symbol(),).toString()
 // @ts-expect-error
 EnumHelper.getCompanion(objectSymbolInstance,).toString()
 
@@ -58,7 +58,7 @@ EnumHelper.getCompanion(emptyReadonlyArrayInstance,).toString()
 // @ts-expect-error
 EnumHelper.getCompanion(readonlyArrayInstance,).toString()
 // @ts-expect-error
-EnumHelper.getCompanion(new window.Array<unknown>(),).toString()
+EnumHelper.getCompanion(new Array<unknown>(),).toString()
 
 // @ts-expect-error
 EnumHelper.getCompanion(readonlySetInstance,).toString()
