@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Compile (Types)" type="js.build_tools.npm" folderName="Compile">
+  <configuration default="false" name="Build (Common Javascript)" type="js.build_tools.npm" folderName="Build">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="compile-types" />
+      <script value="build-cjs" />
     </scripts>
     <node-interpreter value="project" />
     <envs />

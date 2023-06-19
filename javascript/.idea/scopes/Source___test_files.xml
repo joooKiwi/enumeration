@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Source &amp; test files" pattern="file[Enumeration (javascript)]:src//*||file[Enumeration (javascript)]:test//*" />
+</component>

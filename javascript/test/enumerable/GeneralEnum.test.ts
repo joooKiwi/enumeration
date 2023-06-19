@@ -1,3 +1,10 @@
+/******************************************************************************
+ * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
+ *                                                                            *
+ * This project is free to use.                                               *
+ * All the right is reserved to the author of this project.                   *
+ ******************************************************************************/
+
 import {AnotherChildEnum, Child1Enum, Child2Enum, EmptyEnum, EmptyEnumWithVariables, Enum1, Enum2, EnumWithInheritance, EnumWithDefault, EnumWithDifferentComportment, EnumWithExcludedFields, EnumWithLateDefault, ParentEnum, Child3Enum} from "../TemplateEnums"
 import {forbiddenInheritedMembers, forbiddenNumbers, impossibleOrdinals, nullValues, simpleEnumVariables, unhandledValues, validValues}                                                                                                     from "./Enum.constants"
 

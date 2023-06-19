@@ -5,14 +5,5 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-export class Holder<const T, const MESSAGE extends string, > {
-
-    readonly value
-    readonly toString
-
-    public constructor(value: T, message: MESSAGE,) {
-        this.value = value
-        this.toString = () => message
-    }
-
-}
+export type {ExceptionWithNullableCause} from "./ExceptionWithNullableCause"
+export type {ExceptionWithValue}         from "./ExceptionWithValue"

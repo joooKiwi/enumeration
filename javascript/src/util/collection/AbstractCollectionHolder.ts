@@ -1,6 +1,13 @@
-import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                            from "../../general type"
-import type {CollectionHolder}                                                                                                                                                                         from "./CollectionHolder"
-import type {BooleanCallback, BooleanIndexCallback, FilterNonNull, ForEachCallback, ForEachIndexCallback, IsEmpty, IsNotEmpty, JoinCallback, MapCallback, MapIndexCallback, RestrainedBooleanCallback} from "./CollectionHolder.types"
+/******************************************************************************
+ * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
+ *                                                                            *
+ * This project is free to use.                                               *
+ * All the right is reserved to the author of this project.                   *
+ ******************************************************************************/
+
+import type {Nullable, NullOr, UndefinedOr}                                                                                                                                                                                                                                                                                          from "../../general type"
+import type {CollectionHolder}                                                                                                                                                                                                                                                                                                       from "./CollectionHolder"
+import type {BooleanCallback, BooleanIndexCallback, CollectionHolderName, IndexValueCallback, IndexValueWithReturnCallback, IndexWithReturnCallback, ObjectOf, RestrainedBooleanCallback, ReverseBooleanCallback, ReverseRestrainedBooleanCallback, ValueIndexCallback, ValueIndexWithReturnCallback, ValueWithStringReturnCallback} from "./CollectionHolder.types"
 
 export abstract class AbstractCollectionHolder<const T = unknown, >
     implements CollectionHolder<T> {
@@ -10,12 +17,13 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     [index: number]: UndefinedOr<T>
 
     readonly #size: number
-    readonly #isEmpty: IsEmpty<this>
+    readonly #isEmpty: boolean
 
     readonly #reference: Iterable<T>
     readonly #array: readonly T[]
     #set?: ReadonlySet<T>
-    #weakSet?: Readonly<WeakSet<&T & object>>
+    #weakSet?: Readonly<WeakSet<ObjectOf<T>>>
+    #map?: ReadonlyMap<number, T>
 
     #hasNull?: boolean
 
@@ -25,6 +33,9 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------
 
+    protected constructor(array: readonly T[],)
+    protected constructor(set: ReadonlySet<T>,)
+    protected constructor(iterable: Iterable<T>,)
     protected constructor(iterable: Iterable<T>,) {
         //TODO implement the proxy pattern to have the index retrieved only when needed
         this.#reference = iterable
@@ -32,14 +43,14 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         if (iterable instanceof Array) {
             const size = this.#size = iterable.length
             if (size == 0) {
-                this.#isEmpty = true as IsEmpty<this>
+                this.#isEmpty = true
                 this.#hasNull = false
                 this.#first = this.#last = null
                 this.#array = Object.freeze([],)
                 return
             }
 
-            this.#isEmpty = false as IsEmpty<this>
+            this.#isEmpty = false
             if (size == 1) {
                 const value = this.#first = this.#last = this[0] = iterable[0]
                 this.#array = Object.freeze([value,],)
@@ -57,16 +68,16 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         }
 
         if (iterable instanceof Set) {
-            const size: number = this.#size = iterable.size
+            const size = this.#size = iterable.size
             if (size == 0) {
-                this.#isEmpty = true as IsEmpty<this>
+                this.#isEmpty = true
                 this.#hasNull = false
                 this.#first = this.#last = null
                 this.#array = Object.freeze([],)
                 return
             }
 
-            this.#isEmpty = false as IsEmpty<this>
+            this.#isEmpty = false
             if (size == 1) {
                 const value = this.#first = this.#last = this[0] = iterable[Symbol.iterator]().next().value
                 this.#array = Object.freeze([value,],)
@@ -89,7 +100,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         let value = iterator.next()
         if (value.done) {
             this.#size = 0
-            this.#isEmpty = true as IsEmpty<this>
+            this.#isEmpty = true
             this.#hasNull = false
             this.#first = this.#last = null
             this.#array = Object.freeze([],)
@@ -97,7 +108,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         }
 
         const array = []
-        this.#isEmpty = false as IsEmpty<this>
+        this.#isEmpty = false
         const first = this.#first = this[0] = array[0] = value.value
         value = iterator.next()
         let size = 1,
@@ -130,12 +141,12 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
 
-    public get isEmpty(): IsEmpty<this> {
+    public get isEmpty(): boolean {
         return this.#isEmpty
     }
 
-    public get isNotEmpty(): IsNotEmpty<this> {
-        return !this.isEmpty as IsNotEmpty<this>
+    public get isNotEmpty(): boolean {
+        return !this.isEmpty
     }
 
     //#endregion -------------------- Size methods --------------------
@@ -153,11 +164,11 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this.#hasNull
     }
 
-    public get includesNull(): this['hasNull'] {
+    public get includesNull(): this["hasNull"] {
         return this.hasNull
     }
 
-    public get containsNull(): this['hasNull'] {
+    public get containsNull(): this["hasNull"] {
         return this.hasNull
     }
 
@@ -184,6 +195,136 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     protected abstract _new<const U, >(iterable: Iterable<U>,): CollectionHolder<U>
 
     //#region -------------------- Value methods --------------------
+
+    //#region -------------------- Get / at methods --------------------
+
+    public get(index: number,): T {
+        if (this.isEmpty)
+            throw new ReferenceError("No element at any index could be found since it it empty.",)
+        const size = this.size,
+            indexToRetrieve = index < 0 ? size + index : index
+        if (indexToRetrieve < 0)
+            throw new ReferenceError(`The index ${index}${index === indexToRetrieve ? "" : ` (${indexToRetrieve} after calculation)`} is under 0.`,)
+        if (indexToRetrieve > size)
+            throw new ReferenceError(`The index ${index}${index === indexToRetrieve ? "" : ` (${indexToRetrieve} after calculation)`} is over the size of the collection (${size}).`,)
+        return this[indexToRetrieve]!
+    }
+
+    public at(index: number,): T {
+        return this.get(index,)
+    }
+
+
+    public getOrElse<U, >(index: number, defaultValue: IndexWithReturnCallback<U>,): | T | U
+    public getOrElse(index: number, defaultValue: IndexWithReturnCallback<T>,): T
+    public getOrElse(index: number, defaultValue: IndexWithReturnCallback<T>,) {
+        if (this.isEmpty)
+            return defaultValue(index < 0 ? this.size + index : index)
+        const size = this.size,
+            indexToRetrieve = index < 0 ? size + index : index
+        return indexToRetrieve > size || indexToRetrieve < 0 ? defaultValue(indexToRetrieve,) : this[indexToRetrieve]
+    }
+
+    public atOrElse<U, >(index: number, defaultValue: IndexWithReturnCallback<U>,): | T | U
+    public atOrElse(index: number, defaultValue: IndexWithReturnCallback<T>,): T
+    public atOrElse(index: number, defaultValue: IndexWithReturnCallback<T>,) {
+        return this.getOrElse(index, defaultValue,)
+    }
+
+
+    public getOrNull(index: number,): NullOr<T> {
+        if (this.isEmpty)
+            return null
+        const size = this.size,
+            indexToRetrieve = index < 0 ? size + index : index
+        return indexToRetrieve > size || indexToRetrieve < 0 ? null : this[indexToRetrieve]!
+    }
+
+    public atOrNull(index: number,): NullOr<T> {
+        return this.getOrNull(index,)
+    }
+
+    //#endregion -------------------- Get / at methods --------------------
+    //#region -------------------- Index of methods --------------------
+
+    public indexOf(element: unknown, fromIndex: Nullable<number> = null, toIndex: Nullable<number> = null,): NullOr<number> {
+        if (this.isEmpty)
+            return null
+        if (fromIndex == null && toIndex == null) {
+            const indexFound = this._array.indexOf(element as never,)
+            return indexFound === -1 ? null : indexFound
+        }
+
+        const size = this.size
+
+        let startingIndex = fromIndex ?? 0
+        if (fromIndex != null) {
+            if (startingIndex > size)
+                return null
+            if (startingIndex < 0)
+                startingIndex += size
+            if (startingIndex < 0)
+                startingIndex = 0
+        }
+
+        let endingIndex = toIndex ?? size
+        if (endingIndex != null) {
+            if (endingIndex < 0)
+                endingIndex += size
+            if (endingIndex < 0)
+                return null
+            else if (endingIndex > size)
+                endingIndex = size
+        }
+
+        if (endingIndex < startingIndex)
+            return null
+
+        let index = startingIndex - 1
+        while (++index < endingIndex)
+            if (this[index] === element)
+                return index
+        return null
+    }
+
+    public lastIndexOf(element: unknown, fromIndex: Nullable<number> = null, toIndex: Nullable<number> = null,): NullOr<number> {
+        if (this.isEmpty)
+            return null
+
+        const size = this.size
+
+        let startingIndex = fromIndex ?? 0
+        if (fromIndex != null) {
+            if (startingIndex > size)
+                return null
+            if (startingIndex < 0)
+                startingIndex += size
+            if (startingIndex < 0)
+                startingIndex = 0
+        }
+
+        let endingIndex = toIndex ?? size
+        if (endingIndex != null) {
+            if (endingIndex < 0)
+                endingIndex += size
+            if (endingIndex < 0)
+                return null
+            else if (endingIndex > size)
+                endingIndex = size
+        }
+
+        if (endingIndex < startingIndex)
+            return null
+
+        let index = endingIndex
+        while (index-- > startingIndex)
+            if (this[index] === element)
+                return index
+        return null
+    }
+
+    //#endregion -------------------- Index of methods --------------------
+    //#region -------------------- First methods --------------------
 
     public first(): NonNullable<T>
     public first<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
@@ -215,6 +356,8 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this.#first
     }
 
+    //#endregion -------------------- First methods --------------------
+    //#region -------------------- Last methods --------------------
 
     public last(): NonNullable<T>
     public last<const S extends T, >(callback: RestrainedBooleanCallback<T, S>,): NonNullable<S>
@@ -246,9 +389,58 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this.#last
     }
 
+    //#endregion -------------------- Last methods --------------------
+
     //#endregion -------------------- Value methods --------------------
     //#region -------------------- Loop methods --------------------
 
+    //#region -------------------- All / any / none methods --------------------
+
+    public all(callback: BooleanCallback<T>,): boolean {
+        if (this.isEmpty)
+            return false
+
+        const size = this.size
+        let index = -1
+        while (++index < size)
+            if (!callback(this[index]!, index,))
+                return false
+        return true
+    }
+
+    public any(): this["isNotEmpty"]
+    public any(callback: BooleanCallback<T>,): boolean
+    public any(callback?: BooleanCallback<T>,): boolean {
+        if (callback == null)
+            return this.isNotEmpty
+        if (this.isEmpty)
+            return false
+
+        const size = this.size
+        let index = -1
+        while (++index < size)
+            if (callback(this[index]!, index,))
+                return true
+        return false
+    }
+
+    public none(): this["isEmpty"]
+    public none(callback: BooleanCallback<T>,): boolean
+    public none(callback?: BooleanCallback<T>,): boolean {
+        if (callback == null)
+            return this.isEmpty
+        if (this.isEmpty)
+            return true
+
+        const size = this.size
+        let index = -1
+        while (++index < size)
+            if (callback(this[index]!, index,))
+                return false
+        return true
+    }
+
+    //#endregion -------------------- All / any / none methods --------------------
     //#region -------------------- Has / includes / contains methods --------------------
 
     public hasOne(...values: readonly unknown[]): boolean {
@@ -261,12 +453,12 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
             return true
 
         const array = this._array
-        if(valueSize === 1)
+        if (valueSize === 1)
             return array.includes(values[0] as never,)
 
         let valueIndex = -1
         while (++valueIndex < valueSize)
-            if(array.includes(values[valueIndex] as never,))
+            if (array.includes(values[valueIndex] as never,))
                 return true
         return false
     }
@@ -290,12 +482,12 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
             return true
 
         const array = this._array
-        if(valueSize === 1)
+        if (valueSize === 1)
             return array.includes(values[0] as never,)
 
         let valueIndex = -1
         while (++valueIndex < valueSize)
-            if(!array.includes(values[valueIndex] as never,))
+            if (!array.includes(values[valueIndex] as never,))
                 return false
         return true
     }
@@ -311,7 +503,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     //#endregion -------------------- Has / includes / contains methods --------------------
     //#region -------------------- Join methods --------------------
 
-    public join(separator: Nullable<string> = null, prefix: Nullable<string> = null, postfix: Nullable<string> = null, limit: Nullable<number> = null, truncated: Nullable<string> = null, transform: Nullable<JoinCallback<T>> = null,): string {
+    public join(separator: Nullable<string> = null, prefix: Nullable<string> = null, postfix: Nullable<string> = null, limit: Nullable<number> = null, truncated: Nullable<string> = null, transform: Nullable<ValueWithStringReturnCallback<T>> = null,): string {
         const size = this.size
         separator ??= ", "
         transform ??= it => `${it}`
@@ -334,8 +526,10 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this._new(this._array.filter((value, index,) => callback(value, index,),),)
     }
 
-    public filterByIndex(callback: BooleanIndexCallback,): CollectionHolder<T> {
-        return this._new(this._array.filter((_, index,) => callback(index,),),)
+    public filterIndexed<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<S>
+    public filterIndexed(callback: ReverseBooleanCallback<T>,): CollectionHolder<T>
+    public filterIndexed<const S extends T, >(callback: | ReverseRestrainedBooleanCallback<T, S> | ReverseBooleanCallback<T>,) {
+        return this._new(this._array.filter((value, index,) => callback(index, value,),),)
     }
 
 
@@ -345,14 +539,23 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this._new(this._array.filter((value, index,) => !callback(value, index,),),)
     }
 
-    public filterNotByIndex(callback: BooleanIndexCallback,): CollectionHolder<T> {
-        return this._new(this._array.filter((_, index,) => !callback(index,),),)
+    public filterIndexedNot<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): CollectionHolder<S>
+    public filterIndexedNot(callback: ReverseBooleanCallback<T>,): CollectionHolder<T>
+    public filterIndexedNot<const S extends T, >(callback: | ReverseRestrainedBooleanCallback<T, S> | ReverseBooleanCallback<T>,) {
+        return this._new(this._array.filter((value, index,) => !callback(index, value,),),)
     }
 
 
-    public filterNonNull(): FilterNonNull<T, this>
-    public filterNonNull() {
+    public filterNotNull(): CollectionHolder<NonNullable<T>>
+    public filterNotNull() {
         return this.hasNull ? this._new(this._array.filter(it => it != null)) : this
+    }
+
+    public requireNoNulls(): CollectionHolder<NonNullable<T>>
+    public requireNoNulls() {
+        if (this.hasNull)
+            throw new TypeError("The current collection contains null values.",)
+        return this as CollectionHolder<NonNullable<T>>
     }
 
     //#endregion -------------------- Filter methods --------------------
@@ -364,8 +567,10 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this._array.find((value, index,) => callback(value, index,),) ?? null
     }
 
-    public findByIndex(callback: BooleanIndexCallback,): NullOr<T> {
-        return this._array.find((_, index,) => callback(index,),) ?? null
+    public findByIndex<const S extends T, >(callback: ReverseRestrainedBooleanCallback<T, S>,): NullOr<S>
+    public findByIndex(callback: ReverseBooleanCallback<T>,): NullOr<T>
+    public findByIndex<const S extends T, >(callback: | ReverseRestrainedBooleanCallback<T, S> | ReverseBooleanCallback<T>,) {
+        return this._array.find((value, index,) => callback(index, value,),) ?? null
     }
 
 
@@ -384,7 +589,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     public findLast(callback: BooleanCallback<T>,): NullOr<T>
     public findLast<const S extends T, >(callback: | RestrainedBooleanCallback<T, S> | BooleanCallback<T>,) {
         let index = this.size
-        while (--index > 0) {
+        while (index-- > 0) {
             const value = this[index]!
             if (callback(value, index,))
                 return value
@@ -394,7 +599,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
     public findLastByIndex(callback: BooleanIndexCallback,): NullOr<T> {
         let index = this.size
-        while (--index > 0)
+        while (index-- > 0)
             if (callback(index,))
                 return this[index]!
         return null
@@ -402,7 +607,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
     public findLastIndex(callback: BooleanCallback<T>,): NullOr<number> {
         let index = this.size
-        while (--index > 0)
+        while (index-- > 0)
             if (callback(this[index]!, index,))
                 return index
         return null
@@ -410,23 +615,27 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
     public findLastIndexByIndex(callback: BooleanIndexCallback,): NullOr<number> {
         let index = this.size
-        while (--index > 0)
+        while (index-- > 0)
             if (callback(index,))
                 return index
         return null
     }
 
     //#endregion -------------------- Find methods --------------------
+    //#region -------------------- Map methods --------------------
 
-    public map<const U, >(callback: MapCallback<T, U>,): CollectionHolder<U> {
+    public map<const U, >(callback: ValueIndexWithReturnCallback<T, U>,): CollectionHolder<U> {
         return this._new(this._array.map((value, index,) => callback(value, index,),),)
     }
 
-    public mapIndex<const U, >(callback: MapIndexCallback<U>,): CollectionHolder<U> {
-        return this._new(this._array.map((_, index,) => callback(index,),),)
+    public mapIndexed<const U, >(callback: IndexValueWithReturnCallback<T, U>,): CollectionHolder<U> {
+        return this._new(this._array.map((value, index,) => callback(index, value,),),)
     }
 
-    public forEach(callback: ForEachCallback<T>,): this {
+    //#endregion -------------------- Map methods --------------------
+    //#region -------------------- ForEach methods --------------------
+
+    public forEach(callback: ValueIndexCallback<T>,): this {
         const size = this.size
         let index = -1
         while (++index < size)
@@ -434,36 +643,40 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return this
     }
 
-    public forEachIndex(callback: ForEachIndexCallback,): this {
+    public forEachIndexed(callback: IndexValueCallback<T>,): this {
         const size = this.size
         let index = -1
         while (++index < size)
-            callback(index,)
+            callback(index, this[index]!,)
         return this
     }
 
+    //#endregion -------------------- ForEach methods --------------------
 
     public reverse(fromIndex: Nullable<number> = null, toIndex: Nullable<number> = null,): CollectionHolder<T> {
         const size = this.size
-        let startingIndex = fromIndex ?? 0,
-            endingIndex = toIndex ?? size
+
+        let startingIndex = fromIndex ?? 0
 
         if (fromIndex != null) {
             if (startingIndex < 0)
-                startingIndex = size + startingIndex
+                startingIndex += size
             if (startingIndex < 0)
                 throw new RangeError(`The starting index "${fromIndex}" is under 0 after calculation from "${size} - ${Math.abs(fromIndex)}".`,)
             if (startingIndex > size)
                 throw new RangeError(`The starting index "${fromIndex}" is over the collection size "${size}".`,)
         }
+
+        let endingIndex = toIndex ?? size
         if (toIndex != null) {
             if (endingIndex < 0)
-                endingIndex = size + endingIndex
+                endingIndex += size
             if (endingIndex < 0)
                 throw new RangeError(`The ending index "${toIndex}" is under 0 after calculation from "${size} - ${Math.abs(toIndex)}".`,)
             if (endingIndex > size)
                 throw new RangeError(`The ending index "${toIndex}" is over the collection size "${size}".`,)
         }
+
         if (endingIndex < startingIndex)
             throw new RangeError(`The ending index "${toIndex}"${(toIndex == startingIndex ? '' : ` ("${startingIndex}" after calculation)`)} is over the starting index "${fromIndex}"${fromIndex == endingIndex ? '' : `("${endingIndex}" after calculation)`}.`,)
 
@@ -478,7 +691,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     //#endregion -------------------- Loop methods --------------------
-    //#region -------------------- Iterator methods --------------------
+    //#region -------------------- Javascript methods --------------------
 
     public* [Symbol.iterator](): IterableIterator<T> {
         const size = this.size
@@ -487,7 +700,11 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
             yield this[index]!
     }
 
-    //#endregion -------------------- Iterator methods --------------------
+    public get [Symbol.toStringTag](): CollectionHolderName {
+        return "CollectionHolder"
+    }
+
+    //#endregion -------------------- Javascript methods --------------------
     //#region -------------------- Conversion methods --------------------
 
     public toArray(): readonly T[] {
@@ -503,6 +720,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return array
     }
 
+
     public toSet(): ReadonlySet<T> {
         return this.#set ??= Object.freeze(new Set(this,),)
     }
@@ -511,15 +729,16 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
         return new Set(this,)
     }
 
-    public toWeakSet(): Readonly<WeakSet<& T & object>> {
-        return this.#weakSet ??= Object.freeze(this.toMutableWeakSet())
+
+    public toWeakSet(): Readonly<WeakSet<ObjectOf<T>>> {
+        return this.#weakSet ??= Object.freeze(this.toMutableWeakSet(),)
     }
 
-    public toMutableWeakSet(): WeakSet<& T & object> {
+    public toMutableWeakSet(): WeakSet<ObjectOf<T>> {
         const size = this.size,
             $this = this
-        return new WeakSet({
-            * [Symbol.iterator](): IterableIterator<& T & object> {
+        return new WeakSet<ObjectOf<T>>({
+            * [Symbol.iterator]() {
                 let index = -1
                 while (++index < size)
                     yield Object($this[index]!)
@@ -528,12 +747,25 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
 
+    public toMap(): ReadonlyMap<number, T> {
+        return this.#map ??= Object.freeze(this.toMutableMap(),)
+    }
+
+    public toMutableMap(): Map<number, T> {
+        const map = new Map<number, T>()
+        let index = this.size
+        while (index-- > 0)
+            map.set(index, this[index]!,)
+        return map
+    }
+
+
     public toString(): string {
-        return this.join(null, '[', ']',)
+        return this.join()
     }
 
     public toLocaleString(): string {
-        return this.join(null, '[', ']', null, null, it => it?.toLocaleString() ?? `${it}`,)
+        return this.join(null, null, null, null, null, it => it?.toLocaleString() ?? `${it}`,)
     }
 
     //#endregion -------------------- Conversion methods --------------------
