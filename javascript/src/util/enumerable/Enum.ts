@@ -97,11 +97,17 @@ export abstract class Enum<const ORDINAL extends number, const NAME extends stri
      * @throws {NullReferenceException} The current instance was not found in the {@link BasicCompanionEnumDeclaration.values companion values}
      */
     get #nameOnCurrentInstance(): NAME {
-        const companion = this.#__companion
-        const index = companion.values.findIndex(it => it === this)
-        if (index == null)
-            throw new NullReferenceException(`Reference not found! No name to the "${companion.instance.name}" were found. Or it was called during its construction.`, this,)
-        return companion.names.findByIndex(it => it === index)!
+        const companion = this.#__companion,
+            iterator = companion.iterator
+        let value = iterator.next()
+        let index = 0
+        while (!value.done) {
+            if (value.value === this)
+                return companion.names[index]!
+            value = iterator.next()
+            index++
+        }
+        throw new NullReferenceException(`Reference not found! No name to the "${companion.instance.name}" were found. Or it was called during its construction.`, this,)
     }
 
     //#endregion -------------------- Methods --------------------
