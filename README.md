@@ -25,6 +25,7 @@ _(This may change once the implementation is made)_
 
 | Git version | Implementation version |
 |-------------|------------------------|
+| 1.3.7       | `JS / TS`: 2.3.0       |
 | 1.3.6       | `JS / TS`: 2.2.3       |
 | 1.3.5       | `JS / TS`: 2.2.2       |
 | 1.3.4       | `JS / TS`: 2.2.1       |
