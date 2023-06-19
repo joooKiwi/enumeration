@@ -137,6 +137,10 @@
     "enum class",
     "enumeration"
   ],
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/joooKiwi",
+  },
   "author": "JóôòKiwi",
   "license": "MIT",
   "devDependencies": {
