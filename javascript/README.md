@@ -103,14 +103,14 @@ export class Example extends Enum<Ordinals, Names> {
     public static readonly 2: typeof Example.C
     // Optional number typing (end)
 
-    private constructor() { super() }
-
     public static readonly CompanionEnum: BasicCompanionEnumSingleton<Example, typeof Example> =
         class CompanionEnum_Example extends BasicCompanionEnum<Example, typeof Example> {
-        static #instance?: CompanionEnum_Example
-        private constructor() { super(Example,) }
-        public static get get() { return CompanionEnum_Example.#instance ??= new CompanionEnum_Example() }
-   }
+            static #instance?: CompanionEnum_Example
+            private constructor() { super(Example,) }
+            public static get get() { return CompanionEnum_Example.#instance ??= new CompanionEnum_Example() }
+        }
+
+    private constructor() { super() }
 
 }
 ```
@@ -297,14 +297,14 @@ export class ParentEnum extends Enum<ParentOrdinals, ParentNames> {
    public static readonly 0: typeof ParentEnum.A
    public static readonly 1: typeof ParentEnum.B
 
-   private constructor() { super() }
+   public static readonly CompanionEnum: BasicCompanionEnumSingleton<ParentEnum, typeof ParentEnum> =
+        class CompanionEnum_ParentEnum extends BasicCompanionEnum<ParentEnum, typeof ParentEnum> {
+            static #instance?: CompanionEnum_ParentEnum
+            private constructor() { super(ParentEnum,) }
+            public static get get() { return BasicCompanionEnum.#instance ??= new BasicCompanionEnum() }
+        }
 
-   static CompanionEnum: BasicCompanionEnumSingleton<ParentEnum, typeof ParentEnum> =
-       class CompanionEnum_ParentEnum extends BasicCompanionEnum<ParentEnum, typeof ParentEnum> {
-       static #instance?: CompanionEnum_ParentEnum
-       private constructor() { super(ParentEnum,) }
-       public static get get() { return BasicCompanionEnum.#instance ??= new BasicCompanionEnum() }
-   }
+   private constructor() { super() }
 }
 ```
 ```typescript
