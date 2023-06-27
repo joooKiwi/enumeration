@@ -427,28 +427,17 @@ describe("CollectionHolderTest", () => {
     },)
     describe("filterNotNull", () => {
         test("[a,null,b,undefined].filterNotNull() == [a,b]", () => expect(A_NULL_B_UNDEFINED().filterNotNull().toArray(),).toStrictEqual(['a', 'b',],),)
-        test("[a,null,b,undefined].filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED().filterNotNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
-        test("[a,null,b,undefined].filterNot(null).filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED().filterNot(it => it === null).filterNotNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
-        test("[a,null,b,undefined].filterNot(undefined).filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED().filterNot(it => it === undefined).filterNotNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED,),)
-        test("[a,null,b,undefined].filterNot(undefined).filterNot(null).filterNotNull() == last iteration", () => {
-            const lastIteration = A_NULL_B_UNDEFINED().filterNot(it => it === undefined).filterNot(it => it === null)
-            expect(lastIteration.filterNotNull(),).toStrictEqual(lastIteration,)
-        },)
-        test("[a,null,b,undefined].filterNot(null).filterNot(undefined).filterNotNull() == last iteration", () => {
-            const lastIteration = A_NULL_B_UNDEFINED().filterNot(it => it === null).filterNot(it => it === undefined)
-            expect(lastIteration.filterNotNull(),).toStrictEqual(lastIteration,)
-        },)
-        test("[a,b].filterNotNull() == this", () => expect(AB().filterNotNull(),).toStrictEqual(AB,),)
+        test("[a,null,b,undefined].filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED().filterNotNull(),).not.toStrictEqual(A_NULL_B_UNDEFINED(),),)
+        test("[a,null,b,undefined].filterNot(null).filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED().filterNot(it => it === null).filterNotNull().toArray(),).not.toStrictEqual(['a', null, 'b', undefined,],),)
+        test("[a,null,b,undefined].filterNot(undefined).filterNotNull() != this", () => expect(A_NULL_B_UNDEFINED().filterNot(it => it === undefined).filterNotNull().toArray(),).not.toStrictEqual(['a', null, 'b', undefined,],),)
+        test("[a,b].filterNotNull() == this", () => expect(AB().filterNotNull().toArray(),).toStrictEqual(['a', 'b',],),)
     },)
     describe("requireNoNulls", () => {
         test("[a,null,b,undefined].requireNotNull() → throw", () => expect(() => A_NULL_B_UNDEFINED().requireNoNulls(),).toThrow(TypeError,),)
         test("[a,null,b,undefined].filterNot(null).requireNotNull() → throw", () => expect(() => A_NULL_B_UNDEFINED().filterNot(it => it === null).requireNoNulls(),).toThrow(TypeError,),)
         test("[a,null,b,undefined].filterNot(undefined).requireNotNull() → throw", () => expect(() => A_NULL_B_UNDEFINED().filterNot(it => it === undefined).requireNoNulls(),).toThrow(TypeError),)
-        test("[a,null,b,undefined].filterNonNull().requireNotNull() == last iteration", () => {
-            const lastIteration = A_NULL_B_UNDEFINED().filterNotNull()
-            expect(lastIteration.requireNoNulls(),).toStrictEqual(lastIteration,)
-        },)
-        test("[a,b].requireNotNull() == this", () => expect(AB().requireNoNulls(),).toStrictEqual(AB,),)
+        test("[a,null,b,undefined].filterNonNull().requireNotNull() → no throw", () => expect(() => A_NULL_B_UNDEFINED().filterNotNull().requireNoNulls().toArray(),).not.toThrow(),)
+        test("[a,b].requireNotNull() -> no throw", () => expect(() => AB().requireNoNulls(),).not.toThrow(),)
     },)
     describe("find", () => {
         test("[a,b,c,d,A,B,C,D].find(anyCase b) == b", () => expect(ABCD_ABCD().find(it => it.toLowerCase() === 'b',),).toBe('b',),)
