@@ -25,26 +25,37 @@ describe("CollectionHolderTest", () => {
         describe("get / at", () => {
             describe("simple", () => {
                 describe("[](0)", () => {
+                    test("index", () => expect(() => EMPTY()[0],).toThrow(ReferenceError,),)
                     test("get", () => expect(() => EMPTY().get(0,),).toThrow(ReferenceError,),)
                     test("at", () => expect(() => EMPTY().at(0,),).toThrow(ReferenceError,),)
                 },)
                 describe("[a,b](0)", () => {
+                    test("index", () => expect(AB()[0],).toEqual('a',),)
                     test("get", () => expect(AB().get(0,),).toEqual('a',),)
                     test("at", () => expect(AB().at(0,),).toEqual('a',),)
                 },)
                 describe("[a,b](3)", () => {
+                    test("index", () => expect(() => AB()[3],).toThrow(ReferenceError,),)
                     test("get", () => expect(() => AB().get(3,),).toThrow(ReferenceError,),)
                     test("at", () => expect(() => AB().at(3,),).toThrow(ReferenceError,),)
                 },)
                 describe("[a,b,c,d](1)", () => {
+                    test("index", () => expect(ABCD()[1],).toEqual('b',),)
                     test("get", () => expect(ABCD().get(1,),).toEqual('b',),)
                     test("at", () => expect(ABCD().at(1,),).toEqual('b',),)
                 },)
                 describe("[a,b,c,d](-1)", () => {
+                    test("index", () => expect(ABCD()[-1],).toEqual('d',),)
                     test("get", () => expect(ABCD().get(-1,),).toEqual('d',),)
                     test("at", () => expect(ABCD().at(-1,),).toEqual('d',),)
                 },)
+                describe("[a,b,c,d](-4)", () => {
+                    test("index", () => expect(ABCD()[-4],).toEqual('a',),)
+                    test("get", () => expect(ABCD().get(-4,),).toEqual('a',),)
+                    test("at", () => expect(ABCD().at(-4,),).toEqual('a',),)
+                },)
                 describe("[a,b,c,d](-5)", () => {
+                    test("index", () => expect(() => ABCD()[-5],).toThrow(ReferenceError,),)
                     test("get", () => expect(() => ABCD().get(-5,),).toThrow(ReferenceError,),)
                     test("at", () => expect(() => ABCD().at(-5,),).toThrow(ReferenceError,),)
                 },)
