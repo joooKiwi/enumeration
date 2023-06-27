@@ -18,4 +18,4 @@ export const sizeValues = () => [
         true, false,
     ] as const,
     nonPresentItem = Symbol(),
-    templateCollection = new GenericCollectionHolder(templateItems(),)
+    collectionOfTemplateItems = () => new GenericCollectionHolder(templateItems(),)

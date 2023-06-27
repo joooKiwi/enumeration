@@ -6,7 +6,7 @@
  ******************************************************************************/
 
 import {A, A_NULL_B_UNDEFINED, AB, AB12, AB_OBJECT, ABAB, ABCD, ABCD_ABCD, ABCD_NULL, ABCD_UNDEFINED, ABCDEFGHIJ, EMPTY, NULL_ABCD, SINGULAR_A_OBJECT, SINGULAR_B_OBJECT, UNDEFINED_ABCD} from "./constantCollections"
-import {nonPresentItem, sizeValues, templateCollection, templateItems}                                                                                                                    from "./constantValues"
+import {nonPresentItem, sizeValues, collectionOfTemplateItems, templateItems}                                                                                                             from "./constantValues"
 
 describe("CollectionHolderTest", () => {
     describe("size", () => describe.each(sizeValues(),)("%s", ({value: {collection: it, size,},},) => {
@@ -317,29 +317,29 @@ describe("CollectionHolderTest", () => {
                 },)
             },)
             describe.each(templateItems(),)("%s", it => {
-                test("has", () => expect(templateCollection.hasOne(it,),).toBeTrue(),)
-                test("includes", () => expect(templateCollection.includesOne(it,),).toBeTrue(),)
-                test("contains", () => expect(templateCollection.containsOne(it,),).toBeTrue(),)
+                test("has", () => expect(collectionOfTemplateItems().hasOne(it,),).toBeTrue(),)
+                test("includes", () => expect(collectionOfTemplateItems().includesOne(it,),).toBeTrue(),)
+                test("contains", () => expect(collectionOfTemplateItems().containsOne(it,),).toBeTrue(),)
 
                 describe("value + nonPresentItem", () => {
-                    test("has", () => expect(templateCollection.hasOne(it, nonPresentItem,),).toBeTrue(),)
-                    test("includes", () => expect(templateCollection.includesOne(it, nonPresentItem,),).toBeTrue(),)
-                    test("contains", () => expect(templateCollection.containsOne(it, nonPresentItem,),).toBeTrue(),)
+                    test("has", () => expect(collectionOfTemplateItems().hasOne(it, nonPresentItem,),).toBeTrue(),)
+                    test("includes", () => expect(collectionOfTemplateItems().includesOne(it, nonPresentItem,),).toBeTrue(),)
+                    test("contains", () => expect(collectionOfTemplateItems().containsOne(it, nonPresentItem,),).toBeTrue(),)
                 },)
                 describe("Object(value)", () => {
-                    test("has not", () => expect(templateCollection.hasOne(Object(it,),),).toBeFalse(),)
-                    test("includes", () => expect(templateCollection.includesOne(Object(it,),),).toBeFalse(),)
-                    test("contains", () => expect(templateCollection.containsOne(Object(it,),),).toBeFalse(),)
+                    test("has not", () => expect(collectionOfTemplateItems().hasOne(Object(it,),),).toBeFalse(),)
+                    test("includes", () => expect(collectionOfTemplateItems().includesOne(Object(it,),),).toBeFalse(),)
+                    test("contains", () => expect(collectionOfTemplateItems().containsOne(Object(it,),),).toBeFalse(),)
                 },)
                 describe("[value]", () => {
-                    test("has", () => expect(templateCollection.hasOne([it,],),).toBeFalse(),)
-                    test("includes", () => expect(templateCollection.includesOne([it,],),).toBeFalse(),)
-                    test("contains", () => expect(templateCollection.containsOne([it,],),).toBeFalse(),)
+                    test("has", () => expect(collectionOfTemplateItems().hasOne([it,],),).toBeFalse(),)
+                    test("includes", () => expect(collectionOfTemplateItems().includesOne([it,],),).toBeFalse(),)
+                    test("contains", () => expect(collectionOfTemplateItems().containsOne([it,],),).toBeFalse(),)
                 },)
                 describe("{value}", () => {
-                    test("has", () => expect(templateCollection.hasOne({it,},),).toBeFalse(),)
-                    test("includes", () => expect(templateCollection.includesOne({it,},),).toBeFalse(),)
-                    test("contains", () => expect(templateCollection.containsOne({it,},),).toBeFalse(),)
+                    test("has", () => expect(collectionOfTemplateItems().hasOne({it,},),).toBeFalse(),)
+                    test("includes", () => expect(collectionOfTemplateItems().includesOne({it,},),).toBeFalse(),)
+                    test("contains", () => expect(collectionOfTemplateItems().containsOne({it,},),).toBeFalse(),)
                 },)
             },)
         },)
@@ -369,29 +369,29 @@ describe("CollectionHolderTest", () => {
                 },)
             },)
             describe.each(templateItems(),)("%s", it => {
-                test("has", () => expect(templateCollection.hasAll(it,),).toBeTrue(),)
-                test("includes", () => expect(templateCollection.includesAll(it,),).toBeTrue(),)
-                test("contains", () => expect(templateCollection.containsAll(it,),).toBeTrue(),)
+                test("has", () => expect(collectionOfTemplateItems().hasAll(it,),).toBeTrue(),)
+                test("includes", () => expect(collectionOfTemplateItems().includesAll(it,),).toBeTrue(),)
+                test("contains", () => expect(collectionOfTemplateItems().containsAll(it,),).toBeTrue(),)
 
                 describe("value + nonPresentItem", () => {
-                    test("has", () => expect(templateCollection.hasAll(it, nonPresentItem,),).toBeFalse(),)
-                    test("includes", () => expect(templateCollection.includesAll(it, nonPresentItem,),).toBeFalse(),)
-                    test("contains", () => expect(templateCollection.containsAll(it, nonPresentItem,),).toBeFalse(),)
+                    test("has", () => expect(collectionOfTemplateItems().hasAll(it, nonPresentItem,),).toBeFalse(),)
+                    test("includes", () => expect(collectionOfTemplateItems().includesAll(it, nonPresentItem,),).toBeFalse(),)
+                    test("contains", () => expect(collectionOfTemplateItems().containsAll(it, nonPresentItem,),).toBeFalse(),)
                 },)
                 describe("Object(value)", () => {
-                    test("has not", () => expect(templateCollection.hasAll(Object(it,),),).toBeFalse(),)
-                    test("includes", () => expect(templateCollection.includesAll(Object(it,),),).toBeFalse(),)
-                    test("contains", () => expect(templateCollection.containsAll(Object(it,),),).toBeFalse(),)
+                    test("has not", () => expect(collectionOfTemplateItems().hasAll(Object(it,),),).toBeFalse(),)
+                    test("includes", () => expect(collectionOfTemplateItems().includesAll(Object(it,),),).toBeFalse(),)
+                    test("contains", () => expect(collectionOfTemplateItems().containsAll(Object(it,),),).toBeFalse(),)
                 },)
                 describe("[value]", () => {
-                    test("has", () => expect(templateCollection.hasAll([it,],),).toBeFalse(),)
-                    test("includes", () => expect(templateCollection.includesAll([it,],),).toBeFalse(),)
-                    test("contains", () => expect(templateCollection.containsAll([it,],),).toBeFalse(),)
+                    test("has", () => expect(collectionOfTemplateItems().hasAll([it,],),).toBeFalse(),)
+                    test("includes", () => expect(collectionOfTemplateItems().includesAll([it,],),).toBeFalse(),)
+                    test("contains", () => expect(collectionOfTemplateItems().containsAll([it,],),).toBeFalse(),)
                 },)
                 describe("{value}", () => {
-                    test("has", () => expect(templateCollection.hasAll({it,},),).toBeFalse(),)
-                    test("includes", () => expect(templateCollection.includesAll({it,},),).toBeFalse(),)
-                    test("contains", () => expect(templateCollection.containsAll({it,},),).toBeFalse(),)
+                    test("has", () => expect(collectionOfTemplateItems().hasAll({it,},),).toBeFalse(),)
+                    test("includes", () => expect(collectionOfTemplateItems().includesAll({it,},),).toBeFalse(),)
+                    test("contains", () => expect(collectionOfTemplateItems().containsAll({it,},),).toBeFalse(),)
                 },)
             },)
         },)
