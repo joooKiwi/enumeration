@@ -215,7 +215,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index-of.html Kotlin indexOf(element)
      * @see https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1.indexof C# IndexOf(item)
      */
-    indexOf(element: unknown, fromIndex?: Nullable<number>, toIndex?:Nullable<number>,): NullOr<number>
+    indexOf(element: unknown, fromIndex?: Nullable<number>, toIndex?: Nullable<number>,): NullOr<number>
 
     /**
      * Get the <b>last</b> occurrence equivalent to the value received
@@ -231,7 +231,7 @@ export interface CollectionHolder<T = unknown, > {
      * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/last-index-of.html Kotlin lastIndexOf(element)
      * @see https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1.lastindexof C# LastIndexOf(item)
      */
-    lastIndexOf(element: unknown, fromIndex?:Nullable<number>, toIndex?:Nullable<number>,): NullOr<number>
+    lastIndexOf(element: unknown, fromIndex?: Nullable<number>, toIndex?: Nullable<number>,): NullOr<number>
 
     //#endregion -------------------- Index of methods --------------------
     //#region -------------------- First methods --------------------
