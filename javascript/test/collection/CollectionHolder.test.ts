@@ -420,8 +420,8 @@ describe("CollectionHolderTest", () => {
     describe("filter", () => {
         test("[a,b,c,d].filter(d) == [d]", () => expect(ABCD().filter(it => it === 'd',).toArray(),).toStrictEqual(['d',],),)
         test("[a,b,c,d].filterIndexed(3) == [d]", () => expect(ABCD().filterIndexed(it => it === 3,).toArray(),).toStrictEqual(['d',],),)
-        test("[a,b,c,d].filterNot(d) == [a,c,c]", () => expect(ABCD().filterNot(it => it === 'd',).toArray(),).toStrictEqual(['a', 'b', 'c',],),)
-        test("[a,b,c,d].filterIndexedNot(3) == [a,c,c]", () => expect(ABCD().filterIndexedNot(it => it === 3,).toArray(),).toStrictEqual(['a', 'b', 'c',],),)
+        test("[a,b,c,d].filterNot(d) == [a,b,c]", () => expect(ABCD().filterNot(it => it === 'd',).toArray(),).toStrictEqual(['a', 'b', 'c',],),)
+        test("[a,b,c,d].filterIndexedNot(3) == [a,b,c]", () => expect(ABCD().filterIndexedNot(it => it === 3,).toArray(),).toStrictEqual(['a', 'b', 'c',],),)
         test("[a,b,1,2].filter(number) == [1,2]", () => expect(AB12().filter(it => typeof it == "number",).toArray(),).toStrictEqual([1, 2,],),)
         test("[a,b,1,2].filterNot(number) == [a,b]", () => expect(AB12().filterNot(it => typeof it == "number",).toArray(),).toStrictEqual(['a', 'b',],),)
     },)
