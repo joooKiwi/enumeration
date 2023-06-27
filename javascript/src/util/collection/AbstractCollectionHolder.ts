@@ -505,16 +505,17 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
 
     public join(separator: Nullable<string> = null, prefix: Nullable<string> = null, postfix: Nullable<string> = null, limit: Nullable<number> = null, truncated: Nullable<string> = null, transform: Nullable<ValueWithStringReturnCallback<T>> = null,): string {
         const size = this.size
-        separator ??= ", "
+        separator ??= CollectionConstants.DEFAULT_JOIN_SEPARATOR
         transform ??= it => `${it}`
 
         let string = ''
-        const hasALimit = limit != null
-        const sizeMinus1 = (limit == null ? size : limit < 0 ? size + limit : limit) - 1
+        const hasALimit = limit != null,
+            sizeMinus1 = (limit == null ? size : limit < 0 ? size + limit : limit) - 1,
+            proxyHandler = this._proxyHandler
         let index = -1
         while (++index < sizeMinus1)
-            string += `${transform(this[index]!)}${separator}`
-        return `${prefix ?? '['}${string}${transform(this[index]!)}${hasALimit ? `${separator}${truncated ?? '…'}` : ''}${postfix ?? ']'}`
+            string += `${transform(proxyHandler.get(this, index,),)}${separator}`
+        return `${prefix ?? CollectionConstants.DEFAULT_JOIN_PREFIX}${string}${transform(proxyHandler.get(this, index,),)}${hasALimit ? `${separator}${truncated ?? CollectionConstants.DEFAULT_JOIN_TRUNCATED}` : CollectionConstants.EMPTY_STRING}${postfix ?? CollectionConstants.DEFAULT_JOIN_POSTFIX}`
     }
 
     //#endregion -------------------- Join methods --------------------
@@ -701,7 +702,7 @@ export abstract class AbstractCollectionHolder<const T = unknown, >
     }
 
     public get [Symbol.toStringTag](): CollectionHolderName {
-        return "CollectionHolder"
+        return CollectionConstants.COLLECTION_HOLDER_TO_STRING_TAG
     }
 
     //#endregion -------------------- Javascript methods --------------------
