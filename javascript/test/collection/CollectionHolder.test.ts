@@ -214,7 +214,7 @@ describe("CollectionHolderTest", () => {
             test("[a,b,c,d,null].first(!a) == b", () => expect(ABCD_NULL().first(it => it !== 'a',),).toBe('b',),)
             describe("[undefined,a,b,c,d].first(!a) == throw|null", () => {
                 test("throw", () => expect(() => UNDEFINED_ABCD().first(it => it !== 'a',),).toThrow(ReferenceError,),)
-                test("or null", () => expect(UNDEFINED_ABCD().firstOrNull(it => it !== 'a',),).toBeNull(),)
+                test("or null", () => expect(UNDEFINED_ABCD().firstOrNull(it => it !== 'a',),).toBeUndefined(),)
             },)
             test("[a,b,c,d,undefined].first(!a) == b", () => expect(ABCD_UNDEFINED().first(it => it !== 'a',),).toBe('b',),)
         },)
