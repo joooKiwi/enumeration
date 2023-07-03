@@ -5,8 +5,9 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {Nullable, NullOr, NullOrUndefined, PossibleBigInt, PossibleNumber, PossibleNumeric, PossibleString}                                                                                                                                                                                                                                                                from "../../../general type"
-import type {CollectionHolder}                                                                                                                                                                                                                                                                                                                                                  from "../../collection/CollectionHolder"
+import type {CollectionHolder}   from "@joookiwi/collection"
+import {GenericCollectionHolder} from "@joookiwi/collection"
+
 import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                        from "../Enumerable"
 import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                             from "../EnumerableConstructor"
 import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, PossibleEnumerableValue, PossibleEnumerableValueBy, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "../Enumerable.types"
@@ -14,7 +15,6 @@ import type {BasicCompanionEnumDeclaration}                                     
 import type {CompanionEnumName}                                                                                                                                                                                                                                                                                                                                                 from "./types"
 import type {Nullable, NullOr, NullOrUndefined, PossibleBigInt, PossibleNumber, PossibleNumeric, PossibleString}                                                                                                                                                                                                                                                                from "../general type"
 
-import {GenericCollectionHolder}                     from "../../collection/GenericCollectionHolder"
 import {EnumConstants}                               from "../EnumConstants"
 import {EnumHelper}                                  from "../EnumHelper"
 import {ForbiddenNumericException}                   from "../exception/ForbiddenNumericException"
@@ -209,8 +209,8 @@ export class BasicCompanionEnum<const ENUMERABLE extends Enumerable,
         }
 
 
-        EnumConstants.ORDINALS_MAP.set(this, this.#ordinals = new GenericCollectionHolder(freeze(everyOrdinals,),) as CollectionHolder<OrdinalOf<ENUMERABLE>>,)
-        EnumConstants.NAMES_MAP.set(this, this.#names = new GenericCollectionHolder(freeze(everyNames,),) as CollectionHolder<NameOf<ENUMERABLE>>,)
+        EnumConstants.ORDINALS_MAP.set(this, this.#ordinals = new GenericCollectionHolder(freeze(everyOrdinals,),) as unknown as CollectionHolder<OrdinalOf<ENUMERABLE>>,)
+        EnumConstants.NAMES_MAP.set(this, this.#names = new GenericCollectionHolder(freeze(everyNames,),) as unknown as CollectionHolder<NameOf<ENUMERABLE>>,)
         EnumConstants.VALUES_MAP.set(this, this.#values = new GenericCollectionHolder(freeze(everyEnumerable,),) as unknown as CollectionHolder<ENUMERABLE>,)
     }
 

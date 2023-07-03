@@ -133,6 +133,9 @@
   },
   "author": "JóôòKiwi",
   "license": "MIT",
+  "dependencies": {
+    "@joookiwi/collection": "^1.0.3"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.0",

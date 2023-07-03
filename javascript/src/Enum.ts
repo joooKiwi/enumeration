@@ -17,8 +17,6 @@ import {NullReferenceException} from "./exception/NullReferenceException"
 import {ClassCastException}     from "./exception/generic/ClassCastException"
 import {NullPointerException}   from "./exception/generic/NullPointerException"
 
-const {set} = Reflect
-
 export abstract class Enum<const ORDINAL extends number, const NAME extends string, >
     implements Enumerable<ORDINAL, NAME> {
 
@@ -38,7 +36,7 @@ export abstract class Enum<const ORDINAL extends number, const NAME extends stri
      * Note that the use of {@link Enum.#Companion companion} is present so it <b>reflectively</b> set the instance received to <b>this</b>.
      */
     protected constructor() {
-        set(this.#prototypeConstructor = EnumHelper.getLastPrototype(this,), this.#ordinal = this.#lastOrdinalPlus1, this,)
+        Reflect.set(this.#prototypeConstructor = EnumHelper.getLastPrototype(this,), this.#ordinal = this.#lastOrdinalPlus1, this,)
     }
 
     //#endregion -------------------- Constructor --------------------
