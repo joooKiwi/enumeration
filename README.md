@@ -572,5 +572,5 @@ But it can become so much more by the contributions.
 | 2.0.0           | February 2nd, 2023  | Change from `static` methods implementation to a `companion enum` implementation                                                        |
 | 1.2.0           | Novembre 20th, 2022 | New `filterByIndex` & `find` in `collection`                                                                                            |
 | 1.1.0           | November 19th, 2022 | New `has`, `join`, `filter` in the `collection`                                                                                         |
-| 1.0.6           | November 12nd, 2022 |                                                                                                                                         |
+| 1.0.6           | November 12nd, 2022 | Addition of some forgotten types to be exported                                                                                         |
 | 1.0.5           | November 11st, 2022 | The first version _(after few tentative of publishing it)_                                                                              |
