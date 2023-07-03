@@ -25,8 +25,8 @@
     "prelocal-publish": "npm run build",
     "local-publish":    "npm link",
 
-    "prepublish": "npm-run-all build test",
-    "publish":    "npm publish --access=public"
+    "prepublish-to-npm": "npm-run-all build test",
+    "publish-to-npm":    "npm publish --access=public"
   },
 
   "directories": {
