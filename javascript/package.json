@@ -56,66 +56,56 @@
       "import":  "./dist/ecmascript module/*.js",
       "require": "./dist/common javascript/*.js"
     },
-    "./collection/*": {
-      "types":   "./dist/types/util/collection/*.d.ts",
-      "import":  "./dist/ecmascript module/util/collection/*.js",
-      "require": "./dist/common javascript/util/collection/*.js"
-    },
     "./enumerable/*": {
-      "types":   "./dist/types/util/enumerable/*.d.ts",
-      "import":  "./dist/ecmascript module/util/enumerable/*.js",
-      "require": "./dist/common javascript/util/enumerable/*.js"
+      "types":   "./dist/types/*.d.ts",
+      "import":  "./dist/ecmascript module/js",
+      "require": "./dist/common javascript/js"
     },
     "./exception/*": {
-      "types":   "./dist/types/util/enumerable/exception/*.d.ts",
-      "import":  "./dist/ecmascript module/util/enumerable/exception/*.js",
-      "require": "./dist/common javascript/util/enumerable/exception/*.js"
+      "types":   "./dist/types/exception/*.d.ts",
+      "import":  "./dist/ecmascript module/exception/*.js",
+      "require": "./dist/common javascript/exception/*.js"
     },
     "./companion/*": {
-      "types":   "./dist/types/util/enumerable/companion/*.d.ts",
-      "import":  "./dist/ecmascript module/util/enumerable/companion/*.js",
-      "require": "./dist/common javascript/util/enumerable/companion/*.js"
+      "types":   "./dist/types/companion/*.d.ts",
+      "import":  "./dist/ecmascript module/companion/*.js",
+      "require": "./dist/common javascript/companion/*.js"
     },
     "./enumerable/exception/*": {
-      "types":   "./dist/types/util/enumerable/exception/*.d.ts",
-      "import":  "./dist/ecmascript module/util/enumerable/exception/*.js",
-      "require": "./dist/common javascript/util/enumerable/exception/*.js"
+      "types":   "./dist/types/exception/*.d.ts",
+      "import":  "./dist/ecmascript module/exception/*.js",
+      "require": "./dist/common javascript/exception/*.js"
     },
     "./enumerable/companion/*": {
-      "types":   "./dist/types/util/enumerable/companion/*.d.ts",
-      "import":  "./dist/ecmascript module/util/enumerable/companion/*.js",
-      "require": "./dist/common javascript/util/enumerable/companion/*.js"
+      "types":   "./dist/types/companion/*.d.ts",
+      "import":  "./dist/ecmascript module/companion/*.js",
+      "require": "./dist/common javascript/companion/*.js"
     },
 
-    "./collection": {
-      "types":   "./dist/types/util/collection/index.d.ts",
-      "import":  "./dist/ecmascript module/util/collection/index.js",
-      "require": "./dist/common javascript/util/collection/index.js"
-    },
     "./enumerable": {
-      "types":   "./dist/types/util/enumerable/index.d.ts",
-      "import":  "./dist/ecmascript module/util/enumerable/index.js",
-      "require": "./dist/common javascript/util/enumerable/index.js"
+      "types":   "./dist/types/index.d.ts",
+      "import":  "./dist/ecmascript module/index.js",
+      "require": "./dist/common javascript/index.js"
     },
     "./exception": {
-      "types":   "./dist/types/util/enumerable/exception/index.d.ts",
-      "import":  "./dist/ecmascript module/util/enumerable/exception/index.js",
-      "require": "./dist/common javascript/util/enumerable/exception/index.js"
+      "types":   "./dist/types/exception/index.d.ts",
+      "import":  "./dist/ecmascript module/exception/index.js",
+      "require": "./dist/common javascript/exception/index.js"
     },
     "./companion": {
-      "types":   "./dist/types/util/enumerable/companion/index.d.ts",
-      "import":  "./dist/ecmascript module/util/enumerable/companion/index.js",
-      "require": "./dist/common javascript/util/enumerable/companion/index.js"
+      "types":   "./dist/types/companion/index.d.ts",
+      "import":  "./dist/ecmascript module/companion/index.js",
+      "require": "./dist/common javascript/companion/index.js"
     },
     "./enumerable/exception": {
-      "types":   "./dist/types/util/enumerable/exception/index.d.ts",
-      "import":  "./dist/ecmascript module/util/enumerable/exception/index.js",
-      "require": "./dist/common javascript/util/enumerable/exception/index.js"
+      "types":   "./dist/types/exception/index.d.ts",
+      "import":  "./dist/ecmascript module/exception/index.js",
+      "require": "./dist/common javascript/exception/index.js"
     },
     "./enumerable/companion": {
-      "types":   "./dist/types/util/enumerable/companion/index.d.ts",
-      "import":  "./dist/ecmascript module/util/enumerable/companion/index.js",
-      "require": "./dist/common javascript/util/enumerable/companion/index.js"
+      "types":   "./dist/types/companion/index.d.ts",
+      "import":  "./dist/ecmascript module/companion/index.js",
+      "require": "./dist/common javascript/companion/index.js"
     }
   },
 

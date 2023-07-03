@@ -8,14 +8,14 @@
 import {AnotherChildEnum, Child1Enum, Child2Enum, EmptyEnum, EmptyEnumWithVariables, Enum1, Enum2, EnumWithInheritance, EnumWithDefault, EnumWithDifferentComportment, EnumWithExcludedFields, EnumWithLateDefault, ParentEnum, Child3Enum} from "../TemplateEnums"
 import {forbiddenInheritedMembers, forbiddenNumbers, impossibleOrdinals, nullValues, simpleEnumVariables, unhandledValues, validValues}                                                                                                     from "./Enum.constants"
 
-import {ForbiddenInheritedEnumerableMemberException} from "../../src/util/enumerable/exception/ForbiddenInheritedEnumerableMemberException"
-import {ForbiddenNumericException}                   from "../../src/util/enumerable/exception/ForbiddenNumericException"
-import {ImpossibleOrdinalException}                  from "../../src/util/enumerable/exception/ImpossibleOrdinalException"
-import {InvalidEnumerableException}                  from "../../src/util/enumerable/exception/InvalidEnumerableException"
-import {InvalidInstanceException}                    from "../../src/util/enumerable/exception/InvalidInstanceException"
-import {NullReferenceException}                      from "../../src/util/enumerable/exception/NullReferenceException"
-import {NullEnumerableException}                     from "../../src/util/enumerable/exception/NullEnumerableException"
-import {UnhandledValueException}                     from "../../src/util/enumerable/exception/UnhandledValueException"
+import {ForbiddenInheritedEnumerableMemberException} from "../../src/exception/ForbiddenInheritedEnumerableMemberException"
+import {ForbiddenNumericException}                   from "../../src/exception/ForbiddenNumericException"
+import {ImpossibleOrdinalException}                  from "../../src/exception/ImpossibleOrdinalException"
+import {InvalidEnumerableException}                  from "../../src/exception/InvalidEnumerableException"
+import {InvalidInstanceException}                    from "../../src/exception/InvalidInstanceException"
+import {NullReferenceException}                      from "../../src/exception/NullReferenceException"
+import {NullEnumerableException}                     from "../../src/exception/NullEnumerableException"
+import {UnhandledValueException}                     from "../../src/exception/UnhandledValueException"
 
 describe("GeneralEnumTest", () => {
 

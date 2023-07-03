@@ -5,7 +5,7 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import {EnumConstants} from "../../src/util/enumerable/EnumConstants"
+import {EnumConstants} from "../../src/EnumConstants"
 
 import type {EmptyEnumWithVariables} from "../TemplateEnums"
 import {Holder}                      from "../Holder"

@@ -5,7 +5,7 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import {EnumHelper}                   from "../../src/util/enumerable/EnumHelper"
+import {EnumHelper}                   from "../../src/EnumHelper"
 import {EnumWithDifferentComportment} from "../TemplateEnums"
 
 throw new EvalError("This file was not made to be read by Javascript. It should only be compilable by Typescript.")
