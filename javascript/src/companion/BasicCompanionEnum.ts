@@ -180,11 +180,11 @@ export class BasicCompanionEnum<const ENUMERABLE extends Enumerable,
             everyNames = [] as string[],
             everyEnumerable = [] as Enumerable[]
 
-        const everyFieldsSize = everyFields.length
+        const everyFieldSize = everyFields.length
         let currentOrdinal = 0
-        let everyFieldsIndex = -1
-        while (++everyFieldsIndex < everyFieldsSize) {
-            const [name, property,] = everyFields[everyFieldsIndex]!
+        let everyFieldIndex = -1
+        while (++everyFieldIndex < everyFieldSize) {
+            const [name, property,] = everyFields[everyFieldIndex]!
             if (property.get != null)
                 continue
             if (property.set != null)
