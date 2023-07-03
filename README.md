@@ -562,6 +562,7 @@ But it can become so much more by the contributions.
 
 | JS / TS version | Date                | Quick note                                                                                                                              |
 |-----------------|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| 2.4.0           | July 3rd, 2023      | The dependency of `collection` is now a standalone package                                                                              |
 | 2.3.0           | April 18th, 2023    | New and renaming of some methods in `collection` (see [the release patch](https://github.com/joooKiwi/enumeration/releases/tag/v1.3.7)) |
 | 2.2.3           | April 13th, 2023    | Fix on the `collection` when receiving receiving a `Set` or `Array` of 1                                                                |
 | 2.2.2           | April 12th, 2023    | Fix on the reverse order of the enum fields initialization                                                                              |
