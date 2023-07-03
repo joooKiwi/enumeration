@@ -2,6 +2,7 @@
 
 ## Table of content
 * [Installation](#installation)
+* [Similar projects (by others)](#similar-projects-by-others)
 * [Motivation](#motivation)
 * [Usage](#usage)
   * [The base](#the-base)
@@ -29,6 +30,17 @@ npm i -D @joookiwi/enumerable
 ```
 
 ---
+
+## Similar projects (by others)
+
+There are some related projects _(not made by me)_
+but still useful if you still want the enum in a different approach.
+Although, no version like **0.0.1** or **0.1.0** are included in it.
+ - [JsEnum](https://www.npmjs.com/package/@stein197/enum) by [stein197](https://www.npmjs.com/~stein197)
+ - [Simple Js Enum](https://www.npmjs.com/package/simple-js-enum) by [yevhendiachenko](https://www.npmjs.com/~yevhendiachenko)
+ - [Enuify](https://www.npmjs.com/package/enumify) by [rauschma](https://www.npmjs.com/~rauschma)
+ - [Discope enumeration](https://www.npmjs.com/package/@dipscope/enumeration) by [dpimonov](https://www.npmjs.com/~dpimonov)
+
 
 ## Motivation
 
