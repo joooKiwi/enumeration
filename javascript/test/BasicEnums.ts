@@ -5,11 +5,11 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import {Enum}                                from "../src/util/enumerable/Enum"
-import type {Enumerable}                     from "../src/util/enumerable/Enumerable"
-import type {EnumerableWithParent}           from "../src/util/enumerable/EnumerableWithParent"
-import type {EnumerableWithGrandParent}      from "../src/util/enumerable/EnumerableWithGrandParent"
-import type {EnumerableWithGreatGrandParent} from "../src/util/enumerable/EnumerableWithGreatGrandParent"
+import {Enum}                                from "../src/Enum"
+import type {Enumerable}                     from "../src/Enumerable"
+import type {EnumerableWithParent}           from "../src/EnumerableWithParent"
+import type {EnumerableWithGrandParent}      from "../src/EnumerableWithGrandParent"
+import type {EnumerableWithGreatGrandParent} from "../src/EnumerableWithGreatGrandParent"
 
 export class BasicEnumByEnum extends Enum<any, any> {
     constructor() { super() }

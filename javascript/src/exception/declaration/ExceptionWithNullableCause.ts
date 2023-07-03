@@ -5,5 +5,13 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-export * from "./companion/index"
-export * from "./exception/index"
+import type {NullOr} from "../../general type"
+
+/** A simple {@link Error exception} declaration with a nullable {@link Error.cause cause} */
+export interface ExceptionWithNullableCause<ERROR extends Error = never, >
+    extends Error {
+
+    /** The cause of the {@link Error exception} */
+    get cause(): NullOr<ERROR>
+
+}

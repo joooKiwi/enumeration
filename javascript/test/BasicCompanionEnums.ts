@@ -7,18 +7,18 @@
 
 import {BasicEnumByEnum, BasicEnumByEnumerable, BasicEnumByGrandParentEnumerable, BasicEnumByGrandParentEnum, BasicEnumByParentEnumerable, BasicEnumByParentEnum, BasicEnumByGreatGrandParentEnumerable, BasicEnumByGreatGrandParentEnum} from "./BasicEnums"
 
-import type {Enumerable}                                   from "../src/util/enumerable/Enumerable"
-import type {EnumerableWithGrandParent}                    from "../src/util/enumerable/EnumerableWithGrandParent"
-import type {EnumerableWithGreatGrandParent}               from "../src/util/enumerable/EnumerableWithGreatGrandParent"
-import type {EnumerableWithParent}                         from "../src/util/enumerable/EnumerableWithParent"
-import {BasicCompanionEnum}                                from "../src/util/enumerable/companion/BasicCompanionEnum"
-import type {BasicCompanionEnumDeclaration}                from "../src/util/enumerable/companion/BasicCompanionEnum.declaration"
-import {CompanionEnumWithGrandParent}                      from "../src/util/enumerable/companion/CompanionEnumWithGrandParent"
-import type {CompanionEnumWithGrandParentDeclaration}      from "../src/util/enumerable/companion/CompanionEnumWithGrandParent.declaration"
-import {CompanionEnumWithGreatGrandParent}                 from "../src/util/enumerable/companion/CompanionEnumWithGreatGrandParent"
-import type {CompanionEnumWithGreatGrandParentDeclaration} from "../src/util/enumerable/companion/CompanionEnumWithGreatGrandParent.declaration"
-import {CompanionEnumWithParent}                           from "../src/util/enumerable/companion/CompanionEnumWithParent"
-import type {CompanionEnumWithParentDeclaration}           from "../src/util/enumerable/companion/CompanionEnumWithParent.declaration"
+import type {Enumerable}                                   from "../src/Enumerable"
+import type {EnumerableWithGrandParent}                    from "../src/EnumerableWithGrandParent"
+import type {EnumerableWithGreatGrandParent}               from "../src/EnumerableWithGreatGrandParent"
+import type {EnumerableWithParent}                         from "../src/EnumerableWithParent"
+import {BasicCompanionEnum}                                from "../src/companion/BasicCompanionEnum"
+import type {BasicCompanionEnumDeclaration}                from "../src/companion/BasicCompanionEnum.declaration"
+import {CompanionEnumWithGrandParent}                      from "../src/companion/CompanionEnumWithGrandParent"
+import type {CompanionEnumWithGrandParentDeclaration}      from "../src/companion/CompanionEnumWithGrandParent.declaration"
+import {CompanionEnumWithGreatGrandParent}                 from "../src/companion/CompanionEnumWithGreatGrandParent"
+import type {CompanionEnumWithGreatGrandParentDeclaration} from "../src/companion/CompanionEnumWithGreatGrandParent.declaration"
+import {CompanionEnumWithParent}                           from "../src/companion/CompanionEnumWithParent"
+import type {CompanionEnumWithParentDeclaration}           from "../src/companion/CompanionEnumWithParent.declaration"
 
 export class BasicCompanionEnumByBasicCompanionEnum extends BasicCompanionEnum<Enumerable, any> {
     constructor() { super(BasicEnumByEnum,) }

@@ -2,10 +2,11 @@
 
 ## Table of content
 * [Installation](#installation)
+* [Similar projects (by others)](#similar-projects-by-others)
 * [Motivation](#motivation)
 * [Usage](#usage)
   * [The base](#the-base)
-  * [Default usage](#default-usage)
+  * [Default value](#default-value)
   * [Excluded field](#excluded-field)
   * [Inheritance by 1 to 3 parents](#inheritance-by-1-to-3-parents)
     * [Inheritance by single parent](#inheritance-by-single-parent)
@@ -29,6 +30,17 @@ npm i -D @joookiwi/enumerable
 ```
 
 ---
+
+## Similar projects (by others)
+
+There are some related projects _(not made by me)_
+but still useful if you still want the enum in a different approach.
+Although, no version like **0.0.1** or **0.1.0** are included in it.
+ - [JsEnum](https://www.npmjs.com/package/@stein197/enum) by [stein197](https://www.npmjs.com/~stein197)
+ - [Simple Js Enum](https://www.npmjs.com/package/simple-js-enum) by [yevhendiachenko](https://www.npmjs.com/~yevhendiachenko)
+ - [Enuify](https://www.npmjs.com/package/enumify) by [rauschma](https://www.npmjs.com/~rauschma)
+ - [Discope enumeration](https://www.npmjs.com/package/@dipscope/enumeration) by [dpimonov](https://www.npmjs.com/~dpimonov)
+
 
 ## Motivation
 
@@ -103,14 +115,14 @@ export class Example extends Enum<Ordinals, Names> {
     public static readonly 2: typeof Example.C
     // Optional number typing (end)
 
-    private constructor() { super() }
-
     public static readonly CompanionEnum: BasicCompanionEnumSingleton<Example, typeof Example> =
         class CompanionEnum_Example extends BasicCompanionEnum<Example, typeof Example> {
-        static #instance?: CompanionEnum_Example
-        private constructor() { super(Example,) }
-        public static get get() { return CompanionEnum_Example.#instance ??= new CompanionEnum_Example() }
-   }
+            static #instance?: CompanionEnum_Example
+            private constructor() { super(Example,) }
+            public static get get() { return CompanionEnum_Example.#instance ??= new CompanionEnum_Example() }
+        }
+
+    private constructor() { super() }
 
 }
 ```
@@ -129,11 +141,26 @@ export type Ordinals = Enum[Names]
 
 </details>
 
-### Default usage
+### Default value
 
 By default, the **companion enum** is always implemented.
 But it will throw a `NullEnumerableException` if nothing has been set _(in the initialization)_.
 Or it may be that it has been removed _(at compile time)_.
+And it can also throw a `UnhandledValueException` if the value received is incompatible.
+
+The possible values for the fields are:
+ - `_DEFAULT` → `Enumerable` valid to the **companion enum**
+ - `_DEFAULT_NAME` → a [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+      as either a primitive or an object
+ - `_DEFAULT_ORDINAL` → a [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number) or
+      a [bigint](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
+      as a primitive or an object
+
+Keep in mind that the value will always be converted to the **companion enum** base instance in the end.
+
+And, you can always use the getter pattern on the default fields (`_DEFAULT`, `_DEFAULT_NAME`, `_DEFAULT_ORDINAL`).
+Utilizing the lazy implementation is not really effective for the pre-made **companion enum**
+since they can only be retrieved 1 time.
 
 <details>
 <summary>Javascript</summary>
@@ -141,7 +168,11 @@ Or it may be that it has been removed _(at compile time)_.
 ```javascript
 class CompanionEnum_Example extends BasicCompanionEnum {
 
-    _DEFAULT = Example.B
+    _DEFAULT = condition1 ? Example.B : null
+
+    _DEFAULT_NAME = condition2 ? 'C' : null
+
+    _DEFAULT_ORDINAL = condition3 ? 4 : null
 
 }
 ```
@@ -152,7 +183,11 @@ class CompanionEnum_Example extends BasicCompanionEnum {
 ```typescript
 class CompanionEnum_Example extends BasicCompanionEnum<Example, typeof Example> {
 
-    protected override readonly _DEFAULT = Example.B
+    protected override readonly _DEFAULT = condition1 ? Example.B : null
+
+    protected override readonly _DEFAULT_NAME = condition2 ? 'C' : null
+
+    protected override readonly _DEFAULT_ORDINAL = condition3 ? 4 : null
 
 }
 ```
@@ -274,14 +309,14 @@ export class ParentEnum extends Enum<ParentOrdinals, ParentNames> {
    public static readonly 0: typeof ParentEnum.A
    public static readonly 1: typeof ParentEnum.B
 
-   private constructor() { super() }
+   public static readonly CompanionEnum: BasicCompanionEnumSingleton<ParentEnum, typeof ParentEnum> =
+        class CompanionEnum_ParentEnum extends BasicCompanionEnum<ParentEnum, typeof ParentEnum> {
+            static #instance?: CompanionEnum_ParentEnum
+            private constructor() { super(ParentEnum,) }
+            public static get get() { return BasicCompanionEnum.#instance ??= new BasicCompanionEnum() }
+        }
 
-   static CompanionEnum: BasicCompanionEnumSingleton<ParentEnum, typeof ParentEnum> =
-       class CompanionEnum_ParentEnum extends BasicCompanionEnum<ParentEnum, typeof ParentEnum> {
-       static #instance?: CompanionEnum_ParentEnum
-       private constructor() { super(ParentEnum,) }
-       public static get get() { return BasicCompanionEnum.#instance ??= new BasicCompanionEnum() }
-   }
+   private constructor() { super() }
 }
 ```
 ```typescript

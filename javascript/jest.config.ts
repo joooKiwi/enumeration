@@ -13,7 +13,7 @@ const config: Config = {
     errorOnDeprecated:        true,
     extensionsToTreatAsEsm:   [".ts",],
     moduleDirectories:        ["node_modules", "src/util",],
-    modulePathIgnorePatterns: ["./dist/", "./example/"],
+    modulePathIgnorePatterns: ["./dist/", "./example/",],
     preset:                   "ts-jest",
     rootDir:                  "./test",
     setupFilesAfterEnv:       ["jest-extended/all",],
