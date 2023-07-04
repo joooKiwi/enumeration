@@ -8,12 +8,12 @@
 import type {Enumerable}                                                                        from "./Enumerable"
 import type {EnumerableConstructor}                                                             from "./EnumerableConstructor"
 import type {CompanionOf}                                                                       from "./Enumerable.types"
-import type {BasicCompanionEnumDeclaration}                                                     from "./companion/BasicCompanionEnum.declaration"
+import type {CompanionEnumDeclaration}                                                          from "./companion/CompanionEnum.declaration"
 import type {CompanionEnumFromEnumerableConstructorOrCompanionEnum, PossibleEnumerableInstance} from "./companion/types"
 import type {Nullable, NullOrUndefined}                                                         from "./general type"
 
 import {Enum}                     from "./Enum"
-import {BasicCompanionEnum}       from "./companion/BasicCompanionEnum"
+import {CompanionEnum}            from "./companion/CompanionEnum"
 import {InvalidInstanceException} from "./exception/InvalidInstanceException"
 import {NullInstanceException}    from "./exception/NullInstanceException"
 import {NullReferenceException}   from "./exception/NullReferenceException"
@@ -21,7 +21,7 @@ import {NonExistantKeyException}  from "./exception/NonExistantKeyException"
 
 /**
  * Every method made to help on {@link Enumerable} queries
- * or {@link BasicCompanionEnumDeclaration companion enum} creation
+ * or {@link CompanionEnumDeclaration companion enum} creation
  */
 export namespace EnumHelper {
 
@@ -37,12 +37,12 @@ export namespace EnumHelper {
     }
 
     /**
-     * Tell if the value received is an instance of {@link BasicCompanionEnum}
+     * Tell if the value received is an instance of {@link CompanionEnum}
      *
      * @param value The value to compare
      */
-    export function isBasicCompanionEnum(value: unknown,): value is BasicCompanionEnum<Enumerable, EnumerableConstructor<Enumerable, any>> {
-        return value != null && value instanceof BasicCompanionEnum
+    export function isBasicCompanionEnum(value: unknown,): value is CompanionEnum<Enumerable, EnumerableConstructor<Enumerable, any>> {
+        return value != null && value instanceof CompanionEnum
     }
 
 
@@ -59,12 +59,12 @@ export namespace EnumHelper {
     }
 
     /**
-     * Tell if the value received has the structure of a {@link BasicCompanionEnumDeclaration}
+     * Tell if the value received has the structure of a {@link CompanionEnumDeclaration}
      * without verifying its typing on the field directly
      *
      * @param value The value to compare
      */
-    export function isCompanionEnumByStructure(value: unknown,): value is (& object & Record<keyof BasicCompanionEnumDeclaration<never, never>, unknown>) {
+    export function isCompanionEnumByStructure(value: unknown,): value is (& object & Record<keyof CompanionEnumDeclaration<never, never>, unknown>) {
         return value != null && typeof value == "object"
             && "instance" in value
             && "default" in value
@@ -83,17 +83,17 @@ export namespace EnumHelper {
      */
     export function getCompanion(instance: NullOrUndefined,): never
     /**
-     * Get the {@link BasicCompanionEnumDeclaration companion} instance directly
+     * Get the {@link CompanionEnumDeclaration companion} instance directly
      *
-     * @param companion The {@link BasicCompanionEnumDeclaration companion} instance
+     * @param companion The {@link CompanionEnumDeclaration companion} instance
      * @throws {NullInstanceException}
      */
-    export function getCompanion<const ENUMERABLE extends Enumerable, const COMPANION_ENUM extends BasicCompanionEnumDeclaration<any, any> = BasicCompanionEnumDeclaration<ENUMERABLE, any>, >(companion: Nullable<COMPANION_ENUM>,): COMPANION_ENUM
+    export function getCompanion<const ENUMERABLE extends Enumerable, const COMPANION_ENUM extends CompanionEnumDeclaration<any, any> = CompanionEnumDeclaration<ENUMERABLE, any>, >(companion: Nullable<COMPANION_ENUM>,): COMPANION_ENUM
     /**
-     * Get a {@link BasicCompanionEnumDeclaration companion} instance from an {@link Enumerable} class.
-     * And if in the {@link BasicCompanionEnumDeclaration companion} values or class type, there is no valid value, then exception can be thrown.
+     * Get a {@link CompanionEnumDeclaration companion} instance from an {@link Enumerable} class.
+     * And if in the {@link CompanionEnumDeclaration companion} values or class type, there is no valid value, then exception can be thrown.
      *
-     * @param constructorClass The {@link Enumerable} class to retrieve the {@link BasicCompanionEnumDeclaration companion}
+     * @param constructorClass The {@link Enumerable} class to retrieve the {@link CompanionEnumDeclaration companion}
      * @throws {NullInstanceException}
      * @throws {InvalidInstanceException}
      * @throws {NonExistantKeyException}
@@ -101,9 +101,9 @@ export namespace EnumHelper {
      */
     export function getCompanion<const ENUMERABLE extends Enumerable, const ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any> = EnumerableConstructor<ENUMERABLE, any>, >(constructorClass: Nullable<ENUMERABLE_CONSTRUCTOR>,): CompanionOf<ENUMERABLE_CONSTRUCTOR>
     /**
-     * Get the {@link BasicCompanionEnumDeclaration companion} from any values ({@link EnumerableConstructor} or {@link BasicCompanionEnumDeclaration companion})
+     * Get the {@link CompanionEnumDeclaration companion} from any values ({@link EnumerableConstructor} or {@link CompanionEnumDeclaration companion})
      *
-     * @param instance The {@link EnumerableConstructor} or {@link BasicCompanionEnumDeclaration} instance
+     * @param instance The {@link EnumerableConstructor} or {@link CompanionEnumDeclaration} instance
      *
      * @generalTypescriptDefinition
      * @throws {NullInstanceException}
@@ -112,7 +112,7 @@ export namespace EnumHelper {
      * @throws {NullReferenceException}
      */
     export function getCompanion<const ENUMERABLE extends Enumerable, const INSTANCE extends PossibleEnumerableInstance<any> = PossibleEnumerableInstance<ENUMERABLE>, >(instance: Nullable<INSTANCE>,): CompanionEnumFromEnumerableConstructorOrCompanionEnum<INSTANCE>
-    export function getCompanion(instance: Nullable<PossibleEnumerableInstance>,): BasicCompanionEnumDeclaration<any, any> {
+    export function getCompanion(instance: Nullable<PossibleEnumerableInstance>,): CompanionEnumDeclaration<any, any> {
         if (instance == null)
             throw new NullInstanceException()
 
@@ -137,7 +137,7 @@ export namespace EnumHelper {
         if (!isBasicCompanionEnum(companionInstance) || !isCompanionEnumByStructure(companionInstance))
             throw new InvalidInstanceException(`The reference "${instance.name}.CompanionEnum.get" is not a CompanionEnum instance or has its structure.`, instance,)
 
-        return companionInstance as BasicCompanionEnumDeclaration<any, any>
+        return companionInstance as CompanionEnumDeclaration<any, any>
     }
 
     //#endregion -------------------- Get companion --------------------

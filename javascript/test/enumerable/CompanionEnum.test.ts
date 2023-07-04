@@ -13,13 +13,13 @@ import type {EnumerableWithGrandParent}                    from "../../src/Enume
 import type {EnumerableWithGreatGrandParent}               from "../../src/EnumerableWithGreatGrandParent"
 import type {EnumerableWithParent}                         from "../../src/EnumerableWithParent"
 import type {EnumerableConstructor}                        from "../../src/EnumerableConstructor"
-import type {BasicCompanionEnumDeclaration}                from "../../src/companion/BasicCompanionEnum.declaration"
+import type {CompanionEnumDeclaration}                     from "../../src/companion/CompanionEnum.declaration"
 import type {CompanionEnumWithGrandParentDeclaration}      from "../../src/companion/CompanionEnumWithGrandParent.declaration"
 import type {CompanionEnumWithGreatGrandParentDeclaration} from "../../src/companion/CompanionEnumWithGreatGrandParent.declaration"
 import type {CompanionEnumWithParentDeclaration}           from "../../src/companion/CompanionEnumWithParent.declaration"
 
 import {Enum}                              from "../../src/Enum"
-import {BasicCompanionEnum}                from "../../src/companion/BasicCompanionEnum"
+import {CompanionEnum}                     from "../../src/companion/CompanionEnum"
 import {CompanionEnumWithGrandParent}      from "../../src/companion/CompanionEnumWithGrandParent"
 import {CompanionEnumWithGreatGrandParent} from "../../src/companion/CompanionEnumWithGreatGrandParent"
 import {CompanionEnumWithParent}           from "../../src/companion/CompanionEnumWithParent"
@@ -35,7 +35,7 @@ import {NullInstanceException}             from "../../src/exception/NullInstanc
 
 class BasicEnum extends Enum<number, string> {
     static readonly A = new BasicEnum()
-    static CompanionEnum = class CompanionEnum_BasicEnum extends BasicCompanionEnum<BasicEnum, any> {
+    static CompanionEnum = class CompanionEnum_BasicEnum extends CompanionEnum<BasicEnum, any> {
         static #instance?: CompanionEnum_BasicEnum
         private constructor() { super(BasicEnum,) }
         static get get() { return this.#instance ??= new CompanionEnum_BasicEnum() }
@@ -105,18 +105,18 @@ class BasicEnumWithGreatGrandParent extends Enum<number, string> implements Enum
 //#endregion -------------------- Helper enum class declaration --------------------
 //#region -------------------- Helper companion class declaration --------------------
 
-class BasicCompanionEnum_TestClassHelper
-    extends BasicCompanionEnum<Enumerable, EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>> {
-    constructor(instance: EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>,) {
+class CompanionEnum_TestClassHelper
+    extends CompanionEnum<Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
+    constructor(instance: EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>,) {
         super(instance,)
     }
 }
 
 class CompanionEnumWithParent_TestClassHelper
     extends CompanionEnumWithParent<EnumerableWithParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-        Enumerable, EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>> {
+        Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
     constructor(instance: EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-                parentInstance: EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>) {
+                parentInstance: EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>) {
         super(instance, parentInstance,)
     }
 }
@@ -124,10 +124,10 @@ class CompanionEnumWithParent_TestClassHelper
 class CompanionEnumWithGrandParent_TestClassHelper
     extends CompanionEnumWithGrandParent<EnumerableWithGrandParent, EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
         EnumerableWithParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-        Enumerable, EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>> {
+        Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
     constructor(instance: EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
                 parentInstance: EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-                grandParentInstance: EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>,) {
+                grandParentInstance: EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>,) {
         super(instance, parentInstance, grandParentInstance,)
     }
 }
@@ -136,11 +136,11 @@ class CompanionEnumWithGreatGrandParent_TestClassHelper
     extends CompanionEnumWithGreatGrandParent<EnumerableWithGreatGrandParent, EnumerableConstructor<any, CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, any, any>>,
         EnumerableWithGrandParent, EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
         EnumerableWithParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-        Enumerable, EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>> {
+        Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
     constructor(instance: EnumerableConstructor<any, CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, any, any>>,
                 parentInstance: EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
                 grandParentInstance: EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-                greatGrandParentInstance: EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>,) {
+                greatGrandParentInstance: EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>,) {
         super(instance, parentInstance, grandParentInstance, greatGrandParentInstance,)
     }
 }
@@ -154,10 +154,10 @@ describe("CompanionEnumTest", () => {
     describe("BasicCompanionEnum", () => {
         describe("invalid argument", () => {
             // @ts-expect-error
-            test.each(nullValues,)("%s", it => expect(() => new BasicCompanionEnum_TestClassHelper(it,),).toThrow(NullInstanceException,),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new BasicCompanionEnum_TestClassHelper(it,),).toThrow(InvalidInstanceException,),)
+            test.each(nullValues,)("%s", it => expect(() => new CompanionEnum_TestClassHelper(it,),).toThrow(NullInstanceException,),)
+            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new CompanionEnum_TestClassHelper(it,),).toThrow(InvalidInstanceException,),)
         },)
-        test("valid construction", () => expect(() => new BasicCompanionEnum_TestClassHelper(BasicEnum,),).not.toThrow(),)
+        test("valid construction", () => expect(() => new CompanionEnum_TestClassHelper(BasicEnum,),).not.toThrow(),)
         describe("methods", () => {
             const value = BasicEnum.A,
                 parentValue = BasicEnumWithParent.A,
@@ -165,8 +165,8 @@ describe("CompanionEnumTest", () => {
                 greatGrandParentValue = BasicEnumWithGreatGrandParent.A,
                 name = 'A',
                 ordinal = 0
-            let instance: BasicCompanionEnum_TestClassHelper
-            beforeEach(() => instance = new BasicCompanionEnum_TestClassHelper(BasicEnum,),)
+            let instance: CompanionEnum_TestClassHelper
+            beforeEach(() => instance = new CompanionEnum_TestClassHelper(BasicEnum,),)
 
             describe("setDefault", () => {
                 test.each(nullValues,)("%s", it => {

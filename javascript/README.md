@@ -77,7 +77,7 @@ _Note: The companion field (in the class) should be in the static instance inste
 <summary>Javascript</summary>
 
 ```javascript
-import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
+import {CompanionEnum, Enum} from "@joookiwi/enumerable"
 
 export class Example extends Enum {
 
@@ -85,7 +85,7 @@ export class Example extends Enum {
    static B = new Example()
    static C = new Example()
 
-   static CompanionEnum = class CompanionEnum_Example extends BasicCompanionEnum {
+   static CompanionEnum = class CompanionEnum_Example extends CompanionEnum {
        static #instance
        constructor() { super(Example,) }
        static get get() { return CompanionEnum_Example.#instance ??= new CompanionEnum_Example() }
@@ -99,7 +99,7 @@ export class Example extends Enum {
 
 ```typescript
 // Example.ts
-import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
+import {CompanionEnum, Enum} from "@joookiwi/enumerable"
 import type {BasicCompanionEnumSingleton} from "@joookiwi/enumerable/dist/types"
 import type {Names, Ordinals} from "./Example.types"
 
@@ -116,7 +116,7 @@ export class Example extends Enum<Ordinals, Names> {
     // Optional number typing (end)
 
     public static readonly CompanionEnum: BasicCompanionEnumSingleton<Example, typeof Example> =
-        class CompanionEnum_Example extends BasicCompanionEnum<Example, typeof Example> {
+        class CompanionEnum_Example extends CompanionEnum<Example, typeof Example> {
             static #instance?: CompanionEnum_Example
             private constructor() { super(Example,) }
             public static get get() { return CompanionEnum_Example.#instance ??= new CompanionEnum_Example() }
@@ -166,7 +166,7 @@ since they can only be retrieved 1 time.
 <summary>Javascript</summary>
 
 ```javascript
-class CompanionEnum_Example extends BasicCompanionEnum {
+class CompanionEnum_Example extends CompanionEnum {
 
     _DEFAULT = condition1 ? Example.B : null
 
@@ -181,7 +181,7 @@ class CompanionEnum_Example extends BasicCompanionEnum {
 <summary>Typescript</summary>
 
 ```typescript
-class CompanionEnum_Example extends BasicCompanionEnum<Example, typeof Example> {
+class CompanionEnum_Example extends CompanionEnum<Example, typeof Example> {
 
     protected override readonly _DEFAULT = condition1 ? Example.B : null
 
@@ -209,11 +209,17 @@ class Example extends Enum {
     static D = someReason ? this.A : this.B
     static SOME_FIELD = this.D
 
-    static CompanionEnum = class CompanionEnum_Example extends BasicCompanionEnum {
+    static CompanionEnum = class CompanionEnum_Example extends CompanionEnum {
         _EXCLUDED_NAMES = ['D', "SOME_FIELD",]
         static #instance
-        constructor() { super(Example,) }
-        static get get() { return CompanionEnum_Example.#instance ??= new CompanionEnum_Example() }
+
+        constructor() {
+            super(Example,)
+        }
+
+        static get get() {
+            return CompanionEnum_Example.#instance ??= new CompanionEnum_Example()
+        }
     }
 }
 ```
@@ -229,8 +235,8 @@ class Example extends Enum<Ordinals, Names> {
     public static readonly D = someReason ? this.A : this.B
     public static readonly SOME_FIELD = this.D
 
-    public static readonly CompanionEnum: BasicCompanionEnumSingleton<Example, typeof Example> =
-        class CompanionEnum_Example extends BasicCompanionEnum<Example, typeof Example> {
+    public static readonly CompanionEnum: CompanionEnumSingleton<Example, typeof Example> =
+        class CompanionEnum_Example extends CompanionEnum<Example, typeof Example> {
         protected readonly _EXCLUDED_NAMES = ['D', "SOME_FIELD",]
         static #instance?: CompanionEnum_Example
         private constructor() { super(Example,) }
@@ -262,11 +268,17 @@ it will not be possible (in practice).
 export class ParentEnum extends Enum {
     static A = new ParentEnum()
     static B = new ParentEnum()
-   
-    static CompanionEnum = class CompanionEnum_ParentEnum extends BasicCompanionEnum {
+
+    static CompanionEnum = class CompanionEnum_ParentEnum extends CompanionEnum {
         static #instance
-        constructor() { super(ParentEnum,) }
-        static get get() { return BasicCompanionEnum.#instance ??= new BasicCompanionEnum() }
+
+        constructor() {
+            super(ParentEnum,)
+        }
+
+        static get get() {
+            return CompanionEnum.#instance ??= new CompanionEnum()
+        }
     }
 }
 ```
@@ -309,11 +321,11 @@ export class ParentEnum extends Enum<ParentOrdinals, ParentNames> {
    public static readonly 0: typeof ParentEnum.A
    public static readonly 1: typeof ParentEnum.B
 
-   public static readonly CompanionEnum: BasicCompanionEnumSingleton<ParentEnum, typeof ParentEnum> =
-        class CompanionEnum_ParentEnum extends BasicCompanionEnum<ParentEnum, typeof ParentEnum> {
+   public static readonly CompanionEnum: CompanionEnumSingleton<ParentEnum, typeof ParentEnum> =
+        class CompanionEnum_ParentEnum extends CompanionEnum<ParentEnum, typeof ParentEnum> {
             static #instance?: CompanionEnum_ParentEnum
             private constructor() { super(ParentEnum,) }
-            public static get get() { return BasicCompanionEnum.#instance ??= new BasicCompanionEnum() }
+            public static get get() { return CompanionEnum.#instance ??= new CompanionEnum() }
         }
 
    private constructor() { super() }

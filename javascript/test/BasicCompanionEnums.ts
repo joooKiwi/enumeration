@@ -11,8 +11,8 @@ import type {Enumerable}                                   from "../src/Enumerab
 import type {EnumerableWithGrandParent}                    from "../src/EnumerableWithGrandParent"
 import type {EnumerableWithGreatGrandParent}               from "../src/EnumerableWithGreatGrandParent"
 import type {EnumerableWithParent}                         from "../src/EnumerableWithParent"
-import {BasicCompanionEnum}                                from "../src/companion/BasicCompanionEnum"
-import type {BasicCompanionEnumDeclaration}                from "../src/companion/BasicCompanionEnum.declaration"
+import {CompanionEnum}                                     from "../src/companion/CompanionEnum"
+import type {CompanionEnumDeclaration}                     from "../src/companion/CompanionEnum.declaration"
 import {CompanionEnumWithGrandParent}                      from "../src/companion/CompanionEnumWithGrandParent"
 import type {CompanionEnumWithGrandParentDeclaration}      from "../src/companion/CompanionEnumWithGrandParent.declaration"
 import {CompanionEnumWithGreatGrandParent}                 from "../src/companion/CompanionEnumWithGreatGrandParent"
@@ -20,7 +20,7 @@ import type {CompanionEnumWithGreatGrandParentDeclaration} from "../src/companio
 import {CompanionEnumWithParent}                           from "../src/companion/CompanionEnumWithParent"
 import type {CompanionEnumWithParentDeclaration}           from "../src/companion/CompanionEnumWithParent.declaration"
 
-export class BasicCompanionEnumByBasicCompanionEnum extends BasicCompanionEnum<Enumerable, any> {
+export class BasicCompanionEnumByBasicCompanionEnum extends CompanionEnum<Enumerable, any> {
     constructor() { super(BasicEnumByEnum,) }
 }
 export class BasicCompanionEnumByCompanionEnumWithParent extends CompanionEnumWithParent<EnumerableWithParent, any, Enumerable, any> {
@@ -33,7 +33,7 @@ export class BasicCompanionEnumByCompanionEnumWithGreatGrandParent extends Compa
     constructor() { super(BasicEnumByGreatGrandParentEnum, BasicEnumByGrandParentEnum, BasicEnumByParentEnum, BasicEnumByEnum,) }
 }
 
-export class BasicCompanionEnumByBasicCompanionEnumDeclaration implements BasicCompanionEnumDeclaration<Enumerable, any> {
+export class BasicCompanionEnumByBasicCompanionEnumDeclaration implements CompanionEnumDeclaration<Enumerable, any> {
 
     get instance() { return BasicEnumByEnumerable }
 

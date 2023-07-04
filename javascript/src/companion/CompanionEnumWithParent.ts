@@ -10,10 +10,10 @@ import type {EnumerableConstructor}                                             
 import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, PossibleNameOf, PossibleOrdinalOf, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableOrdinal, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "../Enumerable.types"
 import type {EnumerableWithParent}                                                                                                                                                                                                                                                                                                                                                                               from "../EnumerableWithParent"
 import type {Nullable, NullOrUndefined, PossibleBigInt, PossibleNumeric, PossibleString, PossibleStringOrNumeric}                                                                                                                                                                                                                                                                                                from "../general type"
+import type {CompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                                                           from "./CompanionEnum.declaration"
 import type {CompanionEnumWithParentDeclaration}                                                                                                                                                                                                                                                                                                                                                                 from "./CompanionEnumWithParent.declaration"
-import type {BasicCompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                                                      from "./BasicCompanionEnum.declaration"
 
-import {BasicCompanionEnum}         from "./BasicCompanionEnum"
+import {CompanionEnum}              from "./CompanionEnum"
 import {InvalidEnumerableException} from "../exception/InvalidEnumerableException"
 import {InvalidInstanceException}   from "../exception/InvalidInstanceException"
 import {NonExistantKeyException}    from "../exception/NonExistantKeyException"
@@ -23,8 +23,8 @@ import {NullReferenceException}     from "../exception/NullReferenceException"
 export class CompanionEnumWithParent<const ENUMERABLE extends EnumerableWithParent<PossibleOrdinalOf<number, PARENT_ENUMERABLE>, PossibleNameOf<string, PARENT_ENUMERABLE>, PARENT_ENUMERABLE>,
     const ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<ENUMERABLE, CompanionEnumWithParentDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR, PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR>>,
     const PARENT_ENUMERABLE extends Enumerable,
-    const PARENT_ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUMERABLE, BasicCompanionEnumDeclaration<PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR>>, >
-    extends BasicCompanionEnum<ENUMERABLE, ENUMERABLE_CONSTRUCTOR>
+    const PARENT_ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUMERABLE, CompanionEnumDeclaration<PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR>>, >
+    extends CompanionEnum<ENUMERABLE, ENUMERABLE_CONSTRUCTOR>
     implements CompanionEnumWithParentDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR, PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR> {
 
     //#region -------------------- Fields --------------------

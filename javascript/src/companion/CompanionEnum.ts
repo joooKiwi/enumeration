@@ -11,7 +11,7 @@ import {GenericCollectionHolder} from "@joookiwi/collection"
 import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                        from "../Enumerable"
 import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                             from "../EnumerableConstructor"
 import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, PossibleEnumerableValue, PossibleEnumerableValueBy, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "../Enumerable.types"
-import type {BasicCompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                     from "./BasicCompanionEnum.declaration"
+import type {CompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                          from "./CompanionEnum.declaration"
 import type {CompanionEnumName}                                                                                                                                                                                                                                                                                                                                                 from "./types"
 import type {Nullable, NullOr, NullOrUndefined, PossibleBigInt, PossibleNumber, PossibleNumeric, PossibleString}                                                                                                                                                                                                                                                                from "../general type"
 
@@ -32,9 +32,9 @@ const {POSITIVE_INFINITY, NEGATIVE_INFINITY, MAX_VALUE, isNaN,} = Number,
     {get, has,} = Reflect,
     {entries, freeze, getOwnPropertyDescriptors,} = Object
 
-export class BasicCompanionEnum<const ENUMERABLE extends Enumerable,
-    const ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<ENUMERABLE, BasicCompanionEnumDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR>>, >
-    implements BasicCompanionEnumDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR> {
+export class CompanionEnum<const ENUMERABLE extends Enumerable,
+    const ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<ENUMERABLE, CompanionEnumDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR>>, >
+    implements CompanionEnumDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR> {
 
     //#region -------------------- Fields --------------------
 
@@ -50,9 +50,9 @@ export class BasicCompanionEnum<const ENUMERABLE extends Enumerable,
      *
      * Note that giving an invalid name will result in an exception on the first time it is initialised.
      * From either {@link Enumerable.name get name},
-     * {@link BasicCompanionEnum.getValue getValue()}, {@link BasicCompanionEnum.values get values},
-     * {@link BasicCompanionEnum.getOrdinal getOrdinal()}, {@link BasicCompanionEnum.ordinals get ordinals}
-     * {@link BasicCompanionEnum.getName getName()} or {@link BasicCompanionEnum.names get names}
+     * {@link CompanionEnum.getValue getValue()}, {@link CompanionEnum.values get values},
+     * {@link CompanionEnum.getOrdinal getOrdinal()}, {@link CompanionEnum.ordinals get ordinals}
+     * {@link CompanionEnum.getName getName()} or {@link CompanionEnum.names get names}
      */
     protected readonly _EXCLUDED_NAMES?: Nullable<readonly Nullable<string>[]>
 

@@ -5,8 +5,8 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-export type {BasicCompanionEnumDeclaration}                from "./BasicCompanionEnum.declaration"
-export {BasicCompanionEnum}                                from "./BasicCompanionEnum"
+export type {CompanionEnumDeclaration}                     from "./CompanionEnum.declaration"
+export {CompanionEnum}                                     from "./CompanionEnum"
 export type {CompanionEnumWithParentDeclaration}           from "./CompanionEnumWithParent.declaration"
 export {CompanionEnumWithParent}                           from "./CompanionEnumWithParent"
 export type {CompanionEnumWithGrandParentDeclaration}      from "./CompanionEnumWithGrandParent.declaration"

@@ -9,7 +9,7 @@ import type {EnumConstants}                                from "../EnumConstant
 import type {Enumerable}                                   from "../Enumerable"
 import type {CompanionOf}                                  from "../Enumerable.types"
 import type {EnumerableConstructor}                        from "../EnumerableConstructor"
-import type {BasicCompanionEnumDeclaration}                from "./BasicCompanionEnum.declaration"
+import type {CompanionEnumDeclaration}                     from "./CompanionEnum.declaration"
 import type {CompanionEnumWithParentDeclaration}           from "./CompanionEnumWithParent.declaration"
 import type {CompanionEnumWithGrandParentDeclaration}      from "./CompanionEnumWithGrandParent.declaration"
 import type {CompanionEnumWithGreatGrandParentDeclaration} from "./CompanionEnumWithGreatGrandParent.declaration"
@@ -19,11 +19,11 @@ export type CompanionEnumName = typeof EnumConstants["COMPANION_ENUM_TO_STRING_T
 
 export type CompanionEnumFromEnumerableConstructorOrCompanionEnum<T extends PossibleEnumerableInstance<any>, >
     = T extends EnumerableConstructor<any, any> ? CompanionOf<T>
-    : T extends BasicCompanionEnumDeclaration<any, any> ? T : never
+    : T extends CompanionEnumDeclaration<any, any> ? T : never
 
-/** The possible {@link Enumerable} instances. Either a {@link EnumerableConstructor} or a {@link BasicCompanionEnumDeclaration} */
+/** The possible {@link Enumerable} instances. Either a {@link EnumerableConstructor} or a {@link CompanionEnumDeclaration} */
 export type PossibleEnumerableInstance<ENUMERABLE extends Enumerable = Enumerable, > =
-    | BasicCompanionEnumDeclaration<ENUMERABLE, any>
+    | CompanionEnumDeclaration<ENUMERABLE, any>
     | CompanionEnumWithParentDeclaration<any, any, ENUMERABLE, any>
     | CompanionEnumWithGrandParentDeclaration<any, any, any, any, ENUMERABLE, any>
     | CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, ENUMERABLE, any>

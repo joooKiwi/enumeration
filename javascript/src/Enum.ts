@@ -9,7 +9,7 @@ import type {Enumerable}                                      from "./Enumerable
 import type {EnumerableConstructor}                           from "./EnumerableConstructor"
 import type {EnumerableName, EnumerableToPrimitive}           from "./Enumerable.types"
 import type {Nullable, PossiblePrimitiveHint, PossibleString} from "./general type"
-import type {BasicCompanionEnumDeclaration}                   from "./companion/BasicCompanionEnum.declaration"
+import type {CompanionEnumDeclaration}                        from "./companion/CompanionEnum.declaration"
 
 import {EnumConstants}          from "./EnumConstants"
 import {EnumHelper}             from "./EnumHelper"
@@ -25,7 +25,7 @@ export abstract class Enum<const ORDINAL extends number, const NAME extends stri
     #name?: NAME
     readonly #ordinal: ORDINAL
     readonly #prototypeConstructor
-    #companion?: BasicCompanionEnumDeclaration<Enum<ORDINAL, NAME>, EnumerableConstructor<Enum<ORDINAL, NAME>, any>>
+    #companion?: CompanionEnumDeclaration<Enum<ORDINAL, NAME>, EnumerableConstructor<Enum<ORDINAL, NAME>, any>>
 
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------
@@ -90,9 +90,9 @@ export abstract class Enum<const ORDINAL extends number, const NAME extends stri
 
     /**
      * Get the {@link Enumerable enumerable} {@link Enumerable.name name}
-     * by utilising the {@link BasicCompanionEnumDeclaration.values companion values}
+     * by utilising the {@link CompanionEnumDeclaration.values companion values}
      *
-     * @throws {NullReferenceException} The current instance was not found in the {@link BasicCompanionEnumDeclaration.values companion values}
+     * @throws {NullReferenceException} The current instance was not found in the {@link CompanionEnumDeclaration.values companion values}
      */
     get #nameOnCurrentInstance(): NAME {
         const companion = this.#__companion,

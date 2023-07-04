@@ -5,7 +5,7 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {CollectionHolder}               from "@joookiwi/collection"
+import type {CollectionHolder} from "@joookiwi/collection"
 
 import type {Enumerable}                     from "./Enumerable"
 import type {EnumerableConstructor}          from "./EnumerableConstructor"
@@ -13,23 +13,23 @@ import type {EnumerableWithGrandParent}      from "./EnumerableWithGrandParent"
 import type {EnumerableWithGreatGrandParent} from "./EnumerableWithGreatGrandParent"
 import type {EnumerableWithParent}           from "./EnumerableWithParent"
 import type {NullOr}                         from "./general type"
-import type {BasicCompanionEnumDeclaration}  from "./companion/BasicCompanionEnum.declaration"
+import type {CompanionEnumDeclaration}       from "./companion/CompanionEnum.declaration"
 
 /** A simple class containing every field used by an {@link Enumerable} helper, instance or companion */
 export namespace EnumConstants {
 
     /**
-     * A map of every {@link BasicCompanionEnumDeclaration.default default} stored from a {@link BasicCompanionEnumDeclaration}
+     * A map of every {@link CompanionEnumDeclaration.default default} stored from a {@link CompanionEnumDeclaration}
      *
-     * @see BasicCompanionEnumDeclaration.default
+     * @see CompanionEnumDeclaration.default
      */
-    export const DEFAULT_MAP = new Map<BasicCompanionEnumDeclaration<any, any>, NullOr<Enumerable>>()
+    export const DEFAULT_MAP = new Map<CompanionEnumDeclaration<any, any>, NullOr<Enumerable>>()
     /**
-     * A map of every {@link Enumerable} {@link BasicCompanionEnumDeclaration.values values} stored from a {@link BasicCompanionEnumDeclaration}
+     * A map of every {@link Enumerable} {@link CompanionEnumDeclaration.values values} stored from a {@link CompanionEnumDeclaration}
      *
-     * @see BasicCompanionEnumDeclaration.values
+     * @see CompanionEnumDeclaration.values
      */
-    export const VALUES_MAP = new Map<BasicCompanionEnumDeclaration<any, any>, CollectionHolder<Enumerable>>()
+    export const VALUES_MAP = new Map<CompanionEnumDeclaration<any, any>, CollectionHolder<Enumerable>>()
     /**
      * A map of an individual {@link Enumerable.name name} associated to a {@link Enumerable}
      *
@@ -37,11 +37,11 @@ export namespace EnumConstants {
      */
     export const NAME_MAP = new Map<Enumerable, string>()
     /**
-     * A map of every {@link Enumerable} {@link BasicCompanionEnumDeclaration.names names} stored from a {@link BasicCompanionEnumDeclaration}
+     * A map of every {@link Enumerable} {@link CompanionEnumDeclaration.names names} stored from a {@link CompanionEnumDeclaration}
      *
-     * @see BasicCompanionEnumDeclaration.names
+     * @see CompanionEnumDeclaration.names
      */
-    export const NAMES_MAP = new Map<BasicCompanionEnumDeclaration<any, any>, CollectionHolder<string>>()
+    export const NAMES_MAP = new Map<CompanionEnumDeclaration<any, any>, CollectionHolder<string>>()
     /**
      * A map of the last ordinal of {@link Enum} instance
      *
@@ -55,11 +55,11 @@ export namespace EnumConstants {
      */
     export const ORDINAL_MAP = new Map<Enumerable, number>()
     /**
-     * A map of every {@link Enumerable} {@link BasicCompanionEnumDeclaration.ordinals ordinals} stored from a {@link BasicCompanionEnumDeclaration}
+     * A map of every {@link Enumerable} {@link CompanionEnumDeclaration.ordinals ordinals} stored from a {@link CompanionEnumDeclaration}
      *
-     * @see BasicCompanionEnumDeclaration.ordinals
+     * @see CompanionEnumDeclaration.ordinals
      */
-    export const ORDINALS_MAP = new Map<BasicCompanionEnumDeclaration<any, any>, CollectionHolder<number>>()
+    export const ORDINALS_MAP = new Map<CompanionEnumDeclaration<any, any>, CollectionHolder<number>>()
 
     /** A {@link RegExp regex} to include any numeric value (negative and/or decimal) */
     export const NUMBER_ONLY_REGEX = /^-?\d+(\.\d+)?$/
@@ -92,7 +92,7 @@ export namespace EnumConstants {
     export const ENUM_TO_STRING_TAG = "Enum"
     /**
      * The simple {@link Symbol.toStringTag} of a companion enum
-     * ({@link BasicCompanionEnumDeclaration}, {@link CompanionEnumWithParentDeclaration}, {@link CompanionEnumWithGrandParentDeclaration}, {@link CompanionEnumWithGreatGrandParentDeclaration})
+     * ({@link CompanionEnumDeclaration}, {@link CompanionEnumWithParentDeclaration}, {@link CompanionEnumWithGrandParentDeclaration}, {@link CompanionEnumWithGreatGrandParentDeclaration})
      *
      * @uniqueJavascriptVariable
      */

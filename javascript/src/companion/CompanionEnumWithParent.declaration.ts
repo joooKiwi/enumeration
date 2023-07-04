@@ -10,13 +10,13 @@ import type {EnumerableConstructor}                                             
 import type {ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, NameOf, OrdinalOf, PossibleEnumerableValue, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, ValueByEnumerableConstructorAndEnumerableNameAndName} from "../Enumerable.types"
 import type {EnumerableWithParent}                                                                                                                                                                                                                                                                                                                                                                     from "../EnumerableWithParent"
 import type {Nullable, NullOrUndefined, PossibleBigInt}                                                                                                                                                                                                                                                                                                                                                from "../general type"
-import type {BasicCompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                                            from "./BasicCompanionEnum.declaration"
+import type {CompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                                                 from "./CompanionEnum.declaration"
 
 export interface CompanionEnumWithParentDeclaration<ENUMERABLE extends EnumerableWithParent<number, string, PARENT_ENUMERABLE>,
     ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<ENUMERABLE, CompanionEnumWithParentDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR, PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR>>,
     PARENT_ENUMERABLE extends Enumerable,
-    PARENT_ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUMERABLE, BasicCompanionEnumDeclaration<PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR>>, >
-    extends BasicCompanionEnumDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR> {
+    PARENT_ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUMERABLE, CompanionEnumDeclaration<PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR>>, >
+    extends CompanionEnumDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR> {
 
     get parentInstance(): PARENT_ENUMERABLE_CONSTRUCTOR
 

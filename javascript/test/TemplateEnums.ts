@@ -5,14 +5,14 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {NullOr}                                                                                                                                           from "../src/general type"
-import type {EnumerableWithGrandParent}                                                                                                                        from "../src/EnumerableWithGrandParent"
-import type {EnumerableWithGreatGrandParent}                                                                                                                   from "../src/EnumerableWithGreatGrandParent"
-import type {EnumerableWithParent}                                                                                                                             from "../src/EnumerableWithParent"
-import type {BasicCompanionEnumSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumWithParentSingleton} from "../src/Singleton.types"
+import type {NullOr}                                                                                                                                      from "../src/general type"
+import type {EnumerableWithGrandParent}                                                                                                                   from "../src/EnumerableWithGrandParent"
+import type {EnumerableWithGreatGrandParent}                                                                                                              from "../src/EnumerableWithGreatGrandParent"
+import type {EnumerableWithParent}                                                                                                                        from "../src/EnumerableWithParent"
+import type {CompanionEnumSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumWithParentSingleton} from "../src/Singleton.types"
 
 import {Enum}                              from "../src/Enum"
-import {BasicCompanionEnum}                from "../src/companion/BasicCompanionEnum"
+import {CompanionEnum}                     from "../src/companion/CompanionEnum"
 import {CompanionEnumWithGrandParent}      from "../src/companion/CompanionEnumWithGrandParent"
 import {CompanionEnumWithGreatGrandParent} from "../src/companion/CompanionEnumWithGreatGrandParent"
 import {CompanionEnumWithParent}           from "../src/companion/CompanionEnumWithParent"
@@ -55,8 +55,8 @@ type Names4 = keyof EnumType4
 export class EmptyEnum
     extends Enum<never, never> {
 
-    public static readonly CompanionEnum: BasicCompanionEnumSingleton<EmptyEnum, typeof EmptyEnum> = class CompanionEnum_EmptyEnum
-        extends BasicCompanionEnum<EmptyEnum, typeof EmptyEnum> {
+    public static readonly CompanionEnum: CompanionEnumSingleton<EmptyEnum, typeof EmptyEnum> = class CompanionEnum_EmptyEnum
+        extends CompanionEnum<EmptyEnum, typeof EmptyEnum> {
 
         static #instance?: CompanionEnum_EmptyEnum
 
@@ -84,8 +84,8 @@ export class Enum1
     public static readonly 0: typeof Enum1.A
     public static readonly 1: typeof Enum1.B
 
-    public static readonly CompanionEnum: BasicCompanionEnumSingleton<Enum1, typeof Enum1> = class CompanionEnum_Enum1
-        extends BasicCompanionEnum<Enum1, typeof Enum1> {
+    public static readonly CompanionEnum: CompanionEnumSingleton<Enum1, typeof Enum1> = class CompanionEnum_Enum1
+        extends CompanionEnum<Enum1, typeof Enum1> {
 
         static #instance?: CompanionEnum_Enum1
 
@@ -113,8 +113,8 @@ export class Enum2
     public static readonly 0: typeof Enum2.A
     public static readonly 1: typeof Enum2.B
 
-    public static readonly CompanionEnum: BasicCompanionEnumSingleton<Enum2, typeof Enum2> = class CompanionEnum_Enum2
-        extends BasicCompanionEnum<Enum2, typeof Enum2> {
+    public static readonly CompanionEnum: CompanionEnumSingleton<Enum2, typeof Enum2> = class CompanionEnum_Enum2
+        extends CompanionEnum<Enum2, typeof Enum2> {
 
         static #instance?: CompanionEnum_Enum2
 
@@ -137,8 +137,8 @@ export class Enum2
 export class EmptyEnumWithVariables
     extends Enum<never, never> {
 
-    public static readonly CompanionEnum: BasicCompanionEnumSingleton<EmptyEnumWithVariables, typeof EmptyEnumWithVariables> = class CompanionEnum_EnumWithVariables
-        extends BasicCompanionEnum<EmptyEnumWithVariables, typeof EmptyEnumWithVariables> {
+    public static readonly CompanionEnum: CompanionEnumSingleton<EmptyEnumWithVariables, typeof EmptyEnumWithVariables> = class CompanionEnum_EnumWithVariables
+        extends CompanionEnum<EmptyEnumWithVariables, typeof EmptyEnumWithVariables> {
 
         static #instance?: CompanionEnum_EnumWithVariables
 
@@ -185,8 +185,8 @@ export class EnumWithDifferentComportment<const ORDINAL extends Ordinals2 = Ordi
     public static readonly 1: typeof EnumWithDifferentComportment.B
     public static readonly 2: typeof EnumWithDifferentComportment.C
 
-    public static readonly CompanionEnum: BasicCompanionEnumSingleton<EnumWithDifferentComportment, typeof EnumWithDifferentComportment> = class CompanionEnum_EnumWithDifferentComportment
-        extends BasicCompanionEnum<EnumWithDifferentComportment, typeof EnumWithDifferentComportment> {
+    public static readonly CompanionEnum: CompanionEnumSingleton<EnumWithDifferentComportment, typeof EnumWithDifferentComportment> = class CompanionEnum_EnumWithDifferentComportment
+        extends CompanionEnum<EnumWithDifferentComportment, typeof EnumWithDifferentComportment> {
 
         static #instance?: CompanionEnum_EnumWithDifferentComportment
 
@@ -254,8 +254,8 @@ export class EnumWithInheritance
     public static readonly 4: typeof EnumWithInheritance.E
     public static readonly 5: typeof EnumWithInheritance.F
 
-    public static readonly CompanionEnum: BasicCompanionEnumSingleton<EnumWithInheritance, typeof EnumWithInheritance> = class CompanionEnum_EnumWithInheritance
-        extends BasicCompanionEnum<EnumWithInheritance, typeof EnumWithInheritance> {
+    public static readonly CompanionEnum: CompanionEnumSingleton<EnumWithInheritance, typeof EnumWithInheritance> = class CompanionEnum_EnumWithInheritance
+        extends CompanionEnum<EnumWithInheritance, typeof EnumWithInheritance> {
 
         static #instance?: CompanionEnum_EnumWithInheritance
 
@@ -291,8 +291,8 @@ export class EnumWithExcludedFields
     public static readonly 0: typeof EnumWithExcludedFields.A
     public static readonly 1: typeof EnumWithExcludedFields.B
 
-    public static readonly CompanionEnum: BasicCompanionEnumSingleton<EnumWithExcludedFields, typeof EnumWithExcludedFields> = class CompanionEnum_EnumWithExcludedFields
-        extends BasicCompanionEnum<EnumWithExcludedFields, typeof EnumWithExcludedFields> {
+    public static readonly CompanionEnum: CompanionEnumSingleton<EnumWithExcludedFields, typeof EnumWithExcludedFields> = class CompanionEnum_EnumWithExcludedFields
+        extends CompanionEnum<EnumWithExcludedFields, typeof EnumWithExcludedFields> {
 
         static #instance?: CompanionEnum_EnumWithExcludedFields
         protected override readonly _EXCLUDED_NAMES = ['C',] as const
@@ -324,8 +324,8 @@ export class EnumWithDefault
     public static readonly 0: typeof EnumWithDefault.A
     public static readonly 1: typeof EnumWithDefault.B
 
-    public static readonly CompanionEnum: BasicCompanionEnumSingleton<EnumWithDefault, typeof EnumWithDefault> = class CompanionEnum_EnumWithDefault
-        extends BasicCompanionEnum<EnumWithDefault, typeof EnumWithDefault> {
+    public static readonly CompanionEnum: CompanionEnumSingleton<EnumWithDefault, typeof EnumWithDefault> = class CompanionEnum_EnumWithDefault
+        extends CompanionEnum<EnumWithDefault, typeof EnumWithDefault> {
 
         static #instance?: CompanionEnum_EnumWithDefault
         protected override readonly _DEFAULT = EnumWithDefault.A
@@ -354,8 +354,8 @@ export class EnumWithLateDefault
     public static readonly 0: typeof EnumWithLateDefault.A
     public static readonly 1: typeof EnumWithLateDefault.B
 
-    public static readonly CompanionEnum: BasicCompanionEnumSingleton<EnumWithLateDefault, typeof EnumWithLateDefault> = class CompanionEnum_EnumWithLateDefault
-        extends BasicCompanionEnum<EnumWithLateDefault, typeof EnumWithLateDefault> {
+    public static readonly CompanionEnum: CompanionEnumSingleton<EnumWithLateDefault, typeof EnumWithLateDefault> = class CompanionEnum_EnumWithLateDefault
+        extends CompanionEnum<EnumWithLateDefault, typeof EnumWithLateDefault> {
 
         static #instance?: CompanionEnum_EnumWithLateDefault
 
@@ -384,8 +384,8 @@ export class ParentEnum
     public static readonly 0: typeof ParentEnum.A
     public static readonly 1: typeof ParentEnum.B
 
-    public static readonly CompanionEnum: BasicCompanionEnumSingleton<ParentEnum, typeof ParentEnum> = class CompanionEnum_ParentEnum
-        extends BasicCompanionEnum<ParentEnum, typeof ParentEnum> {
+    public static readonly CompanionEnum: CompanionEnumSingleton<ParentEnum, typeof ParentEnum> = class CompanionEnum_ParentEnum
+        extends CompanionEnum<ParentEnum, typeof ParentEnum> {
 
         static #instance?: CompanionEnum_ParentEnum
 
