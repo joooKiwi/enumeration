@@ -560,18 +560,19 @@ But it can become so much more by the contributions.
 
 ## Version history
 
-| JS / TS version | Date                | Quick note                                                                                                                              |
-|-----------------|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| 2.4.0           | July 3rd, 2023      | The dependency of `collection` is now a standalone package                                                                              |
-| 2.3.0           | April 18th, 2023    | New and renaming of some methods in `collection` (see [the release patch](https://github.com/joooKiwi/enumeration/releases/tag/v1.3.7)) |
-| 2.2.3           | April 13th, 2023    | Fix on the `collection` when receiving receiving a `Set` or `Array` of 1                                                                |
-| 2.2.2           | April 12th, 2023    | Fix on the reverse order of the enum fields initialization                                                                              |
-| 2.2.1           | April 12th, 2023    | Fix of `this[0]` not set when receiving an array of 1                                                                                   |
-| 2.2.0           | April 12th, 2023    | New `join` implementation in `collection`,<br/>New `toWeakSet`, `reverse` & `hasNull` in `collection`                                   |
-| 2.1.1           | April 8th, 2023     | Fix on the [package.json](https://github.com/joooKiwi/enumeration/blob/main/javascript/package.json) file                               |
-| 2.1.0           | April 6th, 2023     | Change from absolute imports to relative one _(for better dependant utilisation)_                                                       |
-| 2.0.0           | February 2nd, 2023  | Change from `static` methods implementation to a `companion enum` implementation                                                        |
-| 1.2.0           | Novembre 20th, 2022 | New `filterByIndex` & `find` in `collection`                                                                                            |
-| 1.1.0           | November 19th, 2022 | New `has`, `join`, `filter` in the `collection`                                                                                         |
-| 1.0.6           | November 12nd, 2022 | Addition of some forgotten types to be exported                                                                                         |
-| 1.0.5           | November 11st, 2022 | The first version _(after few tentative of publishing it)_                                                                              |
+| JS / TS version | Date                | Quick note                                                                                                                             |
+|-----------------|---------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| 2.4.1           | July 4th, 2023      | The files were not exported in the [index file](https://github.com/joooKiwi/enumeration/blob/main/javascript/src/index.ts)             |
+| 2.4.0           | July 3rd, 2023      | The dependency of `collection` is now a standalone package                                                                             |
+| 2.3.0           | April 18th, 2023    | New and renaming of some methods in `collection` (see [the release note](https://github.com/joooKiwi/enumeration/releases/tag/v1.3.7)) |
+| 2.2.3           | April 13th, 2023    | Fix on the `collection` when receiving receiving a `Set` or `Array` of 1                                                               |
+| 2.2.2           | April 12th, 2023    | Fix on the reverse order of the enum fields initialization                                                                             |
+| 2.2.1           | April 12th, 2023    | Fix of `this[0]` not set when receiving an array of 1                                                                                  |
+| 2.2.0           | April 12th, 2023    | New `join` implementation in `collection`,<br/>New `toWeakSet`, `reverse` & `hasNull` in `collection`                                  |
+| 2.1.1           | April 8th, 2023     | Fix on the [package.json](https://github.com/joooKiwi/enumeration/blob/main/javascript/package.json) file                              |
+| 2.1.0           | April 6th, 2023     | Change from absolute imports to relative one _(for better dependant utilisation)_                                                      |
+| 2.0.0           | February 2nd, 2023  | Change from `static` methods implementation to a `companion enum` implementation                                                       |
+| 1.2.0           | Novembre 20th, 2022 | New `filterByIndex` & `find` in `collection`                                                                                           |
+| 1.1.0           | November 19th, 2022 | New `has`, `join`, `filter` in the `collection`                                                                                        |
+| 1.0.6           | November 12nd, 2022 | Addition of some forgotten types to be exported                                                                                        |
+| 1.0.5           | November 11st, 2022 | The first version _(after few tentative of publishing it)_                                                                             |
