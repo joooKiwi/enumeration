@@ -17,13 +17,13 @@ The usage of `COMPANION_ENUM` in the extension can be changed to
 `CompanionEnumWithGrandParent` or `CompanionEnumWithGreatGrandParent`.
 And in `C#`, it uses the type system to its advantage (like for the [ValueTuple](https://learn.microsoft.com/dotnet/api/system.valuetuple)).
 
-| Language                  |                               Published                                | class<br/>extension | native<br/>enum<br/>functionality | trait<br/>usage | utility                                       |
-|:--------------------------|:----------------------------------------------------------------------:|---------------------|:----------------------------------|-----------------|-----------------------------------------------|
-| Javascript<br/>Typescript | [Published to npm](https://www.npmjs.com/package/@joookiwi/enumerable) | yes                 |                                   |                 | `EnumHelper`, `EnumConstant`                  |
-| Java                      |                         Maven _(in progress)_                          | yes                 | yes                               |                 | `EnumHelper`, `EnumConstant`, `EnumMethods`   |
-| Kotlin                    |                         Maven _(in progress)_                          | yes                 | yes                               |                 | `EnumHelper`, `EnumConstant`, `EnumExtension` |
-| PHP                       |                                Composer                                | not necessary       | not necessary                     | yes             | `EnumHelper`, `EnumConstant`  `EnumMethods`   |
-| C#                        |                                 Nugget                                 | yes                 | yes                               |                 | `EnumHelper`, `EnumConstant`, `EnumExtension` |
+| Language                  |                               Published                                | class<br/>extension | native<br/>enum<br/>functionality | trait<br/>usage | annotation / attribute | utility                                       |
+|:--------------------------|:----------------------------------------------------------------------:|---------------------|:----------------------------------|-----------------|------------------------|-----------------------------------------------|
+| Javascript<br/>Typescript | [Published to npm](https://www.npmjs.com/package/@joookiwi/enumerable) | yes                 |                                   |                 |                        | `EnumHelper`, `EnumConstant`                  |
+| Java                      |                         Maven _(in progress)_                          | yes                 | yes                               |                 | yes                    | `EnumHelper`, `EnumConstant`, `EnumMethods`   |
+| Kotlin                    |                         Maven _(in progress)_                          | yes                 | yes                               |                 | yes                    | `EnumHelper`, `EnumConstant`, `EnumExtension` |
+| PHP                       |                                Composer                                | not necessary       | not necessary                     | yes             | yes                    | `EnumHelper`, `EnumConstant`  `EnumMethods`   |
+| C#                        |                                 Nugget                                 | yes                 | yes                               |                 | yes                    | `EnumHelper`, `EnumConstant`, `EnumExtension` |
 
 _(This may change once the implementation is made)_
 
@@ -463,7 +463,7 @@ use joookiwi\enumerable\EnumWithGrandParent;
 class GrandParentingEnumExample
     extends EnumeWithGrandParent<GrandParentingEnumExample, ParentingEnumExample, EnumExample> {
 
-    private ParentingExample(ParentingEnumExample parent = null, EnumExample grandParent = null) { parent::__construct(parent, grandParent); }
+    private ParentingExample(ParentingEnumExample|null parent = null, EnumExample|null grandParent = null) { parent::__construct(parent, grandParent); }
 
 }
 ```
