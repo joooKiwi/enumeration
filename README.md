@@ -454,7 +454,7 @@ use joookiwi\enumerable\EnumeWithParent;
 class ParentingEnumExample
     extends EnumWithParent<ParentingEnumExample, EnumExample> {
 
-    private function __construct(parent: EnumExample = null) { parent::__construct(parent); }
+    private function __construct(parent: EnumExample|null = null) { parent::__construct(parent); }
 
 }
 ```
