@@ -44,11 +44,11 @@ export class CompanionEnumWithGreatGrandParent<ENUMERABLE extends EnumerableWith
 
     protected constructor(instance: ENUMERABLE_CONSTRUCTOR, parentInstance: PARENT_ENUMERABLE_CONSTRUCTOR, grandParentInstance: GRAND_PARENT_ENUMERABLE_CONSTRUCTOR, greatGrandParentInstance: GREAT_GRAND_PARENT_ENUMERABLE_CONSTRUCTOR,) {
         super(instance, parentInstance, grandParentInstance,)
-        if(!("greatGrandParent" in instance.prototype))
+        if (!("greatGrandParent" in instance.prototype))
             throw new NonExistantKeyException(`No attribute "greatGrandParent" exist in the "${instance.name}" instance. Either use a getter method or add it in the class.`, "greatGrandParent", instance.prototype,)
-        if(!("grandParent" in parentInstance.prototype))
+        if (!("grandParent" in parentInstance.prototype))
             throw new NonExistantKeyException(`No attribute "grandParent" exist in the "${parentInstance.name}" instance. Either use a getter method or add it in the class.`, "grandParent", parentInstance.prototype,)
-        if(!("parent" in grandParentInstance.prototype))
+        if (!("parent" in grandParentInstance.prototype))
             throw new NonExistantKeyException(`No attribute "parent" exist in the "${grandParentInstance.name}" instance. Either use a getter method or add it in the class.`, "parent", grandParentInstance.prototype,)
         if (greatGrandParentInstance == null)
             throw new NullInstanceException()

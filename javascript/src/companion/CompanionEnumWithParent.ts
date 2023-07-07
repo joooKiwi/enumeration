@@ -36,7 +36,7 @@ export class CompanionEnumWithParent<const ENUMERABLE extends EnumerableWithPare
 
     protected constructor(instance: ENUMERABLE_CONSTRUCTOR, parentInstance: PARENT_ENUMERABLE_CONSTRUCTOR,) {
         super(instance,)
-        if(!("parent" in instance.prototype))
+        if (!("parent" in instance.prototype))
             throw new NonExistantKeyException(`No attribute "parent" exist in the "${instance.name}" instance. Either use a getter method or add it in the class.`, "parent", instance.prototype,)
         if (parentInstance == null)
             throw new NullInstanceException()
