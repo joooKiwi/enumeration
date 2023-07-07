@@ -176,9 +176,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
             nameMap = EnumConstants.NAME_MAP,
             excludedNames = this._EXCLUDED_NAMES,
             everyFields = entries(getOwnPropertyDescriptors(instance,),),
-            everyOrdinals = [] as number[],
-            everyNames = [] as string[],
-            everyEnumerable = [] as Enumerable[]
+            everyOrdinals = [] as OrdinalOf<ENUMERABLE>[],
+            everyNames = [] as NameOf<ENUMERABLE>[],
+            everyEnumerable = [] as ENUMERABLE[]
 
         const everyFieldSize = everyFields.length
         let currentOrdinal = 0
@@ -205,13 +205,13 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
 
             everyOrdinals.push(currentOrdinal++,)
             everyNames.push(name,)
-            everyEnumerable.push(value as Enumerable,)
+            everyEnumerable.push(value as ENUMERABLE,)
         }
 
 
-        EnumConstants.ORDINALS_MAP.set(this, this.#ordinals = new GenericCollectionHolder(freeze(everyOrdinals,),) as unknown as CollectionHolder<OrdinalOf<ENUMERABLE>>,)
-        EnumConstants.NAMES_MAP.set(this, this.#names = new GenericCollectionHolder(freeze(everyNames,),) as unknown as CollectionHolder<NameOf<ENUMERABLE>>,)
-        EnumConstants.VALUES_MAP.set(this, this.#values = new GenericCollectionHolder(freeze(everyEnumerable,),) as unknown as CollectionHolder<ENUMERABLE>,)
+        EnumConstants.ORDINALS_MAP.set(this, this.#ordinals = new GenericCollectionHolder(freeze(everyOrdinals,),) as CollectionHolder<OrdinalOf<ENUMERABLE>>,)
+        EnumConstants.NAMES_MAP.set(this, this.#names = new GenericCollectionHolder(freeze(everyNames,),) as CollectionHolder<NameOf<ENUMERABLE>>,)
+        EnumConstants.VALUES_MAP.set(this, this.#values = new GenericCollectionHolder(freeze(everyEnumerable,),) as CollectionHolder<ENUMERABLE>,)
     }
 
 
