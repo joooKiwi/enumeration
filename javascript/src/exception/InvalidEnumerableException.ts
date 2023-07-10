@@ -36,7 +36,7 @@ export class InvalidEnumerableException<const ENUMERABLE extends Enumerable,
         return this.#value
     }
 
-    /** The expected {@link EnumerableConstructor enumerable constructors} that was assumed to be one of them */
+    /** The expected {@link EnumerableConstructor enumerable constructors} that were assumed to be one of them */
     public get expectedEnumerableConstructors(): EXPECTED_ENUMERABLE_CONSTRUCTORS {
         return this.#expectedEnumerableConstructors
     }

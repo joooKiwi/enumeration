@@ -27,7 +27,10 @@ export class ForbiddenNumericException<const T extends PossibleStringOrNumeric, 
         this.#value = value
     }
 
-    /** The forbidden numeric value (as a {@link String}, {@link Number} or {@link BigInt}) that was {@link EnumConstants.EDGE_CASE_NUMERIC_NAME ±∞ or NaN} */
+    /**
+     * The forbidden numeric value (as a {@link String}, {@link Number} or {@link BigInt})
+     * that was {@link EnumConstants.EDGE_CASE_NUMERIC_NAME ±∞ or NaN}
+     */
     public get value(): T {
         return this.#value
     }
