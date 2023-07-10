@@ -14,7 +14,7 @@
 
     "test": "jest",
     "test-general-enum":   "jest --testNamePattern=GeneralEnumTest",
-    "test-enum-helper":    "jest --testNamePattern=EnumHelperTest",
+    "test-helper-methods": "jest --testNamePattern=HelperMethodsTest",
     "test-companion-enum": "jest --testNamePattern=CompanionEnumTest",
 
     "test-pack":    "npm pack --dry-run",
@@ -70,6 +70,11 @@
       "import":  "./dist/ecmascript module/exception/*.js",
       "require": "./dist/common javascript/exception/*.js"
     },
+    "./helper/*": {
+      "types":   "./dist/types/helper/*.d.ts",
+      "import":  "./dist/ecmascript module/helper/*.js",
+      "require": "./dist/common javascript/helper/*.js"
+    },
     "./enumerable/companion/*": {
       "types":   "./dist/types/companion/*.d.ts",
       "import":  "./dist/ecmascript module/companion/*.js",
@@ -79,6 +84,11 @@
       "types":   "./dist/types/exception/*.d.ts",
       "import":  "./dist/ecmascript module/exception/*.js",
       "require": "./dist/common javascript/exception/*.js"
+    },
+    "./enumerable/helper/*": {
+      "types":   "./dist/types/helper/*.d.ts",
+      "import":  "./dist/ecmascript module/helper/*.js",
+      "require": "./dist/common javascript/helper/*.js"
     },
 
     "./enumerable": {
@@ -96,6 +106,11 @@
       "import":  "./dist/ecmascript module/exception/index.js",
       "require": "./dist/common javascript/exception/index.js"
     },
+    "./helper": {
+      "types":   "./dist/types/helper/index.d.ts",
+      "import":  "./dist/ecmascript module/helper/index.js",
+      "require": "./dist/common javascript/helper/index.js"
+    },
     "./enumerable/companion": {
       "types":   "./dist/types/companion/index.d.ts",
       "import":  "./dist/ecmascript module/companion/index.js",
@@ -105,6 +120,11 @@
       "types":   "./dist/types/exception/index.d.ts",
       "import":  "./dist/ecmascript module/exception/index.js",
       "require": "./dist/common javascript/exception/index.js"
+    },
+    "./enumerable/helper": {
+      "types":   "./dist/types/helper/index.d.ts",
+      "import":  "./dist/ecmascript module/helper/index.js",
+      "require": "./dist/common javascript/helper/index.js"
     }
   },
 

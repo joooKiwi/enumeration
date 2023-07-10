@@ -12,10 +12,11 @@ import type {Nullable, PossiblePrimitiveHint, PossibleString} from "./general ty
 import type {CompanionEnumDeclaration}                        from "./companion/CompanionEnum.declaration"
 
 import {EnumConstants}          from "./EnumConstants"
-import {EnumHelper}             from "./EnumHelper"
 import {NullReferenceException} from "./exception/NullReferenceException"
 import {ClassCastException}     from "./exception/generic/ClassCastException"
 import {NullPointerException}   from "./exception/generic/NullPointerException"
+import {getCompanion}           from "./helper/getCompanion"
+import {getLastPrototype}       from "./helper/getLastPrototype"
 
 export abstract class Enum<const ORDINAL extends number, const NAME extends string, >
     implements Enumerable<ORDINAL, NAME> {
@@ -36,7 +37,7 @@ export abstract class Enum<const ORDINAL extends number, const NAME extends stri
      * Note that the use of {@link Enum.#Companion companion} is present so it <b>reflectively</b> set the instance received to <b>this</b>.
      */
     protected constructor() {
-        Reflect.set(this.#prototypeConstructor = EnumHelper.getLastPrototype(this,), this.#ordinal = this.#lastOrdinalPlus1, this,)
+        Reflect.set(this.#prototypeConstructor = getLastPrototype(this,), this.#ordinal = this.#lastOrdinalPlus1, this,)
     }
 
     //#endregion -------------------- Constructor --------------------
@@ -51,7 +52,7 @@ export abstract class Enum<const ORDINAL extends number, const NAME extends stri
     }
 
     get #__companion() {
-        return this.#companion ??= EnumHelper.getCompanion(this.#prototypeConstructor)
+        return this.#companion ??= getCompanion(this.#prototypeConstructor,)
     }
 
     public [Symbol.toPrimitive]<const HINT extends string, >(hint: Nullable<HINT>,): EnumerableToPrimitive<HINT, this>

@@ -16,7 +16,6 @@ import type {CompanionEnumName}                                                 
 import type {Nullable, NullOr, NullOrUndefined, PossibleBigInt, PossibleNumber, PossibleNumeric, PossibleString}                                                                                                                                                                                                                                                                from "../general type"
 
 import {EnumConstants}                               from "../EnumConstants"
-import {EnumHelper}                                  from "../EnumHelper"
 import {ForbiddenNumericException}                   from "../exception/ForbiddenNumericException"
 import {ForbiddenInheritedEnumerableMemberException} from "../exception/ForbiddenInheritedEnumerableMemberException"
 import {ImpossibleOrdinalException}                  from "../exception/ImpossibleOrdinalException"
@@ -26,6 +25,9 @@ import {NullReferenceException}                      from "../exception/NullRefe
 import {NullEnumerableException}                     from "../exception/NullEnumerableException"
 import {NullInstanceException}                       from "../exception/NullInstanceException"
 import {UnhandledValueException}                     from "../exception/UnhandledValueException"
+import {getLastPrototype}                            from "../helper/getLastPrototype"
+import {isEnum}                                      from "../helper/isEnum"
+import {isEnumByStructure}                           from "../helper/isEnumByStructure"
 
 const {POSITIVE_INFINITY, NEGATIVE_INFINITY, MAX_VALUE, isNaN,} = Number,
     MAX_VALUE_AS_BIGINT = BigInt(MAX_VALUE,),
@@ -256,7 +258,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         if (defaultValue == null)
             return false
 
-        if (!EnumHelper.isEnum(defaultValue) && !EnumHelper.isEnumerableByStructure(defaultValue))
+        if (!isEnum(defaultValue) && !isEnumByStructure(defaultValue))
             throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT) was not an Enum or in the structure of an Enumerable.`, defaultValue,)
         try {
             EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValueByEnumerable(defaultValue as Enumerable,),)
@@ -374,7 +376,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         const value = get(this.instance, nameOrOrdinal,)
         if (value == null)
             throw new NullReferenceException(`The ${valueType} "${this.instance.name}.${nameOrOrdinal}" cannot be a null reference."`, nameOrOrdinal,)
-        if (!EnumHelper.isEnum(value) || !EnumHelper.isEnumerableByStructure(value))
+        if (!isEnum(value) || !isEnumByStructure(value))
             throw new InvalidInstanceException(`The reference "${this.instance.name}.${nameOrOrdinal}" is not instance of Enumerable.`, nameOrOrdinal,)
         return value as Enumerable
     }
@@ -513,7 +515,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
             return this._getValueByNumber(value, value,)
         if (typeof value == "bigint")
             return this._getValueByBigInt(value, value,)
-        if (EnumHelper.isEnum(value) || EnumHelper.isEnumerableByStructure(value,))
+        if (isEnum(value))
+            return this._getValueByEnumerable(value,)
+        if (isEnumByStructure(value,))
             return this._getValueByEnumerable(value,)
         if (value instanceof String)
             return this._getValueByString(value.valueOf(), value,)
@@ -599,7 +603,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         if (value instanceof instance)
             return this._getValueFromValues(value,)
 
-        throw new InvalidEnumerableException(`The enumerable "${EnumHelper.getLastPrototype(value).name}.${value.name}" is not an instance of "${instance.name}".`, value, [instance,],)
+        throw new InvalidEnumerableException(`The enumerable "${getLastPrototype(value).name}.${value.name}" is not an instance of "${instance.name}".`, value, [instance,],)
     }
 
     /**
@@ -655,7 +659,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
             return this._getNameByNumber(value, value,)
         if (typeof value == "bigint")
             return this._getNameByBigInt(value, value,)
-        if (EnumHelper.isEnum(value) || EnumHelper.isEnumerableByStructure(value,))
+        if (isEnum(value))
+            return this._getNameByEnumerable(value,)
+        if (isEnumByStructure(value,))
             return this._getNameByEnumerable(value,)
         if (value instanceof String)
             return this._getNameByString(value.valueOf(), value,)
@@ -778,7 +784,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
             return this._getOrdinalByNumber(value, value,)
         if (typeof value == "bigint")
             return this._getOrdinalByBigInt(value, value,)
-        if (EnumHelper.isEnum(value) || EnumHelper.isEnumerableByStructure(value,))
+        if (isEnum(value))
+            return this._getOrdinalByEnumerable(value,)
+        if (isEnumByStructure(value,))
             return this._getOrdinalByEnumerable(value,)
         if (value instanceof String)
             return this._getOrdinalByString(value.valueOf(), value,)

@@ -6,7 +6,4 @@
     "noUnusedParameters": false,
     "noUnusedLocals": false,
   },
-  "files": [
-    "EnumHelper.tests.ts",
-  ],
 }

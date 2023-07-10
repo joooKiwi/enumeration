@@ -10,15 +10,17 @@ import {BasicEnumByEnum, BasicEnumByEnumerable, BasicEnumByGrandParentEnum, Basi
 import {BasicCompanionEnumByBasicCompanionEnum, BasicCompanionEnumByBasicCompanionEnumDeclaration, BasicCompanionEnumByCompanionEnumWithGrandParent, BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration, BasicCompanionEnumByCompanionEnumWithGreatGrandParent, BasicCompanionEnumByCompanionEnumWithGreatGrandParentDeclaration, BasicCompanionEnumByCompanionEnumWithParent, BasicCompanionEnumByCompanionEnumWithParentDeclaration} from "../BasicCompanionEnums"
 import {EmptyEnum}                                                                                                                                                                                                                                                                                                                                                                                                                              from "../TemplateEnums"
 
-import {EnumHelper}               from "../../src/EnumHelper"
-import {InvalidInstanceException} from "../../src/exception/InvalidInstanceException"
-import {NonExistantKeyException}  from "../../src/exception/NonExistantKeyException"
-import {NullInstanceException}    from "../../src/exception/NullInstanceException"
-import {NullReferenceException}   from "../../src/exception/NullReferenceException"
+import {InvalidInstanceException}   from "../../src/exception/InvalidInstanceException"
+import {NonExistantKeyException}    from "../../src/exception/NonExistantKeyException"
+import {NullInstanceException}      from "../../src/exception/NullInstanceException"
+import {NullReferenceException}     from "../../src/exception/NullReferenceException"
+import {getCompanion}               from "../../src/helper/getCompanion"
+import {isCompanionEnum}            from "../../src/helper/isCompanionEnum"
+import {isCompanionEnumByStructure} from "../../src/helper/isCompanionEnumByStructure"
+import {isEnum}                     from "../../src/helper/isEnum"
+import {isEnumByStructure}          from "../../src/helper/isEnumByStructure"
 
-const {isEnum, isEnumerableByStructure, isBasicCompanionEnum, isCompanionEnumByStructure, getCompanion,} = EnumHelper
-
-describe("EnumHelperTest", () => {
+describe("HelperMethodsTest", () => {
 
     describe("getCompanion", () => {
         describe("with invalid companion reference", () => {
@@ -57,30 +59,30 @@ describe("EnumHelperTest", () => {
         test("Enum with EnumerableByGreatGrandParent", () => expect(isEnum(new BasicEnumByGreatGrandParentEnum(),),).toBeTrue())
         test("EnumerableWithGreatGrandParent structure", () => expect(isEnum(new BasicEnumByGreatGrandParentEnumerable(),),).toBeFalse())
     },)
-    describe("isEnumerableByStructure", () => {
-        test.each(nullValues,)("%s", it => expect(isEnumerableByStructure(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,}) => expect(isEnumerableByStructure(it),).toBeFalse(),)
-        test("Enum inheritance", () => expect(isEnumerableByStructure(new BasicEnumByEnum(),),).toBeTrue())
-        test("Enumerable structure", () => expect(isEnumerableByStructure(new BasicEnumByEnumerable(),),).toBeTrue())
-        test("Enum with EnumerableByParent", () => expect(isEnumerableByStructure(new BasicEnumByParentEnum(),),).toBeTrue())
-        test("EnumerableWithParent structure", () => expect(isEnumerableByStructure(new BasicEnumByParentEnumerable(),),).toBeTrue())
-        test("Enum with EnumerableByGrandParent", () => expect(isEnumerableByStructure(new BasicEnumByGrandParentEnum(),),).toBeTrue())
-        test("EnumerableWithGrandParent structure", () => expect(isEnumerableByStructure(new BasicEnumByGrandParentEnumerable(),),).toBeTrue())
-        test("Enum with EnumerableByGreatGrandParent", () => expect(isEnumerableByStructure(new BasicEnumByGreatGrandParentEnum(),),).toBeTrue())
-        test("EnumerableWithGreatGrandParent structure", () => expect(isEnumerableByStructure(new BasicEnumByGreatGrandParentEnumerable(),),).toBeTrue())
+    describe("isEnumByStructure", () => {
+        test.each(nullValues,)("%s", it => expect(isEnumByStructure(it,),).toBeFalse())
+        test.each(invalidInstances,)("%s", ({value: it,}) => expect(isEnumByStructure(it),).toBeFalse(),)
+        test("Enum inheritance", () => expect(isEnumByStructure(new BasicEnumByEnum(),),).toBeTrue())
+        test("Enumerable structure", () => expect(isEnumByStructure(new BasicEnumByEnumerable(),),).toBeTrue())
+        test("Enum with EnumerableByParent", () => expect(isEnumByStructure(new BasicEnumByParentEnum(),),).toBeTrue())
+        test("EnumerableWithParent structure", () => expect(isEnumByStructure(new BasicEnumByParentEnumerable(),),).toBeTrue())
+        test("Enum with EnumerableByGrandParent", () => expect(isEnumByStructure(new BasicEnumByGrandParentEnum(),),).toBeTrue())
+        test("EnumerableWithGrandParent structure", () => expect(isEnumByStructure(new BasicEnumByGrandParentEnumerable(),),).toBeTrue())
+        test("Enum with EnumerableByGreatGrandParent", () => expect(isEnumByStructure(new BasicEnumByGreatGrandParentEnum(),),).toBeTrue())
+        test("EnumerableWithGreatGrandParent structure", () => expect(isEnumByStructure(new BasicEnumByGreatGrandParentEnumerable(),),).toBeTrue())
     },)
-    describe("isBasicCompanionEnum", () => {
-        test.each(nullValues,)("%s", it => expect(isBasicCompanionEnum(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,}) => expect(isBasicCompanionEnum(it),).toBeFalse(),)
+    describe("isCompanionEnum", () => {
+        test.each(nullValues,)("%s", it => expect(isCompanionEnum(it,),).toBeFalse())
+        test.each(invalidInstances,)("%s", ({value: it,}) => expect(isCompanionEnum(it),).toBeFalse(),)
 
-        test("BasicCompanionEnum inheritance", () => expect(isBasicCompanionEnum(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeTrue(),)
-        test("BasicCompanionEnumDeclaration inheritance", () => expect(isBasicCompanionEnum(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeFalse(),)
-        test("CompanionEnumWithParent inheritance", () => expect(isBasicCompanionEnum(new BasicCompanionEnumByCompanionEnumWithParent(),),).toBeTrue(),)
-        test("CompanionEnumWithParentDeclaration inheritance", () => expect(isBasicCompanionEnum(new BasicCompanionEnumByCompanionEnumWithParentDeclaration(),),).toBeFalse(),)
-        test("CompanionEnumWithGrandParent inheritance", () => expect(isBasicCompanionEnum(new BasicCompanionEnumByCompanionEnumWithGrandParent(),),).toBeTrue(),)
-        test("CompanionEnumWithGrandParentDeclaration inheritance", () => expect(isBasicCompanionEnum(new BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration(),),).toBeFalse(),)
-        test("CompanionEnumWithGreatGrandParent inheritance", () => expect(isBasicCompanionEnum(new BasicCompanionEnumByCompanionEnumWithGreatGrandParent(),),).toBeTrue(),)
-        test("CompanionEnumWithGreatGrandParentDeclaration inheritance", () => expect(isBasicCompanionEnum(new BasicCompanionEnumByCompanionEnumWithGreatGrandParentDeclaration(),),).toBeFalse(),)
+        test("BasicCompanionEnum inheritance", () => expect(isCompanionEnum(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeTrue(),)
+        test("BasicCompanionEnumDeclaration inheritance", () => expect(isCompanionEnum(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithParent inheritance", () => expect(isCompanionEnum(new BasicCompanionEnumByCompanionEnumWithParent(),),).toBeTrue(),)
+        test("CompanionEnumWithParentDeclaration inheritance", () => expect(isCompanionEnum(new BasicCompanionEnumByCompanionEnumWithParentDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithGrandParent inheritance", () => expect(isCompanionEnum(new BasicCompanionEnumByCompanionEnumWithGrandParent(),),).toBeTrue(),)
+        test("CompanionEnumWithGrandParentDeclaration inheritance", () => expect(isCompanionEnum(new BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithGreatGrandParent inheritance", () => expect(isCompanionEnum(new BasicCompanionEnumByCompanionEnumWithGreatGrandParent(),),).toBeTrue(),)
+        test("CompanionEnumWithGreatGrandParentDeclaration inheritance", () => expect(isCompanionEnum(new BasicCompanionEnumByCompanionEnumWithGreatGrandParentDeclaration(),),).toBeFalse(),)
     },)
     describe("isCompanionEnumByStructure", () => {
         test.each(nullValues,)("%s", it => expect(isCompanionEnumByStructure(it,),).toBeFalse())
