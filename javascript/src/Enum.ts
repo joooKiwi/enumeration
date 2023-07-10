@@ -59,10 +59,10 @@ export abstract class Enum<const ORDINAL extends number, const NAME extends stri
     public [Symbol.toPrimitive](hint: Nullable<PossibleString>,): EnumerableToPrimitive<PossiblePrimitiveHint, this>
     public [Symbol.toPrimitive](hint: Nullable<PossibleString>,): | ORDINAL | NAME {
         if (hint == null)
-            throw new NullPointerException(`Invalid null hint: The "${this.#__companion.instance.name}" cannot be converted to a string or number primitive`)
+            throw new NullPointerException(`Invalid null hint: The "${this.#__companion.instance.name}" cannot be converted to a string or number primitive`,)
         if (hint instanceof String)
-            return this[Symbol.toPrimitive](hint.valueOf())
-        if (!EnumConstants.TO_PRIMITIVE_VALUES.test(hint))
+            return this[Symbol.toPrimitive](hint.valueOf(),)
+        if (!EnumConstants.TO_PRIMITIVE_VALUES.test(hint,))
             throw new ClassCastException(`Invalid hint "${hint}": The "${this.#__companion.instance.name}" could only be converted to a string or number primitive`,)
         return hint.toLowerCase() === "number" ? this.ordinal : this.name
     }
@@ -84,7 +84,7 @@ export abstract class Enum<const ORDINAL extends number, const NAME extends stri
     get #lastOrdinalPlus1(): ORDINAL {
         const instance = this.#prototypeConstructor,
             map = EnumConstants.LAST_ORDINAL_MAP
-        const nextValue = (map.get(instance) ?? -1) + 1 as ORDINAL
+        const nextValue = (map.get(instance,) ?? -1) + 1 as ORDINAL
         map.set(instance, nextValue,)
         return nextValue
     }
