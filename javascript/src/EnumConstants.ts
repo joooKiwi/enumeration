@@ -18,6 +18,8 @@ import type {CompanionEnumDeclaration}       from "./companion/CompanionEnum.dec
 /** A simple class containing every field used by an {@link Enumerable} helper, instance or companion */
 export namespace EnumConstants {
 
+    //#region -------------------- Maps --------------------
+
     /**
      * A map of every {@link CompanionEnumDeclaration.default default} stored from a {@link CompanionEnumDeclaration}
      *
@@ -61,6 +63,9 @@ export namespace EnumConstants {
      */
     export const ORDINALS_MAP = new Map<CompanionEnumDeclaration<any, any>, CollectionHolder<number>>()
 
+    //#endregion -------------------- Maps --------------------
+    //#region -------------------- Initialization validation fields --------------------
+
     /** A {@link RegExp regex} to include any numeric value (negative and/or decimal) */
     export const NUMBER_ONLY_REGEX = /^-?\d+(\.\d+)?$/
     /** A {@link RegExp regex} to include any non-decimal value (negative included) */
@@ -84,6 +89,9 @@ export namespace EnumConstants {
     /** Every inherited member of any {@link Enumerable enumerable} instances ({@link Enumerable}, {@link EnumerableWithParent}, {@link EnumerableWithGrandParent}, {@link EnumerableWithGreatGrandParent}) */
     export const INHERITED_ENUMERABLE_MEMBERS = ["name", "ordinal", "parent", "grandParent", "greatGrandParent",] as const satisfies readonly (| keyof Enumerable | keyof EnumerableWithParent | keyof EnumerableWithGrandParent | keyof EnumerableWithGreatGrandParent)[]
 
+    //#endregion -------------------- Initialization validation fields --------------------
+    //#region -------------------- Symbol.toString tags --------------------
+
     /**
      * The simple {@link Symbol.toStringTag} of an {@link Enum}
      *
@@ -97,5 +105,7 @@ export namespace EnumConstants {
      * @uniqueJavascriptVariable
      */
     export const COMPANION_ENUM_TO_STRING_TAG = "CompanionEnum"
+
+    //#endregion -------------------- Symbol.toString tags --------------------
 
 }
