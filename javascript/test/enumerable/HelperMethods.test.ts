@@ -12,25 +12,31 @@ import {EmptyEnum}                                                              
 
 import type {Enumerable} from "../../src/Enumerable"
 
-import {InvalidInstanceException}              from "../../src/exception/InvalidInstanceException"
-import {NonExistantKeyException}               from "../../src/exception/NonExistantKeyException"
-import {NullInstanceException}                 from "../../src/exception/NullInstanceException"
-import {NullReferenceException}                from "../../src/exception/NullReferenceException"
-import {getCompanion}                          from "../../src/helper/getCompanion"
-import {getLastPrototype}                      from "../../src/helper/getLastPrototype"
-import {isCompanionEnum}                       from "../../src/helper/isCompanionEnum"
-import {isCompanionEnumByStructure}            from "../../src/helper/isCompanionEnumByStructure"
-import {isEnum}                                from "../../src/helper/isEnum"
-import {isEnumByStructure}                     from "../../src/helper/isEnumByStructure"
-import {isEnumWithNullableGrandParent}         from "../../src/helper/isEnumWithNullableGrandParent"
-import {isEnumWithNullableGreatGrandParent}    from "../../src/helper/isEnumWithNullableGreatGrandParent"
-import {isEnumWithNullableParent}              from "../../src/helper/isEnumWithNullableParent"
-import {isEnumWithGrandParent}                 from "../../src/helper/isEnumWithGrandParent"
-import {isEnumWithGrandParentByStructure}      from "../../src/helper/isEnumWithGrandParentByStructure"
-import {isEnumWithGreatGrandParent}            from "../../src/helper/isEnumWithGreatGrandParent"
-import {isEnumWithGreatGrandParentByStructure} from "../../src/helper/isEnumWithGreatGrandParentByStructure"
-import {isEnumWithParent}                      from "../../src/helper/isEnumWithParent"
-import {isEnumWithParentByStructure}           from "../../src/helper/isEnumWithParentByStructure"
+import {InvalidInstanceException}                       from "../../src/exception/InvalidInstanceException"
+import {NonExistantKeyException}                        from "../../src/exception/NonExistantKeyException"
+import {NullInstanceException}                          from "../../src/exception/NullInstanceException"
+import {NullReferenceException}                         from "../../src/exception/NullReferenceException"
+import {getCompanion}                                   from "../../src/helper/getCompanion"
+import {getLastPrototype}                               from "../../src/helper/getLastPrototype"
+import {isCompanionEnum}                                from "../../src/helper/isCompanionEnum"
+import {isCompanionEnumByStructure}                     from "../../src/helper/isCompanionEnumByStructure"
+import {isCompanionEnumWithParent}                      from "../../src/helper/isCompanionEnumWithParent"
+import {isCompanionEnumWithParentByStructure}           from "../../src/helper/isCompanionEnumWithParentByStructure"
+import {isCompanionEnumWithGrandParent}                 from "../../src/helper/isCompanionEnumWithGrandParent"
+import {isCompanionEnumWithGrandParentByStructure}      from "../../src/helper/isCompanionEnumWithGrandParentByStructure"
+import {isCompanionEnumWithGreatGrandParent}            from "../../src/helper/isCompanionEnumWithGreatGrandParent"
+import {isCompanionEnumWithGreatGrandParentByStructure} from "../../src/helper/isCompanionEnumWithGreatGrandParentByStructure"
+import {isEnum}                                         from "../../src/helper/isEnum"
+import {isEnumByStructure}                              from "../../src/helper/isEnumByStructure"
+import {isEnumWithNullableGrandParent}                  from "../../src/helper/isEnumWithNullableGrandParent"
+import {isEnumWithNullableGreatGrandParent}             from "../../src/helper/isEnumWithNullableGreatGrandParent"
+import {isEnumWithNullableParent}                       from "../../src/helper/isEnumWithNullableParent"
+import {isEnumWithGrandParent}                          from "../../src/helper/isEnumWithGrandParent"
+import {isEnumWithGrandParentByStructure}               from "../../src/helper/isEnumWithGrandParentByStructure"
+import {isEnumWithGreatGrandParent}                     from "../../src/helper/isEnumWithGreatGrandParent"
+import {isEnumWithGreatGrandParentByStructure}          from "../../src/helper/isEnumWithGreatGrandParentByStructure"
+import {isEnumWithParent}                               from "../../src/helper/isEnumWithParent"
+import {isEnumWithParentByStructure}                    from "../../src/helper/isEnumWithParentByStructure"
 
 describe("HelperMethodsTest", () => {
 
@@ -491,6 +497,96 @@ describe("HelperMethodsTest", () => {
         test("CompanionEnumWithParentDeclaration",           () => expect(method(new BasicCompanionEnumByCompanionEnumWithParentDeclaration(),),).toBeTrue(),)
         test("CompanionEnumWithGrandParent",                 () => expect(method(new BasicCompanionEnumByCompanionEnumWithGrandParent(),),).toBeTrue(),)
         test("CompanionEnumWithGrandParentDeclaration",      () => expect(method(new BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration(),),).toBeTrue(),)
+        test("CompanionEnumWithGreatGrandParent",            () => expect(method(new BasicCompanionEnumByCompanionEnumWithGreatGrandParent(),),).toBeTrue(),)
+        test("CompanionEnumWithGreatGrandParentDeclaration", () => expect(method(new BasicCompanionEnumByCompanionEnumWithGreatGrandParentDeclaration(),),).toBeTrue(),)
+    },)
+    describe("isCompanionEnumWithParent", () => {
+        const method = isCompanionEnumWithParent
+
+        test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+
+        test("CompanionEnum",                                () => expect(method(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeFalse(),)
+        test("CompanionEnumDeclaration",                     () => expect(method(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithParent",                      () => expect(method(new BasicCompanionEnumByCompanionEnumWithParent(),),).toBeTrue(),)
+        test("CompanionEnumWithParentDeclaration",           () => expect(method(new BasicCompanionEnumByCompanionEnumWithParentDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithGrandParent",                 () => expect(method(new BasicCompanionEnumByCompanionEnumWithGrandParent(),),).toBeTrue(),)
+        test("CompanionEnumWithGrandParentDeclaration",      () => expect(method(new BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithGreatGrandParent",            () => expect(method(new BasicCompanionEnumByCompanionEnumWithGreatGrandParent(),),).toBeTrue(),)
+        test("CompanionEnumWithGreatGrandParentDeclaration", () => expect(method(new BasicCompanionEnumByCompanionEnumWithGreatGrandParentDeclaration(),),).toBeFalse(),)
+    },)
+    describe("isCompanionEnumWithParentByStructure", () => {
+        const method = isCompanionEnumWithParentByStructure
+
+        test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+
+        test("CompanionEnum",                                () => expect(method(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeFalse(),)
+        test("CompanionEnumDeclaration",                     () => expect(method(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithParent",                      () => expect(method(new BasicCompanionEnumByCompanionEnumWithParent(),),).toBeTrue(),)
+        test("CompanionEnumWithParentDeclaration",           () => expect(method(new BasicCompanionEnumByCompanionEnumWithParentDeclaration(),),).toBeTrue(),)
+        test("CompanionEnumWithGrandParent",                 () => expect(method(new BasicCompanionEnumByCompanionEnumWithGrandParent(),),).toBeTrue(),)
+        test("CompanionEnumWithGrandParentDeclaration",      () => expect(method(new BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration(),),).toBeTrue(),)
+        test("CompanionEnumWithGreatGrandParent",            () => expect(method(new BasicCompanionEnumByCompanionEnumWithGreatGrandParent(),),).toBeTrue(),)
+        test("CompanionEnumWithGreatGrandParentDeclaration", () => expect(method(new BasicCompanionEnumByCompanionEnumWithGreatGrandParentDeclaration(),),).toBeTrue(),)
+    },)
+    describe("isCompanionEnumWithGrandParent", () => {
+        const method = isCompanionEnumWithGrandParent
+
+        test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+
+        test("CompanionEnum",                                () => expect(method(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeFalse(),)
+        test("CompanionEnumDeclaration",                     () => expect(method(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithParent",                      () => expect(method(new BasicCompanionEnumByCompanionEnumWithParent(),),).toBeFalse(),)
+        test("CompanionEnumWithParentDeclaration",           () => expect(method(new BasicCompanionEnumByCompanionEnumWithParentDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithGrandParent",                 () => expect(method(new BasicCompanionEnumByCompanionEnumWithGrandParent(),),).toBeTrue(),)
+        test("CompanionEnumWithGrandParentDeclaration",      () => expect(method(new BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithGreatGrandParent",            () => expect(method(new BasicCompanionEnumByCompanionEnumWithGreatGrandParent(),),).toBeTrue(),)
+        test("CompanionEnumWithGreatGrandParentDeclaration", () => expect(method(new BasicCompanionEnumByCompanionEnumWithGreatGrandParentDeclaration(),),).toBeFalse(),)
+    },)
+    describe("isCompanionEnumWithGrandParentByStructure", () => {
+        const method = isCompanionEnumWithGrandParentByStructure
+
+        test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+
+        test("CompanionEnum",                                () => expect(method(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeFalse(),)
+        test("CompanionEnumDeclaration",                     () => expect(method(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithParent",                      () => expect(method(new BasicCompanionEnumByCompanionEnumWithParent(),),).toBeFalse(),)
+        test("CompanionEnumWithParentDeclaration",           () => expect(method(new BasicCompanionEnumByCompanionEnumWithParentDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithGrandParent",                 () => expect(method(new BasicCompanionEnumByCompanionEnumWithGrandParent(),),).toBeTrue(),)
+        test("CompanionEnumWithGrandParentDeclaration",      () => expect(method(new BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration(),),).toBeTrue(),)
+        test("CompanionEnumWithGreatGrandParent",            () => expect(method(new BasicCompanionEnumByCompanionEnumWithGreatGrandParent(),),).toBeTrue(),)
+        test("CompanionEnumWithGreatGrandParentDeclaration", () => expect(method(new BasicCompanionEnumByCompanionEnumWithGreatGrandParentDeclaration(),),).toBeTrue(),)
+    },)
+    describe("isCompanionEnumWithGreatGrandParent", () => {
+        const method = isCompanionEnumWithGreatGrandParent
+
+        test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+
+        test("CompanionEnum",                                () => expect(method(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeFalse(),)
+        test("CompanionEnumDeclaration",                     () => expect(method(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithParent",                      () => expect(method(new BasicCompanionEnumByCompanionEnumWithParent(),),).toBeFalse(),)
+        test("CompanionEnumWithParentDeclaration",           () => expect(method(new BasicCompanionEnumByCompanionEnumWithParentDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithGrandParent",                 () => expect(method(new BasicCompanionEnumByCompanionEnumWithGrandParent(),),).toBeFalse(),)
+        test("CompanionEnumWithGrandParentDeclaration",      () => expect(method(new BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithGreatGrandParent",            () => expect(method(new BasicCompanionEnumByCompanionEnumWithGreatGrandParent(),),).toBeTrue(),)
+        test("CompanionEnumWithGreatGrandParentDeclaration", () => expect(method(new BasicCompanionEnumByCompanionEnumWithGreatGrandParentDeclaration(),),).toBeFalse(),)
+    },)
+    describe("isCompanionEnumWithGreatGrandParentByStructure", () => {
+        const method = isCompanionEnumWithGreatGrandParentByStructure
+
+        test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+
+        test("CompanionEnum",                                () => expect(method(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeFalse(),)
+        test("CompanionEnumDeclaration",                     () => expect(method(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithParent",                      () => expect(method(new BasicCompanionEnumByCompanionEnumWithParent(),),).toBeFalse(),)
+        test("CompanionEnumWithParentDeclaration",           () => expect(method(new BasicCompanionEnumByCompanionEnumWithParentDeclaration(),),).toBeFalse(),)
+        test("CompanionEnumWithGrandParent",                 () => expect(method(new BasicCompanionEnumByCompanionEnumWithGrandParent(),),).toBeFalse(),)
+        test("CompanionEnumWithGrandParentDeclaration",      () => expect(method(new BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration(),),).toBeFalse(),)
         test("CompanionEnumWithGreatGrandParent",            () => expect(method(new BasicCompanionEnumByCompanionEnumWithGreatGrandParent(),),).toBeTrue(),)
         test("CompanionEnumWithGreatGrandParentDeclaration", () => expect(method(new BasicCompanionEnumByCompanionEnumWithGreatGrandParentDeclaration(),),).toBeTrue(),)
     },)
