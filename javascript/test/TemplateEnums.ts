@@ -6,9 +6,9 @@
  ******************************************************************************/
 
 import type {NullOr}                                                                                                                                      from "../src/general type"
-import type {EnumerableWithGrandParent}                                                                                                                   from "../src/EnumerableWithGrandParent"
-import type {EnumerableWithGreatGrandParent}                                                                                                              from "../src/EnumerableWithGreatGrandParent"
-import type {EnumerableWithParent}                                                                                                                        from "../src/EnumerableWithParent"
+import type {EnumerableWithNullableGrandParent}                                                                                                           from "../src/EnumerableWithNullableGrandParent"
+import type {EnumerableWithNullableGreatGrandParent}                                                                                                      from "../src/EnumerableWithNullableGreatGrandParent"
+import type {EnumerableWithNullableParent}                                                                                                                from "../src/EnumerableWithNullableParent"
 import type {CompanionEnumSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumWithParentSingleton} from "../src/Singleton.types"
 
 import {Enum}                              from "../src/Enum"
@@ -410,7 +410,7 @@ export class ParentEnum
 
 export class Child1Enum
     extends Enum<Ordinals2, Names2>
-    implements EnumerableWithParent<Ordinals2, Names2, ParentEnum> {
+    implements EnumerableWithNullableParent<Ordinals2, Names2, ParentEnum> {
 
     public static readonly A = new Child1Enum(ParentEnum.A,)
     public static readonly B = new Child1Enum(ParentEnum.B,)
@@ -454,7 +454,7 @@ export class Child1Enum
 
 export class Child2Enum
     extends Enum<Ordinals3, Names3>
-    implements EnumerableWithGrandParent<Ordinals3, Names3, Child1Enum, ParentEnum> {
+    implements EnumerableWithNullableGrandParent<Ordinals3, Names3, Child1Enum, ParentEnum> {
 
     public static readonly A = new Child2Enum(Child1Enum.A, ParentEnum.A,)
     public static readonly B = new Child2Enum(Child1Enum.B, ParentEnum.B,)
@@ -507,7 +507,7 @@ export class Child2Enum
 
 export class Child3Enum
     extends Enum<Ordinals4, Names4>
-    implements EnumerableWithGreatGrandParent<Ordinals4, Names4, Child2Enum, Child1Enum, ParentEnum> {
+    implements EnumerableWithNullableGreatGrandParent<Ordinals4, Names4, Child2Enum, Child1Enum, ParentEnum> {
 
     public static readonly A = new Child3Enum(Child2Enum.A, Child1Enum.A, ParentEnum.A,)
     public static readonly B = new Child3Enum(Child2Enum.B, Child1Enum.B, ParentEnum.B,)
@@ -571,7 +571,7 @@ export class Child3Enum
 
 export class AnotherChildEnum
     extends Enum<Ordinals2, Names2>
-    implements EnumerableWithParent<Ordinals2, Names2, ParentEnum> {
+    implements EnumerableWithNullableParent<Ordinals2, Names2, ParentEnum> {
 
     public static readonly A = new AnotherChildEnum(ParentEnum.A,)
     public static readonly B = new AnotherChildEnum(ParentEnum.B,)

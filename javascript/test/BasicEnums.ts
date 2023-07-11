@@ -5,25 +5,25 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import {Enum}                                from "../src/Enum"
-import type {Enumerable}                     from "../src/Enumerable"
-import type {EnumerableWithParent}           from "../src/EnumerableWithParent"
-import type {EnumerableWithGrandParent}      from "../src/EnumerableWithGrandParent"
-import type {EnumerableWithGreatGrandParent} from "../src/EnumerableWithGreatGrandParent"
+import {Enum}                                        from "../src/Enum"
+import type {Enumerable}                             from "../src/Enumerable"
+import type {EnumerableWithNullableParent}           from "../src/EnumerableWithNullableParent"
+import type {EnumerableWithNullableGrandParent}      from "../src/EnumerableWithNullableGrandParent"
+import type {EnumerableWithNullableGreatGrandParent} from "../src/EnumerableWithNullableGreatGrandParent"
 
 export class BasicEnumByEnum extends Enum<any, any> {
     constructor() { super() }
 }
-export class BasicEnumByParentEnum extends Enum<any, any> implements EnumerableWithParent<any, any, any> {
+export class BasicEnumByParentEnum extends Enum<any, any> implements EnumerableWithNullableParent<any, any, any> {
     get parent() { return null }
     constructor() { super() }
 }
-export class BasicEnumByGrandParentEnum extends Enum<any, any> implements EnumerableWithGrandParent<any, any, any, any> {
+export class BasicEnumByGrandParentEnum extends Enum<any, any> implements EnumerableWithNullableGrandParent<any, any, any, any> {
     get grandParent() { return null }
     get parent() { return null }
     constructor() { super() }
 }
-export class BasicEnumByGreatGrandParentEnum extends Enum<any, any> implements EnumerableWithGreatGrandParent<any, any, any, any> {
+export class BasicEnumByGreatGrandParentEnum extends Enum<any, any> implements EnumerableWithNullableGreatGrandParent<any, any, any, any> {
     get greatGrandParent() { return null }
     get grandParent() { return null }
     get parent() { return null }
@@ -41,7 +41,7 @@ export class BasicEnumByEnumerable implements Enumerable<any, any> {
     }
 
 }
-export class BasicEnumByParentEnumerable implements EnumerableWithParent<any, any, any> {
+export class BasicEnumByParentEnumerable implements EnumerableWithNullableParent<any, any, any> {
 
     get name() { return '' }
     get ordinal() { return -1 }
@@ -51,7 +51,7 @@ export class BasicEnumByParentEnumerable implements EnumerableWithParent<any, an
     [Symbol.toPrimitive](): never { throw new Error() }
 
 }
-export class BasicEnumByGrandParentEnumerable implements EnumerableWithGrandParent<any, any, any, any> {
+export class BasicEnumByGrandParentEnumerable implements EnumerableWithNullableGrandParent<any, any, any, any> {
 
     get name() { return '' }
     get ordinal() { return -1 }
@@ -62,7 +62,7 @@ export class BasicEnumByGrandParentEnumerable implements EnumerableWithGrandPare
     [Symbol.toPrimitive](): never { throw new Error() }
 
 }
-export class BasicEnumByGreatGrandParentEnumerable implements EnumerableWithGreatGrandParent<any, any, any, any> {
+export class BasicEnumByGreatGrandParentEnumerable implements EnumerableWithNullableGreatGrandParent<any, any, any, any> {
 
     get name() { return null }
     get ordinal() { return null }
