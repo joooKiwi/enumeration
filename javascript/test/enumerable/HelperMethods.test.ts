@@ -35,23 +35,25 @@ import {isEnumWithParentByStructure}           from "../../src/helper/isEnumWith
 describe("HelperMethodsTest", () => {
 
     describe("getCompanion", () => {
+        /** A simple alias of {@link getCompanion} */ const method = getCompanion
+
         describe("with invalid companion reference", () => {
-            test.each(nullValues,)("%s", it => expect(() => getCompanion(it,),).toThrow(NullInstanceException,),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => getCompanion(it,),).toThrow(InvalidInstanceException),)
+            test.each(nullValues,)("%s", it => expect(() => method(it,),).toThrow(NullInstanceException,),)
+            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => method(it,),).toThrow(InvalidInstanceException),)
         },)
         describe("companion reference", () => {
             // @ts-expect-error
-            test("nothing", () => expect(() => getCompanion(class EmptyInvalidEnum {},),).toThrow(NonExistantKeyException,),)
+            test("nothing", () => expect(() => method(class EmptyInvalidEnum {},),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test.each(nullValues,)("%s", it => expect(() => getCompanion(class InvalidEnumWithNullCompanionEnum { static readonly CompanionEnum = it },),).toThrow(NullReferenceException,),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => getCompanion(class InvalidEnumWithInvalidInstanceCompanionEnum { static readonly CompanionEnum = it },),).toThrow(InvalidInstanceException,),)
+            test.each(nullValues,)("%s", it => expect(() => method(class InvalidEnumWithNullCompanionEnum { static readonly CompanionEnum = it },),).toThrow(NullReferenceException,),)
+            test.each(invalidInstances,)("%s", ({value: it,},) => expect(() => method(class InvalidEnumWithInvalidInstanceCompanionEnum { static readonly CompanionEnum = it },),).toThrow(InvalidInstanceException,),)
 
         },)
         // @ts-expect-error
-        test("companion enum reference with no get", () => expect(() => getCompanion(class InvalidEnumWithNonFunctionCompanionEnum { static readonly CompanionEnum = class InvalidEmptyCompanionEnum {} },),).toThrow(NonExistantKeyException,),)
+        test("companion enum reference with no get", () => expect(() => method(class InvalidEnumWithNonFunctionCompanionEnum { static readonly CompanionEnum = class InvalidEmptyCompanionEnum {} },),).toThrow(NonExistantKeyException,),)
         describe("companion enum reference with invalid value", () => {
-            test.each(nullValues,)("%s", it => expect(() => getCompanion(class InvalidEnumWithGetNullOnCompanionEnum { static readonly CompanionEnum = class InvalidCompanionEnumWithNullGet { static readonly get = it } },),).toThrow(NullReferenceException,),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => getCompanion(class InvalidEnumWithGetInvalidInstanceOnCompanionEnum { static readonly CompanionEnum = class InvalidCompanionEnumWithInvalidInstanceGet { static readonly get = it } },),).toThrow(InvalidInstanceException,),)
+            test.each(nullValues,)("%s", it => expect(() => method(class InvalidEnumWithGetNullOnCompanionEnum { static readonly CompanionEnum = class InvalidCompanionEnumWithNullGet { static readonly get = it } },),).toThrow(NullReferenceException,),)
+            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => method(class InvalidEnumWithGetInvalidInstanceOnCompanionEnum { static readonly CompanionEnum = class InvalidCompanionEnumWithInvalidInstanceGet { static readonly get = it } },),).toThrow(InvalidInstanceException,),)
         },)
         describe("valid test", () => {
             const instance = EmptyEnum.CompanionEnum.get
