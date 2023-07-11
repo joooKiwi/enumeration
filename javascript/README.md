@@ -14,6 +14,7 @@
 * [Common mistakes](#common-mistakes)
   * [Reversing the inheritance](#reversing-the-inheritance)
   * [Forgetting the type declaration on the companion enum](#forgetting-the-type-declaration-on-the-companion-enum)
+  * [Having an `Enumerable` to not have a value from `getLastPrototype`](#having-an-enumerable-to-not-have-a-value-from-getlastprototype)
 * [Contribution](#contribution)
 
 ## Installation
@@ -476,6 +477,144 @@ interface NestedExampleDeclaration<T> {
     readonly field: T
 }
 ```
+
+### Having an `Enumerable` to not have a value from `getLastPrototype`
+
+Maybe this method did throw you something like
+
+`NullReferenceException: No Enumerable-like could be found from the prototype chain "EnumLike → EnumLike → Object".`
+
+This is likely due to having one requirement (`ordinal`, `name`, `Symbol.toPrimitive` or `Symbol.toStringTag`)
+set as a field instead of a method (or getter method).
+
+The values are not expected to change,
+but it is expected to have at least one class with everything the `Enumerable` have.
+
+A simple change can be done from:
+<details>
+<summary>Javascript (by fields)</summary>
+
+```javascript
+class EnumLike {
+    constructor() {
+        this.ordinal = someOrdinalCode
+        this.name = someNameCode
+        this[Symbol.toPrimitive] = () => someToPrimitiveCode
+        this[Symbol.toStringTag] = "Enum"
+    }
+}
+```
+
+to be transformed to
+
+```javascript
+class EnumLike {
+    #ordinal
+    #name
+    constructor() {
+        this.#ordinal = someOrdinalCode
+        this.#name = someNameCode
+    }
+    get ordinal() { return this.#ordinal }
+    get name() { return this.#name }
+    [Symbol.toPrimitive]() { return somePrimitiveCode }
+    get [Symbol.toStringTag]() { return "Enum" }
+}
+```
+</details>
+<details>
+<summary>Javascript (by constructor default value)</summary>
+
+```javascript
+class EnumLike {
+    constructor(ordinal = someOrdinalCode, name = someNameCode){
+        this.ordinal = ordinal
+        this.name = ordinal
+        this[Symbol.toPrimitive] = () => someToPrimitiveCode
+        this[Symbol.toStringTag] = "Enum"
+    }
+}
+```
+
+to be transformed to
+
+```javascript
+class EnumLike {
+    #ordinal
+    #name
+    constructor(ordinal = someOrdinalCode, name = someNameCode) {
+        this.#ordinal = ordinal
+        this.#name = name
+    }
+    get ordinal() { return this.#ordinal }
+    get name() { return this.#name }
+    [Symbol.toPrimitive]() { return somePrimitiveCode }
+    get [Symbol.toStringTag]() { return "Enum" }
+}
+```
+
+</details>
+<details>
+<summary>Typescript (by simple fields)</summary>
+
+```typescript
+class EnumLike {
+    public readonly ordinal = someOrdinalCode
+    public readonly name = someNameCode
+    public readonly [Symbol.toPrimitive] = () => someToPrimitiveCode
+    public readonly [Symbol.toStringTag] = "Enum"
+}
+```
+
+to be transformed to
+
+```typescript
+class EnumLike {
+    readonly #ordinal
+    readonly #name
+    constructor() {
+        this.#ordinal = someOrdinalCode
+        this.#name = someNameCode
+    }
+    public get ordinal() { return this.#ordinal }
+    public get name() { return this.#name }
+    public [Symbol.toPrimitive]() { return somePrimitiveCode }
+    public get [Symbol.toStringTag]() { return "Enum" as const }
+}
+```
+
+</details>
+<details>
+<summary>Typescript (by constructor initialization fields)</summary>
+
+```typescript
+class EnumLike {
+    public readonly [Symbol.toPrimitive] = () => someToPrimitiveCode
+    public readonly [Symbol.toStringTag] = "Enum"
+    constructor(public readonly ordinal = someOrdinalCode, 
+                public readonly name = someNameCode,){}
+}
+```
+
+to be transformed to
+
+```typescript
+class EnumLike {
+    readonly #ordinal
+    readonly #name
+    constructor(ordinal = someOrdinalCode,
+                name = someNameCode,) {
+        this.#ordinal = ordinal
+        this.#name = name
+    }
+    public get ordinal() { return this.#ordinal }
+    public get name() { return this.#name }
+    public [Symbol.toPrimitive]() { return somePrimitiveCode }
+    public get [Symbol.toStringTag]() { return "Enum" as const }
+}
+```
+
+</details>
 
 ## Contribution
 You can contribute to the project by the "GitHub sponsor".
