@@ -9,10 +9,10 @@ import {invalidInstances, nullValues, validValues} from "./Enum.constants"
 
 import type {NullOr}                                       from "../../src/general type"
 import type {Enumerable}                                   from "../../src/Enumerable"
-import type {EnumerableWithGrandParent}                    from "../../src/EnumerableWithGrandParent"
-import type {EnumerableWithGreatGrandParent}               from "../../src/EnumerableWithGreatGrandParent"
-import type {EnumerableWithParent}                         from "../../src/EnumerableWithParent"
 import type {EnumerableConstructor}                        from "../../src/EnumerableConstructor"
+import type {EnumerableWithNullableGrandParent}            from "../../src/EnumerableWithNullableGrandParent"
+import type {EnumerableWithNullableGreatGrandParent}       from "../../src/EnumerableWithNullableGreatGrandParent"
+import type {EnumerableWithNullableParent}                 from "../../src/EnumerableWithNullableParent"
 import type {CompanionEnumDeclaration}                     from "../../src/companion/CompanionEnum.declaration"
 import type {CompanionEnumWithGrandParentDeclaration}      from "../../src/companion/CompanionEnumWithGrandParent.declaration"
 import type {CompanionEnumWithGreatGrandParentDeclaration} from "../../src/companion/CompanionEnumWithGreatGrandParent.declaration"
@@ -42,7 +42,7 @@ class BasicEnum extends Enum<number, string> {
     }
 }
 
-class BasicEnumWithParent extends Enum<number, string> implements EnumerableWithParent<number, string, BasicEnum> {
+class BasicEnumWithParent extends Enum<number, string> implements EnumerableWithNullableParent<number, string, BasicEnum> {
     static readonly A = new BasicEnumWithParent(BasicEnum.A,)
     static readonly B = new BasicEnumWithParent()
     readonly #parent: NullOr<BasicEnum>
@@ -58,7 +58,7 @@ class BasicEnumWithParent extends Enum<number, string> implements EnumerableWith
     }
 }
 
-class BasicEnumWithGrandParent extends Enum<number, string> implements EnumerableWithGrandParent<number, string, BasicEnumWithParent, BasicEnum> {
+class BasicEnumWithGrandParent extends Enum<number, string> implements EnumerableWithNullableGrandParent<number, string, BasicEnumWithParent, BasicEnum> {
     static readonly A = new BasicEnumWithGrandParent(BasicEnumWithParent.A, BasicEnum.A,)
     static readonly B = new BasicEnumWithGrandParent(BasicEnumWithParent.B,)
     static readonly C = new BasicEnumWithGrandParent()
@@ -78,7 +78,7 @@ class BasicEnumWithGrandParent extends Enum<number, string> implements Enumerabl
     }
 }
 
-class BasicEnumWithGreatGrandParent extends Enum<number, string> implements EnumerableWithGreatGrandParent<number, string, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
+class BasicEnumWithGreatGrandParent extends Enum<number, string> implements EnumerableWithNullableGreatGrandParent<number, string, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
     static readonly A = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.A, BasicEnumWithParent.A, BasicEnum.A,)
     static readonly B = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.B, BasicEnumWithParent.B,)
     static readonly C = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.C,)
@@ -113,7 +113,7 @@ class CompanionEnum_TestClassHelper
 }
 
 class CompanionEnumWithParent_TestClassHelper
-    extends CompanionEnumWithParent<EnumerableWithParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
+    extends CompanionEnumWithParent<EnumerableWithNullableParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
         Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
     constructor(instance: EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
                 parentInstance: EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>) {
@@ -122,8 +122,8 @@ class CompanionEnumWithParent_TestClassHelper
 }
 
 class CompanionEnumWithGrandParent_TestClassHelper
-    extends CompanionEnumWithGrandParent<EnumerableWithGrandParent, EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
-        EnumerableWithParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
+    extends CompanionEnumWithGrandParent<EnumerableWithNullableGrandParent, EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
+        EnumerableWithNullableParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
         Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
     constructor(instance: EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
                 parentInstance: EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
@@ -133,9 +133,9 @@ class CompanionEnumWithGrandParent_TestClassHelper
 }
 
 class CompanionEnumWithGreatGrandParent_TestClassHelper
-    extends CompanionEnumWithGreatGrandParent<EnumerableWithGreatGrandParent, EnumerableConstructor<any, CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, any, any>>,
-        EnumerableWithGrandParent, EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
-        EnumerableWithParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
+    extends CompanionEnumWithGreatGrandParent<EnumerableWithNullableGreatGrandParent, EnumerableConstructor<any, CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, any, any>>,
+        EnumerableWithNullableGrandParent, EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
+        EnumerableWithNullableParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
         Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
     constructor(instance: EnumerableConstructor<any, CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, any, any>>,
                 parentInstance: EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
