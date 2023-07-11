@@ -45,7 +45,7 @@ class BasicEnum extends Enum<number, string> {
 class BasicEnumWithParent extends Enum<number, string> implements EnumerableWithNullableParent<number, string, BasicEnum> {
     static readonly A = new BasicEnumWithParent(BasicEnum.A,)
     static readonly B = new BasicEnumWithParent()
-    readonly #parent: NullOr<BasicEnum>
+    readonly #parent
     constructor(parent: NullOr<BasicEnum> = null,) {
         super()
         this.#parent = parent
@@ -62,8 +62,8 @@ class BasicEnumWithGrandParent extends Enum<number, string> implements Enumerabl
     static readonly A = new BasicEnumWithGrandParent(BasicEnumWithParent.A, BasicEnum.A,)
     static readonly B = new BasicEnumWithGrandParent(BasicEnumWithParent.B,)
     static readonly C = new BasicEnumWithGrandParent()
-    readonly #parent: NullOr<BasicEnumWithParent>
-    readonly #grandParent: NullOr<BasicEnum>
+    readonly #parent
+    readonly #grandParent
     constructor(parent: NullOr<BasicEnumWithParent> = null, grandParent: NullOr<BasicEnum> = null,) {
         super()
         this.#parent = parent
@@ -83,9 +83,9 @@ class BasicEnumWithGreatGrandParent extends Enum<number, string> implements Enum
     static readonly B = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.B, BasicEnumWithParent.B,)
     static readonly C = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.C,)
     static readonly D = new BasicEnumWithGreatGrandParent()
-    readonly #parent: NullOr<BasicEnumWithGrandParent>
-    readonly #grandParent: NullOr<BasicEnumWithParent>
-    readonly #greatGrandParent: NullOr<BasicEnum>
+    readonly #parent
+    readonly #grandParent
+    readonly #greatGrandParent
     constructor(parent: NullOr<BasicEnumWithGrandParent> = null, grandParent: NullOr<BasicEnumWithParent> = null, greatGrandParent: NullOr<BasicEnum> = null,) {
         super()
         this.#parent = parent
