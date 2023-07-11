@@ -5,13 +5,13 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import {Enum} from "../Enum"
+import {EnumWithParent} from "../EnumWithParent"
 
 /**
- * Tell if the value received is a {@link Enum}
+ * Tell if the value received is a {@link EnumWithParent}
  *
  * @param value The value to compare
  */
-export function isEnum(value: unknown,): value is Enum<number, string> {
-    return value instanceof Enum
+export function isEnumWithParent(value: unknown,): value is EnumWithParent<number, string> {
+    return value instanceof EnumWithParent
 }

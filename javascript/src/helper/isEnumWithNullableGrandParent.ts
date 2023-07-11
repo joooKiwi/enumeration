@@ -5,13 +5,15 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import {Enum} from "../Enum"
+import type {EnumerableWithNullableParent} from "../EnumerableWithNullableParent"
+
+import {EnumWithNullableGrandParent} from "../EnumWithNullableGrandParent"
 
 /**
- * Tell if the value received is a {@link Enum}
+ * Tell if the value received is a {@link EnumWithNullableGrandParent}
  *
  * @param value The value to compare
  */
-export function isEnum(value: unknown,): value is Enum<number, string> {
-    return value instanceof Enum
+export function isEnumWithNullableGrandParent(value: unknown,): value is EnumWithNullableGrandParent<number, string, EnumerableWithNullableParent> {
+    return value instanceof EnumWithNullableGrandParent
 }

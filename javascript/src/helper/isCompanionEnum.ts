@@ -11,7 +11,7 @@ import type {EnumerableConstructor} from "../EnumerableConstructor"
 import {CompanionEnum} from "../companion/CompanionEnum"
 
 /**
- * Tell if the value received is an instance of {@link CompanionEnum}
+ * Tell if the value received is a {@link CompanionEnum}
  *
  * @param value The value to compare
  */

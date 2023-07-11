@@ -5,22 +5,21 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {CompanionEnumDeclaration} from "../companion/CompanionEnum.declaration"
+import type {EnumerableWithParent} from "../EnumerableWithParent"
 
 import {EnumConstants} from "../EnumConstants"
 
 /**
- * Tell if the value received has the structure of a {@link CompanionEnumDeclaration}
+ * Tell if the value received has the structure of a {@link EnumerableWithParent}
+ * without verifying its typing on the fields directly
  *
  * @param value The value to compare
- *
- * @doesNotValidateTheTypes
  */
-export function isCompanionEnumByStructure(value: unknown,): value is (& object & Record<keyof CompanionEnumDeclaration<never, never>, unknown>) {
+export function isEnumWithParentByStructure(value: unknown,): value is (& object & Record<keyof EnumerableWithParent, unknown>) {
     if (value == null || typeof value != "object")
         return false
 
-    const members = EnumConstants.COMPANION_ENUM_MEMBERS,
+    const members = EnumConstants.ENUMERABLE_WITH_PARENT_MEMBERS,
         size = members.length
     let index = -1
     while (++index < size)

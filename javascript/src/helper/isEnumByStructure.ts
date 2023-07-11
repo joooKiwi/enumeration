@@ -7,6 +7,8 @@
 
 import type {Enumerable} from "../Enumerable"
 
+import {EnumConstants} from "../EnumConstants"
+
 /**
  * Tell if the value received has the structure of a {@link Enumerable}
  * without verifying its typing on the fields directly
@@ -14,7 +16,14 @@ import type {Enumerable} from "../Enumerable"
  * @param value The value to compare
  */
 export function isEnumByStructure(value: unknown,): value is (& object & Record<keyof Enumerable, unknown>) {
-    return value != null && typeof value == "object"
-        && "name" in value && "ordinal" in value
-        && Symbol.toPrimitive in value && Symbol.toStringTag in value
+    if (value == null || typeof value != "object")
+        return false
+
+    const members = EnumConstants.ENUMERABLE_MEMBERS,
+        size = members.length
+    let index = -1
+    while (++index < size)
+        if (!(members[index]! in value))
+            return false
+    return true
 }

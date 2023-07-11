@@ -7,13 +7,16 @@
 
 import type {CollectionHolder} from "@joookiwi/collection"
 
-import type {Enumerable}                     from "./Enumerable"
-import type {EnumerableConstructor}          from "./EnumerableConstructor"
-import type {EnumerableWithGrandParent}      from "./EnumerableWithGrandParent"
-import type {EnumerableWithGreatGrandParent} from "./EnumerableWithGreatGrandParent"
-import type {EnumerableWithParent}           from "./EnumerableWithParent"
-import type {NullOr}                         from "./general type"
-import type {CompanionEnumDeclaration}       from "./companion/CompanionEnum.declaration"
+import type {Enumerable}                                   from "./Enumerable"
+import type {EnumerableConstructor}                        from "./EnumerableConstructor"
+import type {EnumerableWithNullableGrandParent}            from "./EnumerableWithNullableGrandParent"
+import type {EnumerableWithNullableGreatGrandParent}       from "./EnumerableWithNullableGreatGrandParent"
+import type {EnumerableWithNullableParent}                 from "./EnumerableWithNullableParent"
+import type {NullOr}                                       from "./general type"
+import type {CompanionEnumDeclaration}                     from "./companion/CompanionEnum.declaration"
+import type {CompanionEnumWithGrandParentDeclaration}      from "./companion/CompanionEnumWithGrandParent.declaration"
+import type {CompanionEnumWithGreatGrandParentDeclaration} from "./companion/CompanionEnumWithGreatGrandParent.declaration"
+import type {CompanionEnumWithParentDeclaration}           from "./companion/CompanionEnumWithParent.declaration"
 
 /** A simple class containing every field used by an {@link Enumerable} helper, instance or companion */
 export namespace EnumConstants {
@@ -90,6 +93,33 @@ export namespace EnumConstants {
     export const INHERITED_ENUMERABLE_MEMBERS = ["name", "ordinal", "parent", "grandParent", "greatGrandParent",] as const satisfies readonly (| keyof Enumerable | keyof EnumerableWithParent | keyof EnumerableWithGrandParent | keyof EnumerableWithGreatGrandParent)[]
 
     //#endregion -------------------- Initialization validation fields --------------------
+    //#region -------------------- Enumerable members --------------------
+
+    /** Every member of an {@link Enumerable} */
+    export const ENUMERABLE_MEMBERS = ["name", "ordinal", Symbol.toPrimitive, Symbol.toStringTag,] as const satisfies readonly (keyof Enumerable)[]
+    /** Every member of an {@link EnumerableWithNullableParent} or {@link EnumerableWithParent} */
+    export const ENUMERABLE_WITH_PARENT_MEMBERS = ["name", "ordinal", "parent", Symbol.toPrimitive, Symbol.toStringTag,] as const satisfies readonly (keyof EnumerableWithNullableParent)[]
+    /** Every member of an {@link EnumerableWithNullableGrandParent} or {@link EnumerableWithGrandParent} */
+    export const ENUMERABLE_WITH_GRAND_PARENT_MEMBERS = ["name", "ordinal", "parent", "grandParent", Symbol.toPrimitive, Symbol.toStringTag,] as const satisfies readonly (keyof EnumerableWithNullableGrandParent)[]
+    /** Every member of an {@link EnumerableWithNullableGreatGrandParent} or {@link EnumerableWithGreatGrandParent} */
+    export const ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS = ["name", "ordinal", "parent", "grandParent", "greatGrandParent", Symbol.toPrimitive, Symbol.toStringTag,] as const satisfies readonly (keyof EnumerableWithNullableGreatGrandParent)[]
+
+    /** Every member of an {@link CompanionEnumDeclaration} */
+    export const COMPANION_ENUM_MEMBERS = ["instance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumDeclaration<any, any>)[]
+    /** Every member of an {@link CompanionEnumWithParentDeclaration} */
+    export const COMPANION_ENUM_WITH_PARENT_MEMBERS = ["instance", "parentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumWithParentDeclaration<any, any, any, any>)[]
+    /** Every member of an {@link CompanionEnumWithGrandParentDeclaration} */
+    export const COMPANION_ENUM_WITH_GRAND_PARENT_MEMBERS = ["instance", "parentInstance", "grandParentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>)[]
+    /** Every member of an {@link CompanionEnumWithGreatGrandParentDeclaration} */
+    export const COMPANION_ENUM_WITH_GREAT_GRAND_PARENT_MEMBERS = ["instance", "parentInstance", "grandParentInstance", "greatGrandParentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, any, any>)[]
+
+    //#endregion -------------------- Enumerable members --------------------
+    //#region -------------------- Symbols --------------------
+
+    export const ENUM_REFERENCE_BY_ITS_NAME_SYMBOL = Symbol("Enum reference by its name",)
+    export const NULL_ENUM_REFERENCE_SYMBOL = Symbol("Null enum reference",)
+
+    //#endregion -------------------- Symbols --------------------
     //#region -------------------- Symbol.toString tags --------------------
 
     /**

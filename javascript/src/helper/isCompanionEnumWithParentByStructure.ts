@@ -5,22 +5,22 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {CompanionEnumDeclaration} from "../companion/CompanionEnum.declaration"
+import type {CompanionEnumWithParentDeclaration} from "../companion/CompanionEnumWithParent.declaration"
 
 import {EnumConstants} from "../EnumConstants"
 
 /**
- * Tell if the value received has the structure of a {@link CompanionEnumDeclaration}
+ * Tell if the value received has the structure of a {@link CompanionEnumWithParentDeclaration}
  *
  * @param value The value to compare
  *
  * @doesNotValidateTheTypes
  */
-export function isCompanionEnumByStructure(value: unknown,): value is (& object & Record<keyof CompanionEnumDeclaration<never, never>, unknown>) {
+export function isCompanionEnumWithParentByStructure(value: unknown,): value is (& object & Record<keyof CompanionEnumWithParentDeclaration<never, never, never, never>, unknown>) {
     if (value == null || typeof value != "object")
         return false
 
-    const members = EnumConstants.COMPANION_ENUM_MEMBERS,
+    const members = EnumConstants.COMPANION_ENUM_WITH_PARENT_MEMBERS,
         size = members.length
     let index = -1
     while (++index < size)

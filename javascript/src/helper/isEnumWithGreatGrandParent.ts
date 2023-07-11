@@ -5,13 +5,16 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import {Enum} from "../Enum"
+import type {EnumerableWithGrandParent} from "../EnumerableWithGrandParent"
+import type {EnumerableWithParent}      from "../EnumerableWithParent"
+
+import {EnumWithGreatGrandParent} from "../EnumWithGreatGrandParent"
 
 /**
- * Tell if the value received is a {@link Enum}
+ * Tell if the value received is a {@link EnumWithGreatGrandParent}
  *
  * @param value The value to compare
  */
-export function isEnum(value: unknown,): value is Enum<number, string> {
-    return value instanceof Enum
+export function isEnumWithGreatGrandParent(value: unknown,): value is EnumWithGreatGrandParent<number, string, EnumerableWithGrandParent, EnumerableWithParent> {
+    return value instanceof EnumWithGreatGrandParent
 }
