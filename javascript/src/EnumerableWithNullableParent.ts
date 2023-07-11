@@ -7,14 +7,13 @@
 
 import type {Enumerable}                        from "./Enumerable"
 import type {PossibleNameOf, PossibleOrdinalOf} from "./Enumerable.types"
-import type {EnumerableWithNullableParent}      from "./EnumerableWithNullableParent"
+import type {NullOr}                            from "./general type"
 
-export interface EnumerableWithParent<ORDINAL extends PossibleOrdinalOf<number, PARENT> = number, NAME extends PossibleNameOf<string, PARENT> = string,
+export interface EnumerableWithNullableParent<ORDINAL extends PossibleOrdinalOf<number, PARENT> = number, NAME extends PossibleNameOf<string, PARENT> = string,
     PARENT extends Enumerable = Enumerable, >
-    extends Enumerable<ORDINAL, NAME>,
-            EnumerableWithNullableParent<ORDINAL, NAME, PARENT> {
+    extends Enumerable<ORDINAL, NAME> {
 
-    /** The parent of the current instance */
-    get parent(): PARENT
+    /** The {@link NullOr nullable} parent of the current instance */
+    get parent(): NullOr<PARENT>
 
 }

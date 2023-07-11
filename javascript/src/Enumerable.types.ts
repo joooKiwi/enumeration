@@ -5,10 +5,10 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {EnumConstants}         from "./EnumConstants"
-import type {Enumerable}            from "./Enumerable"
-import type {EnumerableConstructor} from "./EnumerableConstructor"
-import type {PossibleBigInt}        from "./general type"
+import type {EnumConstants}            from "./EnumConstants"
+import type {Enumerable}               from "./Enumerable"
+import type {EnumerableConstructor}    from "./EnumerableConstructor"
+import type {Nullable, PossibleBigInt} from "./general type"
 
 /** The {@link Enumerable} name in a {@link Object.toString toString()} method */
 export type EnumerableName = typeof EnumConstants["ENUM_TO_STRING_TAG"]
@@ -57,6 +57,18 @@ export type PossibleEnumerableValueBy<ENUMERABLE extends Enumerable, >
     = | String | Number | PossibleBigInt
       | ENUMERABLE[ | "ordinal" | "name"]
       | ENUMERABLE
+
+
+/**
+ * Every possible {@link Symbol} passed to a {@link Enum} child
+ * in order to create a {@link import('@joookiwi/lazy').Lazy Lazy}
+ */
+export type PossibleEnumSymbol = typeof EnumConstants[| "ENUM_REFERENCE_BY_ITS_NAME_SYMBOL" | "NULL_ENUM_REFERENCE_SYMBOL"]
+/**
+ * A simple type of {@link Enumerable} by its value or its {@link Enumerable.name name} (object or primitive)
+ * via the {@link Nullable} value itself or a callback returning the {@link Nullable} value
+ */
+export type PossibleEnumerableValueOrNameByValueOrCallback<T extends Enumerable = Enumerable, > = Nullable<| T | NameOf<T> | String | PossibleEnumSymbol | (() => Nullable<T | NameOf<T> | String | PossibleEnumSymbol>)>
 
 //#region -------------------- Enumerable by Enumerable & EnumerableConstructor --------------------
 
