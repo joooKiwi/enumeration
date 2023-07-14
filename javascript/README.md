@@ -104,7 +104,7 @@ export class Example extends Enum {
 ```typescript
 // Example.ts
 import {CompanionEnum, Enum} from "@joookiwi/enumerable"
-import type {BasicCompanionEnumSingleton} from "@joookiwi/enumerable/dist/types"
+import type {CompanionEnumSingleton} from "@joookiwi/enumerable/dist/types"
 import type {Names, Ordinals} from "./Example.types"
 
 export class Example extends Enum<Ordinals, Names> {
@@ -119,7 +119,7 @@ export class Example extends Enum<Ordinals, Names> {
     public static readonly 2: typeof Example.C
     // Optional number typing (end)
 
-    public static readonly CompanionEnum: BasicCompanionEnumSingleton<Example, typeof Example> =
+    public static readonly CompanionEnum: CompanionEnumSingleton<Example, typeof Example> =
         class CompanionEnum_Example extends CompanionEnum<Example, typeof Example> {
             static #instance?: CompanionEnum_Example
             private constructor() { super(Example,) }
