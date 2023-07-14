@@ -5,6 +5,7 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
+export {EnumHelper}                                     from "./EnumHelper"
 export {getCompanion}                                   from "./getCompanion"
 export {getLastPrototype}                               from "./getLastPrototype"
 export {isCompanionEnum}                                from "./isCompanionEnum"
