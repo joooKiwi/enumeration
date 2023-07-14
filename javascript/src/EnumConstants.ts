@@ -122,7 +122,18 @@ export namespace EnumConstants {
     //#endregion -------------------- Enumerable members --------------------
     //#region -------------------- Symbols --------------------
 
+    /**
+     * Tell that the {@link Enumerable} reference will be similar to another {@link Enumerable.name}
+     *
+     * @uniqueJavascriptVariable
+     */
     export const ENUM_REFERENCE_BY_ITS_NAME_SYMBOL = Symbol("Enum reference by its name",)
+
+    /**
+     * Tell that the {@link Enumerable} reference will be <b>null</b>
+     *
+     * @uniqueJavascriptVariable
+     */
     export const NULL_ENUM_REFERENCE_SYMBOL = Symbol("Null enum reference",)
 
     //#endregion -------------------- Symbols --------------------
