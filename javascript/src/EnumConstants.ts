@@ -115,13 +115,13 @@ export namespace EnumConstants {
     export const ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS = ["name", "ordinal", "parent", "grandParent", "greatGrandParent", Symbol.toPrimitive, Symbol.toStringTag,] as const satisfies readonly (keyof EnumerableWithNullableGreatGrandParent)[]
 
     /** Every member of an {@link CompanionEnumDeclaration} */
-    export const COMPANION_ENUM_MEMBERS = ["instance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumDeclaration<any, any>)[]
+    export const COMPANION_ENUM_MEMBERS = ["instance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumDeclaration<never, never>)[]
     /** Every member of an {@link CompanionEnumWithParentDeclaration} */
-    export const COMPANION_ENUM_WITH_PARENT_MEMBERS = ["instance", "parentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumWithParentDeclaration<any, any, any, any>)[]
+    export const COMPANION_ENUM_WITH_PARENT_MEMBERS = ["instance", "parentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumWithParentDeclaration<never, never, never, never>)[]
     /** Every member of an {@link CompanionEnumWithGrandParentDeclaration} */
-    export const COMPANION_ENUM_WITH_GRAND_PARENT_MEMBERS = ["instance", "parentInstance", "grandParentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>)[]
+    export const COMPANION_ENUM_WITH_GRAND_PARENT_MEMBERS = ["instance", "parentInstance", "grandParentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumWithGrandParentDeclaration<never, never, never, never, never, never>)[]
     /** Every member of an {@link CompanionEnumWithGreatGrandParentDeclaration} */
-    export const COMPANION_ENUM_WITH_GREAT_GRAND_PARENT_MEMBERS = ["instance", "parentInstance", "grandParentInstance", "greatGrandParentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, any, any>)[]
+    export const COMPANION_ENUM_WITH_GREAT_GRAND_PARENT_MEMBERS = ["instance", "parentInstance", "grandParentInstance", "greatGrandParentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumWithGreatGrandParentDeclaration<never, never, never, never, never, never, never, never>)[]
 
     //#endregion -------------------- Enumerable members --------------------
     //#region -------------------- Symbols --------------------
