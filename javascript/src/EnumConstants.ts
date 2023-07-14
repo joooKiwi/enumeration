@@ -95,8 +95,12 @@ export namespace EnumConstants {
     // export const RESERVED_JAVASCRIPT_OBJECT_NAMES = ["constructor", "hasOwnProperty", "isPrototypeOf", "toLocaleString", "toString", "valueOf",] as const
     /** Every edge case of a {@link Number} */
     export const EDGE_CASE_NUMERIC_NAME = ["NaN", "-Infinity", "Infinity",] as const
-    /** Every inherited member of any {@link Enumerable enumerable} instances ({@link Enumerable}, {@link EnumerableWithParent}, {@link EnumerableWithGrandParent}, {@link EnumerableWithGreatGrandParent}) */
-    export const INHERITED_ENUMERABLE_MEMBERS = ["name", "ordinal", "parent", "grandParent", "greatGrandParent",] as const satisfies readonly (| keyof Enumerable | keyof EnumerableWithParent | keyof EnumerableWithGrandParent | keyof EnumerableWithGreatGrandParent)[]
+    /**
+     * Every inherited member of any {@link Enumerable enumerable} instances
+     * ({@link Enumerable}, with {@link EnumerableWithNullableParent parent},
+     * {@link EnumerableWithNullableGrandParent grandparent} and {@link EnumerableWithNullableGreatGrandParent great-grandparent})
+     */
+    export const INHERITED_ENUMERABLE_MEMBERS = ["name", "ordinal", "parent", "grandParent", "greatGrandParent",] as const satisfies readonly (| keyof Enumerable | keyof EnumerableWithNullableParent | keyof EnumerableWithNullableGrandParent | keyof EnumerableWithNullableGreatGrandParent)[]
 
     //#endregion -------------------- Initialization validation fields --------------------
     //#region -------------------- Enumerable members --------------------
