@@ -7,8 +7,8 @@
 
 import type {Enumerable}                        from "./Enumerable"
 import type {PossibleNameOf, PossibleOrdinalOf} from "./Enumerable.types"
-import type {EnumerableWithParent}              from "./EnumerableWithParent"
 import type {EnumerableWithNullableGrandParent} from "./EnumerableWithNullableGrandParent"
+import type {EnumerableWithParent}              from "./EnumerableWithParent"
 
 export interface EnumerableWithGrandParent<ORDINAL extends PossibleOrdinalOf<number, PARENT> = number, NAME extends PossibleNameOf<string, PARENT> = string,
     PARENT extends EnumerableWithParent<PossibleOrdinalOf<number, GRAND_PARENT>, PossibleNameOf<string, GRAND_PARENT>, GRAND_PARENT> = EnumerableWithParent<number, string, never>,
