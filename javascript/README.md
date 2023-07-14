@@ -1,4 +1,5 @@
-# Enumerable (javascript version)
+# Enumeration (javascript version)
+[![downloads](https://img.shields.io/npm/dt/@joookiwi/enumerable.svg)](https://npm-stat.com/charts.html?package=@joookiwi/enumerable)
 
 ## Table of content
 * [Installation](#installation)
