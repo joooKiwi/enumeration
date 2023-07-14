@@ -70,7 +70,9 @@ Field definition (for `Typescript`) _for better support_:
 
 And optional override fields _(in the **companion enum**)_:
  - `protected readonly _EXCLUDED_NAMES`
- - `protected readonly _DEFAULT`
+ - `protected readonly _DEFAULT` (Takes precedence over `_DEFAULT_NAME`)
+ - `protected readonly _DEFAULT_NAME` (Takes precedence over `_DEFAULT_ORDINAL`)
+ - `protected readonly _DEFAULT_ORDINAL`
 
 _Note: The companion field (in the class) should be in the static instance instead of declared after-end (like in a namespace or via reflection)_
 
@@ -617,5 +619,5 @@ class EnumLike {
 </details>
 
 ## Contribution
-You can contribute to the project by the "GitHub sponsor".
+You can contribute to the project by the [GitHub sponsor](https://github.com/sponsors/joooKiwi).
 But eventually, more ways to contribute should be present.
