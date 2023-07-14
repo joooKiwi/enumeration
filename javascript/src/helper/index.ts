@@ -26,3 +26,4 @@ export {isEnumWithGreatGrandParent}                     from "./isEnumWithGreatG
 export {isEnumWithGreatGrandParentByStructure}          from "./isEnumWithGreatGrandParentByStructure"
 export {isEnumWithParent}                               from "./isEnumWithParent"
 export {isEnumWithParentByStructure}                    from "./isEnumWithParentByStructure"
+export {KnownEnumConstructors}                          from "./KnownEnumConstructors"
