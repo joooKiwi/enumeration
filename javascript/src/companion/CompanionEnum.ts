@@ -373,12 +373,16 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     #validateIsEnumerableFromReflection(nameOrOrdinal: | string | number, valueType: ValueType,): Enumerable {
         if (!has(this.instance, nameOrOrdinal,))
             throw new NullReferenceException(`No ${valueType} exist in "${this.instance.name}.${nameOrOrdinal}".`, nameOrOrdinal,)
+
         const value = get(this.instance, nameOrOrdinal,)
         if (value == null)
             throw new NullReferenceException(`The ${valueType} "${this.instance.name}.${nameOrOrdinal}" cannot be a null reference."`, nameOrOrdinal,)
-        if (!isEnum(value) || !isEnumByStructure(value))
-            throw new InvalidInstanceException(`The reference "${this.instance.name}.${nameOrOrdinal}" is not instance of Enumerable.`, nameOrOrdinal,)
-        return value as Enumerable
+
+        if (isEnum(value))
+            return value
+        if (isEnumByStructure(value))
+            return value as Enumerable
+        throw new InvalidInstanceException(`The reference "${this.instance.name}.${nameOrOrdinal}" is not instance of Enumerable.`, nameOrOrdinal,)
     }
 
 
