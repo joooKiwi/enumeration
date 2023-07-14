@@ -175,6 +175,7 @@ export class EnumWithGreatGrandParent<const ORDINAL extends PossibleOrdinalOf<nu
     /**
      * The great-grandparent of the current instance
      *
+     * @lazy
      * @throws {NullReferenceException}
      */
     public get greatGrandParent(): GREAT_GRAND_PARENT {
