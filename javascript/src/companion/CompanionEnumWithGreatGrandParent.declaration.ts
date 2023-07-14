@@ -8,19 +8,19 @@
 import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                      from "../Enumerable"
 import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                           from "../EnumerableConstructor"
 import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableOrdinal, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "../Enumerable.types"
-import type {EnumerableWithGreatGrandParent}                                                                                                                                                                                                                                                                                                                                  from "../EnumerableWithGreatGrandParent"
-import type {EnumerableWithGrandParent}                                                                                                                                                                                                                                                                                                                                       from "../EnumerableWithGrandParent"
-import type {EnumerableWithParent}                                                                                                                                                                                                                                                                                                                                            from "../EnumerableWithParent"
+import type {EnumerableWithNullableGrandParent}                                                                                                                                                                                                                                                                                                                               from "../EnumerableWithNullableGrandParent"
+import type {EnumerableWithNullableGreatGrandParent}                                                                                                                                                                                                                                                                                                                          from "../EnumerableWithNullableGreatGrandParent"
+import type {EnumerableWithNullableParent}                                                                                                                                                                                                                                                                                                                                    from "../EnumerableWithNullableParent"
 import type {Nullable, NullOrUndefined, PossibleBigInt, PossibleStringOrNumeric}                                                                                                                                                                                                                                                                                              from "../general type"
 import type {CompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                        from "./CompanionEnum.declaration"
 import type {CompanionEnumWithParentDeclaration}                                                                                                                                                                                                                                                                                                                              from "./CompanionEnumWithParent.declaration"
 import type {CompanionEnumWithGrandParentDeclaration}                                                                                                                                                                                                                                                                                                                         from "./CompanionEnumWithGrandParent.declaration"
 
-export interface CompanionEnumWithGreatGrandParentDeclaration<ENUMERABLE extends EnumerableWithGreatGrandParent<number, string, PARENT_ENUMERABLE, GRAND_PARENT_ENUMERABLE, GREAT_GRAND_PARENT_ENUMERABLE>,
+export interface CompanionEnumWithGreatGrandParentDeclaration<ENUMERABLE extends EnumerableWithNullableGreatGrandParent<number, string, PARENT_ENUMERABLE, GRAND_PARENT_ENUMERABLE, GREAT_GRAND_PARENT_ENUMERABLE>,
     ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<ENUMERABLE, CompanionEnumWithGreatGrandParentDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR, PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR, GRAND_PARENT_ENUMERABLE, GRAND_PARENT_ENUMERABLE_CONSTRUCTOR, GREAT_GRAND_PARENT_ENUMERABLE, GREAT_GRAND_PARENT_ENUMERABLE_CONSTRUCTOR>>,
-    PARENT_ENUMERABLE extends EnumerableWithGrandParent<number, string, GRAND_PARENT_ENUMERABLE, GREAT_GRAND_PARENT_ENUMERABLE>,
+    PARENT_ENUMERABLE extends EnumerableWithNullableGrandParent<number, string, GRAND_PARENT_ENUMERABLE, GREAT_GRAND_PARENT_ENUMERABLE>,
     PARENT_ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUMERABLE, CompanionEnumWithGrandParentDeclaration<PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR, GRAND_PARENT_ENUMERABLE, GRAND_PARENT_ENUMERABLE_CONSTRUCTOR, GREAT_GRAND_PARENT_ENUMERABLE, GREAT_GRAND_PARENT_ENUMERABLE_CONSTRUCTOR>>,
-    GRAND_PARENT_ENUMERABLE extends EnumerableWithParent<number, string, GREAT_GRAND_PARENT_ENUMERABLE>,
+    GRAND_PARENT_ENUMERABLE extends EnumerableWithNullableParent<number, string, GREAT_GRAND_PARENT_ENUMERABLE>,
     GRAND_PARENT_ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<GRAND_PARENT_ENUMERABLE, CompanionEnumWithParentDeclaration<GRAND_PARENT_ENUMERABLE, GRAND_PARENT_ENUMERABLE_CONSTRUCTOR, GREAT_GRAND_PARENT_ENUMERABLE, GREAT_GRAND_PARENT_ENUMERABLE_CONSTRUCTOR>>,
     GREAT_GRAND_PARENT_ENUMERABLE extends Enumerable,
     GREAT_GRAND_PARENT_ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<GREAT_GRAND_PARENT_ENUMERABLE, CompanionEnumDeclaration<GREAT_GRAND_PARENT_ENUMERABLE, GREAT_GRAND_PARENT_ENUMERABLE_CONSTRUCTOR>>, >
@@ -60,7 +60,7 @@ export interface CompanionEnumWithGreatGrandParentDeclaration<ENUMERABLE extends
     getValue<const GRAND_PARENT_INSTANCE extends GRAND_PARENT_ENUMERABLE, >                                                                                                                                                                                                                      (grandParentInstance: Nullable<GRAND_PARENT_ENUMERABLE>,):                                                                                                                 ValueByEnumerableConstructorAndEnumerableOrdinal<ENUMERABLE_CONSTRUCTOR, GRAND_PARENT_INSTANCE>
 
     /**
-     * Get the {@link EnumerableWithGreatGrandParent instance} by comparing its {@link EnumerableWithGreatGrandParent.greatGrandParent} value
+     * Get the {@link EnumerableWithNullableGreatGrandParent instance} by comparing its {@link EnumerableWithNullableGreatGrandParent.greatGrandParent} value
      *
      * @param greatGrandParentInstance The great-grandparent instance to find
      * @throws {InvalidEnumerableException}
@@ -89,7 +89,7 @@ export interface CompanionEnumWithGreatGrandParentDeclaration<ENUMERABLE extends
     getName<const GRAND_PARENT_INSTANCE extends GRAND_PARENT_ENUMERABLE, >                                                                                                                                                                                                                      (grandParentInstance: Nullable<GRAND_PARENT_INSTANCE>,):                                                                                                                 NameOf<GRAND_PARENT_INSTANCE>
 
     /**
-     * Get the {@link EnumerableWithGreatGrandParent.name name} from the {@link EnumerableWithGreatGrandParent great-grandparent instance} directly
+     * Get the {@link EnumerableWithNullableGreatGrandParent.name name} from the {@link EnumerableWithNullableGreatGrandParent great-grandparent instance} directly
      *
      * @param greatGrandParentInstance The great-grandparent instance to find
      * @throws {InvalidEnumerableException}
@@ -118,7 +118,7 @@ export interface CompanionEnumWithGreatGrandParentDeclaration<ENUMERABLE extends
     getOrdinal<const GRAND_PARENT_INSTANCE extends GRAND_PARENT_ENUMERABLE, >                                                                                                                                                                                                                      (grandParentInstance: Nullable<GRAND_PARENT_INSTANCE>,):                                                                                                                 OrdinalOf<GRAND_PARENT_INSTANCE>
 
     /**
-     * Get the {@link EnumerableWithGreatGrandParent.ordinal ordinal} from the {@link EnumerableWithGreatGrandParent great-grandparent instance} directly
+     * Get the {@link EnumerableWithNullableGreatGrandParent.ordinal ordinal} from the {@link EnumerableWithNullableGreatGrandParent great-grandparent instance} directly
      *
      * @param greatGrandParentInstance The great-grandparent instance to find
      * @throws {InvalidEnumerableException}
