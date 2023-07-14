@@ -15,10 +15,10 @@ import type {EnumerableWithNullableParent}                                      
 import type {Enumerable}                                                                                from "./Enumerable"
 import type {Nullable, NullOr}                                                                          from "./general type"
 
-import {EnumWithNullableGrandParent}           from "./EnumWithNullableGrandParent"
-import {ImpossibleIntegrityReferenceException} from "./exception/ImpossibleIntegrityReferenceException"
-import {Helper}                                from "./helper/Helper"
-import {KnownEnumConstructors}                 from "./helper/KnownEnumConstructors"
+import {EnumWithNullableGrandParent}  from "./EnumWithNullableGrandParent"
+import {ImpossibleIntegrityException} from "./exception/ImpossibleIntegrityException"
+import {Helper}                       from "./helper/Helper"
+import {KnownEnumConstructors}        from "./helper/KnownEnumConstructors"
 
 /**
  * A simple {@link Enum} class in conjuncture with the {@link EnumerableWithNullableGreatGrandParent}.
@@ -29,7 +29,7 @@ import {KnownEnumConstructors}                 from "./helper/KnownEnumConstruct
  *  - An exception is thrown when attempting to retrieve its {@link CompanionEnumWithGreatGrandParent}
  *  - An exception is thrown when attempting to retrieve the value by {@link CompanionEnumWithGreatGrandParentDeclaration.getValue getValue()}
  *
- * Also, it can throw a {@link ImpossibleIntegrityReferenceException} when receiving a <b>null</b>
+ * Also, it can throw a {@link ImpossibleIntegrityException} when receiving a <b>null</b>
  * on a value that was not expected to be null on the {@link EnumWithNullableGreatGrandParent.parent parent} &
  * {@link EnumWithNullableGreatGrandParent.grandParent grandparent} methods.
  *
@@ -176,7 +176,7 @@ export class EnumWithNullableGreatGrandParent<const ORDINAL extends PossibleOrdi
                 greatGrandParent = this.greatGrandParent
 
             if (grandParent == null && greatGrandParent != null)
-                throw new ImpossibleIntegrityReferenceException(`The grandparent reference in "${this.constructor.name}" was not expected to be null when its great-grandparent is not-null.`, this,)
+                throw new ImpossibleIntegrityException(`The grandparent reference in "${this.constructor.name}" was not expected to be null when its great-grandparent is not-null.`, this,)
             return grandParent
         },)
         if (args.length <= 2)
@@ -191,7 +191,7 @@ export class EnumWithNullableGreatGrandParent<const ORDINAL extends PossibleOrdi
     /**
      * The {@link NullOr nullable} grandparent of the current instance
      *
-     * @throws {ImpossibleIntegrityReferenceException}
+     * @throws {ImpossibleIntegrityException}
      * @throws {NullReferenceException}
      */
     public override get grandParent(): NullOr<GRAND_PARENT> {

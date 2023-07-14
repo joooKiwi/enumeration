@@ -7,9 +7,9 @@
 
 import type {PossibleEnumerableValueOrNameByValueOrCallback, PossibleEnumSymbol} from "../../src/Enumerable.types"
 
-import {EnumConstants}                         from "../../src/EnumConstants"
-import {ImpossibleIntegrityReferenceException} from "../../src/exception/ImpossibleIntegrityReferenceException"
-import {NullReferenceException}                from "../../src/exception/NullReferenceException"
+import {EnumConstants}                from "../../src/EnumConstants"
+import {ImpossibleIntegrityException} from "../../src/exception/ImpossibleIntegrityException"
+import {NullReferenceException}       from "../../src/exception/NullReferenceException"
 
 import {nullValues}                                                                                                                                                                                                                                          from "./Enum.constants"
 import {nameValues}                                                                                                                                                                                                                                          from "./Enum.testInstances"
@@ -252,8 +252,8 @@ describe("EnumInheritorTest", () => {
                 test("value", () => expect(newInstanceWithNull(it,).parent,).toBeNull(),)
                 test("callback", () => expect(newInstanceWithNull(() => it,).parent,).toBeNull(),)
                 describe("impossible instance", () => {
-                    test("value", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityReferenceException,),)
-                    test("callback", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityReferenceException,),)
+                    test("value", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityException,),)
+                    test("callback", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityException,),)
                 },)
             },)
             describe("null symbol", () => {
@@ -261,8 +261,8 @@ describe("EnumInheritorTest", () => {
                 test("value", () => expect(newInstanceWithNull(it,).parent,).toBeNull(),)
                 test("callback", () => expect(newInstanceWithNull(() => it,).parent,).toBeNull(),)
                 describe("impossible instance", () => {
-                    test("value", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityReferenceException,),)
-                    test("callback", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityReferenceException,),)
+                    test("value", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityException,),)
+                    test("callback", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityException,),)
                 },)
             },)
             describe.each(nameValues,)('%s', name => {
@@ -314,8 +314,8 @@ describe("EnumInheritorTest", () => {
                 test("value", () => expect(newInstanceWithNull(it,).parent,).toBeNull(),)
                 test("callback", () => expect(newInstanceWithNull(() => it,).parent,).toBeNull(),)
                 describe("impossible instance", () => {
-                    test("value", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityReferenceException,),)
-                    test("callback", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityReferenceException,),)
+                    test("value", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityException,),)
+                    test("callback", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityException,),)
                 },)
             },)
             describe("null symbol", () => {
@@ -323,8 +323,8 @@ describe("EnumInheritorTest", () => {
                 test("value", () => expect(newInstanceWithNull(it,).parent,).toBeNull(),)
                 test("callback", () => expect(newInstanceWithNull(() => it,).parent,).toBeNull(),)
                 describe("impossible instance", () => {
-                    test("value", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityReferenceException,),)
-                    test("callback", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityReferenceException,),)
+                    test("value", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityException,),)
+                    test("callback", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityException,),)
                 },)
             },)
             describe.each(nameValues,)('%s', name => {
@@ -535,8 +535,8 @@ describe("EnumInheritorTest", () => {
                 test("value", () => expect(newInstanceWithNull(it,).grandParent,).toBeNull(),)
                 test("callback", () => expect(newInstanceWithNull(() => it,).grandParent,).toBeNull(),)
                 describe("impossible instance", () => {
-                    test("value", () => expect(() => newValidInstance(it,).grandParent,).toThrow(ImpossibleIntegrityReferenceException,),)
-                    test("callback", () => expect(() => newValidInstance(it,).grandParent,).toThrow(ImpossibleIntegrityReferenceException,),)
+                    test("value", () => expect(() => newValidInstance(it,).grandParent,).toThrow(ImpossibleIntegrityException,),)
+                    test("callback", () => expect(() => newValidInstance(it,).grandParent,).toThrow(ImpossibleIntegrityException,),)
                 },)
             },)
             describe("null symbol", () => {
@@ -544,8 +544,8 @@ describe("EnumInheritorTest", () => {
                 test("value", () => expect(newInstanceWithNull(it,).grandParent,).toBeNull(),)
                 test("callback", () => expect(newInstanceWithNull(() => it,).grandParent,).toBeNull(),)
                 describe("impossible instance", () => {
-                    test("value", () => expect(() => newValidInstance(it,).grandParent,).toThrow(ImpossibleIntegrityReferenceException,),)
-                    test("callback", () => expect(() => newValidInstance(it,).grandParent,).toThrow(ImpossibleIntegrityReferenceException,),)
+                    test("value", () => expect(() => newValidInstance(it,).grandParent,).toThrow(ImpossibleIntegrityException,),)
+                    test("callback", () => expect(() => newValidInstance(it,).grandParent,).toThrow(ImpossibleIntegrityException,),)
                 },)
             },)
             describe.each(nameValues,)('%s', name => {
