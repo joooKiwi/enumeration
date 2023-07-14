@@ -13,9 +13,11 @@
     "build-types": "tsc --project tsconfig.types.json",
 
     "test": "jest",
-    "test-general-enum":   "jest --testNamePattern=GeneralEnumTest",
-    "test-helper-methods": "jest --testNamePattern=HelperMethodsTest",
-    "test-companion-enum": "jest --testNamePattern=CompanionEnumTest",
+    "test-general-enum":                   "jest --testNamePattern=GeneralEnumTest",
+    "test-helper-methods":                 "jest --testNamePattern=HelperMethodsTest",
+    "test-helper-known-enum-constructors": "jest --testNamePattern=KnownEnumConstructorsTest",
+    "test-companion-enum":                 "jest --testNamePattern=CompanionEnumTest",
+    "test-enum-inheritor":                 "jest --testNamePattern=EnumInheritorTest",
 
     "test-pack":    "npm pack --dry-run",
     "test-publish": "npm publish --@access=public --dry-run",
