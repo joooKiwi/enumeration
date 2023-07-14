@@ -19,6 +19,12 @@ import type {CompanionEnumWithGreatGrandParentDeclaration} from "./companion/Com
 import type {CompanionEnumWithParentDeclaration}           from "./companion/CompanionEnumWithParent.declaration"
 
 /** A simple class containing every field used by an {@link Enumerable} helper, instance or companion */
+export class EnumConstants {
+    constructor() {
+        throw new EvalError("The class EnumConstants cannot be created",)
+    }
+}
+
 export namespace EnumConstants {
 
     //#region -------------------- Maps --------------------
@@ -138,4 +144,8 @@ export namespace EnumConstants {
 
     //#endregion -------------------- Symbol.toString tags --------------------
 
+}
+
+export interface EnumConstants {
+    new(...args: readonly unknown[]): never
 }
