@@ -8,23 +8,23 @@
 import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                                                         from "../Enumerable"
 import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                                                              from "../EnumerableConstructor"
 import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, PossibleNameOf, PossibleOrdinalOf, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableOrdinal, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "../Enumerable.types"
-import type {EnumerableWithParent}                                                                                                                                                                                                                                                                                                                                                                               from "../EnumerableWithParent"
+import type {EnumerableWithNullableParent}                                                                                                                                                                                                                                                                                                                                                                       from "../EnumerableWithNullableParent"
 import type {Nullable, NullOrUndefined, PossibleBigInt, PossibleNumeric, PossibleString, PossibleStringOrNumeric}                                                                                                                                                                                                                                                                                                from "../general type"
+import type {CompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                                                           from "./CompanionEnum.declaration"
 import type {CompanionEnumWithParentDeclaration}                                                                                                                                                                                                                                                                                                                                                                 from "./CompanionEnumWithParent.declaration"
-import type {BasicCompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                                                      from "./BasicCompanionEnum.declaration"
 
-import {BasicCompanionEnum}         from "./BasicCompanionEnum"
+import {CompanionEnum}              from "./CompanionEnum"
 import {InvalidEnumerableException} from "../exception/InvalidEnumerableException"
 import {InvalidInstanceException}   from "../exception/InvalidInstanceException"
 import {NonExistantKeyException}    from "../exception/NonExistantKeyException"
 import {NullInstanceException}      from "../exception/NullInstanceException"
 import {NullReferenceException}     from "../exception/NullReferenceException"
 
-export class CompanionEnumWithParent<const ENUMERABLE extends EnumerableWithParent<PossibleOrdinalOf<number, PARENT_ENUMERABLE>, PossibleNameOf<string, PARENT_ENUMERABLE>, PARENT_ENUMERABLE>,
+export class CompanionEnumWithParent<const ENUMERABLE extends EnumerableWithNullableParent<PossibleOrdinalOf<number, PARENT_ENUMERABLE>, PossibleNameOf<string, PARENT_ENUMERABLE>, PARENT_ENUMERABLE>,
     const ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<ENUMERABLE, CompanionEnumWithParentDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR, PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR>>,
     const PARENT_ENUMERABLE extends Enumerable,
-    const PARENT_ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUMERABLE, BasicCompanionEnumDeclaration<PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR>>, >
-    extends BasicCompanionEnum<ENUMERABLE, ENUMERABLE_CONSTRUCTOR>
+    const PARENT_ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUMERABLE, CompanionEnumDeclaration<PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR>>, >
+    extends CompanionEnum<ENUMERABLE, ENUMERABLE_CONSTRUCTOR>
     implements CompanionEnumWithParentDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR, PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR> {
 
     //#region -------------------- Fields --------------------
@@ -36,7 +36,7 @@ export class CompanionEnumWithParent<const ENUMERABLE extends EnumerableWithPare
 
     protected constructor(instance: ENUMERABLE_CONSTRUCTOR, parentInstance: PARENT_ENUMERABLE_CONSTRUCTOR,) {
         super(instance,)
-        if(!("parent" in instance.prototype))
+        if (!("parent" in instance.prototype))
             throw new NonExistantKeyException(`No attribute "parent" exist in the "${instance.name}" instance. Either use a getter method or add it in the class.`, "parent", instance.prototype,)
         if (parentInstance == null)
             throw new NullInstanceException()
@@ -88,7 +88,7 @@ export class CompanionEnumWithParent<const ENUMERABLE extends EnumerableWithPare
     }
 
     /**
-     * Get a {@link EnumerableWithParent enumerable} by validating it is the {@link instance} or {@link parentInstance parent instance} (enumerable constructor)
+     * Get a {@link EnumerableWithNullableParent enumerable} by validating it is the {@link instance} or {@link parentInstance parent instance} (enumerable constructor)
      *
      * @param value The value to compare its class type to the type ({@link instance} or {@link parentInstance})
      * @throws {InvalidEnumerableException}
@@ -100,17 +100,17 @@ export class CompanionEnumWithParent<const ENUMERABLE extends EnumerableWithPare
 
         if (value instanceof instance)
             return this._getValueFromValues(value)
-        if(value instanceof parentInstance)
+        if (value instanceof parentInstance)
             return this._getValueFromParentInValues(value,)
 
         throw new InvalidEnumerableException(`The enumerable "${instance.name}.${value.name}" is not an instance of "${instance.name}" or "${parentInstance.name}".`, value, [instance, parentInstance,] as const,)
     }
 
     /**
-     * Get an {@link EnumerableWithParent enumerable} from the {@link values} by the {@link EnumerableWithParent.parent parent} instance
+     * Get an {@link EnumerableWithNullableParent enumerable} from the {@link values} by the {@link EnumerableWithNullableParent.parent parent} instance
      * or throw a {@link NullReferenceException} if never found
      *
-     * @param value The {@link EnumerableWithParent enumerable} {@link EnumerableWithParent.parent parent} to find
+     * @param value The {@link EnumerableWithNullableParent enumerable} {@link EnumerableWithNullableParent.parent parent} to find
      * @throws {NullReferenceException}
      */
     protected _getValueFromParentInValues(value: Enumerable,): ENUMERABLE {

@@ -5,17 +5,17 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {Enumerable}                    from "./Enumerable"
-import type {Singleton}                     from "./Singleton"
-import type {BasicCompanionEnumDeclaration} from "./companion/BasicCompanionEnum.declaration"
+import type {Enumerable}               from "./Enumerable"
+import type {Singleton}                from "./Singleton"
+import type {CompanionEnumDeclaration} from "./companion/CompanionEnum.declaration"
 
-/** The <i>static</i> {@link Enumerable} definition containing the {@link BasicCompanionEnumDeclaration companion enum} {@link Singleton singleton} field */
+/** The <i>static</i> {@link Enumerable} definition containing the {@link CompanionEnumDeclaration companion enum} {@link Singleton singleton} field */
 export interface EnumerableConstructor<ENUMERABLE extends Enumerable,
-    COMPANION_ENUM extends BasicCompanionEnumDeclaration<ENUMERABLE, EnumerableConstructor<ENUMERABLE, COMPANION_ENUM>>, >
+    COMPANION_ENUM extends CompanionEnumDeclaration<ENUMERABLE, EnumerableConstructor<ENUMERABLE, COMPANION_ENUM>>, >
     extends Function {
 
     /**
-     * The {@link BasicCompanionEnumDeclaration companion enum} {@link Singleton}
+     * The {@link CompanionEnumDeclaration companion enum} {@link Singleton}
      * containing the utility methods for the {@link Enumerable}
      */
     readonly CompanionEnum: Singleton<COMPANION_ENUM>

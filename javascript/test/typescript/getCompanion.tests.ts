@@ -5,7 +5,7 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import {EnumHelper}                   from "../../src/EnumHelper"
+import {getCompanion}                 from "../../src/helper/getCompanion"
 import {EnumWithDifferentComportment} from "../TemplateEnums"
 
 throw new EvalError("This file was not made to be read by Javascript. It should only be compilable by Typescript.")
@@ -24,58 +24,58 @@ const readonlyMapInstance: ReadonlyMap<unknown, unknown> = new Map<unknown, unkn
 const valueInstance: EnumWithDifferentComportment = EnumWithDifferentComportment.CompanionEnum.get.default // This is a type for the test
 
 // @ts-expect-error
-EnumHelper.getCompanion(undefined,).toString()
+getCompanion(undefined,).toString()
 // @ts-expect-error
-EnumHelper.getCompanion(null,).toString()
+getCompanion(null,).toString()
 
 // @ts-expect-error
-EnumHelper.getCompanion(primitiveStringInstance,).toString()
+getCompanion(primitiveStringInstance,)
 // @ts-expect-error
-EnumHelper.getCompanion(new String('',),).toString()
+getCompanion(new String('',),)
 
 // @ts-expect-error
-EnumHelper.getCompanion(primitiveNumberInstance,).toString()
+getCompanion(primitiveNumberInstance,)
 // @ts-expect-error
-EnumHelper.getCompanion(new Number(0,),).toString()
+getCompanion(new Number(0,),)
 
 // @ts-expect-error
-EnumHelper.getCompanion(primitiveBigIntInstance,).toString()
+getCompanion(primitiveBigIntInstance,)
 // @ts-expect-error
-EnumHelper.getCompanion(BigInt(0n),).toString()
+getCompanion(BigInt(0n),)
 
 // @ts-expect-error
-EnumHelper.getCompanion(Symbol(),).toString()
+getCompanion(Symbol(),)
 // @ts-expect-error
-EnumHelper.getCompanion(objectSymbolInstance,).toString()
+getCompanion(objectSymbolInstance,)
 
 // @ts-expect-error
-EnumHelper.getCompanion(emptyObjectInstance,).toString()
+getCompanion(emptyObjectInstance,)
 
 // @ts-expect-error
-EnumHelper.getCompanion(emptyMutableArrayInstance,).toString()
+getCompanion(emptyMutableArrayInstance,)
 // @ts-expect-error
-EnumHelper.getCompanion(emptyReadonlyArrayInstance,).toString()
+getCompanion(emptyReadonlyArrayInstance,)
 // @ts-expect-error
-EnumHelper.getCompanion(readonlyArrayInstance,).toString()
+getCompanion(readonlyArrayInstance,)
 // @ts-expect-error
-EnumHelper.getCompanion(new Array<unknown>(),).toString()
+getCompanion(new Array<unknown>(),)
 
 // @ts-expect-error
-EnumHelper.getCompanion(readonlySetInstance,).toString()
+getCompanion(readonlySetInstance,)
 // @ts-expect-error
-EnumHelper.getCompanion(new Set<unknown>(),).toString()
+getCompanion(new Set<unknown>(),)
 
 // @ts-expect-error
-EnumHelper.getCompanion(readonlyMapInstance,).toString()
+getCompanion(readonlyMapInstance,)
 // @ts-expect-error
-EnumHelper.getCompanion(new Map<unknown, unknown>(),).toString()
+getCompanion(new Map<unknown, unknown>(),)
 
-export const valueByConstructor = EnumHelper.getCompanion(EnumWithDifferentComportment,) satisfies CompanionValue
+export const valueByConstructor = getCompanion(EnumWithDifferentComportment,) satisfies CompanionValue
 // @ts-expect-error
-EnumHelper.getCompanion(EnumWithDifferentComportment.CompanionEnum,)
-export const valueByCompanion = EnumHelper.getCompanion(EnumWithDifferentComportment.CompanionEnum.get,) satisfies CompanionValue
+getCompanion(EnumWithDifferentComportment.CompanionEnum,)
+export const valueByCompanion = getCompanion(EnumWithDifferentComportment.CompanionEnum.get,) satisfies CompanionValue
 // @ts-expect-error
-EnumHelper.getCompanion(valueInstance,)
+getCompanion(valueInstance,)
 
 /*** The simple enum type */
 type EnumValue = EnumWithDifferentComportment

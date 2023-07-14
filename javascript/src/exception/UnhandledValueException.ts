@@ -12,7 +12,8 @@ import {ClassCastException} from "./generic/ClassCastException"
 
 /**
  * A simple exception made to tell that the type received by
- * {@link BasicCompanionEnumDeclaration.getValue getValue}, {@link BasicCompanionEnumDeclaration.getName getName} and {@link BasicCompanionEnumDeclaration.getOrdinal getOrdinal}
+ * {@link CompanionEnumDeclaration.getValue getValue}, {@link CompanionEnumDeclaration.getName getName}
+ * and {@link CompanionEnumDeclaration.getOrdinal getOrdinal}
  * that the value received was not a {@link String}, {@link Number}, {@link BigInt} or {@link Enumerable}
  */
 export class UnhandledValueException<const T, const ERROR extends Error = never, >

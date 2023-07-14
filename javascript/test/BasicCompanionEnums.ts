@@ -5,14 +5,14 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import {BasicEnumByEnum, BasicEnumByEnumerable, BasicEnumByGrandParentEnumerable, BasicEnumByGrandParentEnum, BasicEnumByParentEnumerable, BasicEnumByParentEnum, BasicEnumByGreatGrandParentEnumerable, BasicEnumByGreatGrandParentEnum} from "./BasicEnums"
+import {Enum_Enum, Enum_Enumerable, Enum_GrandParentEnumerable, Enum_Enum_GrandParentEnumerable, Enum_ParentEnumerable, Enum_Enum_ParentEnumerable, Enum_GreatGrandParentEnumerable, Enum_Enum_GreatGrandParentEnumerable} from "./BasicEnums"
 
 import type {Enumerable}                                   from "../src/Enumerable"
 import type {EnumerableWithGrandParent}                    from "../src/EnumerableWithGrandParent"
 import type {EnumerableWithGreatGrandParent}               from "../src/EnumerableWithGreatGrandParent"
 import type {EnumerableWithParent}                         from "../src/EnumerableWithParent"
-import {BasicCompanionEnum}                                from "../src/companion/BasicCompanionEnum"
-import type {BasicCompanionEnumDeclaration}                from "../src/companion/BasicCompanionEnum.declaration"
+import {CompanionEnum}                                     from "../src/companion/CompanionEnum"
+import type {CompanionEnumDeclaration}                     from "../src/companion/CompanionEnum.declaration"
 import {CompanionEnumWithGrandParent}                      from "../src/companion/CompanionEnumWithGrandParent"
 import type {CompanionEnumWithGrandParentDeclaration}      from "../src/companion/CompanionEnumWithGrandParent.declaration"
 import {CompanionEnumWithGreatGrandParent}                 from "../src/companion/CompanionEnumWithGreatGrandParent"
@@ -20,22 +20,22 @@ import type {CompanionEnumWithGreatGrandParentDeclaration} from "../src/companio
 import {CompanionEnumWithParent}                           from "../src/companion/CompanionEnumWithParent"
 import type {CompanionEnumWithParentDeclaration}           from "../src/companion/CompanionEnumWithParent.declaration"
 
-export class BasicCompanionEnumByBasicCompanionEnum extends BasicCompanionEnum<Enumerable, any> {
-    constructor() { super(BasicEnumByEnum,) }
+export class BasicCompanionEnumByBasicCompanionEnum extends CompanionEnum<Enumerable, any> {
+    constructor() { super(Enum_Enum,) }
 }
 export class BasicCompanionEnumByCompanionEnumWithParent extends CompanionEnumWithParent<EnumerableWithParent, any, Enumerable, any> {
-    constructor() { super(BasicEnumByParentEnum, BasicEnumByEnum,) }
+    constructor() { super(Enum_Enum_ParentEnumerable, Enum_Enum,) }
 }
 export class BasicCompanionEnumByCompanionEnumWithGrandParent extends CompanionEnumWithGrandParent<EnumerableWithGrandParent, any, EnumerableWithParent, any, Enumerable, any> {
-    constructor() { super(BasicEnumByGrandParentEnum, BasicEnumByParentEnum, BasicEnumByEnum,) }
+    constructor() { super(Enum_Enum_GrandParentEnumerable, Enum_Enum_ParentEnumerable, Enum_Enum,) }
 }
 export class BasicCompanionEnumByCompanionEnumWithGreatGrandParent extends CompanionEnumWithGreatGrandParent<EnumerableWithGreatGrandParent, any, EnumerableWithGrandParent, any, EnumerableWithParent, any, Enumerable, any> {
-    constructor() { super(BasicEnumByGreatGrandParentEnum, BasicEnumByGrandParentEnum, BasicEnumByParentEnum, BasicEnumByEnum,) }
+    constructor() { super(Enum_Enum_GreatGrandParentEnumerable, Enum_Enum_GrandParentEnumerable, Enum_Enum_ParentEnumerable, Enum_Enum,) }
 }
 
-export class BasicCompanionEnumByBasicCompanionEnumDeclaration implements BasicCompanionEnumDeclaration<Enumerable, any> {
+export class BasicCompanionEnumByBasicCompanionEnumDeclaration implements CompanionEnumDeclaration<Enumerable, any> {
 
-    get instance() { return BasicEnumByEnumerable }
+    get instance() { return Enum_Enumerable }
 
     get default(): never { throw new Error() }
     set default(_value: unknown,) {}
@@ -56,8 +56,8 @@ export class BasicCompanionEnumByBasicCompanionEnumDeclaration implements BasicC
 }
 export class BasicCompanionEnumByCompanionEnumWithParentDeclaration implements CompanionEnumWithParentDeclaration<EnumerableWithParent, any, Enumerable, any> {
 
-    get parentInstance() { return BasicEnumByParentEnumerable }
-    get instance() { return BasicEnumByEnumerable }
+    get parentInstance() { return Enum_ParentEnumerable }
+    get instance() { return Enum_Enumerable }
 
     get default(): never { throw new Error() }
     set default(_value: unknown,) {}
@@ -78,9 +78,9 @@ export class BasicCompanionEnumByCompanionEnumWithParentDeclaration implements C
 }
 export class BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration implements CompanionEnumWithGrandParentDeclaration<EnumerableWithGrandParent, any, EnumerableWithParent, any, Enumerable, any> {
 
-    get grandParentInstance() { return BasicEnumByGrandParentEnumerable }
-    get parentInstance() { return BasicEnumByParentEnumerable }
-    get instance() { return BasicEnumByEnumerable }
+    get grandParentInstance() { return Enum_GrandParentEnumerable }
+    get parentInstance() { return Enum_ParentEnumerable }
+    get instance() { return Enum_Enumerable }
 
     get default(): never { throw new Error() }
     set default(_value: unknown,) {}
@@ -101,10 +101,10 @@ export class BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration impleme
 }
 export class BasicCompanionEnumByCompanionEnumWithGreatGrandParentDeclaration implements CompanionEnumWithGreatGrandParentDeclaration<EnumerableWithGreatGrandParent, any, EnumerableWithGrandParent, any, EnumerableWithParent, any, Enumerable, any> {
 
-    get greatGrandParentInstance() { return BasicEnumByGreatGrandParentEnumerable }
-    get grandParentInstance() { return BasicEnumByGrandParentEnumerable }
-    get parentInstance() { return BasicEnumByParentEnumerable }
-    get instance() { return BasicEnumByEnumerable }
+    get greatGrandParentInstance() { return Enum_GreatGrandParentEnumerable }
+    get grandParentInstance() { return Enum_GrandParentEnumerable }
+    get parentInstance() { return Enum_ParentEnumerable }
+    get instance() { return Enum_Enumerable }
 
     get default(): never { throw new Error() }
     set default(_value: unknown,) {}

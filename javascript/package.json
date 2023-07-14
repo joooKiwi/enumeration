@@ -1,6 +1,6 @@
 {
   "name": "@joookiwi/enumerable",
-  "version": "2.4.2",
+  "version": "2.5.0",
   "description": "A Javascript implementation of an enum class",
 
   "scripts": {
@@ -13,9 +13,11 @@
     "build-types": "tsc --project tsconfig.types.json",
 
     "test": "jest",
-    "test-general-enum":   "jest --testNamePattern=GeneralEnumTest",
-    "test-enum-helper":    "jest --testNamePattern=EnumHelperTest",
-    "test-companion-enum": "jest --testNamePattern=CompanionEnumTest",
+    "test-general-enum":                   "jest --testNamePattern=GeneralEnumTest",
+    "test-helper-methods":                 "jest --testNamePattern=HelperMethodsTest",
+    "test-helper-known-enum-constructors": "jest --testNamePattern=KnownEnumConstructorsTest",
+    "test-companion-enum":                 "jest --testNamePattern=CompanionEnumTest",
+    "test-enum-inheritor":                 "jest --testNamePattern=EnumInheritorTest",
 
     "test-pack":    "npm pack --dry-run",
     "test-publish": "npm publish --@access=public --dry-run",
@@ -60,12 +62,22 @@
       "import":  "./dist/ecmascript module/js",
       "require": "./dist/common javascript/js"
     },
+    "./companion/*": {
+      "types":   "./dist/types/companion/*.d.ts",
+      "import":  "./dist/ecmascript module/companion/*.js",
+      "require": "./dist/common javascript/companion/*.js"
+    },
     "./exception/*": {
       "types":   "./dist/types/exception/*.d.ts",
       "import":  "./dist/ecmascript module/exception/*.js",
       "require": "./dist/common javascript/exception/*.js"
     },
-    "./companion/*": {
+    "./helper/*": {
+      "types":   "./dist/types/helper/*.d.ts",
+      "import":  "./dist/ecmascript module/helper/*.js",
+      "require": "./dist/common javascript/helper/*.js"
+    },
+    "./enumerable/companion/*": {
       "types":   "./dist/types/companion/*.d.ts",
       "import":  "./dist/ecmascript module/companion/*.js",
       "require": "./dist/common javascript/companion/*.js"
@@ -75,10 +87,10 @@
       "import":  "./dist/ecmascript module/exception/*.js",
       "require": "./dist/common javascript/exception/*.js"
     },
-    "./enumerable/companion/*": {
-      "types":   "./dist/types/companion/*.d.ts",
-      "import":  "./dist/ecmascript module/companion/*.js",
-      "require": "./dist/common javascript/companion/*.js"
+    "./enumerable/helper/*": {
+      "types":   "./dist/types/helper/*.d.ts",
+      "import":  "./dist/ecmascript module/helper/*.js",
+      "require": "./dist/common javascript/helper/*.js"
     },
 
     "./enumerable": {
@@ -86,12 +98,22 @@
       "import":  "./dist/ecmascript module/index.js",
       "require": "./dist/common javascript/index.js"
     },
+    "./companion": {
+      "types":   "./dist/types/companion/index.d.ts",
+      "import":  "./dist/ecmascript module/companion/index.js",
+      "require": "./dist/common javascript/companion/index.js"
+    },
     "./exception": {
       "types":   "./dist/types/exception/index.d.ts",
       "import":  "./dist/ecmascript module/exception/index.js",
       "require": "./dist/common javascript/exception/index.js"
     },
-    "./companion": {
+    "./helper": {
+      "types":   "./dist/types/helper/index.d.ts",
+      "import":  "./dist/ecmascript module/helper/index.js",
+      "require": "./dist/common javascript/helper/index.js"
+    },
+    "./enumerable/companion": {
       "types":   "./dist/types/companion/index.d.ts",
       "import":  "./dist/ecmascript module/companion/index.js",
       "require": "./dist/common javascript/companion/index.js"
@@ -101,10 +123,10 @@
       "import":  "./dist/ecmascript module/exception/index.js",
       "require": "./dist/common javascript/exception/index.js"
     },
-    "./enumerable/companion": {
-      "types":   "./dist/types/companion/index.d.ts",
-      "import":  "./dist/ecmascript module/companion/index.js",
-      "require": "./dist/common javascript/companion/index.js"
+    "./enumerable/helper": {
+      "types":   "./dist/types/helper/index.d.ts",
+      "import":  "./dist/ecmascript module/helper/index.js",
+      "require": "./dist/common javascript/helper/index.js"
     }
   },
 
@@ -136,10 +158,10 @@
     "@joookiwi/collection": "^1.0.4"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.2",
-    "@types/node": "^20.3.3",
+    "@types/jest": "^29.5.3",
+    "@types/node": "^20.4.2",
     "del-cli": "^5.0.0",
-    "jest-environment-jsdom": "^29.6.0",
+    "jest-environment-jsdom": "^29.6.1",
     "jest-extended": "^4.0.0",
     "npm-run-all": "^4.1.5",
     "ts-jest": "^29.1.1",

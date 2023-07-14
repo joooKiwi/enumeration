@@ -14,6 +14,7 @@
 * [Common mistakes](#common-mistakes)
   * [Reversing the inheritance](#reversing-the-inheritance)
   * [Forgetting the type declaration on the companion enum](#forgetting-the-type-declaration-on-the-companion-enum)
+  * [Having an `Enumerable` to not have a value from `getLastPrototype`](#having-an-enumerable-to-not-have-a-value-from-getlastprototype)
 * [Contribution](#contribution)
 
 ## Installation
@@ -38,7 +39,7 @@ but still useful if you still want the enum in a different approach.
 Although, no version like **0.0.1** or **0.1.0** are included in it.
  - [JsEnum](https://www.npmjs.com/package/@stein197/enum) by [stein197](https://www.npmjs.com/~stein197)
  - [Simple Js Enum](https://www.npmjs.com/package/simple-js-enum) by [yevhendiachenko](https://www.npmjs.com/~yevhendiachenko)
- - [Enuify](https://www.npmjs.com/package/enumify) by [rauschma](https://www.npmjs.com/~rauschma)
+ - [Enumify](https://www.npmjs.com/package/enumify) by [rauschma](https://www.npmjs.com/~rauschma)
  - [Discope enumeration](https://www.npmjs.com/package/@dipscope/enumeration) by [dpimonov](https://www.npmjs.com/~dpimonov)
 
 
@@ -69,7 +70,9 @@ Field definition (for `Typescript`) _for better support_:
 
 And optional override fields _(in the **companion enum**)_:
  - `protected readonly _EXCLUDED_NAMES`
- - `protected readonly _DEFAULT`
+ - `protected readonly _DEFAULT` (Takes precedence over `_DEFAULT_NAME`)
+ - `protected readonly _DEFAULT_NAME` (Takes precedence over `_DEFAULT_ORDINAL`)
+ - `protected readonly _DEFAULT_ORDINAL`
 
 _Note: The companion field (in the class) should be in the static instance instead of declared after-end (like in a namespace or via reflection)_
 
@@ -77,7 +80,7 @@ _Note: The companion field (in the class) should be in the static instance inste
 <summary>Javascript</summary>
 
 ```javascript
-import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
+import {CompanionEnum, Enum} from "@joookiwi/enumerable"
 
 export class Example extends Enum {
 
@@ -85,7 +88,7 @@ export class Example extends Enum {
    static B = new Example()
    static C = new Example()
 
-   static CompanionEnum = class CompanionEnum_Example extends BasicCompanionEnum {
+   static CompanionEnum = class CompanionEnum_Example extends CompanionEnum {
        static #instance
        constructor() { super(Example,) }
        static get get() { return CompanionEnum_Example.#instance ??= new CompanionEnum_Example() }
@@ -99,7 +102,7 @@ export class Example extends Enum {
 
 ```typescript
 // Example.ts
-import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
+import {CompanionEnum, Enum} from "@joookiwi/enumerable"
 import type {BasicCompanionEnumSingleton} from "@joookiwi/enumerable/dist/types"
 import type {Names, Ordinals} from "./Example.types"
 
@@ -116,7 +119,7 @@ export class Example extends Enum<Ordinals, Names> {
     // Optional number typing (end)
 
     public static readonly CompanionEnum: BasicCompanionEnumSingleton<Example, typeof Example> =
-        class CompanionEnum_Example extends BasicCompanionEnum<Example, typeof Example> {
+        class CompanionEnum_Example extends CompanionEnum<Example, typeof Example> {
             static #instance?: CompanionEnum_Example
             private constructor() { super(Example,) }
             public static get get() { return CompanionEnum_Example.#instance ??= new CompanionEnum_Example() }
@@ -166,7 +169,7 @@ since they can only be retrieved 1 time.
 <summary>Javascript</summary>
 
 ```javascript
-class CompanionEnum_Example extends BasicCompanionEnum {
+class CompanionEnum_Example extends CompanionEnum {
 
     _DEFAULT = condition1 ? Example.B : null
 
@@ -181,7 +184,7 @@ class CompanionEnum_Example extends BasicCompanionEnum {
 <summary>Typescript</summary>
 
 ```typescript
-class CompanionEnum_Example extends BasicCompanionEnum<Example, typeof Example> {
+class CompanionEnum_Example extends CompanionEnum<Example, typeof Example> {
 
     protected override readonly _DEFAULT = condition1 ? Example.B : null
 
@@ -209,11 +212,17 @@ class Example extends Enum {
     static D = someReason ? this.A : this.B
     static SOME_FIELD = this.D
 
-    static CompanionEnum = class CompanionEnum_Example extends BasicCompanionEnum {
+    static CompanionEnum = class CompanionEnum_Example extends CompanionEnum {
         _EXCLUDED_NAMES = ['D', "SOME_FIELD",]
         static #instance
-        constructor() { super(Example,) }
-        static get get() { return CompanionEnum_Example.#instance ??= new CompanionEnum_Example() }
+
+        constructor() {
+            super(Example,)
+        }
+
+        static get get() {
+            return CompanionEnum_Example.#instance ??= new CompanionEnum_Example()
+        }
     }
 }
 ```
@@ -229,8 +238,8 @@ class Example extends Enum<Ordinals, Names> {
     public static readonly D = someReason ? this.A : this.B
     public static readonly SOME_FIELD = this.D
 
-    public static readonly CompanionEnum: BasicCompanionEnumSingleton<Example, typeof Example> =
-        class CompanionEnum_Example extends BasicCompanionEnum<Example, typeof Example> {
+    public static readonly CompanionEnum: CompanionEnumSingleton<Example, typeof Example> =
+        class CompanionEnum_Example extends CompanionEnum<Example, typeof Example> {
         protected readonly _EXCLUDED_NAMES = ['D', "SOME_FIELD",]
         static #instance?: CompanionEnum_Example
         private constructor() { super(Example,) }
@@ -262,11 +271,17 @@ it will not be possible (in practice).
 export class ParentEnum extends Enum {
     static A = new ParentEnum()
     static B = new ParentEnum()
-   
-    static CompanionEnum = class CompanionEnum_ParentEnum extends BasicCompanionEnum {
+
+    static CompanionEnum = class CompanionEnum_ParentEnum extends CompanionEnum {
         static #instance
-        constructor() { super(ParentEnum,) }
-        static get get() { return BasicCompanionEnum.#instance ??= new BasicCompanionEnum() }
+
+        constructor() {
+            super(ParentEnum,)
+        }
+
+        static get get() {
+            return CompanionEnum.#instance ??= new CompanionEnum()
+        }
     }
 }
 ```
@@ -309,11 +324,11 @@ export class ParentEnum extends Enum<ParentOrdinals, ParentNames> {
    public static readonly 0: typeof ParentEnum.A
    public static readonly 1: typeof ParentEnum.B
 
-   public static readonly CompanionEnum: BasicCompanionEnumSingleton<ParentEnum, typeof ParentEnum> =
-        class CompanionEnum_ParentEnum extends BasicCompanionEnum<ParentEnum, typeof ParentEnum> {
+   public static readonly CompanionEnum: CompanionEnumSingleton<ParentEnum, typeof ParentEnum> =
+        class CompanionEnum_ParentEnum extends CompanionEnum<ParentEnum, typeof ParentEnum> {
             static #instance?: CompanionEnum_ParentEnum
             private constructor() { super(ParentEnum,) }
-            public static get get() { return BasicCompanionEnum.#instance ??= new BasicCompanionEnum() }
+            public static get get() { return CompanionEnum.#instance ??= new CompanionEnum() }
         }
 
    private constructor() { super() }
@@ -465,6 +480,144 @@ interface NestedExampleDeclaration<T> {
 }
 ```
 
+### Having an `Enumerable` to not have a value from `getLastPrototype`
+
+Maybe this method did throw you something like
+
+`NullReferenceException: No Enumerable-like could be found from the prototype chain "EnumLike → EnumLike → Object".`
+
+This is likely due to having one requirement (`ordinal`, `name`, `Symbol.toPrimitive` or `Symbol.toStringTag`)
+set as a field instead of a method (or getter method).
+
+The values are not expected to change,
+but it is expected to have at least one class with everything the `Enumerable` have.
+
+A simple change can be done from:
+<details>
+<summary>Javascript (by fields)</summary>
+
+```javascript
+class EnumLike {
+    constructor() {
+        this.ordinal = someOrdinalCode
+        this.name = someNameCode
+        this[Symbol.toPrimitive] = () => someToPrimitiveCode
+        this[Symbol.toStringTag] = "Enum"
+    }
+}
+```
+
+to be transformed to
+
+```javascript
+class EnumLike {
+    #ordinal
+    #name
+    constructor() {
+        this.#ordinal = someOrdinalCode
+        this.#name = someNameCode
+    }
+    get ordinal() { return this.#ordinal }
+    get name() { return this.#name }
+    [Symbol.toPrimitive]() { return somePrimitiveCode }
+    get [Symbol.toStringTag]() { return "Enum" }
+}
+```
+</details>
+<details>
+<summary>Javascript (by constructor default value)</summary>
+
+```javascript
+class EnumLike {
+    constructor(ordinal = someOrdinalCode, name = someNameCode){
+        this.ordinal = ordinal
+        this.name = ordinal
+        this[Symbol.toPrimitive] = () => someToPrimitiveCode
+        this[Symbol.toStringTag] = "Enum"
+    }
+}
+```
+
+to be transformed to
+
+```javascript
+class EnumLike {
+    #ordinal
+    #name
+    constructor(ordinal = someOrdinalCode, name = someNameCode) {
+        this.#ordinal = ordinal
+        this.#name = name
+    }
+    get ordinal() { return this.#ordinal }
+    get name() { return this.#name }
+    [Symbol.toPrimitive]() { return somePrimitiveCode }
+    get [Symbol.toStringTag]() { return "Enum" }
+}
+```
+
+</details>
+<details>
+<summary>Typescript (by simple fields)</summary>
+
+```typescript
+class EnumLike {
+    public readonly ordinal = someOrdinalCode
+    public readonly name = someNameCode
+    public readonly [Symbol.toPrimitive] = () => someToPrimitiveCode
+    public readonly [Symbol.toStringTag] = "Enum"
+}
+```
+
+to be transformed to
+
+```typescript
+class EnumLike {
+    readonly #ordinal
+    readonly #name
+    constructor() {
+        this.#ordinal = someOrdinalCode
+        this.#name = someNameCode
+    }
+    public get ordinal() { return this.#ordinal }
+    public get name() { return this.#name }
+    public [Symbol.toPrimitive]() { return somePrimitiveCode }
+    public get [Symbol.toStringTag]() { return "Enum" as const }
+}
+```
+
+</details>
+<details>
+<summary>Typescript (by constructor initialization fields)</summary>
+
+```typescript
+class EnumLike {
+    public readonly [Symbol.toPrimitive] = () => someToPrimitiveCode
+    public readonly [Symbol.toStringTag] = "Enum"
+    constructor(public readonly ordinal = someOrdinalCode, 
+                public readonly name = someNameCode,){}
+}
+```
+
+to be transformed to
+
+```typescript
+class EnumLike {
+    readonly #ordinal
+    readonly #name
+    constructor(ordinal = someOrdinalCode,
+                name = someNameCode,) {
+        this.#ordinal = ordinal
+        this.#name = name
+    }
+    public get ordinal() { return this.#ordinal }
+    public get name() { return this.#name }
+    public [Symbol.toPrimitive]() { return somePrimitiveCode }
+    public get [Symbol.toStringTag]() { return "Enum" as const }
+}
+```
+
+</details>
+
 ## Contribution
-You can contribute to the project by the "GitHub sponsor".
+You can contribute to the project by the [GitHub sponsor](https://github.com/sponsors/joooKiwi).
 But eventually, more ways to contribute should be present.

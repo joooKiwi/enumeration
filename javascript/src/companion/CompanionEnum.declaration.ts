@@ -13,8 +13,8 @@ import type {EnumerableConstructor}                                             
 import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, PossibleEnumerableValue, PossibleEnumerableValueBy, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "../Enumerable.types"
 import type {CompanionEnumName}                                                                                                                                                                                                                                                                                                                                                 from "./types"
 
-export interface BasicCompanionEnumDeclaration<ENUMERABLE extends Enumerable,
-    ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<ENUMERABLE, BasicCompanionEnumDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR>>, > {
+export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
+    ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<ENUMERABLE, CompanionEnumDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR>>, > {
 
     /** The {@link Enumerable} constructor (or class in other languages) */
     get instance(): ENUMERABLE_CONSTRUCTOR

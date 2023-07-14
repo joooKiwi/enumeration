@@ -5,8 +5,15 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {EnumConstants} from "./EnumConstants"
+import type {EnumerableWithParent} from "../EnumerableWithParent"
 
-/** The forbidden names or {@link String strings} to use when trying to find a value from the {@link EnumHelper} */
-export type ForbiddenNames = | typeof EnumConstants["EDGE_CASE_NUMERIC_NAME"][number]
-                             | typeof EnumConstants["INHERITED_ENUMERABLE_MEMBERS"][number]
+import {EnumWithGrandParent} from "../EnumWithGrandParent"
+
+/**
+ * Tell if the value received is a {@link EnumWithGrandParent}
+ *
+ * @param value The value to compare
+ */
+export function isEnumWithGrandParent(value: unknown,): value is EnumWithGrandParent<number, string, EnumerableWithParent> {
+    return value instanceof EnumWithGrandParent
+}

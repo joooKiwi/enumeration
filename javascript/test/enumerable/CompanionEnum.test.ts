@@ -9,17 +9,17 @@ import {invalidInstances, nullValues, validValues} from "./Enum.constants"
 
 import type {NullOr}                                       from "../../src/general type"
 import type {Enumerable}                                   from "../../src/Enumerable"
-import type {EnumerableWithGrandParent}                    from "../../src/EnumerableWithGrandParent"
-import type {EnumerableWithGreatGrandParent}               from "../../src/EnumerableWithGreatGrandParent"
-import type {EnumerableWithParent}                         from "../../src/EnumerableWithParent"
 import type {EnumerableConstructor}                        from "../../src/EnumerableConstructor"
-import type {BasicCompanionEnumDeclaration}                from "../../src/companion/BasicCompanionEnum.declaration"
+import type {EnumerableWithNullableGrandParent}            from "../../src/EnumerableWithNullableGrandParent"
+import type {EnumerableWithNullableGreatGrandParent}       from "../../src/EnumerableWithNullableGreatGrandParent"
+import type {EnumerableWithNullableParent}                 from "../../src/EnumerableWithNullableParent"
+import type {CompanionEnumDeclaration}                     from "../../src/companion/CompanionEnum.declaration"
 import type {CompanionEnumWithGrandParentDeclaration}      from "../../src/companion/CompanionEnumWithGrandParent.declaration"
 import type {CompanionEnumWithGreatGrandParentDeclaration} from "../../src/companion/CompanionEnumWithGreatGrandParent.declaration"
 import type {CompanionEnumWithParentDeclaration}           from "../../src/companion/CompanionEnumWithParent.declaration"
 
 import {Enum}                              from "../../src/Enum"
-import {BasicCompanionEnum}                from "../../src/companion/BasicCompanionEnum"
+import {CompanionEnum}                     from "../../src/companion/CompanionEnum"
 import {CompanionEnumWithGrandParent}      from "../../src/companion/CompanionEnumWithGrandParent"
 import {CompanionEnumWithGreatGrandParent} from "../../src/companion/CompanionEnumWithGreatGrandParent"
 import {CompanionEnumWithParent}           from "../../src/companion/CompanionEnumWithParent"
@@ -35,17 +35,17 @@ import {NullInstanceException}             from "../../src/exception/NullInstanc
 
 class BasicEnum extends Enum<number, string> {
     static readonly A = new BasicEnum()
-    static CompanionEnum = class CompanionEnum_BasicEnum extends BasicCompanionEnum<BasicEnum, any> {
+    static CompanionEnum = class CompanionEnum_BasicEnum extends CompanionEnum<BasicEnum, any> {
         static #instance?: CompanionEnum_BasicEnum
         private constructor() { super(BasicEnum,) }
         static get get() { return this.#instance ??= new CompanionEnum_BasicEnum() }
     }
 }
 
-class BasicEnumWithParent extends Enum<number, string> implements EnumerableWithParent<number, string, BasicEnum> {
+class BasicEnumWithParent extends Enum<number, string> implements EnumerableWithNullableParent<number, string, BasicEnum> {
     static readonly A = new BasicEnumWithParent(BasicEnum.A,)
     static readonly B = new BasicEnumWithParent()
-    readonly #parent: NullOr<BasicEnum>
+    readonly #parent
     constructor(parent: NullOr<BasicEnum> = null,) {
         super()
         this.#parent = parent
@@ -58,12 +58,12 @@ class BasicEnumWithParent extends Enum<number, string> implements EnumerableWith
     }
 }
 
-class BasicEnumWithGrandParent extends Enum<number, string> implements EnumerableWithGrandParent<number, string, BasicEnumWithParent, BasicEnum> {
+class BasicEnumWithGrandParent extends Enum<number, string> implements EnumerableWithNullableGrandParent<number, string, BasicEnumWithParent, BasicEnum> {
     static readonly A = new BasicEnumWithGrandParent(BasicEnumWithParent.A, BasicEnum.A,)
     static readonly B = new BasicEnumWithGrandParent(BasicEnumWithParent.B,)
     static readonly C = new BasicEnumWithGrandParent()
-    readonly #parent: NullOr<BasicEnumWithParent>
-    readonly #grandParent: NullOr<BasicEnum>
+    readonly #parent
+    readonly #grandParent
     constructor(parent: NullOr<BasicEnumWithParent> = null, grandParent: NullOr<BasicEnum> = null,) {
         super()
         this.#parent = parent
@@ -78,14 +78,14 @@ class BasicEnumWithGrandParent extends Enum<number, string> implements Enumerabl
     }
 }
 
-class BasicEnumWithGreatGrandParent extends Enum<number, string> implements EnumerableWithGreatGrandParent<number, string, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
+class BasicEnumWithGreatGrandParent extends Enum<number, string> implements EnumerableWithNullableGreatGrandParent<number, string, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
     static readonly A = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.A, BasicEnumWithParent.A, BasicEnum.A,)
     static readonly B = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.B, BasicEnumWithParent.B,)
     static readonly C = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.C,)
     static readonly D = new BasicEnumWithGreatGrandParent()
-    readonly #parent: NullOr<BasicEnumWithGrandParent>
-    readonly #grandParent: NullOr<BasicEnumWithParent>
-    readonly #greatGrandParent: NullOr<BasicEnum>
+    readonly #parent
+    readonly #grandParent
+    readonly #greatGrandParent
     constructor(parent: NullOr<BasicEnumWithGrandParent> = null, grandParent: NullOr<BasicEnumWithParent> = null, greatGrandParent: NullOr<BasicEnum> = null,) {
         super()
         this.#parent = parent
@@ -105,42 +105,42 @@ class BasicEnumWithGreatGrandParent extends Enum<number, string> implements Enum
 //#endregion -------------------- Helper enum class declaration --------------------
 //#region -------------------- Helper companion class declaration --------------------
 
-class BasicCompanionEnum_TestClassHelper
-    extends BasicCompanionEnum<Enumerable, EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>> {
-    constructor(instance: EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>,) {
+class CompanionEnum_TestClassHelper
+    extends CompanionEnum<Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
+    constructor(instance: EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>,) {
         super(instance,)
     }
 }
 
 class CompanionEnumWithParent_TestClassHelper
-    extends CompanionEnumWithParent<EnumerableWithParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-        Enumerable, EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>> {
+    extends CompanionEnumWithParent<EnumerableWithNullableParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
+        Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
     constructor(instance: EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-                parentInstance: EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>) {
+                parentInstance: EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>) {
         super(instance, parentInstance,)
     }
 }
 
 class CompanionEnumWithGrandParent_TestClassHelper
-    extends CompanionEnumWithGrandParent<EnumerableWithGrandParent, EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
-        EnumerableWithParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-        Enumerable, EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>> {
+    extends CompanionEnumWithGrandParent<EnumerableWithNullableGrandParent, EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
+        EnumerableWithNullableParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
+        Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
     constructor(instance: EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
                 parentInstance: EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-                grandParentInstance: EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>,) {
+                grandParentInstance: EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>,) {
         super(instance, parentInstance, grandParentInstance,)
     }
 }
 
 class CompanionEnumWithGreatGrandParent_TestClassHelper
-    extends CompanionEnumWithGreatGrandParent<EnumerableWithGreatGrandParent, EnumerableConstructor<any, CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, any, any>>,
-        EnumerableWithGrandParent, EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
-        EnumerableWithParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-        Enumerable, EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>> {
+    extends CompanionEnumWithGreatGrandParent<EnumerableWithNullableGreatGrandParent, EnumerableConstructor<any, CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, any, any>>,
+        EnumerableWithNullableGrandParent, EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
+        EnumerableWithNullableParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
+        Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
     constructor(instance: EnumerableConstructor<any, CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, any, any>>,
                 parentInstance: EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
                 grandParentInstance: EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-                greatGrandParentInstance: EnumerableConstructor<any, BasicCompanionEnumDeclaration<any, any>>,) {
+                greatGrandParentInstance: EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>,) {
         super(instance, parentInstance, grandParentInstance, greatGrandParentInstance,)
     }
 }
@@ -150,23 +150,30 @@ class CompanionEnumWithGreatGrandParent_TestClassHelper
 //#endregion -------------------- Helper class declaration --------------------
 
 describe("CompanionEnumTest", () => {
+    const /** A simple alias to the {@link BasicEnum} */Child = BasicEnum,
+        /** A simple alias to the {@link BasicEnumWithParent} */Parent = BasicEnumWithParent,
+        /** A simple alias to the {@link BasicEnumWithGreatGrandParent} */GrandParent = BasicEnumWithGrandParent,
+        /** A simple alias to the {@link BasicEnumWithGreatGrandParent} */GreatGrandParent = BasicEnumWithGreatGrandParent
 
-    describe("BasicCompanionEnum", () => {
+    describe("CompanionEnum", () => {
+        /** A simple alias to the {@link CompanionEnum_TestClassHelper} */
+        const InstanceHelper = CompanionEnum_TestClassHelper
+
         describe("invalid argument", () => {
             // @ts-expect-error
-            test.each(nullValues,)("%s", it => expect(() => new BasicCompanionEnum_TestClassHelper(it,),).toThrow(NullInstanceException,),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new BasicCompanionEnum_TestClassHelper(it,),).toThrow(InvalidInstanceException,),)
+            test.each(nullValues,)("%s", it => expect(() => new InstanceHelper(it,),).toThrow(NullInstanceException,),)
+            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new InstanceHelper(it,),).toThrow(InvalidInstanceException,),)
         },)
-        test("valid construction", () => expect(() => new BasicCompanionEnum_TestClassHelper(BasicEnum,),).not.toThrow(),)
+        test("valid construction", () => expect(() => new InstanceHelper(Child,),).not.toThrow(),)
         describe("methods", () => {
-            const value = BasicEnum.A,
-                parentValue = BasicEnumWithParent.A,
-                grandParentValue = BasicEnumWithGrandParent.A,
-                greatGrandParentValue = BasicEnumWithGreatGrandParent.A,
+            const value = Child.A,
+                parentValue = Parent.A,
+                grandParentValue = GrandParent.A,
+                greatGrandParentValue = GreatGrandParent.A,
                 name = 'A',
                 ordinal = 0
-            let instance: BasicCompanionEnum_TestClassHelper
-            beforeEach(() => instance = new BasicCompanionEnum_TestClassHelper(BasicEnum,),)
+            let instance: CompanionEnum_TestClassHelper
+            beforeEach(() => instance = new InstanceHelper(Child,),)
 
             describe("setDefault", () => {
                 test.each(nullValues,)("%s", it => {
@@ -206,32 +213,35 @@ describe("CompanionEnumTest", () => {
         },)
     },)
     describe("CompanionEnumWithParent", () => {
+        /** A simple alias to the {@link CompanionEnumWithParent_TestClassHelper} */
+        const InstanceHelper = CompanionEnumWithParent_TestClassHelper
+
         describe("invalid argument #1", () => {
             // @ts-expect-error
-            test.each(nullValues,)("%s", it => expect(() => new CompanionEnumWithParent_TestClassHelper(it, BasicEnum,),).toThrow(NullInstanceException),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new CompanionEnumWithParent_TestClassHelper(it, BasicEnum,),).toThrow(InvalidInstanceException),)
+            test.each(nullValues,)("%s", it => expect(() => new InstanceHelper(it, Child,),).toThrow(NullInstanceException),)
+            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new InstanceHelper(it, Child,),).toThrow(InvalidInstanceException),)
             // @ts-expect-error
-            test("parent not present", () => expect(() => new CompanionEnumWithParent_TestClassHelper(BasicEnum, BasicEnum,),).toThrow(NonExistantKeyException),)
+            test("parent not present", () => expect(() => new InstanceHelper(Child, Child,),).toThrow(NonExistantKeyException),)
         },)
         describe("invalid argument #2", () => {
             // @ts-expect-error
-            test.each(nullValues,)("%s", it => expect(() => new CompanionEnumWithParent_TestClassHelper(BasicEnumWithParent, it,),).toThrow(NullInstanceException),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new CompanionEnumWithParent_TestClassHelper(BasicEnumWithParent, it,),).toThrow(InvalidInstanceException),)
+            test.each(nullValues,)("%s", it => expect(() => new InstanceHelper(Parent, it,),).toThrow(NullInstanceException),)
+            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new InstanceHelper(Parent, it,),).toThrow(InvalidInstanceException),)
         },)
         describe("invalid order", () => {
             // @ts-expect-error
-            test("child, parent", () => expect(() => new CompanionEnumWithParent_TestClassHelper(BasicEnum, BasicEnumWithParent,),).toThrow(NonExistantKeyException,),)
+            test("child, parent", () => expect(() => new InstanceHelper(Child, Parent,),).toThrow(NonExistantKeyException,),)
         },)
-        test("valid construction", () => expect(() => new CompanionEnumWithParent_TestClassHelper(BasicEnumWithParent, BasicEnum,),).not.toThrow(),)
+        test("valid construction", () => expect(() => new InstanceHelper(Parent, Child,),).not.toThrow(),)
         describe("methods", () => {
-            const value = BasicEnum.A,
-                parentValue = BasicEnumWithParent.A,
-                grandParentValue = BasicEnumWithGrandParent.A,
-                greatGrandParentValue = BasicEnumWithGreatGrandParent.A,
+            const value = Child.A,
+                parentValue = Parent.A,
+                grandParentValue = GrandParent.A,
+                greatGrandParentValue = GreatGrandParent.A,
                 name = 'A',
                 ordinal = 0
             let instance: CompanionEnumWithParent_TestClassHelper
-            beforeEach(() => instance = new CompanionEnumWithParent_TestClassHelper(BasicEnumWithParent, BasicEnum,),)
+            beforeEach(() => instance = new InstanceHelper(Parent, Child,),)
 
             describe("setDefault", () => {
                 test.each(nullValues,)("%s", it => {
@@ -271,45 +281,48 @@ describe("CompanionEnumTest", () => {
         },)
     },)
     describe("CompanionEnumWithGrandParent", () => {
+        /** A simple alias to the {@link CompanionEnumWithGrandParent_TestClassHelper} */
+        const InstanceHelper = CompanionEnumWithGrandParent_TestClassHelper
+
         describe("invalid argument #1", () => {
             // @ts-expect-error
-            test.each(nullValues,)("%s", it => expect(() => new CompanionEnumWithGrandParent_TestClassHelper(it, BasicEnumWithParent, BasicEnum,),).toThrow(NullInstanceException),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new CompanionEnumWithGrandParent_TestClassHelper(it, BasicEnumWithParent, BasicEnum,),).toThrow(InvalidInstanceException),)
+            test.each(nullValues,)("%s", it => expect(() => new InstanceHelper(it, Parent, Child,),).toThrow(NullInstanceException),)
+            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new InstanceHelper(it, Parent, Child,),).toThrow(InvalidInstanceException),)
         },)
         describe("invalid argument #2", () => {
             // @ts-expect-error
-            test.each(nullValues,)("%s", it => expect(() => new CompanionEnumWithGrandParent_TestClassHelper(BasicEnumWithGrandParent, it, BasicEnum,),).toThrow(NullInstanceException),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new CompanionEnumWithGrandParent_TestClassHelper(BasicEnumWithGrandParent, it, BasicEnum,),).toThrow(InvalidInstanceException),)
+            test.each(nullValues,)("%s", it => expect(() => new InstanceHelper(GrandParent, it, Child,),).toThrow(NullInstanceException),)
+            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new InstanceHelper(GrandParent, it, Child,),).toThrow(InvalidInstanceException),)
         },)
         describe("invalid argument #3", () => {
             // @ts-expect-error
-            test.each(nullValues,)("%s", it => expect(() => new CompanionEnumWithGrandParent_TestClassHelper(BasicEnumWithGrandParent, BasicEnumWithParent, it,),).toThrow(NullInstanceException),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new CompanionEnumWithGrandParent_TestClassHelper(BasicEnumWithGrandParent, BasicEnumWithParent, it,),).toThrow(InvalidInstanceException),)
+            test.each(nullValues,)("%s", it => expect(() => new InstanceHelper(GrandParent, Parent, it,),).toThrow(NullInstanceException),)
+            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new InstanceHelper(GrandParent, Parent, it,),).toThrow(InvalidInstanceException),)
         },)
         describe("invalid order", () => {
             // @ts-expect-error
-            test("child, parent, grandparent", () => expect(() => new CompanionEnumWithGrandParent_TestClassHelper(BasicEnum, BasicEnumWithParent, BasicEnumWithGrandParent,),).toThrow(NonExistantKeyException,),)
+            test("child, parent, grandparent", () => expect(() => new InstanceHelper(Child, Parent, GrandParent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("child, grandparent, parent", () => expect(() => new CompanionEnumWithGrandParent_TestClassHelper(BasicEnum, BasicEnumWithGrandParent, BasicEnumWithParent,),).toThrow(NonExistantKeyException,),)
+            test("child, grandparent, parent", () => expect(() => new InstanceHelper(Child, GrandParent, Parent,),).toThrow(NonExistantKeyException,),)
 
             // @ts-expect-error
-            test("parent, child, grandparent", () => expect(() => new CompanionEnumWithGrandParent_TestClassHelper(BasicEnumWithParent, BasicEnum, BasicEnumWithGrandParent,),).toThrow(NonExistantKeyException,),)
+            test("parent, child, grandparent", () => expect(() => new InstanceHelper(Parent, Child, GrandParent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("parent, grandparent, child", () => expect(() => new CompanionEnumWithGrandParent_TestClassHelper(BasicEnumWithParent, BasicEnumWithGrandParent, BasicEnum,),).toThrow(NonExistantKeyException,),)
+            test("parent, grandparent, child", () => expect(() => new InstanceHelper(Parent, GrandParent, Child,),).toThrow(NonExistantKeyException,),)
 
             // @ts-expect-error
-            test("grandparent, child, parent", () => expect(() => new CompanionEnumWithGrandParent_TestClassHelper(BasicEnumWithGrandParent, BasicEnum, BasicEnumWithParent,),).toThrow(NonExistantKeyException,),)
+            test("grandparent, child, parent", () => expect(() => new InstanceHelper(GrandParent, Child, Parent,),).toThrow(NonExistantKeyException,),)
         },)
-        test("valid construction", () => expect(() => new CompanionEnumWithGrandParent_TestClassHelper(BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum,),).not.toThrow(),)
+        test("valid construction", () => expect(() => new InstanceHelper(GrandParent, Parent, Child,),).not.toThrow(),)
         describe("methods", () => {
-            const value = BasicEnum.A,
-                parentValue = BasicEnumWithParent.A,
-                grandParentValue = BasicEnumWithGrandParent.A,
-                greatGrandParentValue = BasicEnumWithGreatGrandParent.A,
+            const value = Child.A,
+                parentValue = Parent.A,
+                grandParentValue = GrandParent.A,
+                greatGrandParentValue = GreatGrandParent.A,
                 name = 'A',
                 ordinal = 0
             let instance: CompanionEnumWithGrandParent_TestClassHelper
-            beforeEach(() => instance = new CompanionEnumWithGrandParent_TestClassHelper(BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum,),)
+            beforeEach(() => instance = new InstanceHelper(GrandParent, Parent, Child,),)
 
             describe("setDefault", () => {
                 test.each(nullValues,)("%s", it => {
@@ -349,87 +362,90 @@ describe("CompanionEnumTest", () => {
         },)
     },)
     describe("CompanionEnumWithGreatGrandParent", () => {
+        /** A simple alias to the {@link CompanionEnumWithGreatGrandParent_TestClassHelper} */
+        const InstanceHelper = CompanionEnumWithGreatGrandParent_TestClassHelper
+
         describe("invalid argument #1", () => {
             // @ts-expect-error
-            test.each(nullValues,)("%s", it => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(it, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum,),).toThrow(NullInstanceException),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(it, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum,),).toThrow(InvalidInstanceException),)
+            test.each(nullValues,)("%s", it => expect(() => new InstanceHelper(it, GrandParent, Parent, Child,),).toThrow(NullInstanceException),)
+            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new InstanceHelper(it, GrandParent, Parent, Child,),).toThrow(InvalidInstanceException),)
         },)
         describe("invalid argument #2", () => {
             // @ts-expect-error
-            test.each(nullValues,)("%s", it => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGreatGrandParent, it, BasicEnumWithGrandParent, BasicEnum,),).toThrow(NullInstanceException),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGreatGrandParent, it, BasicEnumWithGrandParent, BasicEnum,),).toThrow(InvalidInstanceException),)
+            test.each(nullValues,)("%s", it => expect(() => new InstanceHelper(GreatGrandParent, it, GrandParent, Child,),).toThrow(NullInstanceException),)
+            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new InstanceHelper(GreatGrandParent, it, GrandParent, Child,),).toThrow(InvalidInstanceException),)
         },)
         describe("invalid argument #3", () => {
             // @ts-expect-error
-            test.each(nullValues,)("%s", it => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGreatGrandParent, BasicEnumWithGrandParent, it, BasicEnum,),).toThrow(NullInstanceException),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGreatGrandParent, BasicEnumWithGrandParent, it, BasicEnum,),).toThrow(InvalidInstanceException),)
+            test.each(nullValues,)("%s", it => expect(() => new InstanceHelper(GreatGrandParent, GrandParent, it, Child,),).toThrow(NullInstanceException),)
+            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new InstanceHelper(GreatGrandParent, GrandParent, it, Child,),).toThrow(InvalidInstanceException),)
         },)
         describe("invalid argument #4", () => {
             // @ts-expect-error
-            test.each(nullValues,)("%s", it => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGreatGrandParent, BasicEnumWithGrandParent, BasicEnumWithParent, it,),).toThrow(NullInstanceException),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGreatGrandParent, BasicEnumWithGrandParent, BasicEnumWithParent, it,),).toThrow(InvalidInstanceException),)
+            test.each(nullValues,)("%s", it => expect(() => new InstanceHelper(GreatGrandParent, GrandParent, Parent, it,),).toThrow(NullInstanceException),)
+            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new InstanceHelper(GreatGrandParent, GrandParent, Parent, it,),).toThrow(InvalidInstanceException),)
         },)
         describe("invalid order", () => {
             // @ts-expect-error
-            test("child, parent, grandparent, great-grandparent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnum, BasicEnumWithParent, BasicEnumWithGrandParent, BasicEnumWithGreatGrandParent,),).toThrow(NonExistantKeyException,),)
+            test("child, parent, grandparent, great-grandparent", () => expect(() => new InstanceHelper(Child, Parent, GrandParent, GreatGrandParent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("child, parent, great-grandparent, grandparent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnum, BasicEnumWithParent, BasicEnumWithGreatGrandParent, BasicEnumWithGrandParent,),).toThrow(NonExistantKeyException,),)
+            test("child, parent, great-grandparent, grandparent", () => expect(() => new InstanceHelper(Child, Parent, GreatGrandParent, GrandParent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("child, grandparent, parent, great-grandparent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnum, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnumWithGreatGrandParent,),).toThrow(NonExistantKeyException,),)
+            test("child, grandparent, parent, great-grandparent", () => expect(() => new InstanceHelper(Child, GrandParent, Parent, GreatGrandParent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("child, grandparent, great-grandparent, parent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnum, BasicEnumWithGrandParent, BasicEnumWithGreatGrandParent, BasicEnumWithParent,),).toThrow(NonExistantKeyException,),)
+            test("child, grandparent, great-grandparent, parent", () => expect(() => new InstanceHelper(Child, GrandParent, GreatGrandParent, Parent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("child, great-grandparent, grandparent, parent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnum, BasicEnumWithGreatGrandParent, BasicEnumWithGrandParent, BasicEnumWithParent,),).toThrow(NonExistantKeyException,),)
+            test("child, great-grandparent, grandparent, parent", () => expect(() => new InstanceHelper(Child, GreatGrandParent, GrandParent, Parent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("child, great-grandparent, parent, grandparent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnum, BasicEnumWithGreatGrandParent, BasicEnumWithParent, BasicEnumWithGrandParent,),).toThrow(NonExistantKeyException,),)
+            test("child, great-grandparent, parent, grandparent", () => expect(() => new InstanceHelper(Child, GreatGrandParent, Parent, GrandParent,),).toThrow(NonExistantKeyException,),)
 
             // @ts-expect-error
-            test("parent, child, grandparent, great-grandparent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithParent, BasicEnum, BasicEnumWithGrandParent, BasicEnumWithGreatGrandParent,),).toThrow(NonExistantKeyException,),)
+            test("parent, child, grandparent, great-grandparent", () => expect(() => new InstanceHelper(Parent, Child, GrandParent, GreatGrandParent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("parent, child, great-grandparent, grandparent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithParent, BasicEnum, BasicEnumWithGreatGrandParent, BasicEnumWithGrandParent,),).toThrow(NonExistantKeyException,),)
+            test("parent, child, great-grandparent, grandparent", () => expect(() => new InstanceHelper(Parent, Child, GreatGrandParent, GrandParent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("parent, grandparent, child, great-grandparent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithParent, BasicEnumWithGrandParent, BasicEnum, BasicEnumWithGreatGrandParent,),).toThrow(NonExistantKeyException,),)
+            test("parent, grandparent, child, great-grandparent", () => expect(() => new InstanceHelper(Parent, GrandParent, Child, GreatGrandParent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("parent, grandparent, great-grandparent, child", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithParent, BasicEnumWithGrandParent, BasicEnumWithGreatGrandParent, BasicEnum,),).toThrow(NonExistantKeyException,),)
+            test("parent, grandparent, great-grandparent, child", () => expect(() => new InstanceHelper(Parent, GrandParent, GreatGrandParent, Child,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("parent, great-grandparent, child, grandparent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithParent, BasicEnumWithGreatGrandParent, BasicEnum, BasicEnumWithGrandParent,),).toThrow(NonExistantKeyException,),)
+            test("parent, great-grandparent, child, grandparent", () => expect(() => new InstanceHelper(Parent, GreatGrandParent, Child, GrandParent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("parent, great-grandparent, grandparent, child", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithParent, BasicEnumWithGreatGrandParent, BasicEnumWithGrandParent, BasicEnum,),).toThrow(NonExistantKeyException,),)
+            test("parent, great-grandparent, grandparent, child", () => expect(() => new InstanceHelper(Parent, GreatGrandParent, GrandParent, Child,),).toThrow(NonExistantKeyException,),)
 
             // @ts-expect-error
-            test("grandparent, child, parent, great-grandparent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGrandParent, BasicEnum, BasicEnumWithParent, BasicEnumWithGreatGrandParent,),).toThrow(NonExistantKeyException,),)
+            test("grandparent, child, parent, great-grandparent", () => expect(() => new InstanceHelper(GrandParent, Child, Parent, GreatGrandParent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("grandparent, child, great-grandparent, parent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGrandParent, BasicEnum, BasicEnumWithGreatGrandParent, BasicEnumWithParent,),).toThrow(NonExistantKeyException,),)
+            test("grandparent, child, great-grandparent, parent", () => expect(() => new InstanceHelper(GrandParent, Child, GreatGrandParent, Parent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("grandparent, parent, child, great-grandparent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum, BasicEnumWithGreatGrandParent,),).toThrow(NonExistantKeyException,),)
+            test("grandparent, parent, child, great-grandparent", () => expect(() => new InstanceHelper(GrandParent, Parent, Child, GreatGrandParent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("grandparent, parent, great-grandparent, child", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnumWithGreatGrandParent, BasicEnum,),).toThrow(NonExistantKeyException,),)
+            test("grandparent, parent, great-grandparent, child", () => expect(() => new InstanceHelper(GrandParent, Parent, GreatGrandParent, Child,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("grandparent, great-grandparent, parent, child", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGrandParent, BasicEnumWithGreatGrandParent, BasicEnumWithParent, BasicEnum,),).toThrow(NonExistantKeyException,),)
+            test("grandparent, great-grandparent, parent, child", () => expect(() => new InstanceHelper(GrandParent, GreatGrandParent, Parent, Child,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("grandparent, great-grandparent, child, parent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGrandParent, BasicEnumWithGreatGrandParent, BasicEnum, BasicEnumWithParent,),).toThrow(NonExistantKeyException,),)
+            test("grandparent, great-grandparent, child, parent", () => expect(() => new InstanceHelper(GrandParent, GreatGrandParent, Child, Parent,),).toThrow(NonExistantKeyException,),)
 
             // @ts-expect-error
-            test("great-grandparent, child, parent, grandparent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGreatGrandParent, BasicEnum, BasicEnumWithParent, BasicEnumWithGrandParent,),).toThrow(NonExistantKeyException,),)
+            test("great-grandparent, child, parent, grandparent", () => expect(() => new InstanceHelper(GreatGrandParent, Child, Parent, GrandParent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("great-grandparent, child, grandparent, parent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGreatGrandParent, BasicEnum, BasicEnumWithGrandParent, BasicEnumWithParent,),).toThrow(NonExistantKeyException,),)
+            test("great-grandparent, child, grandparent, parent", () => expect(() => new InstanceHelper(GreatGrandParent, Child, GrandParent, Parent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("great-grandparent, parent, child, grandparent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGreatGrandParent, BasicEnumWithParent, BasicEnum, BasicEnumWithGrandParent,),).toThrow(NonExistantKeyException,),)
+            test("great-grandparent, parent, child, grandparent", () => expect(() => new InstanceHelper(GreatGrandParent, Parent, Child, GrandParent,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("great-grandparent, parent, grandparent, child", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGreatGrandParent, BasicEnumWithParent, BasicEnumWithGrandParent, BasicEnum,),).toThrow(NonExistantKeyException,),)
+            test("great-grandparent, parent, grandparent, child", () => expect(() => new InstanceHelper(GreatGrandParent, Parent, GrandParent, Child,),).toThrow(NonExistantKeyException,),)
             // @ts-expect-error
-            test("great-grandparent, grandparent, child, parent", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGreatGrandParent, BasicEnumWithGrandParent, BasicEnum, BasicEnumWithParent,),).toThrow(NonExistantKeyException,),)
+            test("great-grandparent, grandparent, child, parent", () => expect(() => new InstanceHelper(GreatGrandParent, GrandParent, Child, Parent,),).toThrow(NonExistantKeyException,),)
         },)
-        test("valid construction", () => expect(() => new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGreatGrandParent, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum,),).not.toThrow(),)
+        test("valid construction", () => expect(() => new InstanceHelper(GreatGrandParent, GrandParent, Parent, Child,),).not.toThrow(),)
         describe("methods", () => {
-            const value = BasicEnum.A,
-                parentValue = BasicEnumWithParent.A,
-                grandParentValue = BasicEnumWithGrandParent.A,
-                greatGrandParentValue = BasicEnumWithGreatGrandParent.A,
+            const value = Child.A,
+                parentValue = Parent.A,
+                grandParentValue = GrandParent.A,
+                greatGrandParentValue = GreatGrandParent.A,
                 name = 'A',
                 ordinal = 0
             let instance: CompanionEnumWithGreatGrandParent_TestClassHelper
-            beforeEach(() => instance = new CompanionEnumWithGreatGrandParent_TestClassHelper(BasicEnumWithGreatGrandParent, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum,),)
+            beforeEach(() => instance = new InstanceHelper(GreatGrandParent, GrandParent, Parent, Child,),)
 
             describe("setDefault", () => {
                 test.each(nullValues,)("%s", it => {

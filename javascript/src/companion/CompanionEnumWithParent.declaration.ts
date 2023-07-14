@@ -5,18 +5,18 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                                               from "../Enumerable"
-import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                                                    from "../EnumerableConstructor"
-import type {ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, NameOf, OrdinalOf, PossibleEnumerableValue, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, ValueByEnumerableConstructorAndEnumerableNameAndName} from "../Enumerable.types"
-import type {EnumerableWithParent}                                                                                                                                                                                                                                                                                                                                                                     from "../EnumerableWithParent"
-import type {Nullable, NullOrUndefined, PossibleBigInt}                                                                                                                                                                                                                                                                                                                                                from "../general type"
-import type {BasicCompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                                            from "./BasicCompanionEnum.declaration"
+import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                                                                                  from "../Enumerable"
+import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                                                                                       from "../EnumerableConstructor"
+import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, PossibleEnumerableValue, PossibleNameOf, PossibleOrdinalOf, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableOrdinal, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "../Enumerable.types"
+import type {EnumerableWithNullableParent}                                                                                                                                                                                                                                                                                                                                                                                                from "../EnumerableWithNullableParent"
+import type {Nullable, NullOrUndefined, PossibleBigInt}                                                                                                                                                                                                                                                                                                                                                                                   from "../general type"
+import type {CompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                                                                                    from "./CompanionEnum.declaration"
 
-export interface CompanionEnumWithParentDeclaration<ENUMERABLE extends EnumerableWithParent<number, string, PARENT_ENUMERABLE>,
+export interface CompanionEnumWithParentDeclaration<ENUMERABLE extends EnumerableWithNullableParent<PossibleOrdinalOf<number, PARENT_ENUMERABLE>, PossibleNameOf<string, PARENT_ENUMERABLE>, PARENT_ENUMERABLE>,
     ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<ENUMERABLE, CompanionEnumWithParentDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR, PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR>>,
     PARENT_ENUMERABLE extends Enumerable,
-    PARENT_ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUMERABLE, BasicCompanionEnumDeclaration<PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR>>, >
-    extends BasicCompanionEnumDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR> {
+    PARENT_ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUMERABLE, CompanionEnumDeclaration<PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR>>, >
+    extends CompanionEnumDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR> {
 
     get parentInstance(): PARENT_ENUMERABLE_CONSTRUCTOR
 
@@ -48,7 +48,7 @@ export interface CompanionEnumWithParentDeclaration<ENUMERABLE extends Enumerabl
     getValue<const INSTANCE extends ENUMERABLE, >                                                                                                          (instance: Nullable<INSTANCE>,):                                                                                     INSTANCE
 
     /**
-     * Get the {@link EnumerableWithParent instance} by comparing its {@link EnumerableWithParent.parent} value
+     * Get the {@link EnumerableWithNullableParent instance} by comparing its {@link EnumerableWithNullableParent.parent} value
      *
      * @param parentInstance The parent instance to find
      * @throws {InvalidEnumerableException}
@@ -73,7 +73,7 @@ export interface CompanionEnumWithParentDeclaration<ENUMERABLE extends Enumerabl
     getName<const INSTANCE extends ENUMERABLE, >                                                                                                          (instance: Nullable<INSTANCE>,):                                                                                   NameOf<INSTANCE>
 
     /**
-     * Get the {@link EnumerableWithParent.name name} from the {@link EnumerableWithParent parent instance} directly
+     * Get the {@link EnumerableWithNullableParent.name name} from the {@link EnumerableWithNullableParent parent instance} directly
      *
      * @param parentInstance The parent instance to find
      * @throws {InvalidEnumerableException}
@@ -98,7 +98,7 @@ export interface CompanionEnumWithParentDeclaration<ENUMERABLE extends Enumerabl
     getOrdinal<const INSTANCE extends ENUMERABLE, >                                                                                                          (instance: Nullable<INSTANCE>,):                                                                                   OrdinalOf<INSTANCE>
 
     /**
-     * Get the {@link EnumerableWithParent.ordinal ordinal} from the {@link EnumerableWithParent parent instance} directly
+     * Get the {@link EnumerableWithNullableParent.ordinal ordinal} from the {@link EnumerableWithNullableParent parent instance} directly
      *
      * @param parentInstance The parent instance to find
      * @throws {InvalidEnumerableException}
