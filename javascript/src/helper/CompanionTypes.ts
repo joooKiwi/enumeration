@@ -36,7 +36,7 @@ import {isCompanionEnumWithParentByStructure}           from "./isCompanionEnumW
  */
 export abstract class CompanionTypes<const TYPE extends PossibleCompanionTypeName = PossibleCompanionTypeName, >
     extends Enum<CompanionTypesOrdinal, CompanionTypesName> {
-    public static readonly PARENT = new class CompanionTypes_Parent extends CompanionTypes<"parent"> {
+    public static readonly PARENT: CompanionTypes<"parent"> = new class CompanionTypes_Parent extends CompanionTypes<"parent"> {
 
         protected override _getInstance(companionEnum: CompanionEnumDeclaration<Enumerable, any>,): CompanionEnumDeclaration<Enumerable, any> {
             if (isCompanionEnumWithParent(companionEnum,))
@@ -48,7 +48,7 @@ export abstract class CompanionTypes<const TYPE extends PossibleCompanionTypeNam
         }
 
     }("parent",)
-    public static readonly GRAND_PARENT = new class CompanionTypes_Parent extends CompanionTypes<"grandparent"> {
+    public static readonly GRAND_PARENT: CompanionTypes<"grandparent"> = new class CompanionTypes_Parent extends CompanionTypes<"grandparent"> {
 
         protected override _getInstance(companionEnum: CompanionEnumDeclaration<Enumerable, any>,): CompanionEnumDeclaration<Enumerable, any> {
             if (isCompanionEnumWithGrandParent(companionEnum,))
@@ -60,7 +60,7 @@ export abstract class CompanionTypes<const TYPE extends PossibleCompanionTypeNam
         }
 
     }("grandparent",)
-    public static readonly GREAT_GRAND_PARENT = new class CompanionTypes_Parent extends CompanionTypes<"great-grandparent"> {
+    public static readonly GREAT_GRAND_PARENT: CompanionTypes<"great-grandparent"> = new class CompanionTypes_Parent extends CompanionTypes<"great-grandparent"> {
 
         protected override _getInstance(companionEnum: CompanionEnumDeclaration<Enumerable, any>,): CompanionEnumDeclaration<Enumerable, any> {
             if (isCompanionEnumWithGreatGrandParent(companionEnum,))
