@@ -105,6 +105,7 @@ export class EnumWithGrandParent<const ORDINAL extends PossibleOrdinalOf<number,
     /**
      * The grandparent of the current instance
      *
+     * @lazy
      * @throws {NullReferenceException}
      */
     public get grandParent(): GRAND_PARENT {

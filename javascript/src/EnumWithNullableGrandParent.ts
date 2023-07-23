@@ -119,6 +119,7 @@ export class EnumWithNullableGrandParent<const ORDINAL extends PossibleOrdinalOf
     /**
      * The {@link NullOr nullable} parent of the current instance
      *
+     * @lazy
      * @throws {ImpossibleIntegrityException}
      * @throws {NullReferenceException}
      */
@@ -129,6 +130,7 @@ export class EnumWithNullableGrandParent<const ORDINAL extends PossibleOrdinalOf
     /**
      * The {@link NullOr nullable} grandparent of the current instance
      *
+     * @lazy
      * @throws {NullReferenceException}
      */
     public get grandParent(): NullOr<GRAND_PARENT> {
