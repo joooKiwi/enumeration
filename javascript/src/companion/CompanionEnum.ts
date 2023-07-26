@@ -5,8 +5,8 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {CollectionHolder}   from "@joookiwi/collection"
-import {GenericCollectionHolder} from "@joookiwi/collection"
+import type {CollectionHolder, CollectionIterator} from "@joookiwi/collection"
+import {GenericCollectionHolder}                   from "@joookiwi/collection"
 
 import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                        from "../Enumerable"
 import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                             from "../EnumerableConstructor"
@@ -875,8 +875,8 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
 
     //#endregion -------------------- "Get ordinal" methods --------------------
 
-    public* [Symbol.iterator](): IterableIterator<ENUMERABLE> {
-        yield* this.values
+    public [Symbol.iterator](): CollectionIterator<ENUMERABLE> {
+        return this.values[Symbol.iterator]()
     }
 
     public get [Symbol.toStringTag](): CompanionEnumName {
