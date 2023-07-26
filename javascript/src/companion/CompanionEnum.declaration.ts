@@ -5,7 +5,7 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {CollectionHolder} from "@joookiwi/collection"
+import type {CollectionHolder, CollectionIterator} from "@joookiwi/collection"
 
 import type {Nullable, NullOrUndefined, PossibleBigInt, PossibleNumeric, PossibleString}                                                                                                                                                                                                                                                                                        from "../general type"
 import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                        from "../Enumerable"
@@ -367,7 +367,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
     //#endregion -------------------- "Get ordinal" methods --------------------
 
     /** A Javascript way to implements a "for‥of" for a {@link Enumerable instance} instance */
-    [Symbol.iterator](): IterableIterator<ENUMERABLE>
+    [Symbol.iterator](): CollectionIterator<ENUMERABLE>
 
     /**
      * A simple output for the call from {@link Object.prototype.toString.call} [object CompanionEnum] instead of [object Object]
