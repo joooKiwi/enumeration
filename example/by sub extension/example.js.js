@@ -1,7 +1,5 @@
 import {CompanionEnum, Enum} from "@joookiwi/enumerable"
 
-import type {Names2, Ordinals2} from "../type"
-
 export class EnumWithSubExtension
     extends Enum {
 
@@ -25,8 +23,6 @@ export class EnumWithSubExtension
     static E = new EnumWithSubExtension.SubClass2()
     static F = new EnumWithSubExtension()
 
-    public comportment() { return "A comportment by the default Enum" }
-
     static CompanionEnum = class CompanionEnum_EnumWithSubExtension
         extends CompanionEnum {
 
@@ -37,5 +33,7 @@ export class EnumWithSubExtension
         static get get() { return CompanionEnum_EnumWithSubExtension.#instance ??= new CompanionEnum_EnumWithSubExtension() }
 
     }
+
+    comportment() { return "A comportment by the default Enum" }
 
 }

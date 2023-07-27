@@ -21,8 +21,6 @@ export class EnumWithComportement
 
     }()
 
-    aComportement() { console.log("Doing some generic stuff") }
-
     static CompanionEnum = class CompanionEnum_EnumWithComportement
         extends CompanionEnum {
 
@@ -33,5 +31,7 @@ export class EnumWithComportement
         static get get() { return CompanionEnum_EnumWithComportement.#instance ??= new CompanionEnum_EnumWithComportement() }
 
     }
+
+    aComportement() { console.log("Doing some generic stuff") }
 
 }

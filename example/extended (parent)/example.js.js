@@ -12,15 +12,6 @@ export class ExtendedEnum
     static E = new ExtendedEnum()
     static F = new ExtendedEnum()
 
-    #parent
-
-    constructor(parent,) {
-        super()
-        this.#parent = parent
-    }
-
-    get parent() { return this.#parent }
-
     static CompanionEnum = class Companion_ExtendedEnum
         extends CompanionEnumWithParent {
 
@@ -31,5 +22,14 @@ export class ExtendedEnum
         static get get() { return Companion_ExtendedEnum.#instance ??= new Companion_ExtendedEnum() }
 
     }
+
+    #parent
+
+    constructor(parent,) {
+        super()
+        this.#parent = parent
+    }
+
+    get parent() { return this.#parent }
 
 }
