@@ -6,19 +6,19 @@ import type {Names, Ordinals} from "../type"
 export abstract class EnumWithComportement
     extends Enum<Ordinals, Names> {
 
-    public static readonly A = new class extends EnumWithComportement {
+    public static readonly A = new class EnumWithComportement_A extends EnumWithComportement {
 
         public override aComportement() { console.log("Doing stuff from the class \"A\"") }
 
         public override aComportmentDifferentInEachInstance() { console.log("Doing a comportement specific to the class \"A\"") }
 
     }()
-    public static readonly B = new class extends EnumWithComportement {
+    public static readonly B = new class EnumWithComportement_B extends EnumWithComportement {
 
         public override aComportmentDifferentInEachInstance() { console.log("Doing a comportement specific to the class \"B\"") }
 
     }()
-    public static readonly C = new class extends EnumWithComportement {
+    public static readonly C = new class EnumWithComportement_C extends EnumWithComportement {
 
         public override aComportmentDifferentInEachInstance() { console.log("Doing a comportement specific to the class \"C\"") }
 
