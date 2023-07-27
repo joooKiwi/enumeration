@@ -44,7 +44,7 @@ export type NameOf<ENUMERABLE extends Enumerable, > = ENUMERABLE["name"]
  * @see Enumerable.ordinal
  */
 export type OrdinalOf<ENUMERABLE extends Enumerable, > = ENUMERABLE["ordinal"]
-/** The {@link BasicCompanionEnumDeclaration Companion enum} reference of an {@link EnumerableConstructor} */
+/** The {@link CompanionEnumDeclaration Companion enum} reference of an {@link EnumerableConstructor} */
 export type CompanionOf<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, > = ENUMERABLE_CONSTRUCTOR["CompanionEnum"]["get"]
 
 

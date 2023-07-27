@@ -1,4 +1,4 @@
-import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
+import {CompanionEnum, Enum} from "@joookiwi/enumerable"
 
 export class EnumWithSpecificNameAndOrdinal
     extends Enum {
@@ -8,13 +8,13 @@ export class EnumWithSpecificNameAndOrdinal
     static C = new EnumWithSpecificNameAndOrdinal()
 
     static CompanionEnum = class CompanionEnum_EnumWithSpecificNameAndOrdinal
-        extends BasicCompanionEnum {
+        extends CompanionEnum {
 
         static #instance
 
         constructor() { super(EnumWithSpecificNameAndOrdinal,) }
 
-        static get get() { return this.#instance ??= new CompanionEnum_EnumWithSpecificNameAndOrdinal() }
+        static get get() { return CompanionEnum_EnumWithSpecificNameAndOrdinal.#instance ??= new CompanionEnum_EnumWithSpecificNameAndOrdinal() }
 
     }
 

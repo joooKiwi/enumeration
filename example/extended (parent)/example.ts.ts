@@ -1,4 +1,4 @@
-import type {CompanionEnumWithParentSingleton, EnumerableWithParent} from "@joookiwi/enumerable/dist/types"
+import type {CompanionEnumWithParentSingleton, EnumerableWithParent} from "@joookiwi/enumerable"
 import {CompanionEnumWithParent, Enum}                               from "@joookiwi/enumerable"
 
 import type {Names2, Ordinals2} from "../type"
@@ -24,7 +24,7 @@ export class ExtendedEnum
 
         private constructor() { super(ExtendedEnum, SimpleEnum,) }
 
-        public static get get() { return this.#instance ??= new CompanionEnum_ExtendedEnum() }
+        public static get get() { return CompanionEnum_ExtendedEnum.#instance ??= new CompanionEnum_ExtendedEnum() }
 
     }
 

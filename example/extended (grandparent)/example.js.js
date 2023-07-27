@@ -16,6 +16,17 @@ export class SecondExtendedEnum
     static H = new SecondExtendedEnum()
     static I = new SecondExtendedEnum()
 
+    static CompanionEnum = class CompanionEnum_SecondExtendedEnum
+        extends CompanionEnumWithGrandParent {
+
+        static #instance
+
+        constructor() { super(SecondExtendedEnum, ExtendedEnum, SimpleEnum,) }
+
+        static get get() { return CompanionEnum_SecondExtendedEnum.#instance ??= new CompanionEnum_SecondExtendedEnum() }
+
+    }
+
     #parent
     #grandParent
 
@@ -28,16 +39,5 @@ export class SecondExtendedEnum
     get parent() { return this.#parent }
 
     get grandParent() { return this.#grandParent }
-
-    static CompanionEnum = class CompanionEnum_SecondExtendedEnum
-        extends CompanionEnumWithGrandParent {
-
-        static #instance
-
-        constructor() { super(SecondExtendedEnum, ExtendedEnum, SimpleEnum,) }
-
-        static get get() { return this.#instance ??= new CompanionEnum_SecondExtendedEnum() }
-
-    }
 
 }
