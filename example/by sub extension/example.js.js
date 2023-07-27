@@ -1,4 +1,4 @@
-import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
+import {CompanionEnum, Enum} from "@joookiwi/enumerable"
 
 import type {Names2, Ordinals2} from "../type"
 
@@ -28,7 +28,7 @@ export class EnumWithSubExtension
     public comportment() { return "A comportment by the default Enum" }
 
     static CompanionEnum = class CompanionEnum_EnumWithSubExtension
-        extends BasicCompanionEnum {
+        extends CompanionEnum {
 
         static #instance
 

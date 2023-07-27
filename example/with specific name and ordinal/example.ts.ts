@@ -1,4 +1,5 @@
-import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
+import type {CompanionEnumSingleton} from "@joookiwi/enumerable"
+import {CompanionEnum, Enum}         from "@joookiwi/enumerable"
 
 import type {Names, Ordinals} from "../type"
 
@@ -13,8 +14,8 @@ export class EnumWithSpecificNameAndOrdinal<ORDINAL extends Ordinals = Ordinals,
     public static readonly 1: typeof EnumWithSpecificNameAndOrdinal.B
     public static readonly 2: typeof EnumWithSpecificNameAndOrdinal.C
 
-    public static readonly CompanionEnum: BasicCompanionEnum<EnumWithSpecificNameAndOrdinal, typeof EnumWithSpecificNameAndOrdinal> = class CompanionEnum_EnumWithSpecificNameAndOrdinal
-        extends BasicCompanionEnum<EnumWithSpecificNameAndOrdinal, typeof EnumWithSpecificNameAndOrdinal> {
+    public static readonly CompanionEnum: CompanionEnumSingleton<EnumWithSpecificNameAndOrdinal, typeof EnumWithSpecificNameAndOrdinal> = class CompanionEnum_EnumWithSpecificNameAndOrdinal
+        extends CompanionEnum<EnumWithSpecificNameAndOrdinal, typeof EnumWithSpecificNameAndOrdinal> {
 
         static #instance?: CompanionEnum_EnumWithSpecificNameAndOrdinal
 

@@ -1,4 +1,4 @@
-import type {CompanionEnumWithParentSingleton, EnumerableWithParent} from "@joookiwi/enumerable/dist/types"
+import type {CompanionEnumWithParentSingleton, EnumerableWithParent} from "@joookiwi/enumerable"
 import {CompanionEnumWithParent, Enum}                               from "@joookiwi/enumerable"
 
 import type {Names2, Ordinals2} from "../type"

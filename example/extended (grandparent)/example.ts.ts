@@ -1,4 +1,4 @@
-import type {CompanionEnumWithGrandParentSingleton, EnumerableWithGrandParent} from "@joookiwi/enumerable/dist/types"
+import type {CompanionEnumWithGrandParentSingleton, EnumerableWithGrandParent} from "@joookiwi/enumerable"
 import {CompanionEnumWithGrandParent, Enum}                                    from "@joookiwi/enumerable"
 
 import type {Names3, Ordinals3} from "../type"

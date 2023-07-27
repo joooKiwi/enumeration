@@ -1,5 +1,5 @@
-import type {BasicCompanionEnumSingleton} from "@joookiwi/enumerable/dist/types"
-import {BasicCompanionEnum, Enum}         from "@joookiwi/enumerable"
+import type {CompanionEnumSingleton} from "@joookiwi/enumerable/dist/types"
+import {CompanionEnum, Enum}         from "@joookiwi/enumerable"
 
 import type {Names, Ordinals} from "../type"
 
@@ -10,8 +10,8 @@ export class SimpleEnum
     public static readonly B = new SimpleEnum()
     public static readonly C = new SimpleEnum()
 
-    public static readonly CompanionEnum: BasicCompanionEnumSingleton<SimpleEnum, typeof SimpleEnum> = class CompanionEnum_SimpleEnum
-        extends BasicCompanionEnum<SimpleEnum, typeof SimpleEnum> {
+    public static readonly CompanionEnum: CompanionEnumSingleton<SimpleEnum, typeof SimpleEnum> = class CompanionEnum_SimpleEnum
+        extends CompanionEnum<SimpleEnum, typeof SimpleEnum> {
 
         static #instance?: CompanionEnum_SimpleEnum
 

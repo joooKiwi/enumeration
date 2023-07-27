@@ -1,4 +1,4 @@
-import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
+import {CompanionEnum, Enum} from "@joookiwi/enumerable"
 
 export class EnumWithSpecificNameAndOrdinal
     extends Enum {
@@ -8,7 +8,7 @@ export class EnumWithSpecificNameAndOrdinal
     static C = new EnumWithSpecificNameAndOrdinal()
 
     static CompanionEnum = class CompanionEnum_EnumWithSpecificNameAndOrdinal
-        extends BasicCompanionEnum {
+        extends CompanionEnum {
 
         static #instance
 

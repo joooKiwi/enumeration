@@ -1,4 +1,4 @@
-import {BasicCompanionEnum, Enum} from "@joookiwi/enumerable"
+import {CompanionEnum, Enum} from "@joookiwi/enumerable"
 
 export class EnumWithComportement
     extends Enum {
@@ -24,7 +24,7 @@ export class EnumWithComportement
     aComportement() { console.log("Doing some generic stuff") }
 
     static CompanionEnum = class CompanionEnum_EnumWithComportement
-        extends BasicCompanionEnum {
+        extends CompanionEnum {
 
         static #instance
 
