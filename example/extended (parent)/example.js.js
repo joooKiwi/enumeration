@@ -28,7 +28,7 @@ export class ExtendedEnum
 
         constructor() { super(ExtendedEnum, SimpleEnum,) }
 
-        static get get() { return this.#instance ??= new Companion_ExtendedEnum() }
+        static get get() { return Companion_ExtendedEnum.#instance ??= new Companion_ExtendedEnum() }
 
     }
 

@@ -21,7 +21,7 @@ export class EnumWithSpecificNameAndOrdinal<ORDINAL extends Ordinals = Ordinals,
 
         private constructor() { super(EnumWithSpecificNameAndOrdinal,) }
 
-        public static get get() { return this.#instance ??= new CompanionEnum_EnumWithSpecificNameAndOrdinal() }
+        public static get get() { return CompanionEnum_EnumWithSpecificNameAndOrdinal.#instance ??= new CompanionEnum_EnumWithSpecificNameAndOrdinal() }
 
     }
 

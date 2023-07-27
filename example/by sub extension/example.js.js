@@ -34,7 +34,7 @@ export class EnumWithSubExtension
 
         constructor() { super(EnumWithSubExtension,) }
 
-        static get get() { return this.#instance ??= new CompanionEnum_EnumWithSubExtension() }
+        static get get() { return CompanionEnum_EnumWithSubExtension.#instance ??= new CompanionEnum_EnumWithSubExtension() }
 
     }
 

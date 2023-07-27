@@ -19,7 +19,7 @@ export class EnumWithExcluded
 
         private constructor() { super(EnumWithExcluded,) }
 
-        public static get get() { return this.#instance ??= new CompanionEnum_EnumWithExcluded() }
+        public static get get() { return CompanionEnum_EnumWithExcluded.#instance ??= new CompanionEnum_EnumWithExcluded() }
 
 
         protected override readonly _EXCLUDED_NAMES = ['D',]

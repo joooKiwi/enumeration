@@ -29,11 +29,11 @@ export class EnumWithSubExtension
     public static readonly CompanionEnum: CompanionEnumSingleton<EnumWithSubExtension, typeof EnumWithSubExtension> = class CompanionEnum_EnumWithSubExtension
         extends CompanionEnum<EnumWithSubExtension, typeof EnumWithSubExtension> {
 
-        static #instance
+        static #instance?: CompanionEnum_EnumWithSubExtension
 
         private constructor() { super(EnumWithSubExtension,) }
 
-        public static get get() { return this.#instance ??= new CompanionEnum_EnumWithSubExtension() }
+        public static get get() { return CompanionEnum_EnumWithSubExtension.#instance ??= new CompanionEnum_EnumWithSubExtension() }
 
     }
 

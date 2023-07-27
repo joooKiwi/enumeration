@@ -14,7 +14,7 @@ export class SimpleEnum
 
         constructor() { super(SimpleEnum,) }
 
-        static get get() { return this.#instance ??= new CompanionEnum_SimpleEnum() }
+        static get get() { return CompanionEnum_SimpleEnum.#instance ??= new CompanionEnum_SimpleEnum() }
 
     }
 

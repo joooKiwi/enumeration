@@ -31,7 +31,7 @@ export abstract class EnumWithComportement
 
         private constructor() { super(EnumWithComportement,) }
 
-        public static get get() { return this.#instance ??= new CompanionEnum_EnumWithComportement() }
+        public static get get() { return CompanionEnum_EnumWithComportement.#instance ??= new CompanionEnum_EnumWithComportement() }
 
     }
 

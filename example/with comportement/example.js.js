@@ -30,7 +30,7 @@ export class EnumWithComportement
 
         constructor() { super(EnumWithComportement,) }
 
-        static get get() { return this.#instance ??= new CompanionEnum_EnumWithComportement() }
+        static get get() { return CompanionEnum_EnumWithComportement.#instance ??= new CompanionEnum_EnumWithComportement() }
 
     }
 

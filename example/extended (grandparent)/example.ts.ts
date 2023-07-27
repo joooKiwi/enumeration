@@ -29,7 +29,7 @@ export class SecondExtendedEnum
 
         private constructor() { super(SecondExtendedEnum, ExtendedEnum, SimpleEnum,) }
 
-        public static get get() { return this.#instance ??= new CompanionEnum_SecondExtendedEnum() }
+        public static get get() { return CompanionEnum_SecondExtendedEnum.#instance ??= new CompanionEnum_SecondExtendedEnum() }
 
     }
 

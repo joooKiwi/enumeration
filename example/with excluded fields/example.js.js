@@ -16,7 +16,7 @@ export class EnumWithExcluded
 
         constructor() { super(EnumWithExcluded,) }
 
-        static get get() { return this.#instance ??= new CompanionEnum_EnumWithExcluded() }
+        static get get() { return CompanionEnum_EnumWithExcluded.#instance ??= new CompanionEnum_EnumWithExcluded() }
 
 
         _EXCLUDED_NAMES = ['D',]

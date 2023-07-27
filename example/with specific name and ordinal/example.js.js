@@ -14,7 +14,7 @@ export class EnumWithSpecificNameAndOrdinal
 
         constructor() { super(EnumWithSpecificNameAndOrdinal,) }
 
-        static get get() { return this.#instance ??= new CompanionEnum_EnumWithSpecificNameAndOrdinal() }
+        static get get() { return CompanionEnum_EnumWithSpecificNameAndOrdinal.#instance ??= new CompanionEnum_EnumWithSpecificNameAndOrdinal() }
 
     }
 

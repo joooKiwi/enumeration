@@ -36,7 +36,7 @@ export class SecondExtendedEnum
 
         constructor() { super(SecondExtendedEnum, ExtendedEnum, SimpleEnum,) }
 
-        static get get() { return this.#instance ??= new CompanionEnum_SecondExtendedEnum() }
+        static get get() { return CompanionEnum_SecondExtendedEnum.#instance ??= new CompanionEnum_SecondExtendedEnum() }
 
     }
 
