@@ -14,7 +14,7 @@ export interface Enumerable<ORDINAL extends number = number, NAME extends string
      * Get the name on the current enum instance (not to be confused with the class name)
      *
      * @failWhenCalledDuringTheConstruction
-     * @throws {NullReferenceException} The instance has been called during the construction or was not found in the {@link BasicCompanionEnumDeclaration.values companion values}
+     * @throws {NullReferenceException} The instance has been called during the construction or was not found in the {@link CompanionEnumDeclaration.values companion values}
      */
     get name(): NAME
 
