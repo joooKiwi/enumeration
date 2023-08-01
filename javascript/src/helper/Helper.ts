@@ -6,18 +6,18 @@
  ******************************************************************************/
 
 import type {CompanionEnumDeclaration}                       from "../companion"
-import type {NullOr, PossibleString}                         from "../general type"
+import type {NullOr}                                         from "../general type"
 import type {Enumerable}                                     from "../Enumerable"
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "../Enumerable.types"
 import type {PossibleCompanionTypeName}                      from "./CompanionTypes.types"
 
-import {Enum}                                           from "../Enum"
-import {EnumConstants}                                  from "../EnumConstants"
-import {CompanionEnum}                                  from "../companion/CompanionEnum"
-import {InvalidEnumerableException}                     from "../exception/InvalidEnumerableException"
-import {InvalidInstanceException}                       from "../exception/InvalidInstanceException"
-import {NullReferenceException}                         from "../exception/NullReferenceException"
-import {CompanionTypes}                                 from "./CompanionTypes"
+import {Enum}                       from "../Enum"
+import {EnumConstants}              from "../EnumConstants"
+import {CompanionEnum}              from "../companion/CompanionEnum"
+import {InvalidEnumerableException} from "../exception/InvalidEnumerableException"
+import {InvalidInstanceException}   from "../exception/InvalidInstanceException"
+import {NullReferenceException}     from "../exception/NullReferenceException"
+import {CompanionTypes}             from "./CompanionTypes"
 
 /**
  * A simple namespace to encapsulate the methods applicable
@@ -74,7 +74,7 @@ export namespace Helper {
             return getValue(instance, value(), type,)
 
         if (value instanceof String)
-            return getValueFromName(instance, value.valueOf(), CompanionTypes.CompanionEnum.get.getValueByType(type,), value,)
+            return getValueFromName(instance, value.valueOf(), CompanionTypes.CompanionEnum.get.getValueByType(type,),)
         return value
     }
 
@@ -115,7 +115,7 @@ export namespace Helper {
             return getNullableValue(instance, value(), type,)
 
         if (value instanceof String)
-            return getValueFromName<INSTANCE>(instance, value.valueOf(), CompanionTypes.CompanionEnum.get.getValueByType(type,), value,)
+            return getValueFromName<INSTANCE>(instance, value.valueOf(), CompanionTypes.CompanionEnum.get.getValueByType(type,),)
         return value
     }
 
@@ -133,7 +133,7 @@ export namespace Helper {
      * @internal
      */
     export function getValueFromInstanceName<const INSTANCE extends Enumerable, >(instance: Enumerable, type: PossibleCompanionTypeName,): INSTANCE {
-        return getValueFromName(instance, instance.name, CompanionTypes.CompanionEnum.get.getValueByType(type,), instance,)
+        return getValueFromName(instance, instance.name, CompanionTypes.CompanionEnum.get.getValueByType(type,),)
     }
 
     /**
@@ -148,7 +148,7 @@ export namespace Helper {
      *
      * @private
      */
-    function getValueFromName<const INSTANCE extends Enumerable, >(instance: Enumerable, name: string, type: CompanionTypes, originalValue: PossibleString | Enumerable = name,): INSTANCE {
+    function getValueFromName<const INSTANCE extends Enumerable, >(instance: Enumerable, name: string, type: CompanionTypes,): INSTANCE {
         const companionEnum = type.getInstance(instance,)
         try {
             return companionEnum.getValue(name,)
@@ -157,7 +157,7 @@ export namespace Helper {
                 || exception instanceof InvalidInstanceException
                 || exception instanceof NullReferenceException)
                 throw new NullReferenceException(`There were an error while retrieving the parent value on the "${companionEnum.constructor.name}" companion enum.`, instance, exception,)
-            throw new NullReferenceException(`An unknown error has been thrown while retrieving parent value on the "${instance.constructor}.${name}".`, originalValue, exception as Error,)
+            throw exception
         }
     }
 

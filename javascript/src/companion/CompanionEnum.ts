@@ -284,7 +284,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         } catch (exception) {
             if (exception instanceof InvalidEnumerableException)
                 throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT". The value ${defaultValue} is not a valid instance received by the companion enum.`, exception,)
-            throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT". An unknown exception was thrown.`, exception as never,)
+            throw exception
         }
     }
 
@@ -324,7 +324,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
                 throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value "${defaultName}" is an impossible ordinal value.`, exception,)
             if (exception instanceof InvalidEnumerableException)
                 throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value "${this.instance.name}.${defaultName}" is not a valid instance for the companion enum.`, exception,)
-            throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". An unknown exception was thrown.`, exception as never,)
+            throw exception
         }
     }
 
@@ -372,7 +372,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
                 throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". The value "${this.instance.name}.${defaultOrdinal}" is not a valid instance for the companion enum.`, exception,)
             if (exception instanceof InvalidInstanceException)
                 throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". The value "${this.instance.name}.${defaultOrdinal}" is not an Enumerable valid for the companion enum.`, exception,)
-            throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". An unknown exception was thrown.`, exception as never,)
+            throw exception
         }
     }
 

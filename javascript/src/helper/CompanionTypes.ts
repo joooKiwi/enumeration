@@ -130,7 +130,7 @@ export abstract class CompanionTypes<const TYPE extends PossibleCompanionTypeNam
                 || exception instanceof InvalidInstanceException
                 || exception instanceof NullReferenceException)
                 throw new NullReferenceException("There were an error while retrieving the companion enum", instance, exception,)
-            throw new NullReferenceException(`An unknown error has been thrown while retrieving the companion enum on the "${instance.constructor}.${instance.name}".`, instance, exception as Error,)
+            throw exception
         }
     }
 
