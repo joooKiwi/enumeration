@@ -267,7 +267,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {InvalidEnumerableException}
      */
     #initializeDefaultByEnumerable(): boolean {
-        let defaultValue: unknown // Nullable<ENUMERABLE>
+        let defaultValue: Nullable<ENUMERABLE>
         try {
             defaultValue = this._DEFAULT
         } catch (exception) {
@@ -296,7 +296,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {InvalidEnumerableException}
      */
     #initializeDefaultByName(): boolean {
-        let defaultName: unknown // Nullable<PossibleString>
+        let defaultName: Nullable<PossibleString>
         try {
             defaultName = this._DEFAULT_NAME
         } catch (exception) {
@@ -336,7 +336,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {InvalidEnumerableException}
      */
     #initializeDefaultByOrdinal(): boolean {
-        let defaultOrdinal: unknown // Nullable<PossibleNumeric>
+        let defaultOrdinal: Nullable<PossibleNumeric>
         try {
             defaultOrdinal = this._DEFAULT_ORDINAL
         } catch (exception) {
