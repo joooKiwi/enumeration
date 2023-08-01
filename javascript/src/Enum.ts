@@ -91,7 +91,7 @@ export abstract class Enum<const ORDINAL extends number = number, const NAME ext
 
     /**
      * Get the {@link Enumerable enumerable} {@link Enumerable.name name}
-     * by utilising the {@link CompanionEnumDeclaration.values companion values}
+     * by utilizing the {@link CompanionEnumDeclaration.values companion values}
      *
      * @throws {NullReferenceException} The current instance was not found in the {@link CompanionEnumDeclaration.values companion values}
      */

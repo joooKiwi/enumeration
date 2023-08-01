@@ -22,6 +22,7 @@ export interface CompanionEnumWithGrandParentDeclaration<ENUMERABLE extends Enum
     GRAND_PARENT_ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<GRAND_PARENT_ENUMERABLE, CompanionEnumDeclaration<GRAND_PARENT_ENUMERABLE, GRAND_PARENT_ENUMERABLE_CONSTRUCTOR>>, >
     extends CompanionEnumWithParentDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR, PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR> {
 
+    /** The {@link EnumerableWithNullableGrandParent} constructor (or type / class in other languages) */
     get grandParentInstance(): GRAND_PARENT_ENUMERABLE_CONSTRUCTOR
 
     //#region -------------------- Default getter & setter methods --------------------

@@ -18,8 +18,8 @@ export interface CompanionEnumWithParentDeclaration<ENUMERABLE extends Enumerabl
     PARENT_ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUMERABLE, CompanionEnumDeclaration<PARENT_ENUMERABLE, PARENT_ENUMERABLE_CONSTRUCTOR>>, >
     extends CompanionEnumDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR> {
 
+    /** The {@link EnumerableWithNullableParent} constructor (or type / class in other languages) */
     get parentInstance(): PARENT_ENUMERABLE_CONSTRUCTOR
-
 
     //#region -------------------- Default getter & setter methods --------------------
 

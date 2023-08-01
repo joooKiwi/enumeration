@@ -16,7 +16,7 @@ import type {CompanionEnumName}                                                 
 export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
     ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<ENUMERABLE, CompanionEnumDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR>>, > {
 
-    /** The {@link Enumerable} constructor (or class in other languages) */
+    /** The {@link Enumerable} constructor (or type / class in other languages) */
     get instance(): ENUMERABLE_CONSTRUCTOR
 
     //#region -------------------- Default getter & setter methods --------------------

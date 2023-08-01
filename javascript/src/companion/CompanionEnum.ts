@@ -229,7 +229,6 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
             everyEnumerable.push(value as ENUMERABLE,)
         }
 
-
         EnumConstants.ORDINALS_MAP.set(this, this.#ordinals = new GenericCollectionHolder(freeze(everyOrdinals,),) as CollectionHolder<OrdinalOf<ENUMERABLE>>,)
         EnumConstants.NAMES_MAP.set(this, this.#names = new GenericCollectionHolder(freeze(everyNames,),) as CollectionHolder<NameOf<ENUMERABLE>>,)
         EnumConstants.VALUES_MAP.set(this, this.#values = new GenericCollectionHolder(freeze(everyEnumerable,),) as CollectionHolder<ENUMERABLE>,)
@@ -257,7 +256,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         if (this.#initializeDefaultByOrdinal())
             return
 
-        throw new NullEnumerableException(`Unable to get the default value. There is no default stored for "${this.instance.name}".\n\tTry using the the "_DEFAULT", "_DEFAULT_NAME" or "_DEFAULT_ORDINAL" (at declaration), call "${this.instance.name}.default = value" or call "Enum.setDefaultOn(instance, value)" beforehand.`,)
+        throw new NullEnumerableException(`Unable to get the default value. There is no default stored for "${this.instance.name}".\n\tTry using the the "_DEFAULT", "_DEFAULT_NAME" or "_DEFAULT_ORDINAL" (at declaration)\n\tor call "${this.instance.name}.default = value".`,)
     }
 
     /**
