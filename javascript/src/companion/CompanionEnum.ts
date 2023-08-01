@@ -381,24 +381,24 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * Validate that the {@link nameOrOrdinal name or ordinal received} is not <b>null</b> and has the structure of an {@link Enumerable}
      *
      * @param nameOrOrdinal The name or ordinal to retrieve
-     * @param valueType The type of value to retrieve (from either {@link _getValue}, {@link _getName} or {@link _getOrdinal})
      * @throws {NullReferenceException} The {@link nameOrOrdinal name or ordinal received} is not present in the {@link instance}
      * @throws {NullReferenceException} The value from reflection is <b>null</b>
      * @throws {InvalidInstanceException} The value is not in the structure of an {@link Enumerable}
      */
-    #validateIsEnumerableFromReflection(nameOrOrdinal: | string | number, valueType: ValueType,): Enumerable {
-        if (!has(this.instance, nameOrOrdinal,))
-            throw new NullReferenceException(`No ${valueType} exist in "${this.instance.name}.${nameOrOrdinal}".`, nameOrOrdinal,)
+    #validateIsEnumerableFromReflection(nameOrOrdinal: | string | number,): Enumerable {
+        const instance = this.instance
+        if (!has(instance, nameOrOrdinal,))
+            throw new NullReferenceException(`No value exist in "${instance.name}.${nameOrOrdinal}".`, nameOrOrdinal,)
 
-        const value = get(this.instance, nameOrOrdinal,)
+        const value = get(instance, nameOrOrdinal,)
         if (value == null)
-            throw new NullReferenceException(`The ${valueType} "${this.instance.name}.${nameOrOrdinal}" cannot be a null reference."`, nameOrOrdinal,)
+            throw new NullReferenceException(`The value "${instance.name}.${nameOrOrdinal}" cannot be a null reference."`, nameOrOrdinal,)
 
         if (isEnum(value))
             return value
         if (isEnumByStructure(value))
             return value as Enumerable
-        throw new InvalidInstanceException(`The reference "${this.instance.name}.${nameOrOrdinal}" is not instance of Enumerable.`, nameOrOrdinal,)
+        throw new InvalidInstanceException(`The reference "${instance.name}.${nameOrOrdinal}" is not instance of Enumerable.`, nameOrOrdinal,)
     }
 
 
@@ -561,7 +561,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {NullReferenceException}
      */
     protected _getValueByString(name: string, originalName: PossibleString,): ENUMERABLE {
-        return this._getValueByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidStringValue(name, originalName,), "value",),)
+        return this._getValueByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidStringValue(name, originalName,),),)
     }
 
     /**
@@ -607,7 +607,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {NullReferenceException}
      */
     protected _getValueByNumeric(ordinal: number, originalOrdinal: PossibleNumeric,): ENUMERABLE {
-        return this._getValueByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidNumericValue(ordinal, originalOrdinal,), "value",),)
+        return this._getValueByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidNumericValue(ordinal, originalOrdinal,),),)
     }
 
     /**
@@ -705,7 +705,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {NullReferenceException}
      */
     protected _getNameByString(name: string, originalName: PossibleString,) {
-        return this._getNameByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidStringValue(name, originalName,), "name",),)
+        return this._getNameByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidStringValue(name, originalName,),),)
     }
 
     /**
@@ -751,7 +751,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {NullReferenceException}
      */
     protected _getNameByNumeric(ordinal: number, originalOrdinal: PossibleNumeric,) {
-        return this._getNameByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidNumericValue(ordinal, originalOrdinal,), "name",),)
+        return this._getNameByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidNumericValue(ordinal, originalOrdinal,),),)
     }
 
     /**
@@ -831,7 +831,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws NullReferenceException
      */
     protected _getOrdinalByString(name: string, originalName: PossibleString,): OrdinalOf<ENUMERABLE> {
-        return this._getOrdinalByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidStringValue(name, originalName,), "name",),)
+        return this._getOrdinalByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidStringValue(name, originalName,),),)
     }
 
     /**
@@ -876,7 +876,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws NullReferenceException
      */
     protected _getOrdinalByNumeric(ordinal: number, originalOrdinal: PossibleNumeric,): OrdinalOf<ENUMERABLE> {
-        return this._getOrdinalByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidNumericValue(ordinal, originalOrdinal,), "name",),)
+        return this._getOrdinalByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidNumericValue(ordinal, originalOrdinal,),),)
     }
 
     /**
@@ -904,5 +904,4 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
 
 }
 
-type ValueType = | "value" | "name" | "ordinal"
 type MethodCalledName = `get${| "Value" | "Name" | "Ordinal"}`
