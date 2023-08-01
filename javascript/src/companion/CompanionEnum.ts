@@ -202,11 +202,14 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         let currentOrdinal = 0
         let everyFieldIndex = -1
         while (++everyFieldIndex < everyFieldSize) {
-            const [name, property,] = everyFields[everyFieldIndex]!
+            const field = everyFields[everyFieldIndex]!
+            const property = field[1]
             if (property.get != null)
                 continue
             if (property.set != null)
                 continue
+
+            const name = field[0]
             if (name === prototypeName)
                 continue
             if(excludedNames.hasOne(name))
