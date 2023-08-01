@@ -124,7 +124,10 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     }
 
     public set default(value: Nullable<PossibleEnumerableValue<ENUMERABLE>>,) {
-        EnumConstants.DEFAULT_MAP.set(this, this.#default = value == null ? null : this._getValue(value),)
+        if (value == null)
+            EnumConstants.DEFAULT_MAP.set(this, this.#default = null,)
+        else
+            EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValue(value),)
     }
 
     public setDefault(value: NullOrUndefined,): this
