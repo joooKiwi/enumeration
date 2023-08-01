@@ -5,8 +5,8 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {CollectionHolder, CollectionIterator} from "@joookiwi/collection"
-import {GenericCollectionHolder}                   from "@joookiwi/collection"
+import type {CollectionHolder, CollectionIterator}      from "@joookiwi/collection"
+import {EmptyCollectionHolder, GenericCollectionHolder} from "@joookiwi/collection"
 
 import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                        from "../Enumerable"
 import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                             from "../EnumerableConstructor"
@@ -45,6 +45,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     #names?: CollectionHolder<NameOf<ENUMERABLE>>
     #ordinals?: CollectionHolder<OrdinalOf<ENUMERABLE>>
     #default?: NullOr<ENUMERABLE>
+    #excludedNames?: CollectionHolder<string>
 
 
     /**
@@ -56,7 +57,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * {@link CompanionEnum.getOrdinal getOrdinal()}, {@link CompanionEnum.ordinals get ordinals}
      * {@link CompanionEnum.getName getName()} or {@link CompanionEnum.names get names}
      */
-    protected readonly _EXCLUDED_NAMES?: Nullable<readonly Nullable<string>[]>
+    protected readonly _EXCLUDED_NAMES?: Nullable<Iterable<Nullable<string>>>
 
     /**
      * The default {@link Enumerable enumerable value} stored for the current instance at the initialization
@@ -98,6 +99,18 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
 
     public get instance(): ENUMERABLE_CONSTRUCTOR {
         return this.#instance
+    }
+
+
+    protected get _excludedNames(): CollectionHolder<string> {
+        return this.#excludedNames ??= this.#__excludedNames
+    }
+
+    get #__excludedNames(): CollectionHolder<string> {
+        const excludedNames = this._EXCLUDED_NAMES
+        if (excludedNames == null)
+            return EmptyCollectionHolder.get
+        return new GenericCollectionHolder(excludedNames,).filterNotNull()
     }
 
 
@@ -176,7 +189,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
             numberOnlyRegex = EnumConstants.NUMBER_ONLY_REGEX,
             ordinalMap = EnumConstants.ORDINAL_MAP,
             nameMap = EnumConstants.NAME_MAP,
-            excludedNames = this._EXCLUDED_NAMES,
+            excludedNames = this._excludedNames,
             everyFields = entries(getOwnPropertyDescriptors(instance,),),
             everyOrdinals = [] as OrdinalOf<ENUMERABLE>[],
             everyNames = [] as NameOf<ENUMERABLE>[],
@@ -193,7 +206,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
                 continue
             if (name === prototypeName)
                 continue
-            if (excludedNames?.includes(name))
+            if(excludedNames.hasOne(name))
                 continue
             if (numberOnlyRegex.test(name))
                 continue
