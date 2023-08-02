@@ -7,6 +7,7 @@
 
 export {ClassCastException}        from "./ClassCastException"
 export {IllegalAccessException}    from "./IllegalAccessException"
+export {IllegalArgumentException}  from "./IllegalArgumentException"
 export {IndexOutOfBoundsException} from "./IndexOutOfBoundsException"
 export {NoSuchElementException}    from "./NoSuchElementException"
 export {NullPointerException}      from "./NullPointerException"
