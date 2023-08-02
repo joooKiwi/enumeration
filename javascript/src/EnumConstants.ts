@@ -82,13 +82,13 @@ export namespace EnumConstants {
     /**
      * The insensitive hint used on the {@link Enumerable}{@link Symbol.toPrimitive [Symbol.toPrimitive]}()
      *
-     * @uniqueJavascriptVariable
+     * @uniqueToJavascript
      */
     export const TO_PRIMITIVE_VALUES = /string|number|default/i
     /**
      * The simple <i>prototype</i> name of a class
      *
-     * @uniqueJavascriptVariable
+     * @uniqueToJavascript
      */
     export const PROTOTYPE_NAME = "prototype"
     // export const RESERVED_JAVASCRIPT_FUNCTION_NAMES = ["prototype", "name", "length", "apply", "call", "bind", "caller",] as const
@@ -129,14 +129,14 @@ export namespace EnumConstants {
     /**
      * Tell that the {@link Enumerable} reference will be similar to another {@link Enumerable.name}
      *
-     * @uniqueJavascriptVariable
+     * @uniqueToJavascript
      */
     export const ENUM_REFERENCE_BY_ITS_NAME_SYMBOL = Symbol("Enum reference by its name",)
 
     /**
      * Tell that the {@link Enumerable} reference will be <b>null</b>
      *
-     * @uniqueJavascriptVariable
+     * @uniqueToJavascript
      */
     export const NULL_ENUM_REFERENCE_SYMBOL = Symbol("Null enum reference",)
 
@@ -146,14 +146,14 @@ export namespace EnumConstants {
     /**
      * The simple {@link Symbol.toStringTag} of an {@link Enum}
      *
-     * @uniqueJavascriptVariable
+     * @uniqueToJavascript
      */
     export const ENUM_TO_STRING_TAG = "Enum"
     /**
      * The simple {@link Symbol.toStringTag} of a companion enum
      * ({@link CompanionEnumDeclaration}, {@link CompanionEnumWithParentDeclaration}, {@link CompanionEnumWithGrandParentDeclaration}, {@link CompanionEnumWithGreatGrandParentDeclaration})
      *
-     * @uniqueJavascriptVariable
+     * @uniqueToJavascript
      */
     export const COMPANION_ENUM_TO_STRING_TAG = "CompanionEnum"
 
