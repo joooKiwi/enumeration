@@ -15,6 +15,8 @@ import {ClassCastException} from "./generic/ClassCastException"
  * {@link CompanionEnumDeclaration.getValue getValue}, {@link CompanionEnumDeclaration.getName getName}
  * and {@link CompanionEnumDeclaration.getOrdinal getOrdinal}
  * that the value received was not a {@link String}, {@link Number}, {@link BigInt} or {@link Enumerable}
+ *
+ * @uniqueToJavascript
  */
 export class UnhandledValueException<const T, const ERROR extends Error = never, >
     extends ClassCastException<ERROR>
