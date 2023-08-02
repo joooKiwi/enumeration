@@ -414,9 +414,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      *
      * @param value The value to validate
      * @param originalValue The original value received in a method ({@link _getValue}, {@link _getName} or {@link _getOrdinal})
-     * @throws {ForbiddenNumericException} The {@link value} is one of the {@link EnumConstants.EDGE_CASE_NUMERIC_NAME}
-     * @throws {ForbiddenInheritedEnumerableMemberException} The {@link value} is one of the {@link EnumConstants.INHERITED_ENUMERABLE_MEMBERS}
-     * @throws {ImpossibleOrdinalException} The {@link value} is under 0, over {@link Number.MAX_VALUE} or a floating {@link Number}
+     * @throws {ForbiddenNumericException} The {@link value} is one of the {@link EnumConstants.EDGE_CASE_NUMERIC_NAME edge-case numeric name}
+     * @throws {ForbiddenInheritedEnumerableMemberException} The {@link value} is one of the {@link EnumConstants.INHERITED_ENUMERABLE_MEMBERS inherited enumerable member}
+     * @throws {ImpossibleOrdinalException} The {@link value} is under 0, over {@link Number.MAX_VALUE max value} or a floating {@link Number}
      */
     #getValidStringValue(value: string, originalValue: PossibleString,): string {
         if (EnumConstants.EDGE_CASE_NUMERIC_NAME.includes(value as never,))
