@@ -123,8 +123,9 @@ export abstract class CompanionTypes<const TYPE extends PossibleCompanionTypeNam
      * @throws {NullReferenceException}
      */
     public getInstance(instance: Enumerable,): CompanionEnumDeclaration<Enumerable, any> {
+        let companionEnum: CompanionEnumDeclaration<Enumerable, any>
         try {
-            return this._getInstance(getCompanion(getLastPrototype(instance,),),)
+            companionEnum = getCompanion(getLastPrototype(instance,),)
         } catch (exception) {
             if (exception instanceof InvalidEnumerableException
                 || exception instanceof InvalidInstanceException
@@ -132,6 +133,7 @@ export abstract class CompanionTypes<const TYPE extends PossibleCompanionTypeNam
                 throw new NullReferenceException("There were an error while retrieving the companion enum", instance, exception,)
             throw exception
         }
+        return this._getInstance(companionEnum,)
     }
 
 }
