@@ -517,6 +517,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         return this._getValue(value,)
     }
 
+    //#endregion -------------------- "Get value" methods --------------------
+    //#region -------------------- "Open get value" methods --------------------
+
     /**
      * Get an {@link Enumerable} by any possible values
      * ({@link String}, {@link Number}, {@link BigInt} or an {@link Enumerable})
@@ -646,7 +649,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         return valueFound
     }
 
-    //#endregion -------------------- "Get value" methods --------------------
+    //#endregion -------------------- "Open get value" methods --------------------
     //#region -------------------- "Get name" methods --------------------
 
     public getName                                                                                                           (value: NullOrUndefined,):                                                                       never
@@ -659,6 +662,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     public getName(value: Nullable<PossibleEnumerableValue<ENUMERABLE>>,): NameOf<ENUMERABLE> {
         return this._getName(value,)
     }
+
+    //#endregion -------------------- "Get name" methods --------------------
+    //#region -------------------- "Open get name" methods --------------------
 
     /**
      * Get an {@link Enumerable} {@link Enumerable.name name} by any possible values
@@ -771,7 +777,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         return this._getValueByEnumerable(value,).name
     }
 
-    //#endregion -------------------- "Get name" methods --------------------
+    //#endregion -------------------- "Open get name" methods --------------------
     //#region -------------------- "Get ordinal" methods --------------------
 
     public getOrdinal                                                                                                           (value: NullOrUndefined,):                                                                       never
@@ -784,6 +790,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     public getOrdinal(value: Nullable<PossibleEnumerableValue<ENUMERABLE>>,): OrdinalOf<ENUMERABLE> {
         return this._getOrdinal(value,)
     }
+
+    //#endregion -------------------- "Get ordinal" methods --------------------
+    //#region -------------------- "Open get ordinal" methods --------------------
 
     /**
      * Get an {@link Enumerable} {@link Enumerable.ordinal ordinal} by any possible values
@@ -895,7 +904,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         return this._getValueByEnumerable(value,).ordinal
     }
 
-    //#endregion -------------------- "Get ordinal" methods --------------------
+    //#endregion -------------------- "Open get ordinal" methods --------------------
 
     public [Symbol.iterator](): CollectionIterator<ENUMERABLE> {
         return this.values[Symbol.iterator]()
