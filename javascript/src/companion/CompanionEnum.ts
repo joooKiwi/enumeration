@@ -29,11 +29,6 @@ import {getLastPrototype}                            from "../helper/getLastProt
 import {isEnum}                                      from "../helper/isEnum"
 import {isEnumByStructure}                           from "../helper/isEnumByStructure"
 
-const {POSITIVE_INFINITY, NEGATIVE_INFINITY, MAX_VALUE, isNaN,} = Number,
-    MAX_VALUE_AS_BIGINT = BigInt(MAX_VALUE,),
-    {get, has,} = Reflect,
-    {entries, freeze, getOwnPropertyDescriptors,} = Object
-
 export class CompanionEnum<const ENUMERABLE extends Enumerable,
     const ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<ENUMERABLE, CompanionEnumDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR>>, >
     implements CompanionEnumDeclaration<ENUMERABLE, ENUMERABLE_CONSTRUCTOR> {
@@ -202,7 +197,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
             ordinalMap = EnumConstants.ORDINAL_MAP,
             nameMap = EnumConstants.NAME_MAP,
             excludedNames = this._excludedNames,
-            everyFields = entries(getOwnPropertyDescriptors(instance,),),
+            everyFields = Object.entries(Object.getOwnPropertyDescriptors(instance,),),
             everyOrdinals = [] as OrdinalOf<ENUMERABLE>[],
             everyNames = [] as NameOf<ENUMERABLE>[],
             everyEnumerable = [] as ENUMERABLE[]
@@ -238,9 +233,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
             everyEnumerable.push(value as ENUMERABLE,)
         }
 
-        EnumConstants.ORDINALS_MAP.set(this, this.#ordinals = new GenericCollectionHolder(freeze(everyOrdinals,),) as CollectionHolder<OrdinalOf<ENUMERABLE>>,)
-        EnumConstants.NAMES_MAP.set(this, this.#names = new GenericCollectionHolder(freeze(everyNames,),) as CollectionHolder<NameOf<ENUMERABLE>>,)
-        EnumConstants.VALUES_MAP.set(this, this.#values = new GenericCollectionHolder(freeze(everyEnumerable,),) as CollectionHolder<ENUMERABLE>,)
+        EnumConstants.ORDINALS_MAP.set(this, this.#ordinals = new GenericCollectionHolder(Object.freeze(everyOrdinals,),) as CollectionHolder<OrdinalOf<ENUMERABLE>>,)
+        EnumConstants.NAMES_MAP.set(this, this.#names = new GenericCollectionHolder(Object.freeze(everyNames,),) as CollectionHolder<NameOf<ENUMERABLE>>,)
+        EnumConstants.VALUES_MAP.set(this, this.#values = new GenericCollectionHolder(Object.freeze(everyEnumerable,),) as CollectionHolder<ENUMERABLE>,)
     }
 
 
@@ -398,10 +393,10 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      */
     #validateIsEnumerableFromReflection(nameOrOrdinal: | string | number,): Enumerable {
         const instance = this.instance
-        if (!has(instance, nameOrOrdinal,))
+        if (!Reflect.has(instance, nameOrOrdinal,))
             throw new NullReferenceException(`No value exist in "${instance.name}.${nameOrOrdinal}".`, nameOrOrdinal,)
 
-        const value = get(instance, nameOrOrdinal,)
+        const value = Reflect.get(instance, nameOrOrdinal,)
         if (value == null)
             throw new NullReferenceException(`The value "${instance.name}.${nameOrOrdinal}" cannot be a null reference."`, nameOrOrdinal,)
 
@@ -461,11 +456,11 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {ImpossibleOrdinalException} The number is negative or a floating value
      */
     #getValidNumericValue(value: number, originalValue: PossibleNumeric,): number {
-        if (isNaN(value,))
+        if (Number.isNaN(value,))
             throw new ForbiddenNumericException("Forbidden numeric. The number value cannot be a NaN.", originalValue,)
-        if (value == NEGATIVE_INFINITY)
+        if (value == Number.NEGATIVE_INFINITY)
             throw new ForbiddenNumericException("Forbidden numeric. The number value cannot be the negative infinity.", originalValue,)
-        if (value == POSITIVE_INFINITY)
+        if (value == Number.POSITIVE_INFINITY)
             throw new ForbiddenNumericException("Forbidden numeric. The number value cannot be the positive infinity.", originalValue,)
         if (value % 1 != 0)
             throw new ImpossibleOrdinalException(`The number value "${value}" cannot be a floating value.`, originalValue,)
@@ -484,7 +479,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     #getValidBigIntValue(value: bigint, originalValue: PossibleBigInt,): bigint {
         if (value < 0n)
             throw new ImpossibleOrdinalException(`The bigint value "${value}" cannot be under 0.`, originalValue,)
-        if (value > MAX_VALUE_AS_BIGINT)
+        if (value > EnumConstants.MAX_VALUE_AS_BIGINT)
             throw new ImpossibleOrdinalException(`The bigint value "${value}" cannot be over the maximum value of a number.`, originalValue,)
         return value
     }
