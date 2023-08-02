@@ -561,12 +561,13 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         return this._getValue(value,)
     }
 
-    //#endregion -------------------- "Get value" methods --------------------
-    //#region -------------------- "Open get value" methods --------------------
-
     /**
      * Get an {@link Enumerable} by any possible values
      * ({@link String}, {@link Number}, {@link BigInt} or an {@link Enumerable})
+     *
+     * <i><b>Note:</b><br/>
+     * This method is only here in order to provide a way to distinguish the type of the value.
+     * It should not be overridden in normal circumstances.</i>
      *
      * @param value The value to compare and to retrieve the {@link Enumerable instance}
      * @throws {ForbiddenInheritedEnumerableMemberException}
@@ -577,6 +578,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      * @throws {UnhandledValueException}
+     * @readonly
      */
     protected _getValue(value: Nullable<PossibleEnumerableValue>,): ENUMERABLE {
         value = this._getNonNullValueFromGetValue(value,)
@@ -600,6 +602,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
 
         this.#throwInvalidCases(value, "getValue",)
     }
+
+    //#endregion -------------------- "Get value" methods --------------------
+    //#region -------------------- "Open get value" methods --------------------
 
     /**
      * Get a {@link Enumerable} from the current {@link instance} with validation associated to a {@link String}
@@ -706,12 +711,13 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         return this._getName(value,)
     }
 
-    //#endregion -------------------- "Get name" methods --------------------
-    //#region -------------------- "Open get name" methods --------------------
-
     /**
      * Get an {@link Enumerable} {@link Enumerable.name name} by any possible values
      * ({@link String}, {@link Number}, {@link BigInt} or an {@link Enumerable})
+     *
+     * <i><b>Note:</b><br/>
+     * This method is only here in order to provide a way to distinguish the type of the value.
+     * It should not be overridden in normal circumstances.</i>
      *
      * @param value The value to compare and to retrieve the {@link Enumerable instance} {@link Enumerable.name name}
      * @throws {ForbiddenInheritedEnumerableMemberException}
@@ -723,6 +729,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      * @throws {UnhandledValueException}
+     * @readonly
      */
     protected _getName(value: Nullable<PossibleEnumerableValue>,) {
         value = this._getNonNullValueFromGetName(value,)
@@ -746,6 +753,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
 
         this.#throwInvalidCases(value, "getName",)
     }
+
+    //#endregion -------------------- "Get name" methods --------------------
+    //#region -------------------- "Open get name" methods --------------------
 
     /**
      * Get a {@link Enumerable} from the current {@link instance} with validation associated to a {@link String}
@@ -833,12 +843,13 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         return this._getOrdinal(value,)
     }
 
-    //#endregion -------------------- "Get ordinal" methods --------------------
-    //#region -------------------- "Open get ordinal" methods --------------------
-
     /**
      * Get an {@link Enumerable} {@link Enumerable.ordinal ordinal} by any possible values
-     * ({@link String}, {@link Number}, {@link BigInt} or an {@link Enumerable})
+     * ({@link String}, {@link Number}, {@link BigInt} or an {@link Enumerable}).
+     *
+     * <i><b>Note:</b><br/>
+     * This method is only here in order to provide a way to distinguish the type of the value.
+     * It should not be overridden in normal circumstances.</i>
      *
      * @param value The value to compare and to retrieve the {@link Enumerable instance} {@link Enumerable.ordinal ordinal}
      * @throws {ForbiddenInheritedEnumerableMemberException}
@@ -850,6 +861,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      * @throws {UnhandledValueException}
+     * @readonly
      */
     protected _getOrdinal(value: Nullable<PossibleEnumerableValue>,): OrdinalOf<ENUMERABLE> {
         value = this._getNonNullValueFromGetOrdinal(value,)
@@ -873,6 +885,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
 
         this.#throwInvalidCases(value, "getOrdinal",)
     }
+
+    //#endregion -------------------- "Get ordinal" methods --------------------
+    //#region -------------------- "Open get ordinal" methods --------------------
 
     /**
      * Get an {@link Enumerable} {@link Enumerable.ordinal ordinal} from the current {@link instance} with validation associated to a {@link String}
