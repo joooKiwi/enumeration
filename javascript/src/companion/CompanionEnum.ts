@@ -504,6 +504,50 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     }
 
     //#endregion -------------------- Validation & conversion methods --------------------
+
+    //#region -------------------- "Get non null value" methods --------------------
+
+    /**
+     * Get the {@link NonNullable} {@link value} or throw a {@link NullEnumerableException}
+     * from a {@link getValue} method
+     *
+     * @param value The value to validate
+     * @throws NullEnumerableException
+     */
+    protected _getNonNullValueFromGetValue<const T, >(value: Nullable<T>,): T {
+        if (value == null)
+            throw new NullEnumerableException(`Unable to get the value. The value received for the instance ${this.instance.name} cannot be null (or undefined).`,)
+        return value
+    }
+
+    /**
+     * Get the {@link NonNullable} {@link value} or throw a {@link NullEnumerableException}
+     * from a {@link getName} method
+     *
+     * @param value The value to validate
+     * @throws NullEnumerableException
+     */
+    protected _getNonNullValueFromGetName<const T, >(value: Nullable<T>,): T {
+        if (value == null)
+            throw new NullEnumerableException(`Unable to get the name. The value received for the instance ${this.instance.name} cannot be null (or undefined).`,)
+        return value
+    }
+
+    /**
+     * Get the {@link NonNullable} {@link value} or throw a {@link NullEnumerableException}
+     * from a {@link getOrdinal} method
+     *
+     * @param value The value to validate
+     * @throws NullEnumerableException
+     */
+    protected _getNonNullValueFromGetOrdinal<const T, >(value: Nullable<T>,): T {
+        if (value == null)
+            throw new NullEnumerableException(`Unable to get the ordinal. The value received for the instance ${this.instance.name} cannot be null (or undefined).`,)
+        return value
+    }
+
+
+    //#endregion -------------------- "Get non null value" methods --------------------
     //#region -------------------- "Get value" methods --------------------
 
     public getValue                                                                                              (value: NullOrUndefined,):                                                                         never
@@ -535,8 +579,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {UnhandledValueException}
      */
     protected _getValue(value: Nullable<PossibleEnumerableValue>,): ENUMERABLE {
-        if (value == null)
-            throw new NullEnumerableException(`Unable to get the value. The value received for the instance ${this.instance.name} cannot be null (or undefined).`,)
+        value = this._getNonNullValueFromGetValue(value,)
 
         if (typeof value == "string")
             return this._getValueByString(value, value)
@@ -682,8 +725,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {UnhandledValueException}
      */
     protected _getName(value: Nullable<PossibleEnumerableValue>,) {
-        if (value == null)
-            throw new NullEnumerableException(`Unable to get the name. The value received for the instance ${this.instance.name} cannot be null (or undefined).`,)
+        value = this._getNonNullValueFromGetName(value,)
 
         if (typeof value == "string")
             return this._getNameByString(value, value)
@@ -810,8 +852,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {UnhandledValueException}
      */
     protected _getOrdinal(value: Nullable<PossibleEnumerableValue>,): OrdinalOf<ENUMERABLE> {
-        if (value == null)
-            throw new NullEnumerableException(`Unable to get the ordinal. The value received for the instance ${this.instance.name} cannot be null (or undefined).`,)
+        value = this._getNonNullValueFromGetOrdinal(value,)
 
         if (typeof value == "string")
             return this._getOrdinalByString(value, value)
