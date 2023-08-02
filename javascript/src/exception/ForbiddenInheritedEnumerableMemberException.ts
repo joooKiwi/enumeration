@@ -8,7 +8,7 @@
 import type {Nullable, PossibleString} from "../general type"
 import type {ExceptionWithValue}       from "./declaration/ExceptionWithValue"
 
-import {IllegalAccessException} from "./generic/IllegalAccessException"
+import {IllegalArgumentException} from "./generic/IllegalArgumentException"
 
 /**
  * An exception to tell that an {@link EnumConstants.INHERITED_ENUMERABLE_MEMBERS inherited Enumerable member} was used
@@ -16,7 +16,7 @@ import {IllegalAccessException} from "./generic/IllegalAccessException"
  * @see EnumConstants.INHERITED_ENUMERABLE_MEMBERS
  */
 export class ForbiddenInheritedEnumerableMemberException<const T extends PossibleString, const ERROR extends Error = never, >
-    extends IllegalAccessException<ERROR>
+    extends IllegalArgumentException<ERROR>
     implements ExceptionWithValue<T> {
 
     readonly #value

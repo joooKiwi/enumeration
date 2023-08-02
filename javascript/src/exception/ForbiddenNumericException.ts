@@ -8,7 +8,7 @@
 import type {Nullable, PossibleStringOrNumeric} from "../general type"
 import type {ExceptionWithValue}                from "./declaration/ExceptionWithValue"
 
-import {IllegalAccessException} from "./generic/IllegalAccessException"
+import {IllegalArgumentException} from "./generic/IllegalArgumentException"
 
 /**
  * An exception to tell that an edge case numeric ({@link Number} or {@link BigInt})
@@ -17,7 +17,7 @@ import {IllegalAccessException} from "./generic/IllegalAccessException"
  * @see EnumConstants.EDGE_CASE_NUMERIC_NAME
  */
 export class ForbiddenNumericException<const T extends PossibleStringOrNumeric, const ERROR extends Error = never, >
-    extends IllegalAccessException<ERROR>
+    extends IllegalArgumentException<ERROR>
     implements ExceptionWithValue<T> {
 
     readonly #value
