@@ -12,6 +12,6 @@ import {Enum} from "../Enum"
  *
  * @param value The value to compare
  */
-export function isEnum(value: unknown,): value is Enum<number, string> {
+export function isEnum(value: unknown,): value is Enum {
     return value instanceof Enum
 }

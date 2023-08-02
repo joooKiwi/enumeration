@@ -33,7 +33,7 @@ import {NullInstanceException}             from "../../src/exception/NullInstanc
 
 //#region -------------------- Helper enum class declaration --------------------
 
-class BasicEnum extends Enum<number, string> {
+class BasicEnum extends Enum {
     static readonly A = new BasicEnum()
     static CompanionEnum = class CompanionEnum_BasicEnum extends CompanionEnum<BasicEnum, any> {
         static #instance?: CompanionEnum_BasicEnum
@@ -42,7 +42,7 @@ class BasicEnum extends Enum<number, string> {
     }
 }
 
-class BasicEnumWithParent extends Enum<number, string> implements EnumerableWithNullableParent<number, string, BasicEnum> {
+class BasicEnumWithParent extends Enum implements EnumerableWithNullableParent<number, string, BasicEnum> {
     static readonly A = new BasicEnumWithParent(BasicEnum.A,)
     static readonly B = new BasicEnumWithParent()
     readonly #parent
@@ -58,7 +58,7 @@ class BasicEnumWithParent extends Enum<number, string> implements EnumerableWith
     }
 }
 
-class BasicEnumWithGrandParent extends Enum<number, string> implements EnumerableWithNullableGrandParent<number, string, BasicEnumWithParent, BasicEnum> {
+class BasicEnumWithGrandParent extends Enum implements EnumerableWithNullableGrandParent<number, string, BasicEnumWithParent, BasicEnum> {
     static readonly A = new BasicEnumWithGrandParent(BasicEnumWithParent.A, BasicEnum.A,)
     static readonly B = new BasicEnumWithGrandParent(BasicEnumWithParent.B,)
     static readonly C = new BasicEnumWithGrandParent()
@@ -78,7 +78,7 @@ class BasicEnumWithGrandParent extends Enum<number, string> implements Enumerabl
     }
 }
 
-class BasicEnumWithGreatGrandParent extends Enum<number, string> implements EnumerableWithNullableGreatGrandParent<number, string, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
+class BasicEnumWithGreatGrandParent extends Enum implements EnumerableWithNullableGreatGrandParent<number, string, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
     static readonly A = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.A, BasicEnumWithParent.A, BasicEnum.A,)
     static readonly B = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.B, BasicEnumWithParent.B,)
     static readonly C = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.C,)
