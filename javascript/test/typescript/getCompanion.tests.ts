@@ -11,16 +11,6 @@ import {EnumWithDifferentComportment} from "../TemplateEnums"
 throw new EvalError("This file was not made to be read by Javascript. It should only be compilable by Typescript.")
 
 // @ts-ignore
-const primitiveStringInstance: string = ''
-const primitiveNumberInstance: number = 0
-const primitiveBigIntInstance: bigint = 0n
-const objectSymbolInstance: Symbol = Object(Symbol())
-const emptyObjectInstance: {} = {}
-const emptyMutableArrayInstance: [] = []
-const emptyReadonlyArrayInstance: readonly [] = []
-const readonlyArrayInstance: ReadonlyArray<unknown> = new Array<unknown>()
-const readonlySetInstance: ReadonlySet<unknown> = new Set<unknown>()
-const readonlyMapInstance: ReadonlyMap<unknown, unknown> = new Map<unknown, unknown>()
 const valueInstance: EnumWithDifferentComportment = EnumWithDifferentComportment.CompanionEnum.get.default // This is a type for the test
 
 // @ts-expect-error
@@ -29,46 +19,56 @@ getCompanion(undefined,).toString()
 getCompanion(null,).toString()
 
 // @ts-expect-error
-getCompanion(primitiveStringInstance,)
+getCompanion('' as string,)
 // @ts-expect-error
 getCompanion(new String('',),)
 
 // @ts-expect-error
-getCompanion(primitiveNumberInstance,)
+getCompanion(0 as number,)
 // @ts-expect-error
 getCompanion(new Number(0,),)
 
 // @ts-expect-error
-getCompanion(primitiveBigIntInstance,)
+getCompanion(0n as bigint,)
 // @ts-expect-error
-getCompanion(BigInt(0n),)
+getCompanion(BigInt(0n,),)
 
 // @ts-expect-error
 getCompanion(Symbol(),)
 // @ts-expect-error
-getCompanion(objectSymbolInstance,)
+getCompanion(Object(Symbol(),) as Symbol,)
 
 // @ts-expect-error
-getCompanion(emptyObjectInstance,)
+getCompanion({},)
 
 // @ts-expect-error
-getCompanion(emptyMutableArrayInstance,)
+getCompanion([],)
 // @ts-expect-error
-getCompanion(emptyReadonlyArrayInstance,)
+getCompanion([] as readonly [],)
 // @ts-expect-error
-getCompanion(readonlyArrayInstance,)
+getCompanion(Object.freeze(new Array<unknown>(),) as ReadonlyArray<unknown>,)
 // @ts-expect-error
 getCompanion(new Array<unknown>(),)
 
 // @ts-expect-error
-getCompanion(readonlySetInstance,)
+getCompanion(Object.freeze(new Set<unknown>(),) as ReadonlySet<unknown>,)
 // @ts-expect-error
 getCompanion(new Set<unknown>(),)
 
 // @ts-expect-error
-getCompanion(readonlyMapInstance,)
+getCompanion(Object.freeze(new Map<unknown, unknown>(),) as ReadonlyMap<unknown, unknown>,)
 // @ts-expect-error
 getCompanion(new Map<unknown, unknown>(),)
+
+// @ts-expect-error
+getCompanion(Object.freeze(new WeakSet<unknown, unknown>(),),)
+// @ts-expect-error
+getCompanion(new WeakSet<unknown, unknown>(),)
+
+// @ts-expect-error
+getCompanion(Object.freeze(new WeakMap<unknown, unknown>(),),)
+// @ts-expect-error
+getCompanion(new WeakMap<unknown, unknown>(),)
 
 export const valueByConstructor = getCompanion(EnumWithDifferentComportment,) satisfies CompanionValue
 // @ts-expect-error
