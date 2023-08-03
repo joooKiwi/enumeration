@@ -87,10 +87,15 @@ describe("GeneralEnumTest", () => {
         }),)
         describe("ForbiddenInheritedEnumerableMemberException", () => describe.each(forbiddenInheritedMembers,)("%s", ({value: it,},) => {
             const companion = Enum1.CompanionEnum.get
+            //@ts-expect-error
             test("set default", () => expect(() => companion.default = it,).toThrow(ForbiddenInheritedEnumerableMemberException,),)
+            //@ts-expect-error
             test("setDefault", () => expect(() => companion.setDefault(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
+            //@ts-expect-error
             test("getValue", () => expect(() => companion.getValue(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
+            //@ts-expect-error
             test("getName", () => expect(() => companion.getName(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
+            //@ts-expect-error
             test("getOrdinal", () => expect(() => companion.getOrdinal(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
         }),)
 
