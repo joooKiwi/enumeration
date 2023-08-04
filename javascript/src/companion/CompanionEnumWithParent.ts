@@ -12,6 +12,7 @@ import type {EnumerableWithNullableParent}                                      
 import type {Nullable, NullOrUndefined, PossibleBigInt, PossibleNumeric, PossibleString, PossibleStringOrNumeric}                                                                                                                                                                                                                                                                                                from "../general type"
 import type {CompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                                                           from "./CompanionEnum.declaration"
 import type {CompanionEnumWithParentDeclaration}                                                                                                                                                                                                                                                                                                                                                                 from "./CompanionEnumWithParent.declaration"
+import type {ImpossibleNames}                                                                                                                                                                                                                                                                                                                                                                                    from "./types"
 
 import {CompanionEnum}              from "./CompanionEnum"
 import {InvalidEnumerableException} from "../exception/InvalidEnumerableException"
@@ -62,6 +63,7 @@ export class CompanionEnumWithParent<const ENUMERABLE extends EnumerableWithNull
     }
 
     public override setDefault(value: NullOrUndefined,): this
+    public override setDefault(value: ImpossibleNames,): never
     public override setDefault(ordinal: Nullable<PossibleNumeric>,): this
     public override setDefault(name: Nullable<PossibleString>,): this
     public override setDefault(enumerable: Nullable<ENUMERABLE>,): this
@@ -75,7 +77,7 @@ export class CompanionEnumWithParent<const ENUMERABLE extends EnumerableWithNull
     //#endregion -------------------- Getter & setter methods --------------------
     //#region -------------------- Methods --------------------
 
-    public override getValue                                                                                                                                               (value: NullOrUndefined,):                                                                                           never
+    public override getValue                                                                                                                                               (value: Nullable<ImpossibleNames>,):                                                                                 never
     public override getValue<const ORDINAL extends number, >                                                                                                               (ordinal: Nullable<ORDINAL>,):                                                                                       ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
     public override getValue<const ORDINAL extends number, >                                                                                                               (ordinal: Nullable<`${ORDINAL}`>,):                                                                                  ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
     public override getValue<const ORDINAL extends number, >                                                                                                               (ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,):                                                                      ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
@@ -121,7 +123,7 @@ export class CompanionEnumWithParent<const ENUMERABLE extends EnumerableWithNull
     }
 
 
-    public override getName                                                                                                                                               (value: NullOrUndefined,):                                                                                         never
+    public override getName                                                                                                                                               (value: Nullable<ImpossibleNames>,):                                                                               never
     public override getName<const ORDINAL extends number, >                                                                                                               (ordinal: Nullable<ORDINAL>,):                                                                                     EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
     public override getName<const ORDINAL extends number, >                                                                                                               (ordinal: Nullable<`${ORDINAL}`>,):                                                                                EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
     public override getName<const ORDINAL extends number, >                                                                                                               (ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,):                                                                    EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
@@ -134,7 +136,7 @@ export class CompanionEnumWithParent<const ENUMERABLE extends EnumerableWithNull
     }
 
 
-    public override getOrdinal                                                                                                                                               (value: NullOrUndefined,):                                                                                         never
+    public override getOrdinal                                                                                                                                               (value: Nullable<ImpossibleNames>,):                                                                               never
     public override getOrdinal<const ORDINAL extends number, >                                                                                                               (ordinal: Nullable<ORDINAL>,):                                                                                     SpecificOrdinalOf<ORDINAL, ENUMERABLE>
     public override getOrdinal<const ORDINAL extends number, >                                                                                                               (ordinal: Nullable<`${ORDINAL}`>,):                                                                                SpecificOrdinalOf<ORDINAL, ENUMERABLE>
     public override getOrdinal<const ORDINAL extends number, >                                                                                                               (ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,):                                                                    SpecificOrdinalOf<ORDINAL, ENUMERABLE>

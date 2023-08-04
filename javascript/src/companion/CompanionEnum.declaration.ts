@@ -7,7 +7,7 @@
 
 import type {CollectionHolder, CollectionIterator} from "@joookiwi/collection"
 
-import type {Nullable, NullOrUndefined, PossibleBigInt, PossibleNumeric, PossibleString}                                                                                                                                                                                                                                                                                        from "../general type"
+import type {Nullable, NullOrUndefined, PossibleBigInt, PossibleEdgeCaseNumericName, PossibleNumeric, PossibleString}                                                                                                                                                                                                                                                           from "../general type"
 import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                        from "../Enumerable"
 import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                             from "../EnumerableConstructor"
 import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, PossibleEnumerableValue, PossibleEnumerableValueBy, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "../Enumerable.types"
@@ -52,6 +52,15 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @typescriptDefinition
      */
     setDefault(value: NullOrUndefined,): this
+
+    /**
+     * Remove nothing because of an {@link EnumConstants.EDGE_CASE_NUMERIC_NAMES edge-case name}
+     *
+     * @param value The edge-case value
+     * @throws {ForbiddenNumericException}
+     * @typescriptDefinition
+     */
+    setDefault(value: PossibleEdgeCaseNumericName,): never
 
     /**
      * Set the default value of an {@link Enumerable instance}
@@ -127,6 +136,15 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @typescriptDefinition
      */
     getValue(value: NullOrUndefined,): never
+
+    /**
+     * Get nothing because of an {@link EnumConstants.EDGE_CASE_NUMERIC_NAMES edge-case name}
+     *
+     * @param value The edge-case value
+     * @throws {ForbiddenNumericException}
+     * @typescriptDefinition
+     */
+    getValue(value: PossibleEdgeCaseNumericName,): never
 
     /**
      * Get the {@link Enumerable instance} from an {@link Enumerable.ordinal ordinal value} indirectly
@@ -213,6 +231,15 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
     getName(value: NullOrUndefined,): never
 
     /**
+     * Get nothing because of an {@link EnumConstants.EDGE_CASE_NUMERIC_NAMES edge-case name}
+     *
+     * @param value The edge-case value
+     * @throws {ForbiddenNumericException}
+     * @typescriptDefinition
+     */
+    getName(value: PossibleEdgeCaseNumericName,): never
+
+    /**
      * Get the {@link Enumerable.name name} from an {@link Enumerable.ordinal ordinal value} directly
      *
      * @param ordinal The ordinal to find (as a {@link Number})
@@ -294,6 +321,15 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @typescriptDefinition
      */
     getOrdinal(value: NullOrUndefined,): never
+
+    /**
+     * Get nothing because of an {@link EnumConstants.EDGE_CASE_NUMERIC_NAMES edge-case name}
+     *
+     * @param value The edge-case value
+     * @throws {ForbiddenNumericException}
+     * @typescriptDefinition
+     */
+    getOrdinal(value: PossibleEdgeCaseNumericName,): never
 
     /**
      * Get the {@link Enumerable.ordinal ordinal} from an {@link Enumerable.ordinal ordinal value} directly

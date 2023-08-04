@@ -12,7 +12,7 @@ import type {Enumerable}                                                        
 import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                             from "../EnumerableConstructor"
 import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, PossibleEnumerableValue, PossibleEnumerableValueBy, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "../Enumerable.types"
 import type {CompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                          from "./CompanionEnum.declaration"
-import type {CompanionEnumName}                                                                                                                                                                                                                                                                                                                                                 from "./types"
+import type {CompanionEnumName, ImpossibleNames}                                                                                                                                                                                                                                                                                                                                from "./types"
 import type {Nullable, NullOr, NullOrUndefined, PossibleBigInt, PossibleNumber, PossibleNumeric, PossibleString}                                                                                                                                                                                                                                                                from "../general type"
 
 import {EnumConstants}                               from "../EnumConstants"
@@ -126,6 +126,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     }
 
     public setDefault(value: NullOrUndefined,): this
+    public setDefault(value: ImpossibleNames,): never
     public setDefault(enumerable: Nullable<ENUMERABLE>,): this
     public setDefault(value: Nullable<PossibleEnumerableValueBy<ENUMERABLE>>,): this
     public setDefault(ordinal: Nullable<PossibleNumeric>,): this
@@ -550,7 +551,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     //#endregion -------------------- "Get non null value" methods --------------------
     //#region -------------------- "Get value" methods --------------------
 
-    public getValue                                                                                              (value: NullOrUndefined,):                                                                         never
+    public getValue                                                                                              (value: Nullable<ImpossibleNames>,):                                                               never
     public getValue<const ORDINAL extends number, >                                                              (ordinal: Nullable<ORDINAL>,):                                                                     ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
     public getValue<const ORDINAL extends number, >                                                              (ordinal: Nullable<`${ORDINAL}`>,):                                                                ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
     public getValue<const ORDINAL extends number, >                                                              (ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,):                                                    ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
@@ -700,7 +701,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     //#endregion -------------------- "Open get value" methods --------------------
     //#region -------------------- "Get name" methods --------------------
 
-    public getName                                                                                                           (value: NullOrUndefined,):                                                                       never
+    public getName                                                                                                           (value: Nullable<ImpossibleNames>,):                                                             never
     public getName<const ORDINAL extends number, >                                                                           (ordinal: Nullable<ORDINAL>,):                                                                   EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
     public getName<const ORDINAL extends number, >                                                                           (ordinal: Nullable<`${ORDINAL}`>,):                                                              EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
     public getName<const ORDINAL extends number, >                                                                           (ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,):                                                  EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
@@ -832,7 +833,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     //#endregion -------------------- "Open get name" methods --------------------
     //#region -------------------- "Get ordinal" methods --------------------
 
-    public getOrdinal                                                                                                           (value: NullOrUndefined,):                                                                       never
+    public getOrdinal                                                                                                           (value: Nullable<ImpossibleNames>,):                                                             never
     public getOrdinal<const ORDINAL extends number, >                                                                           (ordinal: Nullable<ORDINAL>,):                                                                   SpecificOrdinalOf<ORDINAL, ENUMERABLE>
     public getOrdinal<const ORDINAL extends number, >                                                                           (ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,):                                                  SpecificOrdinalOf<ORDINAL, ENUMERABLE>
     public getOrdinal<const ORDINAL extends number, >                                                                           (ordinal: Nullable<`${ORDINAL}`>,):                                                              SpecificOrdinalOf<ORDINAL, ENUMERABLE>
