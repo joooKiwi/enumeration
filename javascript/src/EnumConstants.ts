@@ -203,7 +203,12 @@ export namespace EnumConstants {
      *  - {@link EnumerableWithNullableGreatGrandParent}
      *  - {@link EnumerableWithGreatGrandParent}
      */
-    export const EVERY_ENUMERABLE_MEMBER = ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS satisfies CollectionHolder<PossibleEnumerableMembers>
+    export const EVERY_ENUMERABLE_MEMBERS = ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS satisfies CollectionHolder<PossibleEnumerableMembers>
+    /**
+     * A simple representation of the {@link EVERY_ENUMERABLE_MEMBERS} joined together as a single string
+     * for the Javascript implementation
+     */
+    export const EVERY_ENUMERABLE_MEMBERS_JOINED = "(\"name\", \"ordinal\", \"parent\", \"grandParent\", \"greatGrandParent\", \"[Symbol.toPrimitive]\", \"[Symbol.toStringTag]\")"
 
     /**
      * Every member of
@@ -212,7 +217,12 @@ export namespace EnumConstants {
      *  - {@link CompanionEnumWithGrandParentDeclaration},
      *  - {@link CompanionEnumWithGreatGrandParentDeclaration}
      */
-    export const EVERY_COMPANION_ENUM_MEMBER = COMPANION_ENUM_WITH_GREAT_GRAND_PARENT_MEMBERS satisfies CollectionHolder<PossibleCompanionEnumMembers>
+    export const EVERY_COMPANION_ENUM_MEMBERS = COMPANION_ENUM_WITH_GREAT_GRAND_PARENT_MEMBERS satisfies CollectionHolder<PossibleCompanionEnumMembers>
+    /**
+     * A simple representation of the {@link EVERY_COMPANION_ENUM_MEMBERS} joined together as a single string
+     * for the Javascript implementation
+     */
+    export const EVERY_COMPANION_ENUM_MEMBERS_JOINED = "(\"instance\", \"parentInstance\", \"grandParentInstance\", \"greatGrandParentInstance\", \"defaultValue\", \"setDefaultValue\", \"values\", \"names\", \"ordinals\", \"iterator\", \"getValue\", \"getName\", \"getOrdinal\", \"[Symbol.iterator]\", \"[Symbol.toStringTag]\")"
 
     //#endregion -------------------- Enumerable members --------------------
     //#region -------------------- Symbols --------------------

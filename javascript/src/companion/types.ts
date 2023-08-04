@@ -30,7 +30,7 @@ export type ImpossibleNames = | PossibleEdgeCaseNumericName
  * The possible {@link CompanionEnumDeclaration} members itself
  * or by an inheritor (in the project)
  *
- * @see EnumConstants.EVERY_COMPANION_ENUM_MEMBER
+ * @see EnumConstants.EVERY_COMPANION_ENUM_MEMBERS
  */
 export type PossibleCompanionEnumMembers = | keyof CompanionEnumDeclaration<never, never>
                                            | keyof CompanionEnumWithParentDeclaration<never, never, never, never>

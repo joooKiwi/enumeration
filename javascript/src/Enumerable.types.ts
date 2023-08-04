@@ -57,7 +57,7 @@ export type CompanionOf<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any
  * The possible {@link Enumerable} members by itself
  * or by an inheritors (in the project)
  *
- * @see EnumConstants.EVERY_ENUMERABLE_MEMBER
+ * @see EnumConstants.EVERY_ENUMERABLE_MEMBERS
  */
 export type PossibleEnumerableMembers = | keyof Enumerable
                                         | keyof EnumerableWithNullableParent
