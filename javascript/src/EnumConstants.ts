@@ -145,6 +145,24 @@ export namespace EnumConstants {
     export const BINARY_REGEX = /^-?0b[01]+$/i
 
     //#endregion -------------------- Regex fields --------------------
+    //#region -------------------- Max value fields --------------------
+
+    /** The maximum value (2³¹ - 1) represented as a {@link Number} */
+    export const MAX_VALUE_AS_NUMBER = 0b111_1111_1111_1111_1111_1111_1111_1111
+    /** The maximum value (2³¹ - 1) represented as a {@link BigInt} */
+    export const MAX_VALUE_AS_BIG_INT = 0b111_1111_1111_1111_1111_1111_1111_1111n
+
+    /**
+     * The max value (2³¹ - 1) size (amount of numbers).
+     *
+     * This is the equivalent of:
+     *
+     * ({@link Math}.{@link Math.log log}({@link Math}.{@link Math.abs abs}({@link MAX_VALUE_AS_NUMBER 2_147_483_647}) + 1) *
+     * {@link Math}.{@link Math.LOG10E LOG10E} | 0) + 1
+     */
+    export const MAX_VALUE_SIZE = 10
+
+    //#endregion -------------------- Max value fields --------------------
     //#region -------------------- Enumerable members --------------------
 
     /** Every member of an {@link Enumerable} */
