@@ -140,27 +140,30 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
 
 
     public get values(): CollectionHolder<ENUMERABLE> {
-        const values = this.#values
-        if (values == null && !EnumConstants.VALUES_MAP.has(this))
+        if (this.#values === undefined && !EnumConstants.VALUES_MAP.has(this))
             this.#initializeMaps()
+
+        const values = this.#values
         if (values == null)
             throw new NullReferenceException(`The values in the ${this.constructor.name} was not expected to be null after it has already been initialized or contained in the EnumConstants.VALUES_MAP.`, this,)
         return values
     }
 
     public get names(): CollectionHolder<NameOf<ENUMERABLE>> {
-        const names = this.#names
-        if (names == null && !EnumConstants.NAMES_MAP.has(this))
+        if (this.#names === undefined && !EnumConstants.NAMES_MAP.has(this))
             this.#initializeMaps()
+
+        const names = this.#names
         if (names == null)
             throw new NullReferenceException(`The names in the ${this.constructor.name} was not expected to be null after it has already been initialized or contained in the EnumConstants.NAMES_MAP.`, this,)
         return names
     }
 
     public get ordinals(): CollectionHolder<OrdinalOf<ENUMERABLE>> {
-        const ordinals = this.#ordinals
-        if (ordinals == null && !EnumConstants.ORDINALS_MAP.has(this))
+        if (this.#ordinals === undefined && !EnumConstants.ORDINALS_MAP.has(this))
             this.#initializeMaps()
+
+        const ordinals = this.#ordinals
         if (ordinals == null)
             throw new NullReferenceException(`The ordinals in the ${this.constructor.name} was not expected to be null after it has already been initialized or contained in the EnumConstants.ORDINALS_MAP.`, this,)
         return ordinals
