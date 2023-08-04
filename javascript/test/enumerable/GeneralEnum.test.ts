@@ -6,7 +6,7 @@
  ******************************************************************************/
 
 import {AnotherChildEnum, Child1Enum, Child2Enum, EmptyEnum, EmptyEnumWithVariables, Enum1, Enum2, EnumWithInheritance, EnumWithDefault, EnumWithDifferentComportment, EnumWithExcludedFields, EnumWithLateDefault, ParentEnum, Child3Enum} from "../TemplateEnums"
-import {forbiddenInheritedMembers, forbiddenNumbers, impossibleOrdinals, nullValues, simpleEnumVariables, unhandledValues, validValues}                                                                                                     from "./Enum.constants"
+import {everyStringEnumerableMember, forbiddenNumbers, impossibleOrdinals, nullValues, simpleEnumVariables, unhandledValues, validValues}                                                                                                   from "./Enum.constants"
 
 import {ForbiddenInheritedEnumerableMemberException} from "../../src/exception/ForbiddenInheritedEnumerableMemberException"
 import {ForbiddenNumericException}                   from "../../src/exception/ForbiddenNumericException"
@@ -85,17 +85,12 @@ describe("GeneralEnumTest", () => {
             test("getName", () => expect(() => companion.getName(it,),).toThrow(ForbiddenNumericException,),)
             test("getOrdinal", () => expect(() => companion.getOrdinal(it,),).toThrow(ForbiddenNumericException,),)
         }),)
-        describe("ForbiddenInheritedEnumerableMemberException", () => describe.each(forbiddenInheritedMembers,)("%s", ({value: it,},) => {
+        describe("ForbiddenInheritedEnumerableMemberException", () => describe.each(everyStringEnumerableMember,)("%s", ({value: it,},) => {
             const companion = Enum1.CompanionEnum.get
-            //@ts-expect-error
             test("set default", () => expect(() => companion.default = it,).toThrow(ForbiddenInheritedEnumerableMemberException,),)
-            //@ts-expect-error
             test("setDefault", () => expect(() => companion.setDefault(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
-            //@ts-expect-error
             test("getValue", () => expect(() => companion.getValue(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
-            //@ts-expect-error
             test("getName", () => expect(() => companion.getName(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
-            //@ts-expect-error
             test("getOrdinal", () => expect(() => companion.getOrdinal(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
         }),)
 

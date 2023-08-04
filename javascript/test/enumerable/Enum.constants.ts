@@ -5,7 +5,8 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import {EnumConstants} from "../../src/EnumConstants"
+import type {PossibleEnumerableMembers} from "../../src/Enumerable.types"
+import {EnumConstants}                  from "../../src/EnumConstants"
 
 import type {EmptyEnumWithVariables} from "../TemplateEnums"
 import {Holder}                      from "../Holder"
@@ -135,9 +136,9 @@ export const nullValues = [null, undefined,] as const,
         new Holder("-Infinity",              `"-Infinity" as string`,),
         new Holder(new String("-Infinity",), `"-Infinity" as object string`,),
     ] as const,
-    forbiddenInheritedMembers = EnumConstants.INHERITED_ENUMERABLE_MEMBERS.map(it => [
-        new Holder(it, `${typeof it == "symbol" ? it.description : it} as string`),
-        new Holder(new String(it,), `${typeof it == "symbol" ? it.description : it}} as object string`,),
+    everyStringEnumerableMember = EnumConstants.EVERY_ENUMERABLE_MEMBER.filterNot((it,): it is (& PossibleEnumerableMembers & symbol) => typeof it == "symbol").map(it => [
+        new Holder(it, `${it} as sting`),
+        new Holder(new String(it,), `${it}} as string object`,),
     ]).toArray().flat(),
     simpleEnumVariables = ["VARIABLE_STRING", "VARIABLE_NUMBER", "VARIABLE_BIGINT",] as const satisfies readonly (keyof typeof EmptyEnumWithVariables)[],
     validValues = [
