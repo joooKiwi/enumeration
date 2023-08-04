@@ -11,7 +11,7 @@ import {EnumWithDifferentComportment} from "../TemplateEnums"
 throw new EvalError("This file was not made to be read by Javascript. It should only be compilable by Typescript.")
 
 // @ts-ignore
-const valueInstance: EnumWithDifferentComportment = EnumWithDifferentComportment.CompanionEnum.get.default // This is a type for the test
+const valueInstance: EnumWithDifferentComportment = EnumWithDifferentComportment.CompanionEnum.get.defaultValue // This is a type for the test
 
 // @ts-expect-error
 getCompanion(undefined,).toString()

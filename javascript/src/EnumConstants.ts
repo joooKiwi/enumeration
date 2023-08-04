@@ -38,7 +38,7 @@ export namespace EnumConstants {
     /**
      * A map of every {@link CompanionEnumDeclaration.default default} stored from a {@link CompanionEnumDeclaration}
      *
-     * @see CompanionEnumDeclaration.default
+     * @see CompanionEnumDeclaration.defaultValue
      */
     export const DEFAULT_MAP = new Map<CompanionEnumDeclaration<any, any>, NullOr<Enumerable>>()
     /**

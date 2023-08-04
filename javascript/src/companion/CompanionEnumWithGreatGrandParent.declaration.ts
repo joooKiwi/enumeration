@@ -33,13 +33,13 @@ export interface CompanionEnumWithGreatGrandParentDeclaration<ENUMERABLE extends
 
     //#region -------------------- Default getter & setter methods --------------------
 
-    get default(): ENUMERABLE
+    get defaultValue(): ENUMERABLE
 
-    set default(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE | GRAND_PARENT_ENUMERABLE | GREAT_GRAND_PARENT_ENUMERABLE>,)
+    set defaultValue(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE | GRAND_PARENT_ENUMERABLE | GREAT_GRAND_PARENT_ENUMERABLE>,)
 
-    setDefault(value: ImpossibleNames,): never
-    setDefault(greatGrandParentInstance: GREAT_GRAND_PARENT_ENUMERABLE,): this
-    setDefault(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE | GRAND_PARENT_ENUMERABLE | GREAT_GRAND_PARENT_ENUMERABLE>,): this
+    setDefaultValue(value: ImpossibleNames,): never
+    setDefaultValue(greatGrandParentInstance: GREAT_GRAND_PARENT_ENUMERABLE,): this
+    setDefaultValue(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE | GRAND_PARENT_ENUMERABLE | GREAT_GRAND_PARENT_ENUMERABLE>,): this
 
     //#endregion -------------------- Default getter & setter methods --------------------
 

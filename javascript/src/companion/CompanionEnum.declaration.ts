@@ -33,7 +33,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {NullEnumerableException}
      * @throws {UnhandledValueException}
      */
-    get default(): ENUMERABLE
+    get defaultValue(): ENUMERABLE
 
     /**
      * Set the default value of an {@link Enumerable instance}
@@ -41,9 +41,9 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @param value The value to set (name, ordinal or instance)
      *
      * @note Receiving a <b>null</b> value with remove the default value
-     * @see setDefault
+     * @see setDefaultValue
      */
-    set default(value: Nullable<PossibleEnumerableValue<ENUMERABLE>>,)
+    set defaultValue(value: Nullable<PossibleEnumerableValue<ENUMERABLE>>,)
 
     /**
      * Remove the default value of an {@link Enumerable instance}
@@ -51,7 +51,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @param value A <b>null</b> value
      * @typescriptDefinition
      */
-    setDefault(value: NullOrUndefined,): this
+    setDefaultValue(value: NullOrUndefined,): this
 
     /**
      * Remove nothing because of an {@link EnumConstants.EDGE_CASE_NUMERIC_NAMES edge-case name}
@@ -60,7 +60,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {ForbiddenNumericException}
      * @typescriptDefinition
      */
-    setDefault(value: PossibleEdgeCaseNumericName,): never
+    setDefaultValue(value: PossibleEdgeCaseNumericName,): never
 
     /**
      * Set the default value of an {@link Enumerable instance}
@@ -69,7 +69,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      *
      * @note Receiving a <b>null</b> value with remove the default value
      */
-    setDefault(enumerable: Nullable<ENUMERABLE>,): this
+    setDefaultValue(enumerable: Nullable<ENUMERABLE>,): this
 
     /**
      * Set the default value of an {@link Enumerable} instance
@@ -79,7 +79,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @note Receiving a <b>null</b> value with remove the default value
      * @typescriptDefinition
      */
-    setDefault(value: Nullable<PossibleEnumerableValueBy<ENUMERABLE>>,): this
+    setDefaultValue(value: Nullable<PossibleEnumerableValueBy<ENUMERABLE>>,): this
 
     /**
      * Set the default value of an {@link Enumerable} instance
@@ -88,7 +88,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      *
      * @note Receiving a <b>null</b> value with remove the default value
      */
-    setDefault(ordinal: Nullable<PossibleNumeric>,): this
+    setDefaultValue(ordinal: Nullable<PossibleNumeric>,): this
 
     /**
      * Set the default value of an {@link Enumerable} instance
@@ -97,7 +97,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      *
      * @note Receiving a <b>null</b> value with remove the default value
      */
-    setDefault(name: Nullable<PossibleString>,): this
+    setDefaultValue(name: Nullable<PossibleString>,): this
 
     /**
      * Set the default value of an {@link Enumerable} instance
@@ -107,7 +107,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @note Receiving a <b>null</b> value with remove the default value
      * @typescriptDefinition
      */
-    setDefault(value: Nullable<PossibleEnumerableValue<ENUMERABLE>>,): this
+    setDefaultValue(value: Nullable<PossibleEnumerableValue<ENUMERABLE>>,): this
 
     //#endregion -------------------- Default getter & setter methods --------------------
     //#region -------------------- Values getter methods --------------------

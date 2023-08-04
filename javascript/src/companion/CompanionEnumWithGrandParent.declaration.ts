@@ -28,13 +28,13 @@ export interface CompanionEnumWithGrandParentDeclaration<ENUMERABLE extends Enum
 
     //#region -------------------- Default getter & setter methods --------------------
 
-    get default(): ENUMERABLE
+    get defaultValue(): ENUMERABLE
 
-    set default(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE | GRAND_PARENT_ENUMERABLE>,)
+    set defaultValue(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE | GRAND_PARENT_ENUMERABLE>,)
 
-    setDefault(value: ImpossibleNames,): never
-    setDefault(grandParentInstance: GRAND_PARENT_ENUMERABLE,): this
-    setDefault(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE | GRAND_PARENT_ENUMERABLE>,): this
+    setDefaultValue(value: ImpossibleNames,): never
+    setDefaultValue(grandParentInstance: GRAND_PARENT_ENUMERABLE,): this
+    setDefaultValue(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE | GRAND_PARENT_ENUMERABLE>,): this
 
     //#endregion -------------------- Default getter & setter methods --------------------
 

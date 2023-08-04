@@ -24,13 +24,13 @@ export interface CompanionEnumWithParentDeclaration<ENUMERABLE extends Enumerabl
 
     //#region -------------------- Default getter & setter methods --------------------
 
-    get default(): ENUMERABLE
+    get defaultValue(): ENUMERABLE
 
-    set default(value: Nullable<PossibleEnumerableValue<| ENUMERABLE | PARENT_ENUMERABLE>>,)
+    set defaultValue(value: Nullable<PossibleEnumerableValue<| ENUMERABLE | PARENT_ENUMERABLE>>,)
 
-    setDefault(value: ImpossibleNames,): never
-    setDefault(parentInstance: PARENT_ENUMERABLE,): this
-    setDefault(value: Nullable<PossibleEnumerableValue<| ENUMERABLE | PARENT_ENUMERABLE>>,): this
+    setDefaultValue(value: ImpossibleNames,): never
+    setDefaultValue(parentInstance: PARENT_ENUMERABLE,): this
+    setDefaultValue(value: Nullable<PossibleEnumerableValue<| ENUMERABLE | PARENT_ENUMERABLE>>,): this
 
     //#endregion -------------------- Default getter & setter methods --------------------
 

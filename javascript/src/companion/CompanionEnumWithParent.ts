@@ -54,23 +54,23 @@ export class CompanionEnumWithParent<const ENUMERABLE extends EnumerableWithNull
     }
 
 
-    public override get default(): ENUMERABLE {
-        return super.default
+    public override get defaultValue(): ENUMERABLE {
+        return super.defaultValue
     }
 
-    public override set default(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE>) {
-        super.default = value == null ? null : this._getValue(value)
+    public override set defaultValue(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE>) {
+        super.defaultValue = value == null ? null : this._getValue(value)
     }
 
-    public override setDefault(value: NullOrUndefined,): this
-    public override setDefault(value: ImpossibleNames,): never
-    public override setDefault(ordinal: Nullable<PossibleNumeric>,): this
-    public override setDefault(name: Nullable<PossibleString>,): this
-    public override setDefault(enumerable: Nullable<ENUMERABLE>,): this
-    public override setDefault(parentEnumerable: Nullable<PARENT_ENUMERABLE>,): this
-    public override setDefault(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE>,): this
-    public override setDefault(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE>): this {
-        this.default = value
+    public override setDefaultValue(value: NullOrUndefined,): this
+    public override setDefaultValue(value: ImpossibleNames,): never
+    public override setDefaultValue(ordinal: Nullable<PossibleNumeric>,): this
+    public override setDefaultValue(name: Nullable<PossibleString>,): this
+    public override setDefaultValue(enumerable: Nullable<ENUMERABLE>,): this
+    public override setDefaultValue(parentEnumerable: Nullable<PARENT_ENUMERABLE>,): this
+    public override setDefaultValue(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE>,): this
+    public override setDefaultValue(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE>): this {
+        this.defaultValue = value
         return this
     }
 

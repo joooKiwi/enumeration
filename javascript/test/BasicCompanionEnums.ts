@@ -37,9 +37,9 @@ export class BasicCompanionEnumByBasicCompanionEnumDeclaration implements Compan
 
     get instance() { return Enum_Enumerable }
 
-    get default(): never { throw new Error() }
-    set default(_value: unknown,) {}
-    setDefault(): never { throw new Error() }
+    get defaultValue(): never { throw new Error() }
+    set defaultValue(_value: unknown,) {}
+    setDefaultValue(): never { throw new Error() }
 
     get values(): never { throw new Error() }
     get names(): never { throw new Error() }
@@ -59,9 +59,9 @@ export class BasicCompanionEnumByCompanionEnumWithParentDeclaration implements C
     get parentInstance() { return Enum_ParentEnumerable }
     get instance() { return Enum_Enumerable }
 
-    get default(): never { throw new Error() }
-    set default(_value: unknown,) {}
-    setDefault(): never { throw new Error() }
+    get defaultValue(): never { throw new Error() }
+    set defaultValue(_value: unknown,) {}
+    setDefaultValue(): never { throw new Error() }
 
     get values(): never { throw new Error() }
     get names(): never { throw new Error() }
@@ -82,9 +82,9 @@ export class BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration impleme
     get parentInstance() { return Enum_ParentEnumerable }
     get instance() { return Enum_Enumerable }
 
-    get default(): never { throw new Error() }
-    set default(_value: unknown,) {}
-    setDefault(): never { throw new Error() }
+    get defaultValue(): never { throw new Error() }
+    set defaultValue(_value: unknown,) {}
+    setDefaultValue(): never { throw new Error() }
 
     get values(): never { throw new Error() }
     get names(): never { throw new Error() }
@@ -106,9 +106,9 @@ export class BasicCompanionEnumByCompanionEnumWithGreatGrandParentDeclaration im
     get parentInstance() { return Enum_ParentEnumerable }
     get instance() { return Enum_Enumerable }
 
-    get default(): never { throw new Error() }
-    set default(_value: unknown,) {}
-    setDefault(): never { throw new Error() }
+    get defaultValue(): never { throw new Error() }
+    set defaultValue(_value: unknown,) {}
+    setDefaultValue(): never { throw new Error() }
 
     get values(): never { throw new Error() }
     get names(): never { throw new Error() }

@@ -175,16 +175,16 @@ describe("CompanionEnumTest", () => {
             let instance: CompanionEnum_TestClassHelper
             beforeEach(() => instance = new InstanceHelper(Child,),)
 
-            describe("setDefault", () => {
+            describe("setDefaultValue", () => {
                 test.each(nullValues,)("%s", it => {
-                    expect(() => instance.setDefault(it,),).not.toThrow()
-                    expect(() => instance.default,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
+                    expect(() => instance.setDefaultValue(it,),).not.toThrow()
+                    expect(() => instance.defaultValue,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
                 },)
-                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefault(it,).default,).toEqual(value,),)
-                test("instance.A", () => expect(instance.setDefault(value,).default,).toEqual(value,),)
-                test("instance with parent.A", () => expect(() => instance.setDefault(parentValue,),).toThrow(InvalidEnumerableException,),)
-                test("instance with grandparent.A", () => expect(() => instance.setDefault(grandParentValue,),).toThrow(InvalidEnumerableException,),)
-                test("instance with great-grandparent.A", () => expect(() => instance.setDefault(greatGrandParentValue,),).toThrow(InvalidEnumerableException,),)
+                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefaultValue(it,).defaultValue,).toEqual(value,),)
+                test("instance.A", () => expect(instance.setDefaultValue(value,).defaultValue,).toEqual(value,),)
+                test("instance with parent.A", () => expect(() => instance.setDefaultValue(parentValue,),).toThrow(InvalidEnumerableException,),)
+                test("instance with grandparent.A", () => expect(() => instance.setDefaultValue(grandParentValue,),).toThrow(InvalidEnumerableException,),)
+                test("instance with great-grandparent.A", () => expect(() => instance.setDefaultValue(greatGrandParentValue,),).toThrow(InvalidEnumerableException,),)
             },)
             describe("getValue", () => {
                 test.each(nullValues,)("%s", it => expect(() => instance.getValue(it,),).toThrow(NullEnumerableException,),)
@@ -243,16 +243,16 @@ describe("CompanionEnumTest", () => {
             let instance: CompanionEnumWithParent_TestClassHelper
             beforeEach(() => instance = new InstanceHelper(Parent, Child,),)
 
-            describe("setDefault", () => {
+            describe("setDefaultValue", () => {
                 test.each(nullValues,)("%s", it => {
-                    expect(() => instance.setDefault(it,),).not.toThrow()
-                    expect(() => instance.default,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
+                    expect(() => instance.setDefaultValue(it,),).not.toThrow()
+                    expect(() => instance.defaultValue,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
                 },)
-                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefault(it,).default,).toEqual(parentValue,),)
-                test("instance.A", () => expect(instance.setDefault(value,).default,).toEqual(parentValue,),)
-                test("instance with parent.A", () => expect(instance.setDefault(parentValue,).default,).toEqual(parentValue,),)
-                test("instance with grandparent.A", () => expect(() => instance.setDefault(grandParentValue,),).toThrow(InvalidEnumerableException,),)
-                test("instance with great-grandparent.A", () => expect(() => instance.setDefault(greatGrandParentValue,),).toThrow(InvalidEnumerableException,),)
+                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefaultValue(it,).defaultValue,).toEqual(parentValue,),)
+                test("instance.A", () => expect(instance.setDefaultValue(value,).defaultValue,).toEqual(parentValue,),)
+                test("instance with parent.A", () => expect(instance.setDefaultValue(parentValue,).defaultValue,).toEqual(parentValue,),)
+                test("instance with grandparent.A", () => expect(() => instance.setDefaultValue(grandParentValue,),).toThrow(InvalidEnumerableException,),)
+                test("instance with great-grandparent.A", () => expect(() => instance.setDefaultValue(greatGrandParentValue,),).toThrow(InvalidEnumerableException,),)
             },)
             describe("getValue", () => {
                 test.each(nullValues,)("%s", it => expect(() => instance.getValue(it,),).toThrow(NullEnumerableException,),)
@@ -324,16 +324,16 @@ describe("CompanionEnumTest", () => {
             let instance: CompanionEnumWithGrandParent_TestClassHelper
             beforeEach(() => instance = new InstanceHelper(GrandParent, Parent, Child,),)
 
-            describe("setDefault", () => {
+            describe("setDefaultValue", () => {
                 test.each(nullValues,)("%s", it => {
-                    expect(() => instance.setDefault(it,),).not.toThrow()
-                    expect(() => instance.default,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
+                    expect(() => instance.setDefaultValue(it,),).not.toThrow()
+                    expect(() => instance.defaultValue,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
                 },)
-                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefault(it,).default,).toEqual(grandParentValue,),)
-                test("instance.A", () => expect(instance.setDefault(value,).default,).toEqual(grandParentValue,),)
-                test("instance with parent.A", () => expect(instance.setDefault(parentValue,).default,).toEqual(grandParentValue,),)
-                test("instance with grandparent.A", () => expect(instance.setDefault(grandParentValue,).default,).toEqual(grandParentValue,),)
-                test("instance with great-grandparent.A", () => expect(() => instance.setDefault(greatGrandParentValue,),).toThrow(InvalidEnumerableException,),)
+                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefaultValue(it,).defaultValue,).toEqual(grandParentValue,),)
+                test("instance.A", () => expect(instance.setDefaultValue(value,).defaultValue,).toEqual(grandParentValue,),)
+                test("instance with parent.A", () => expect(instance.setDefaultValue(parentValue,).defaultValue,).toEqual(grandParentValue,),)
+                test("instance with grandparent.A", () => expect(instance.setDefaultValue(grandParentValue,).defaultValue,).toEqual(grandParentValue,),)
+                test("instance with great-grandparent.A", () => expect(() => instance.setDefaultValue(greatGrandParentValue,),).toThrow(InvalidEnumerableException,),)
             },)
             describe("getValue", () => {
                 test.each(nullValues,)("%s", it => expect(() => instance.getValue(it,),).toThrow(NullEnumerableException,),)
@@ -447,16 +447,16 @@ describe("CompanionEnumTest", () => {
             let instance: CompanionEnumWithGreatGrandParent_TestClassHelper
             beforeEach(() => instance = new InstanceHelper(GreatGrandParent, GrandParent, Parent, Child,),)
 
-            describe("setDefault", () => {
+            describe("setDefaultValue", () => {
                 test.each(nullValues,)("%s", it => {
-                    expect(() => instance.setDefault(it,),).not.toThrow()
-                    expect(() => instance.default,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
+                    expect(() => instance.setDefaultValue(it,),).not.toThrow()
+                    expect(() => instance.defaultValue,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
                 },)
-                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefault(it,).default,).toEqual(greatGrandParentValue,),)
-                test("instance.A", () => expect(instance.setDefault(value,).default,).toEqual(greatGrandParentValue,),)
-                test("instance with parent.A", () => expect(instance.setDefault(parentValue,).default,).toEqual(greatGrandParentValue,),)
-                test("instance with grandparent.A", () => expect(instance.setDefault(grandParentValue,).default,).toEqual(greatGrandParentValue,),)
-                test("instance with great-grandparent.A", () => expect(instance.setDefault(greatGrandParentValue,).default,).toEqual(greatGrandParentValue,),)
+                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefaultValue(it,).defaultValue,).toEqual(greatGrandParentValue,),)
+                test("instance.A", () => expect(instance.setDefaultValue(value,).defaultValue,).toEqual(greatGrandParentValue,),)
+                test("instance with parent.A", () => expect(instance.setDefaultValue(parentValue,).defaultValue,).toEqual(greatGrandParentValue,),)
+                test("instance with grandparent.A", () => expect(instance.setDefaultValue(grandParentValue,).defaultValue,).toEqual(greatGrandParentValue,),)
+                test("instance with great-grandparent.A", () => expect(instance.setDefaultValue(greatGrandParentValue,).defaultValue,).toEqual(greatGrandParentValue,),)
             },)
             describe("getValue", () => {
                 test.each(nullValues,)("%s", it => expect(() => instance.getValue(it,),).toThrow(NullEnumerableException,),)

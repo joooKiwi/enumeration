@@ -39,7 +39,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     #values?: CollectionHolder<ENUMERABLE>
     #names?: CollectionHolder<NameOf<ENUMERABLE>>
     #ordinals?: CollectionHolder<OrdinalOf<ENUMERABLE>>
-    #default?: NullOr<ENUMERABLE>
+    #defaultValue?: NullOr<ENUMERABLE>
     #excludedNames?: CollectionHolder<string>
 
 
@@ -109,31 +109,32 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     }
 
 
-    public get default(): ENUMERABLE {
-        if (this.#default === undefined && !EnumConstants.DEFAULT_MAP.has(this,))
+    public get defaultValue(): ENUMERABLE {
+        if (this.#defaultValue === undefined && !EnumConstants.DEFAULT_MAP.has(this,))
             this.#initializeDefault()
 
-        if (this.#default === null)
+        const defaultValue = this.#defaultValue
+        if (defaultValue == null)
             throw new NullEnumerableException(`The default value was set to null or removed on "${this.instance.name}".\n\tTry a calling "${this.instance.name}.CompanionEnum.get.default = value" or "${this.instance.name}.CompanionEnum.get.setDefault(value)".`,)
-        return this.#default!
+        return defaultValue
     }
 
-    public set default(value: Nullable<PossibleEnumerableValue<ENUMERABLE>>,) {
+    public set defaultValue(value: Nullable<PossibleEnumerableValue<ENUMERABLE>>,) {
         if (value == null)
-            EnumConstants.DEFAULT_MAP.set(this, this.#default = null,)
+            EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = null,)
         else
-            EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValue(value),)
+            EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValue(value),)
     }
 
-    public setDefault(value: NullOrUndefined,): this
-    public setDefault(value: ImpossibleNames,): never
-    public setDefault(enumerable: Nullable<ENUMERABLE>,): this
-    public setDefault(value: Nullable<PossibleEnumerableValueBy<ENUMERABLE>>,): this
-    public setDefault(ordinal: Nullable<PossibleNumeric>,): this
-    public setDefault(name: Nullable<PossibleString>,): this
-    public setDefault(value: Nullable<PossibleEnumerableValue<ENUMERABLE>>,): this
-    public setDefault(value: Nullable<PossibleEnumerableValue<ENUMERABLE>>,): this {
-        this.default = value
+    public setDefaultValue(value: NullOrUndefined,): this
+    public setDefaultValue(value: ImpossibleNames,): never
+    public setDefaultValue(enumerable: Nullable<ENUMERABLE>,): this
+    public setDefaultValue(value: Nullable<PossibleEnumerableValueBy<ENUMERABLE>>,): this
+    public setDefaultValue(ordinal: Nullable<PossibleNumeric>,): this
+    public setDefaultValue(name: Nullable<PossibleString>,): this
+    public setDefaultValue(value: Nullable<PossibleEnumerableValue<ENUMERABLE>>,): this
+    public setDefaultValue(value: Nullable<PossibleEnumerableValue<ENUMERABLE>>,): this {
+        this.defaultValue = value
         return this
     }
 
@@ -284,7 +285,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         if (!isEnum(defaultValue) && !isEnumByStructure(defaultValue))
             throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT) was not an Enum or in the structure of an Enumerable.`, defaultValue,)
         try {
-            EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValueByEnumerable(defaultValue as Enumerable,),)
+            EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByEnumerable(defaultValue as Enumerable,),)
             return true
         } catch (exception) {
             if (exception instanceof InvalidEnumerableException)
@@ -315,10 +316,10 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
             throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT_NAME) was not an string (primitive or object).`, defaultName,)
         try {
             if (typeof defaultName == "string") {
-                EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValueByString(defaultName, defaultName,),)
+                EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByString(defaultName, defaultName,),)
                 return true
             }
-            EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValueByString(defaultName.valueOf(), defaultName,),)
+            EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByString(defaultName.valueOf(), defaultName,),)
             return true
         } catch (exception) {
             if (exception instanceof ForbiddenInheritedEnumerableMemberException)
@@ -355,18 +356,18 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
             throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL) was not an number or bigint (primitive or object).`, defaultOrdinal,)
         try {
             if (typeof defaultOrdinal == "number") {
-                EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValueByNumber(defaultOrdinal, defaultOrdinal,),)
+                EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByNumber(defaultOrdinal, defaultOrdinal,),)
                 return true
             }
             if (typeof defaultOrdinal == "bigint") {
-                EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValueByBigInt(defaultOrdinal, defaultOrdinal,),)
+                EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByBigInt(defaultOrdinal, defaultOrdinal,),)
                 return true
             }
             if (defaultOrdinal instanceof Number) {
-                EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValueByNumber(defaultOrdinal.valueOf(), defaultOrdinal,),)
+                EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByNumber(defaultOrdinal.valueOf(), defaultOrdinal,),)
                 return true
             }
-            EnumConstants.DEFAULT_MAP.set(this, this.#default = this._getValueByBigInt(defaultOrdinal.valueOf(), defaultOrdinal,),)
+            EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByBigInt(defaultOrdinal.valueOf(), defaultOrdinal,),)
             return true
         } catch (exception) {
             if (exception instanceof ForbiddenNumericException)
