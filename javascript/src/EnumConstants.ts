@@ -183,5 +183,9 @@ export namespace EnumConstants {
 }
 
 export interface EnumConstants {
+    /**
+     * @param args Any possible arguments sent
+     * @throws EvalError The class cannot be constructed
+     */
     new(...args: readonly unknown[]): never
 }
