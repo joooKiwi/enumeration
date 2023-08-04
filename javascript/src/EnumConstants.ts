@@ -181,16 +181,16 @@ export namespace EnumConstants {
 
     /** Every member of an {@link CompanionEnumDeclaration} */
     export const COMPANION_ENUM_MEMBERS: CollectionHolder<keyof CompanionEnumDeclaration<never, never>>
-        = new GenericCollectionHolder(["instance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,],)
+        = new GenericCollectionHolder(["instance", "defaultValue", "setDefaultValue", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,],)
     /** Every member of an {@link CompanionEnumWithParentDeclaration} */
     export const COMPANION_ENUM_WITH_PARENT_MEMBERS: CollectionHolder<keyof CompanionEnumWithParentDeclaration<never, never, never, never>>
-        = new GenericCollectionHolder(["instance", "parentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,],)
+        = new GenericCollectionHolder(["instance", "parentInstance", "defaultValue", "setDefaultValue", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,],)
     /** Every member of an {@link CompanionEnumWithGrandParentDeclaration} */
     export const COMPANION_ENUM_WITH_GRAND_PARENT_MEMBERS: CollectionHolder<keyof CompanionEnumWithGrandParentDeclaration<never, never, never, never, never, never>>
-        = new GenericCollectionHolder(["instance", "parentInstance", "grandParentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,],)
+        = new GenericCollectionHolder(["instance", "parentInstance", "grandParentInstance", "defaultValue", "setDefaultValue", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,],)
     /** Every member of an {@link CompanionEnumWithGreatGrandParentDeclaration} */
     export const COMPANION_ENUM_WITH_GREAT_GRAND_PARENT_MEMBERS: CollectionHolder<keyof CompanionEnumWithGreatGrandParentDeclaration<never, never, never, never, never, never, never, never>>
-        = new GenericCollectionHolder(["instance", "parentInstance", "grandParentInstance", "greatGrandParentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,],)
+        = new GenericCollectionHolder(["instance", "parentInstance", "grandParentInstance", "greatGrandParentInstance", "defaultValue", "setDefaultValue", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,],)
 
 
     /**
