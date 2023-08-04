@@ -34,3 +34,6 @@ export type PossibleNumber = | number | Number
 export type PossibleBigInt = | bigint | BigInt
 /** A possible {@link String string}, {@link Number number} or {@link BigInt bigint} (primitive or object) */
 export type PossibleStringOrNumeric = | PossibleString | PossibleNumeric
+
+/** The possible edge case {@link Number} for number conversion from a {@link String} */
+export type PossibleEdgeCaseNumericName = | "NaN" | `${| "" | "-"}Infinity`
