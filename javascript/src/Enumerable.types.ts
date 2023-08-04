@@ -5,10 +5,16 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {EnumConstants}            from "./EnumConstants"
-import type {Enumerable}               from "./Enumerable"
-import type {EnumerableConstructor}    from "./EnumerableConstructor"
-import type {Nullable, PossibleBigInt} from "./general type"
+import type {EnumConstants}                          from "./EnumConstants"
+import type {Enumerable}                             from "./Enumerable"
+import type {EnumerableConstructor}                  from "./EnumerableConstructor"
+import type {EnumerableWithNullableGrandParent}      from "./EnumerableWithNullableGrandParent"
+import type {EnumerableWithNullableGreatGrandParent} from "./EnumerableWithNullableGreatGrandParent"
+import type {EnumerableWithNullableParent}           from "./EnumerableWithNullableParent"
+import type {EnumerableWithGrandParent}              from "./EnumerableWithGrandParent"
+import type {EnumerableWithGreatGrandParent}         from "./EnumerableWithGreatGrandParent"
+import type {EnumerableWithParent}                   from "./EnumerableWithParent"
+import type {Nullable, PossibleBigInt}               from "./general type"
 
 /** The {@link Enumerable} name in a {@link Object.toString toString()} method */
 export type EnumerableName = typeof EnumConstants["ENUM_TO_STRING_TAG"]
@@ -47,6 +53,19 @@ export type OrdinalOf<ENUMERABLE extends Enumerable, > = ENUMERABLE["ordinal"]
 /** The {@link CompanionEnumDeclaration Companion enum} reference of an {@link EnumerableConstructor} */
 export type CompanionOf<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, > = ENUMERABLE_CONSTRUCTOR["CompanionEnum"]["get"]
 
+/**
+ * The possible {@link Enumerable} members by itself
+ * or by an inheritors (in the project)
+ *
+ * @see EnumConstants.EVERY_ENUMERABLE_MEMBER
+ */
+export type PossibleEnumerableMembers = | keyof Enumerable
+                                        | keyof EnumerableWithNullableParent
+                                        | keyof EnumerableWithParent
+                                        | keyof EnumerableWithNullableGrandParent
+                                        | keyof EnumerableWithGrandParent
+                                        | keyof EnumerableWithNullableGreatGrandParent
+                                        | keyof EnumerableWithGreatGrandParent
 
 /** A general {@link Enumerable} type possibility */
 export type PossibleEnumerableValue<ENUMERABLE extends Enumerable = Enumerable, ORDINAL extends number = number, NAME extends string = string, > =
@@ -83,6 +102,5 @@ export type EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENU
     = OrdinalOf<& ENUMERABLE_CONSTRUCTOR[& NAME & keyof ENUMERABLE_CONSTRUCTOR] & ENUMERABLE>
 export type EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUMERABLE extends Enumerable, ORDINAL extends number, >
     = NameOf<& ENUMERABLE_CONSTRUCTOR[& ORDINAL & keyof ENUMERABLE_CONSTRUCTOR] & ENUMERABLE>
-
 
 //#endregion -------------------- Enumerable by Enumerable & EnumerableConstructor --------------------
