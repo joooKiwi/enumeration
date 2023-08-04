@@ -49,6 +49,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * Remove the default value of an {@link Enumerable instance}
      *
      * @param value A <b>null</b> value
+     * @typescriptDefinition
      */
     setDefault(value: NullOrUndefined,): this
 
@@ -67,6 +68,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @param value The value to set by a valid value ({@link Enumerable.name name}, {@link Enumerable.ordinal ordinal} or {@link Enumerable instance})
      *
      * @note Receiving a <b>null</b> value with remove the default value
+     * @typescriptDefinition
      */
     setDefault(value: Nullable<PossibleEnumerableValueBy<ENUMERABLE>>,): this
 
@@ -94,6 +96,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @param value The value to set by a possibly valid value ({@link Enumerable.name name}, {@link Enumerable.ordinal ordinal} or {@link Enumerable instance})
      *
      * @note Receiving a <b>null</b> value with remove the default value
+     * @typescriptDefinition
      */
     setDefault(value: Nullable<PossibleEnumerableValue<ENUMERABLE>>,): this
 
@@ -121,6 +124,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      *
      * @param value A <b>null</b> value
      * @throws {NullEnumerableException}
+     * @typescriptDefinition
      */
     getValue(value: NullOrUndefined,): never
 
@@ -145,6 +149,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {InvalidEnumerableException}
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
+     * @typescriptDefinition
      */
     getValue<const ORDINAL extends number, >(ordinal: Nullable<`${ORDINAL}`>,): ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
 
@@ -152,13 +157,12 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * Get the {@link Enumerable instance} from a {@link Enumerable.ordinal ordinal value} indirectly
      *
      * @param ordinal The ordinal to find (as a {@link Number} or {@link String} template form)
-     *
-     * @typescriptDefinition
      * @throws {ForbiddenNumericException}
      * @throws {ImpossibleOrdinalException}
      * @throws {InvalidEnumerableException}
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
+     * @typescriptDefinition
      */
     getValue<const ORDINAL extends number, >(ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,): ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
 
@@ -187,13 +191,12 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * ({@link Enumerable.ordinal ordinal}, {@link Enumerable.name name} or {@link Enumerable instance})
      *
      * @param value The value (ordinal, name or instance) to find
-     *
-     * @typescriptDefinition
      * @throws {ForbiddenNumericException}
      * @throws {ImpossibleOrdinalException}
      * @throws {InvalidEnumerableException}
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
+     * @typescriptDefinition
      */
     getValue<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUMERABLE, >(value: Nullable<| ORDINAL | `${ORDINAL}` | NAME | String | Number | PossibleBigInt | INSTANCE>,): | ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL> | ValueByEnumerableConstructorAndEnumerableNameAndName<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, NAME> | INSTANCE
 
@@ -205,6 +208,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      *
      * @param value A <b>null</b> value
      * @throws {NullEnumerableException}
+     * @typescriptdefinition
      */
     getName(value: NullOrUndefined,): never
 
@@ -229,6 +233,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {InvalidEnumerableException}
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
+     * @typescriptDefinition
      */
     getName<const ORDINAL extends number, >(ordinal: Nullable<`${ORDINAL}`>,): EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
 
@@ -236,13 +241,12 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * Get the {@link Enumerable.name name} from a {@link Enumerable.ordinal ordinal value} indirectly
      *
      * @param ordinal The ordinal to find (as a {@link Number} or {@link String} template form)
-     *
-     * @typescriptDefinition
      * @throws {ForbiddenNumericException}
      * @throws {ImpossibleOrdinalException}
      * @throws {InvalidEnumerableException}
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
+     * @typescriptDefinition
      */
     getName<const ORDINAL extends number, >(ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,): EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
 
@@ -270,13 +274,12 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * Get the {@link Enumerable.name name} from any valid value ({@link Enumerable.ordinal ordinal}, {@link Enumerable.name name} or {@link Enumerable instance})
      *
      * @param value The value (ordinal, name or instance) to find
-     *
-     * @typescriptDefinition
      * @throws {ForbiddenNumericException}
      * @throws {ImpossibleOrdinalException}
      * @throws {InvalidEnumerableException}
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
+     * @typescriptDefinition
      */
     getName<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUMERABLE = ENUMERABLE, >(value: Nullable<ORDINAL | `${ORDINAL}` | Number | PossibleBigInt | NAME | String | INSTANCE>,): | EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL> | SpecificNameOf<NAME, ENUMERABLE> | NameOf<INSTANCE>
 
@@ -288,6 +291,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      *
      * @param value A <b>null</b> value
      * @throws {NullEnumerableException}
+     * @typescriptDefinition
      */
     getOrdinal(value: NullOrUndefined,): never
 
@@ -312,6 +316,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * @throws {InvalidEnumerableException}
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
+     * @typescriptDefinition
      */
     getOrdinal<const ORDINAL extends number, >(ordinal: Nullable<`${ORDINAL}`>,): SpecificOrdinalOf<ORDINAL, ENUMERABLE>
 
@@ -319,13 +324,12 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * Get the {@link Enumerable.ordinal ordinal} from a {@link Enumerable.ordinal ordinal value} directly
      *
      * @param ordinal The ordinal to find (as a {@link Number} or {@link String} template form)
-     *
-     * @typescriptDefinition
      * @throws {ForbiddenNumericException}
      * @throws {ImpossibleOrdinalException}
      * @throws {InvalidEnumerableException}
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
+     * @typescriptDefinition
      */
     getOrdinal<const ORDINAL extends number, >(ordinal: Nullable<| ORDINAL | `${ORDINAL}`>,): SpecificOrdinalOf<ORDINAL, ENUMERABLE>
 
@@ -354,13 +358,12 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
      * ({@link Enumerable.ordinal ordinal}, {@link Enumerable.name name} or {@link Enumerable instance})
      *
      * @param value The value (ordinal, name or instance) to find
-     *
-     * @typescriptDefinition
      * @throws {ForbiddenNumericException}
      * @throws {ImpossibleOrdinalException}
      * @throws {InvalidEnumerableException}
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
+     * @typescriptDefinition
      */
     getOrdinal<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUMERABLE = ENUMERABLE, >(value: Nullable<ORDINAL | `${ORDINAL}` | Number | PossibleBigInt | NAME | String | INSTANCE>,): | SpecificOrdinalOf<ORDINAL, ENUMERABLE> | EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, NAME> | OrdinalOf<INSTANCE>
 
