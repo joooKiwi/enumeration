@@ -5,18 +5,24 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {CollectionHolder} from "@joookiwi/collection"
+import type {CollectionHolder}   from "@joookiwi/collection"
+import {GenericCollectionHolder} from "@joookiwi/collection"
 
 import type {Enumerable}                                   from "./Enumerable"
+import type {PossibleEnumerableMembers}                    from "./Enumerable.types"
 import type {EnumerableConstructor}                        from "./EnumerableConstructor"
 import type {EnumerableWithNullableGrandParent}            from "./EnumerableWithNullableGrandParent"
 import type {EnumerableWithNullableGreatGrandParent}       from "./EnumerableWithNullableGreatGrandParent"
 import type {EnumerableWithNullableParent}                 from "./EnumerableWithNullableParent"
-import type {NullOr}                                       from "./general type"
+import type {EnumerableWithGrandParent}                    from "./EnumerableWithGrandParent"
+import type {EnumerableWithGreatGrandParent}               from "./EnumerableWithGreatGrandParent"
+import type {EnumerableWithParent}                         from "./EnumerableWithParent"
+import type {NullOr, PossibleEdgeCaseNumericName}          from "./general type"
 import type {CompanionEnumDeclaration}                     from "./companion/CompanionEnum.declaration"
 import type {CompanionEnumWithGrandParentDeclaration}      from "./companion/CompanionEnumWithGrandParent.declaration"
 import type {CompanionEnumWithGreatGrandParentDeclaration} from "./companion/CompanionEnumWithGreatGrandParent.declaration"
 import type {CompanionEnumWithParentDeclaration}           from "./companion/CompanionEnumWithParent.declaration"
+import type {PossibleCompanionEnumMembers}                 from "./companion/types"
 
 /** A simple class containing every field used by an {@link Enumerable} helper, instance or companion */
 export class EnumConstants {
@@ -75,16 +81,6 @@ export namespace EnumConstants {
     //#endregion -------------------- Maps --------------------
     //#region -------------------- Initialization validation fields --------------------
 
-    /** A {@link RegExp regex} to include any numeric value (negative and/or decimal) */
-    export const NUMBER_ONLY_REGEX = /^-?\d+(\.\d+)?$/
-    /** A {@link RegExp regex} to include any non-decimal value (negative included) */
-    export const INTEGER_ONLY_REGEX = /^-?\d+$/
-    /**
-     * The insensitive hint used on the {@link Enumerable}{@link Symbol.toPrimitive [Symbol.toPrimitive]}()
-     *
-     * @uniqueToJavascript
-     */
-    export const TO_PRIMITIVE_VALUES = /string|number|default/i
     /**
      * The simple <i>prototype</i> name of a class
      *
@@ -94,34 +90,59 @@ export namespace EnumConstants {
     // export const RESERVED_JAVASCRIPT_FUNCTION_NAMES = ["prototype", "name", "length", "apply", "call", "bind", "caller",] as const
     // export const RESERVED_JAVASCRIPT_OBJECT_NAMES = ["constructor", "hasOwnProperty", "isPrototypeOf", "toLocaleString", "toString", "valueOf",] as const
     /** Every edge case of a {@link Number} */
-    export const EDGE_CASE_NUMERIC_NAME = ["NaN", "-Infinity", "Infinity",] as const
-    /**
-     * Every inherited member of any {@link Enumerable enumerable} instances
-     * ({@link Enumerable}, with {@link EnumerableWithNullableParent parent},
-     * {@link EnumerableWithNullableGrandParent grandparent} and {@link EnumerableWithNullableGreatGrandParent great-grandparent})
-     */
-    export const INHERITED_ENUMERABLE_MEMBERS = ["name", "ordinal", "parent", "grandParent", "greatGrandParent",] as const satisfies readonly (| keyof Enumerable | keyof EnumerableWithNullableParent | keyof EnumerableWithNullableGrandParent | keyof EnumerableWithNullableGreatGrandParent)[]
+    export const EDGE_CASE_NUMERIC_NAMES: CollectionHolder<PossibleEdgeCaseNumericName> = new GenericCollectionHolder(["NaN", "-Infinity", "Infinity",],)
 
     //#endregion -------------------- Initialization validation fields --------------------
     //#region -------------------- Enumerable members --------------------
 
     /** Every member of an {@link Enumerable} */
-    export const ENUMERABLE_MEMBERS = ["name", "ordinal", Symbol.toPrimitive, Symbol.toStringTag,] as const satisfies readonly (keyof Enumerable)[]
+    export const ENUMERABLE_MEMBERS: CollectionHolder<keyof Enumerable>
+        = new GenericCollectionHolder(["name", "ordinal", Symbol.toPrimitive, Symbol.toStringTag,],)
     /** Every member of an {@link EnumerableWithNullableParent} or {@link EnumerableWithParent} */
-    export const ENUMERABLE_WITH_PARENT_MEMBERS = ["name", "ordinal", "parent", Symbol.toPrimitive, Symbol.toStringTag,] as const satisfies readonly (keyof EnumerableWithNullableParent)[]
+    export const ENUMERABLE_WITH_PARENT_MEMBERS: CollectionHolder<keyof (| EnumerableWithNullableParent | EnumerableWithParent)>
+        = new GenericCollectionHolder(["name", "ordinal", "parent", Symbol.toPrimitive, Symbol.toStringTag,],)
     /** Every member of an {@link EnumerableWithNullableGrandParent} or {@link EnumerableWithGrandParent} */
-    export const ENUMERABLE_WITH_GRAND_PARENT_MEMBERS = ["name", "ordinal", "parent", "grandParent", Symbol.toPrimitive, Symbol.toStringTag,] as const satisfies readonly (keyof EnumerableWithNullableGrandParent)[]
+    export const ENUMERABLE_WITH_GRAND_PARENT_MEMBERS: CollectionHolder<keyof (| EnumerableWithNullableGrandParent | EnumerableWithGrandParent)>
+        = new GenericCollectionHolder(["name", "ordinal", "parent", "grandParent", Symbol.toPrimitive, Symbol.toStringTag,],)
     /** Every member of an {@link EnumerableWithNullableGreatGrandParent} or {@link EnumerableWithGreatGrandParent} */
-    export const ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS = ["name", "ordinal", "parent", "grandParent", "greatGrandParent", Symbol.toPrimitive, Symbol.toStringTag,] as const satisfies readonly (keyof EnumerableWithNullableGreatGrandParent)[]
+    export const ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS: CollectionHolder<keyof (| EnumerableWithNullableGreatGrandParent | EnumerableWithGreatGrandParent)>
+        = new GenericCollectionHolder(["name", "ordinal", "parent", "grandParent", "greatGrandParent", Symbol.toPrimitive, Symbol.toStringTag,],)
+
 
     /** Every member of an {@link CompanionEnumDeclaration} */
-    export const COMPANION_ENUM_MEMBERS = ["instance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumDeclaration<never, never>)[]
+    export const COMPANION_ENUM_MEMBERS: CollectionHolder<keyof CompanionEnumDeclaration<never, never>>
+        = new GenericCollectionHolder(["instance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,],)
     /** Every member of an {@link CompanionEnumWithParentDeclaration} */
-    export const COMPANION_ENUM_WITH_PARENT_MEMBERS = ["instance", "parentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumWithParentDeclaration<never, never, never, never>)[]
+    export const COMPANION_ENUM_WITH_PARENT_MEMBERS: CollectionHolder<keyof CompanionEnumWithParentDeclaration<never, never, never, never>>
+        = new GenericCollectionHolder(["instance", "parentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,],)
     /** Every member of an {@link CompanionEnumWithGrandParentDeclaration} */
-    export const COMPANION_ENUM_WITH_GRAND_PARENT_MEMBERS = ["instance", "parentInstance", "grandParentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumWithGrandParentDeclaration<never, never, never, never, never, never>)[]
+    export const COMPANION_ENUM_WITH_GRAND_PARENT_MEMBERS: CollectionHolder<keyof CompanionEnumWithGrandParentDeclaration<never, never, never, never, never, never>>
+        = new GenericCollectionHolder(["instance", "parentInstance", "grandParentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,],)
     /** Every member of an {@link CompanionEnumWithGreatGrandParentDeclaration} */
-    export const COMPANION_ENUM_WITH_GREAT_GRAND_PARENT_MEMBERS = ["instance", "parentInstance", "grandParentInstance", "greatGrandParentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const satisfies readonly (keyof CompanionEnumWithGreatGrandParentDeclaration<never, never, never, never, never, never, never, never>)[]
+    export const COMPANION_ENUM_WITH_GREAT_GRAND_PARENT_MEMBERS: CollectionHolder<keyof CompanionEnumWithGreatGrandParentDeclaration<never, never, never, never, never, never, never, never>>
+        = new GenericCollectionHolder(["instance", "parentInstance", "grandParentInstance", "greatGrandParentInstance", "default", "setDefault", "values", "names", "ordinals", "iterator", "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,],)
+
+
+    /**
+     * Every member of
+     *  - {@link Enumerable},
+     *  - {@link EnumerableWithNullableParent},
+     *  - {@link EnumerableWithParent},
+     *  - {@link EnumerableWithNullableGrandParent},
+     *  - {@link EnumerableWithGrandParent},
+     *  - {@link EnumerableWithNullableGreatGrandParent}
+     *  - {@link EnumerableWithGreatGrandParent}
+     */
+    export const EVERY_ENUMERABLE_MEMBER = ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS satisfies CollectionHolder<PossibleEnumerableMembers>
+
+    /**
+     * Every member of
+     *  - {@link CompanionEnumDeclaration},
+     *  - {@link CompanionEnumWithParentDeclaration},
+     *  - {@link CompanionEnumWithGrandParentDeclaration},
+     *  - {@link CompanionEnumWithGreatGrandParentDeclaration}
+     */
+    export const EVERY_COMPANION_ENUM_MEMBER = COMPANION_ENUM_WITH_GREAT_GRAND_PARENT_MEMBERS satisfies CollectionHolder<PossibleCompanionEnumMembers>
 
     //#endregion -------------------- Enumerable members --------------------
     //#region -------------------- Symbols --------------------
