@@ -93,6 +93,58 @@ export namespace EnumConstants {
     export const EDGE_CASE_NUMERIC_NAMES: CollectionHolder<PossibleEdgeCaseNumericName> = new GenericCollectionHolder(["NaN", "-Infinity", "Infinity",],)
 
     //#endregion -------------------- Initialization validation fields --------------------
+    //#region -------------------- Regex fields --------------------
+
+    /**
+     * The insensitive hint used on the {@link Enumerable}{@link Symbol.toPrimitive [Symbol.toPrimitive]}()
+     *
+     * @uniqueToJavascript
+     */
+    export const TO_PRIMITIVE_VALUES = /string|number|default/i
+
+
+    /**
+     * A {@link RegExp regex} to include any {@link Number numeric}
+     * in the decimal form (<i>±0.1 or ±10 or ±100_000</i>)
+     */
+    export const DECIMAL_REGEX = /^-?\d+(\.\d+)?$/
+    /**
+     * A {@link RegExp regex} to include any {@link Number integer}
+     * in the decimal form (<i>±10 or ±100_000</i>)
+     */
+    export const INTEGER_REGEX = /^-?\d+$/
+
+    /**
+     * A {@link RegExp regex} to include any {@link Number numeric}
+     * in the exponential form (<i>±1e10</i> or <i>±1e-10</i>).
+     *
+     * This will be an eventual valid regex in the {@link CompanionEnum companion enum}.
+     */
+    export const EXPONENTIAL_REGEX = /^-?\d+e-?\d+$/i
+    /**
+     * A {@link RegExp regex} to include any {@link Number numeric}
+     * in the exponential form (<i>±1¹⁰</i> or <i>±1⁻¹⁰</i>).
+     *
+     * This will be an eventual valid regex in the {@link CompanionEnum companion enum}.
+     */
+    export const UNICODE_EXPONENTIAL_REGEX = /^-?\d+⁻?[⁰¹²³⁴⁵⁶⁷⁸⁹]+$/
+
+    /**
+     * A {@link RegExp regex} to include any {@link Number numeric}
+     * in the hexadecimal form (<i>±0x1a</i>).
+     *
+     * This will be an eventual valid regex in the {@link CompanionEnum companion enum}.
+     */
+    export const HEXADECIMAL_REGEX = /^-?0x[\da-f]+$/i
+    /**
+     * A {@link RegExp regex} to include any {@link Number numeric}
+     * in the binary form (<i>±0x1001</i>).
+     *
+     * This will be an eventual valid regex in the {@link CompanionEnum companion enum}.
+     */
+    export const BINARY_REGEX = /^-?0b[01]+$/i
+
+    //#endregion -------------------- Regex fields --------------------
     //#region -------------------- Enumerable members --------------------
 
     /** Every member of an {@link Enumerable} */
