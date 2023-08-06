@@ -24,16 +24,31 @@ export type Nullable<T, > = | T | null | undefined
 /** The possible hint received from javascript interpolation & conversion */
 export type PossiblePrimitiveHint = "string" | "number" | "default"
 
-/** A possible {@link String string} (primitive or object) */
-export type PossibleString = | string | String
-/** A possible {@link Number number} or {@link BigInt bigint} (primitive or object) */
-export type PossibleNumeric = | PossibleNumber | PossibleBigInt
-/** A possible {@link Number number} (primitive or object) */
-export type PossibleNumber = | number | Number
-/** A possible {@link BigInt bigint} (primitive or object) */
-export type PossibleBigInt = | bigint | BigInt
-/** A possible {@link String string}, {@link Number number} or {@link BigInt bigint} (primitive or object) */
-export type PossibleStringOrNumeric = | PossibleString | PossibleNumeric
+/** A possible {@link Number} (primitive or object) */
+export type PossibleNumber<T extends number = number, > = | T | Number
+/** A simple {@link Number} in a {@link String} format */
+export type NumberInAString<T extends number = number, > = `${T}`
+/** A possible {@link Number} (primitive, object or in a {@link String} format) */
+export type PossibleNumberOrTemplate<T extends number = number, > = | PossibleNumber<T> | NumberInAString<T>
+
+/** A possible {@link BigInt} (primitive or object) */
+export type PossibleBigInt<T extends bigint = bigint, > = | T | BigInt
+/** A simple {@link BigInt} in a {@link String} format */
+export type BigIntInAString<T extends bigint = bigint, > = `${T}`
+/** A possible {@link BigInt} (primitive, object or in a {@link String} format) */
+export type PossibleBigIntOrTemplate<T extends bigint = bigint, > = | PossibleBigInt<T> | BigIntInAString<T>
+
+/** A possible {@link Number} or {@link BigInt} (primitive or object) */
+export type PossibleNumeric<NUMBER extends number = number, BIG_INT extends bigint = bigint, > = | PossibleNumber<NUMBER> | PossibleBigInt<BIG_INT>
+/** A possible {@link Number} or {@link BigInt} (primitive, object or in a {@link String} format) */
+export type PossibleNumericOrTemplate<NUMBER extends number = number, BIG_INT extends bigint = bigint, >
+    = | PossibleNumberOrTemplate<NUMBER> | PossibleBigIntOrTemplate<BIG_INT>
+
+/** A possible {@link String} (primitive or object) */
+export type PossibleString<T extends string = string, > = | T | String
+/** A possible {@link String}, {@link Number} or {@link BigInt} (primitive or object) */
+export type PossibleStringOrNumeric<STRING extends string = string, NUMBER extends number = number, BIG_INT extends bigint = bigint, >
+    = | PossibleString<STRING> | PossibleNumeric<NUMBER, BIG_INT>
 
 /** The possible edge case {@link Number} for number conversion from a {@link String} */
 export type PossibleEdgeCaseNumericName = | "NaN" | `${| "" | "-"}Infinity`
