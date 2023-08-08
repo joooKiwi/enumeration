@@ -20,19 +20,19 @@ import type {Nullable, PossibleBigInt}               from "./general type"
 export type EnumerableName = typeof EnumConstants["ENUM_TO_STRING_TAG"]
 
 /** A conversion from an {@link Enumerable} to a primitive value ({@link String} or {@link Number}) */
-export type EnumerableToPrimitive<HINT extends string, ENUMERABLE extends Enumerable = Enumerable, > =
-    | (Lowercase<HINT> extends "number" ? ENUMERABLE["ordinal"] : never)
-    | (Lowercase<HINT> extends ("string" | "default") ? ENUMERABLE["name"] : never)
+export type EnumerableToPrimitive<HINT extends string, ENUM extends Enumerable = Enumerable, > =
+    | (Lowercase<HINT> extends "number" ? ENUM["ordinal"] : never)
+    | (Lowercase<HINT> extends ("string" | "default") ? ENUM["name"] : never)
 
 /** A simple {@link String} or {@link Enumerable.name} value */
-export type PossibleNameOf<NAME extends string, ENUMERABLE extends Enumerable, > = | NAME | NameOf<ENUMERABLE>
+export type PossibleNameOf<NAME extends string, ENUM extends Enumerable, > = | NAME | NameOf<ENUM>
 /** A simple {@link String} or {@link Enumerable.ordinal} value */
-export type PossibleOrdinalOf<ORDINAL extends number, ENUMERABLE extends Enumerable, > = | ORDINAL | OrdinalOf<ENUMERABLE>
+export type PossibleOrdinalOf<ORDINAL extends number, ENUM extends Enumerable, > = | ORDINAL | OrdinalOf<ENUM>
 
 /** A join of both {@link String} and {@link Enumerable.name} */
-export type SpecificNameOf<NAME extends string, ENUMERABLE extends Enumerable, > = & NAME & NameOf<ENUMERABLE>
+export type SpecificNameOf<NAME extends string, ENUM extends Enumerable, > = & NAME & NameOf<ENUM>
 /** A join of both {@link Number} and {@link Enumerable.ordinal} */
-export type SpecificOrdinalOf<ORDINAL extends number, ENUMERABLE extends Enumerable, > = & ORDINAL & OrdinalOf<ENUMERABLE>
+export type SpecificOrdinalOf<ORDINAL extends number, ENUM extends Enumerable, > = & ORDINAL & OrdinalOf<ENUM>
 
 /**
  * A simple type to retrieve the {@link Enumerable.name name} of an {@link Enumerable}
@@ -41,7 +41,7 @@ export type SpecificOrdinalOf<ORDINAL extends number, ENUMERABLE extends Enumera
  *
  * @see Enumerable.name
  */
-export type NameOf<ENUMERABLE extends Enumerable, > = ENUMERABLE["name"]
+export type NameOf<ENUM extends Enumerable, > = ENUM["name"]
 /**
  * A simple type to retrieve the {@link Enumerable.ordinal ordinal} of an {@link Enumerable}
  * with the combinaison of an {@link EnumerableConstructor} keys
@@ -49,9 +49,9 @@ export type NameOf<ENUMERABLE extends Enumerable, > = ENUMERABLE["name"]
  *
  * @see Enumerable.ordinal
  */
-export type OrdinalOf<ENUMERABLE extends Enumerable, > = ENUMERABLE["ordinal"]
+export type OrdinalOf<ENUM extends Enumerable, > = ENUM["ordinal"]
 /** The {@link CompanionEnumDeclaration Companion enum} reference of an {@link EnumerableConstructor} */
-export type CompanionOf<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, > = ENUMERABLE_CONSTRUCTOR["CompanionEnum"]["get"]
+export type CompanionOf<ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any>, > = ENUM_CONSTRUCTOR["CompanionEnum"]["get"]
 
 /**
  * The possible {@link Enumerable} members by itself
@@ -68,14 +68,14 @@ export type PossibleEnumerableMembers = | keyof Enumerable
                                         | keyof EnumerableWithGreatGrandParent
 
 /** A general {@link Enumerable} type possibility */
-export type PossibleEnumerableValue<ENUMERABLE extends Enumerable = Enumerable, ORDINAL extends number = number, NAME extends string = string, > =
+export type PossibleEnumerableValue<ENUM extends Enumerable = Enumerable, ORDINAL extends number = number, NAME extends string = string, > =
     | String | Number | PossibleBigInt
-    | ORDINAL | NAME | ENUMERABLE
+    | ORDINAL | NAME | ENUM
 /** A strict {@link Enumerable} type possibility */
-export type PossibleEnumerableValueBy<ENUMERABLE extends Enumerable, >
+export type PossibleEnumerableValueBy<ENUM extends Enumerable, >
     = | String | Number | PossibleBigInt
-      | ENUMERABLE[ | "ordinal" | "name"]
-      | ENUMERABLE
+      | ENUM[ | "ordinal" | "name"]
+      | ENUM
 
 
 /**
@@ -91,16 +91,17 @@ export type PossibleEnumerableValueOrNameByValueOrCallback<T extends Enumerable 
 
 //#region -------------------- Enumerable by Enumerable & EnumerableConstructor --------------------
 
-export type ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUMERABLE extends Enumerable, ORDINAL extends number, >
-    = ENUMERABLE_CONSTRUCTOR[& SpecificOrdinalOf<ORDINAL, ENUMERABLE> & keyof ENUMERABLE_CONSTRUCTOR]
-export type ValueByEnumerableConstructorAndEnumerableNameAndName<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUMERABLE extends Enumerable, NAME extends string, >
-    = ENUMERABLE_CONSTRUCTOR[& SpecificNameOf<NAME, ENUMERABLE> & keyof ENUMERABLE_CONSTRUCTOR]
-export type ValueByEnumerableConstructorAndEnumerableOrdinal<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUMERABLE extends Enumerable, >
-    = ENUMERABLE_CONSTRUCTOR[& OrdinalOf<ENUMERABLE> & keyof ENUMERABLE_CONSTRUCTOR]
+export type ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUM extends Enumerable, ORDINAL extends number, >
+    = ENUM_CONSTRUCTOR[& SpecificOrdinalOf<ORDINAL, ENUM> & keyof ENUM_CONSTRUCTOR]
+export type ValueByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUM extends Enumerable, NAME extends string, >
+    = ENUM_CONSTRUCTOR[& SpecificNameOf<NAME, ENUM> & keyof ENUM_CONSTRUCTOR]
+/** @deprecated Use {@link ValueByEnumerableConstructorAndEnumerableName} instead */
+export type ValueByEnumerableConstructorAndEnumerableOrdinal<ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUM extends Enumerable, >
+    = ENUM_CONSTRUCTOR[& OrdinalOf<ENUM> & keyof ENUM_CONSTRUCTOR]
 
-export type EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUMERABLE extends Enumerable, NAME extends string, >
-    = OrdinalOf<& ENUMERABLE_CONSTRUCTOR[& NAME & keyof ENUMERABLE_CONSTRUCTOR] & ENUMERABLE>
-export type EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUMERABLE extends Enumerable, ORDINAL extends number, >
-    = NameOf<& ENUMERABLE_CONSTRUCTOR[& ORDINAL & keyof ENUMERABLE_CONSTRUCTOR] & ENUMERABLE>
+export type EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUM extends Enumerable, NAME extends string, >
+    = OrdinalOf<& ENUM_CONSTRUCTOR[& NAME & keyof ENUM_CONSTRUCTOR] & ENUM>
+export type EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUM extends Enumerable, ORDINAL extends number, >
+    = NameOf<& ENUM_CONSTRUCTOR[& ORDINAL & keyof ENUM_CONSTRUCTOR] & ENUM>
 
 //#endregion -------------------- Enumerable by Enumerable & EnumerableConstructor --------------------
