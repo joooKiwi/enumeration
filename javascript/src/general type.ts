@@ -26,21 +26,23 @@ export type PossiblePrimitiveHint = "string" | "number" | "default"
 
 /** A possible {@link Number} (primitive or object) */
 export type PossibleNumber<T extends number = number, > = | T | Number
-/** A simple {@link Number} in a {@link String} format */
-export type NumberInAString<T extends number = number, > = `${T}`
-/** A possible {@link Number} (primitive, object or in a {@link String} format) */
-export type PossibleNumberOrTemplate<T extends number = number, > = | PossibleNumber<T> | NumberInAString<T>
+/** A simple {@link Number} in a {@link String} template */
+export type NumberTemplate<T extends number = number, > = `${T}`
+/** A possible {@link Number} (primitive, object or in a {@link String} template) */
+export type PossibleNumberOrTemplate<T extends number = number, > = | PossibleNumber<T> | NumberTemplate<T>
 
 /** A possible {@link BigInt} (primitive or object) */
 export type PossibleBigInt<T extends bigint = bigint, > = | T | BigInt
-/** A simple {@link BigInt} in a {@link String} format */
-export type BigIntInAString<T extends bigint = bigint, > = `${T}`
-/** A possible {@link BigInt} (primitive, object or in a {@link String} format) */
-export type PossibleBigIntOrTemplate<T extends bigint = bigint, > = | PossibleBigInt<T> | BigIntInAString<T>
+/** A simple {@link BigInt} in a {@link String} template */
+export type BigIntTemplate<T extends bigint = bigint, > = `${T}`
+/** A possible {@link BigInt} (primitive, object or in a {@link String} template) */
+export type PossibleBigIntOrTemplate<T extends bigint = bigint, > = | PossibleBigInt<T> | BigIntTemplate<T>
 
 /** A possible {@link Number} or {@link BigInt} (primitive or object) */
 export type PossibleNumeric<NUMBER extends number = number, BIG_INT extends bigint = bigint, > = | PossibleNumber<NUMBER> | PossibleBigInt<BIG_INT>
-/** A possible {@link Number} or {@link BigInt} (primitive, object or in a {@link String} format) */
+/** A possible {@link Number} or {@link BigInt} (primitive or object) in a {@link String} template */
+export type NumericTemplate<NUMBER extends number = number, BIG_INT extends bigint = bigint, > = | NumberTemplate<NUMBER> | BigIntTemplate<BIG_INT>
+/** A possible {@link Number} or {@link BigInt} (primitive, object or in a {@link String} template) */
 export type PossibleNumericOrTemplate<NUMBER extends number = number, BIG_INT extends bigint = bigint, >
     = | PossibleNumberOrTemplate<NUMBER> | PossibleBigIntOrTemplate<BIG_INT>
 
