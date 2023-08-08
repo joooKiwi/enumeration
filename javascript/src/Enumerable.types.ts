@@ -98,6 +98,8 @@ export type ValueByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTO
 /** @deprecated Use {@link ValueByEnumerableConstructorAndEnumerableName} instead */
 export type ValueByEnumerableConstructorAndEnumerableOrdinal<ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUM extends Enumerable, >
     = ENUM_CONSTRUCTOR[& OrdinalOf<ENUM> & keyof ENUM_CONSTRUCTOR]
+export type ValueByEnumerableConstructorAndEnumerableName<ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUM extends Enumerable, >
+    = ENUM_CONSTRUCTOR[& NameOf<ENUM> & keyof ENUM_CONSTRUCTOR]
 
 export type EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUM extends Enumerable, NAME extends string, >
     = OrdinalOf<& ENUM_CONSTRUCTOR[& NAME & keyof ENUM_CONSTRUCTOR] & ENUM>
