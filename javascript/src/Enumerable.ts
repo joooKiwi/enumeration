@@ -8,7 +8,7 @@
 import type {EnumerableName, EnumerableToPrimitive}           from "./Enumerable.types"
 import type {Nullable, PossiblePrimitiveHint, PossibleString} from "./general type"
 
-export interface Enumerable<ORDINAL extends number = number, NAME extends string = string, > {
+export interface Enumerable<out ORDINAL extends number = number, out NAME extends string = string, > {
 
     /**
      * Get the name on the current enum instance (not to be confused with the class name)

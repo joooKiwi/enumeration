@@ -60,12 +60,12 @@ export type CompanionOf<ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any>
  * @see EnumConstants.EVERY_ENUMERABLE_MEMBERS
  */
 export type PossibleEnumerableMembers = | keyof Enumerable
-                                        | keyof EnumerableWithNullableParent
-                                        | keyof EnumerableWithParent
-                                        | keyof EnumerableWithNullableGrandParent
-                                        | keyof EnumerableWithGrandParent
-                                        | keyof EnumerableWithNullableGreatGrandParent
-                                        | keyof EnumerableWithGreatGrandParent
+                                        | keyof EnumerableWithNullableParent<Enumerable>
+                                        | keyof EnumerableWithParent<Enumerable>
+                                        | keyof EnumerableWithNullableGrandParent<EnumerableWithNullableParent<Enumerable>, Enumerable>
+                                        | keyof EnumerableWithGrandParent<EnumerableWithParent<Enumerable>, Enumerable>
+                                        | keyof EnumerableWithNullableGreatGrandParent<EnumerableWithNullableGrandParent<EnumerableWithNullableParent<Enumerable>, Enumerable>, EnumerableWithNullableParent<Enumerable>, Enumerable>
+                                        | keyof EnumerableWithGreatGrandParent<EnumerableWithGrandParent<EnumerableWithParent<Enumerable>, Enumerable>, EnumerableWithParent<Enumerable>, Enumerable>
 
 /** A general {@link Enumerable} type possibility */
 export type PossibleEnumerableValue<ENUM extends Enumerable = Enumerable, ORDINAL extends number = number, NAME extends string = string, > =

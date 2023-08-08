@@ -30,10 +30,11 @@ import {KnownEnumConstructors} from "./helper/KnownEnumConstructors"
  *
  * @see EnumWithNullableParent
  */
-export abstract class EnumWithParent<const ORDINAL extends PossibleOrdinalOf<number, PARENT>, const NAME extends PossibleNameOf<string, PARENT>,
-    const PARENT extends Enumerable = Enumerable, >
+export abstract class EnumWithParent<const out PARENT extends Enumerable,
+    const out ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,
+    const out NAME extends PossibleNameOf<string, PARENT> = PossibleNameOf<string, PARENT>, >
     extends Enum<ORDINAL, NAME>
-    implements EnumerableWithParent<ORDINAL, NAME, PARENT> {
+    implements EnumerableWithParent<PARENT, ORDINAL, NAME> {
 
     //#region -------------------- Fields --------------------
 

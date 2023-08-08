@@ -11,11 +11,12 @@ import type {EnumerableWithNullableGrandParent} from "./EnumerableWithNullableGr
 import type {EnumerableWithNullableParent}      from "./EnumerableWithNullableParent"
 import type {NullOr}                            from "./general type"
 
-export interface EnumerableWithNullableGreatGrandParent<ORDINAL extends PossibleOrdinalOf<number, PARENT> = number, NAME extends PossibleNameOf<string, PARENT> = string,
-    PARENT extends EnumerableWithNullableGrandParent<PossibleOrdinalOf<number, GRAND_PARENT>, PossibleNameOf<string, GRAND_PARENT>, GRAND_PARENT, GREAT_GRAND_PARENT> = EnumerableWithNullableGrandParent<number, string, never, never>,
-    GRAND_PARENT extends EnumerableWithNullableParent<PossibleOrdinalOf<number, GREAT_GRAND_PARENT>, PossibleNameOf<string, GREAT_GRAND_PARENT>, GREAT_GRAND_PARENT> = EnumerableWithNullableParent<number, string, never>,
-    GREAT_GRAND_PARENT extends Enumerable = Enumerable, >
-    extends EnumerableWithNullableGrandParent<ORDINAL, NAME, PARENT, GRAND_PARENT> {
+export interface EnumerableWithNullableGreatGrandParent<out PARENT extends EnumerableWithNullableGrandParent<GRAND_PARENT, GREAT_GRAND_PARENT>,
+    out GRAND_PARENT extends EnumerableWithNullableParent<GREAT_GRAND_PARENT>,
+    out GREAT_GRAND_PARENT extends Enumerable,
+    out ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,
+    out NAME extends PossibleNameOf<string, PARENT> = PossibleNameOf<string, PARENT>, >
+    extends EnumerableWithNullableGrandParent<PARENT, GRAND_PARENT, ORDINAL, NAME> {
 
     /** The {@link NullOr nullable} great-grandparent of the current instance */
     get greatGrandParent(): NullOr<GREAT_GRAND_PARENT>

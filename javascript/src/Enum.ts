@@ -6,10 +6,9 @@
  ******************************************************************************/
 
 import type {Enumerable}                                      from "./Enumerable"
-import type {EnumerableConstructor}                           from "./EnumerableConstructor"
 import type {EnumerableName, EnumerableToPrimitive}           from "./Enumerable.types"
 import type {Nullable, PossiblePrimitiveHint, PossibleString} from "./general type"
-import type {CompanionEnumDeclaration}                        from "./companion/CompanionEnum.declaration"
+import type {CompanionEnumDeclarationType}                    from "./companion/types"
 
 import {EnumConstants}          from "./EnumConstants"
 import {NullReferenceException} from "./exception/NullReferenceException"
@@ -18,7 +17,8 @@ import {NullPointerException}   from "./exception/generic/NullPointerException"
 import {getCompanion}           from "./helper/getCompanion"
 import {getLastPrototype}       from "./helper/getLastPrototype"
 
-export abstract class Enum<const ORDINAL extends number = number, const NAME extends string = string, >
+export abstract class Enum<const out ORDINAL extends number = number,
+    const out NAME extends string = string, >
     implements Enumerable<ORDINAL, NAME> {
 
     //#region -------------------- Fields --------------------
@@ -26,7 +26,7 @@ export abstract class Enum<const ORDINAL extends number = number, const NAME ext
     #name?: NAME
     readonly #ordinal: ORDINAL
     readonly #prototypeConstructor
-    #companion?: CompanionEnumDeclaration<Enum<ORDINAL, NAME>, EnumerableConstructor<Enum<ORDINAL, NAME>, any>>
+    #companion?: CompanionEnumDeclarationType<Enum>
 
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------

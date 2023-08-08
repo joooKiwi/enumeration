@@ -10,11 +10,12 @@ import type {PossibleNameOf, PossibleOrdinalOf} from "./Enumerable.types"
 import type {EnumerableWithNullableGrandParent} from "./EnumerableWithNullableGrandParent"
 import type {EnumerableWithParent}              from "./EnumerableWithParent"
 
-export interface EnumerableWithGrandParent<ORDINAL extends PossibleOrdinalOf<number, PARENT> = number, NAME extends PossibleNameOf<string, PARENT> = string,
-    PARENT extends EnumerableWithParent<PossibleOrdinalOf<number, GRAND_PARENT>, PossibleNameOf<string, GRAND_PARENT>, GRAND_PARENT> = EnumerableWithParent<number, string, never>,
-    GRAND_PARENT extends Enumerable = Enumerable, >
-    extends EnumerableWithParent<ORDINAL, NAME, PARENT>,
-            EnumerableWithNullableGrandParent<ORDINAL, NAME, PARENT, GRAND_PARENT> {
+export interface EnumerableWithGrandParent<out PARENT extends EnumerableWithParent<GRAND_PARENT>,
+    out GRAND_PARENT extends Enumerable,
+    out ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,
+    out NAME extends PossibleNameOf<string, PARENT> = PossibleNameOf<string, PARENT>, >
+    extends EnumerableWithParent<PARENT, ORDINAL, NAME>,
+            EnumerableWithNullableGrandParent<PARENT, GRAND_PARENT, ORDINAL, NAME> {
 
     /** The parent of the current instance */
     get parent(): PARENT
