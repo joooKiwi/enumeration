@@ -14,7 +14,7 @@ import {IllegalArgumentException} from "./generic/IllegalArgumentException"
  * An exception to tell that an edge case numeric ({@link Number} or {@link BigInt})
  * or a name ({@link EnumConstants.EDGE_CASE_NUMERIC_NAME ±∞ / NaN}) was used
  *
- * @see EnumConstants.EDGE_CASE_NUMERIC_NAME
+ * @see EnumConstants.EDGE_CASE_NUMERIC_NAMES
  */
 export class ForbiddenNumericException<const T extends PossibleStringOrNumeric, const ERROR extends Error = never, >
     extends IllegalArgumentException<ERROR>

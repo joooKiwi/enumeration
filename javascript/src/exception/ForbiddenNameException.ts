@@ -12,8 +12,9 @@ import {IllegalArgumentException} from "./generic/IllegalArgumentException"
 
 
 /**
- * An exception to tell that an {@link CompanionEnum._EXCLUDED_NAMES excluded name}
- * was provided in a {@link CompanionEnum}
+ * An exception to tell that the value was an {@link CompanionEnum._EXCLUDED_NAMES excluded name}
+ * or an impossible {@link String name}
+ * in a {@link CompanionEnum}
  *
  * @see CompanionEnum._excludedNames
  */
@@ -28,7 +29,7 @@ export class ForbiddenNameException<const T extends PossibleString, const ERROR 
         this.#value = value
     }
 
-    /** The invalid {@link String} value that was not an {@link CompanionEnum._EXCLUDED_NAMES excluded names (in the companion enum)} */
+    /** The invalid {@link String} value */
     public get value(): T {
         return this.#value
     }

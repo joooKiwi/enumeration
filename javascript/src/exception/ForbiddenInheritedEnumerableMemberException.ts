@@ -11,9 +11,9 @@ import type {ExceptionWithValue}       from "./declaration/ExceptionWithValue"
 import {IllegalArgumentException} from "./generic/IllegalArgumentException"
 
 /**
- * An exception to tell that an {@link EnumConstants.INHERITED_ENUMERABLE_MEMBERS inherited Enumerable member} was used
+ * An exception to tell that an {@link EnumConstants.EVERY_ENUMERABLE_MEMBERS enumerable member} was used
  *
- * @see EnumConstants.INHERITED_ENUMERABLE_MEMBERS
+ * @see EnumConstants.EVERY_ENUMERABLE_MEMBERS
  */
 export class ForbiddenInheritedEnumerableMemberException<const T extends PossibleString, const ERROR extends Error = never, >
     extends IllegalArgumentException<ERROR>
