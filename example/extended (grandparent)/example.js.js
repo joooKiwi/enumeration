@@ -1,20 +1,20 @@
-import {CompanionEnumWithGrandParent, Enum} from "@joookiwi/enumerable"
+import {CompanionEnumWithGrandParent, EnumWithNullableGrantParent} from "@joookiwi/enumerable"
 
 import {SimpleEnum}   from "../simple/example.js.js"
 import {ExtendedEnum} from "../extended (parent)/example.js.js"
 
 export class SecondExtendedEnum
-    extends Enum {
+    extends EnumWithNullableGrantParent {
 
-    static A = new SecondExtendedEnum(ExtendedEnum.A, SimpleEnum.A,)
-    static B = new SecondExtendedEnum(ExtendedEnum.B, SimpleEnum.B,)
-    static C = new SecondExtendedEnum(ExtendedEnum.C, SimpleEnum.C,)
-    static D = new SecondExtendedEnum(ExtendedEnum.D,)
-    static E = new SecondExtendedEnum(ExtendedEnum.E,)
-    static F = new SecondExtendedEnum(ExtendedEnum.F,)
-    static G = new SecondExtendedEnum()
-    static H = new SecondExtendedEnum()
-    static I = new SecondExtendedEnum()
+    static A = new SecondExtendedEnum()
+    static B = new SecondExtendedEnum()
+    static C = new SecondExtendedEnum()
+    static D = new SecondExtendedEnum(ExtendedEnum.D, null,)
+    static E = new SecondExtendedEnum(ExtendedEnum.E, null,)
+    static F = new SecondExtendedEnum(ExtendedEnum.F, null,)
+    static G = new SecondExtendedEnum(null, null,)
+    static H = new SecondExtendedEnum(null, null,)
+    static I = new SecondExtendedEnum(null, null,)
 
     static CompanionEnum = class CompanionEnum_SecondExtendedEnum
         extends CompanionEnumWithGrandParent {
@@ -26,18 +26,5 @@ export class SecondExtendedEnum
         static get get() { return CompanionEnum_SecondExtendedEnum.#instance ??= new CompanionEnum_SecondExtendedEnum() }
 
     }
-
-    #parent
-    #grandParent
-
-    constructor(parent = null, grandParent = null,) {
-        super()
-        this.#parent = parent
-        this.#grandParent = grandParent
-    }
-
-    get parent() { return this.#parent }
-
-    get grandParent() { return this.#grandParent }
 
 }
