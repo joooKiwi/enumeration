@@ -122,7 +122,7 @@ export interface CompanionEnumDeclaration<ENUMERABLE extends Enumerable,
     get ordinals(): CollectionHolder<OrdinalOf<ENUMERABLE>>
 
     /** A simple {@link IterableIterator iterator} to be used for the {@link Enumerable instance} */
-    get iterator(): IterableIterator<ENUMERABLE>
+    get iterator(): CollectionIterator<ENUMERABLE>
 
     //#endregion -------------------- Values getter methods --------------------
 

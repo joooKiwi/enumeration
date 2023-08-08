@@ -169,7 +169,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         return ordinals
     }
 
-    public get iterator(): IterableIterator<ENUMERABLE> {
+    public get iterator(): CollectionIterator<ENUMERABLE> {
         return this.values[Symbol.iterator]()
     }
 
