@@ -197,10 +197,6 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      */
     #initializeMaps(): void {
         const instance = this.instance,
-            prototypeName = EnumConstants.PROTOTYPE_NAME,
-            numberOnlyRegex = EnumConstants.NUMBER_ONLY_REGEX,
-            ordinalMap = EnumConstants.ORDINAL_MAP,
-            nameMap = EnumConstants.NAME_MAP,
             excludedNames = this._excludedNames,
             everyFields = Object.entries(Object.getOwnPropertyDescriptors(instance,),),
             everyOrdinals = [] as OrdinalOf<ENUMERABLE>[],
@@ -219,19 +215,19 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
                 continue
 
             const name = field[0]
-            if (name === prototypeName)
+            if (name === EnumConstants.PROTOTYPE_NAME)
                 continue
             if(excludedNames.hasOne(name))
                 continue
-            if (numberOnlyRegex.test(name))
+            if (EnumConstants.DECIMAL_REGEX.test(name))
                 continue
 
             const {value,} = property
             if (!(value instanceof instance))
                 continue
 
-            ordinalMap.set(value as Enumerable, currentOrdinal,)
-            nameMap.set(value as Enumerable, name,)
+            EnumConstants.ORDINAL_MAP.set(value as Enumerable, currentOrdinal,)
+            EnumConstants.NAME_MAP.set(value as Enumerable, name,)
 
             everyOrdinals.push(currentOrdinal++,)
             everyNames.push(name,)
