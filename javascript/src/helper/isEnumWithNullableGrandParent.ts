@@ -1,11 +1,11 @@
-/******************************************************************************
- * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
- *                                                                            *
- * This project is free to use.                                               *
- * All the right is reserved to the author of this project.                   *
+/*******************************************************************************
+ Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {EnumerableWithNullableParent} from "../EnumerableWithNullableParent"
+import type {EnumWithNullableGrandParentGeneralType} from "../Enumerable.types"
 
 import {EnumWithNullableGrandParent} from "../EnumWithNullableGrandParent"
 
@@ -14,6 +14,6 @@ import {EnumWithNullableGrandParent} from "../EnumWithNullableGrandParent"
  *
  * @param value The value to compare
  */
-export function isEnumWithNullableGrandParent(value: unknown,): value is EnumWithNullableGrandParent<number, string, EnumerableWithNullableParent> {
+export function isEnumWithNullableGrandParent(value: unknown,): value is EnumWithNullableGrandParentGeneralType {
     return value instanceof EnumWithNullableGrandParent
 }

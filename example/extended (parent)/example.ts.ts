@@ -1,20 +1,19 @@
-import type {CompanionEnumWithParentSingleton, EnumerableWithParent} from "@joookiwi/enumerable"
-import {CompanionEnumWithParent, Enum}                               from "@joookiwi/enumerable"
+import type {CompanionEnumWithParentSingleton}           from "@joookiwi/enumerable"
+import {CompanionEnumWithParent, EnumWithNullableParent} from "@joookiwi/enumerable"
 
 import type {Names2, Ordinals2} from "../type"
 
 import {SimpleEnum} from "simple/example.ts"
 
 export class ExtendedEnum
-    extends Enum<Names2, Ordinals2>
-    implements EnumerableWithParent<Names2, Ordinals2, SimpleEnum> {
+    extends EnumWithNullableParent<SimpleEnum, Names2, Ordinals2> {
 
-    public static readonly A = new ExtendedEnum(SimpleEnum.A,)
-    public static readonly B = new ExtendedEnum(SimpleEnum.B,)
-    public static readonly C = new ExtendedEnum(SimpleEnum.C,)
-    public static readonly D = new ExtendedEnum()
-    public static readonly E = new ExtendedEnum()
-    public static readonly F = new ExtendedEnum()
+    public static readonly A = new ExtendedEnum()
+    public static readonly B = new ExtendedEnum()
+    public static readonly C = new ExtendedEnum()
+    public static readonly D = new ExtendedEnum(null,)
+    public static readonly E = new ExtendedEnum(null,)
+    public static readonly F = new ExtendedEnum(null,)
 
     public static readonly CompanionEnum: CompanionEnumWithParentSingleton<ExtendedEnum, typeof ExtendedEnum, SimpleEnum, typeof SimpleEnum> = class CompanionEnum_ExtendedEnum
         extends CompanionEnumWithParent<ExtendedEnum, typeof ExtendedEnum,
@@ -28,13 +27,8 @@ export class ExtendedEnum
 
     }
 
-    readonly #parent
-
-    private constructor(parent: SimpleEnum | null = null,) {
-        super()
-        this.#parent = parent
-    }
-
-    public get parent(): SimpleEnum | null { return this.#parent }
+    private constructor()
+    private constructor(parent: SimpleEnum | null,)
+    private constructor(...args: readonly [(SimpleEnum | null)?,]) { super(...args,) }
 
 }

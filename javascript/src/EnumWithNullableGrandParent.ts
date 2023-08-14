@@ -1,8 +1,8 @@
-/******************************************************************************
- * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
- *                                                                            *
- * This project is free to use.                                               *
- * All the right is reserved to the author of this project.                   *
+/*******************************************************************************
+ Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
  ******************************************************************************/
 
 import type {Lazy} from "@joookiwi/lazy"
@@ -33,11 +33,12 @@ import {KnownEnumConstructors}        from "./helper/KnownEnumConstructors"
  *
  * @see EnumWithGrandParent
  */
-export class EnumWithNullableGrandParent<const ORDINAL extends PossibleOrdinalOf<number, PARENT>, const NAME extends PossibleNameOf<string, PARENT>,
-    const PARENT extends EnumerableWithNullableParent<PossibleOrdinalOf<number, GRAND_PARENT>, PossibleNameOf<string, GRAND_PARENT>, GRAND_PARENT>,
-    const GRAND_PARENT extends Enumerable = Enumerable, >
-    extends EnumWithNullableParent<ORDINAL, NAME, PARENT>
-    implements EnumerableWithNullableGrandParent<ORDINAL, NAME, PARENT, GRAND_PARENT> {
+export class EnumWithNullableGrandParent<const out PARENT extends EnumerableWithNullableParent<GRAND_PARENT>,
+    const out GRAND_PARENT extends Enumerable ,
+    const out ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,
+    const out NAME extends PossibleNameOf<string, PARENT> = PossibleNameOf<string, PARENT>, >
+    extends EnumWithNullableParent<PARENT, ORDINAL, NAME>
+    implements EnumerableWithNullableGrandParent<PARENT, GRAND_PARENT, ORDINAL, NAME> {
 
     //#region -------------------- Fields --------------------
 

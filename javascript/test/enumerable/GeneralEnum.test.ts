@@ -1,12 +1,12 @@
-/******************************************************************************
- * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
- *                                                                            *
- * This project is free to use.                                               *
- * All the right is reserved to the author of this project.                   *
+/*******************************************************************************
+ Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
  ******************************************************************************/
 
 import {AnotherChildEnum, Child1Enum, Child2Enum, EmptyEnum, EmptyEnumWithVariables, Enum1, Enum2, EnumWithInheritance, EnumWithDefault, EnumWithDifferentComportment, EnumWithExcludedFields, EnumWithLateDefault, ParentEnum, Child3Enum} from "../TemplateEnums"
-import {forbiddenInheritedMembers, forbiddenNumbers, impossibleOrdinals, nullValues, simpleEnumVariables, unhandledValues, validValues}                                                                                                     from "./Enum.constants"
+import {everyStringEnumerableMember, forbiddenNumbers, impossibleOrdinals, nullValues, simpleEnumVariables, unhandledValues, validValues}                                                                                                   from "./Enum.constants"
 
 import {ForbiddenInheritedEnumerableMemberException} from "../../src/exception/ForbiddenInheritedEnumerableMemberException"
 import {ForbiddenNumericException}                   from "../../src/exception/ForbiddenNumericException"
@@ -23,15 +23,15 @@ describe("GeneralEnumTest", () => {
 
         describe("UnhandledValueException", () => describe.each(unhandledValues,)("%s", ({value: it,},) => {
             const companion = EmptyEnum.CompanionEnum.get
-            test("set default", () => expect(() => companion.default = it,).toThrow(UnhandledValueException,),)
-            test("setDefault", () => expect(() => companion.setDefault(it,),).toThrow(UnhandledValueException,),)
+            test("set defaultValue", () => expect(() => companion.defaultValue = it,).toThrow(UnhandledValueException,),)
+            test("setDefaultValue", () => expect(() => companion.setDefaultValue(it,),).toThrow(UnhandledValueException,),)
             test("getValue", () => expect(() => companion.getValue(it,),).toThrow(UnhandledValueException,),)
             test("getName", () => expect(() => companion.getName(it,),).toThrow(UnhandledValueException,),)
             test("getOrdinal", () => expect(() => companion.getOrdinal(it,),).toThrow(UnhandledValueException,),)
         },),)
         describe("NullEnumerableException", () => describe.each(nullValues,)("%s", it => {
             const companion = EmptyEnum.CompanionEnum.get
-            test("get default", () => expect(() => companion.default,).toThrow(NullEnumerableException,),)
+            test("get defaultValue", () => expect(() => companion.defaultValue,).toThrow(NullEnumerableException,),)
             test("getValue", () => expect(() => companion.getValue(it,),).toThrow(NullEnumerableException,),)
             test("getName", () => expect(() => companion.getName(it,),).toThrow(NullEnumerableException,),)
             test("getOrdinal", () => expect(() => companion.getOrdinal(it,),).toThrow(NullEnumerableException,),)
@@ -39,9 +39,9 @@ describe("GeneralEnumTest", () => {
         describe("InvalidEnumerableException", () => {
             const companion = Enum1.CompanionEnum.get
             // @ts-expect-error
-            test("set default", () => expect(() => companion.default = Enum2.A,).toThrow(InvalidEnumerableException,),)
+            test("set defaultValue", () => expect(() => companion.defaultValue = Enum2.A,).toThrow(InvalidEnumerableException,),)
             // @ts-expect-error
-            test("setDefault", () => expect(() => companion.setDefault(Enum2.A,),).toThrow(InvalidEnumerableException,),)
+            test("setDefaultValue", () => expect(() => companion.setDefaultValue(Enum2.A,),).toThrow(InvalidEnumerableException,),)
             // @ts-expect-error
             test("getValue", () => expect(() => companion.getValue(Enum2.A,),).toThrow(InvalidEnumerableException,),)
             // @ts-expect-error
@@ -51,8 +51,8 @@ describe("GeneralEnumTest", () => {
         },)
         describe("InvalidInstanceException", () => describe.each(simpleEnumVariables,)("%s", it => {
             const companion = EmptyEnumWithVariables.CompanionEnum.get
-            test("set default", () => expect(() => companion.default = it,).toThrow(InvalidInstanceException,),)
-            test("setDefault", () => expect(() => companion.setDefault(it,),).toThrow(InvalidInstanceException,),)
+            test("set defaultValue", () => expect(() => companion.defaultValue = it,).toThrow(InvalidInstanceException,),)
+            test("setDefaultValue", () => expect(() => companion.setDefaultValue(it,),).toThrow(InvalidInstanceException,),)
             test("getValue", () => expect(() => companion.getValue(it,),).toThrow(InvalidInstanceException,),)
             test("getName", () => expect(() => companion.getName(it,),).toThrow(InvalidInstanceException,),)
             test("getOrdinal", () => expect(() => companion.getOrdinal(it,),).toThrow(InvalidInstanceException,),)
@@ -60,8 +60,8 @@ describe("GeneralEnumTest", () => {
 
         describe("ImpossibleOrdinalException", () => describe.each(impossibleOrdinals,)("%s", ({value: it,},) => {
             const companion = Enum1.CompanionEnum.get
-            test("set default", () => expect(() => companion.default = it,).toThrow(ImpossibleOrdinalException,),)
-            test("setDefault", () => expect(() => companion.setDefault(it,),).toThrow(ImpossibleOrdinalException,),)
+            test("set defaultValue", () => expect(() => companion.defaultValue = it,).toThrow(ImpossibleOrdinalException,),)
+            test("setDefaultValue", () => expect(() => companion.setDefaultValue(it,),).toThrow(ImpossibleOrdinalException,),)
             test("getValue", () => expect(() => companion.getValue(it,),).toThrow(ImpossibleOrdinalException,),)
             test("getName", () => expect(() => companion.getName(it,),).toThrow(ImpossibleOrdinalException,),)
             test("getOrdinal", () => expect(() => companion.getOrdinal(it,),).toThrow(ImpossibleOrdinalException,),)
@@ -70,8 +70,8 @@ describe("GeneralEnumTest", () => {
             const companion = EmptyEnum.CompanionEnum.get,
                 somethingInvalid = "somethingInvalid"
 
-            test("set default", () => expect(() => companion.default = somethingInvalid,).toThrow(NullReferenceException),)
-            test("setDefault", () => expect(() => companion.setDefault(somethingInvalid,),).toThrow(NullReferenceException),)
+            test("set defaultValue", () => expect(() => companion.defaultValue = somethingInvalid,).toThrow(NullReferenceException),)
+            test("setDefaultValue", () => expect(() => companion.setDefaultValue(somethingInvalid,),).toThrow(NullReferenceException),)
             test("getValue", () => expect(() => companion.getValue(somethingInvalid,),).toThrow(NullReferenceException),)
             test("getName", () => expect(() => companion.getName(somethingInvalid,),).toThrow(NullReferenceException),)
             test("getOrdinal", () => expect(() => companion.getOrdinal(somethingInvalid,),).toThrow(NullReferenceException),)
@@ -79,16 +79,16 @@ describe("GeneralEnumTest", () => {
 
         describe("ForbiddenNumericException", () => describe.each(forbiddenNumbers,)("%s", ({value: it,},) => {
             const companion = Enum1.CompanionEnum.get
-            test("set default", () => expect(() => companion.default = it,).toThrow(ForbiddenNumericException,),)
-            test("setDefault", () => expect(() => companion.setDefault(it,),).toThrow(ForbiddenNumericException,),)
+            test("set defaultValue", () => expect(() => companion.defaultValue = it,).toThrow(ForbiddenNumericException,),)
+            test("setDefaultValue", () => expect(() => companion.setDefaultValue(it,),).toThrow(ForbiddenNumericException,),)
             test("getValue", () => expect(() => companion.getValue(it,),).toThrow(ForbiddenNumericException,),)
             test("getName", () => expect(() => companion.getName(it,),).toThrow(ForbiddenNumericException,),)
             test("getOrdinal", () => expect(() => companion.getOrdinal(it,),).toThrow(ForbiddenNumericException,),)
         }),)
-        describe("ForbiddenInheritedEnumerableMemberException", () => describe.each(forbiddenInheritedMembers,)("%s", ({value: it,},) => {
+        describe("ForbiddenInheritedEnumerableMemberException", () => describe.each(everyStringEnumerableMember,)("%s", ({value: it,},) => {
             const companion = Enum1.CompanionEnum.get
-            test("set default", () => expect(() => companion.default = it,).toThrow(ForbiddenInheritedEnumerableMemberException,),)
-            test("setDefault", () => expect(() => companion.setDefault(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
+            test("set defaultValue", () => expect(() => companion.defaultValue = it,).toThrow(ForbiddenInheritedEnumerableMemberException,),)
+            test("setDefaultValue", () => expect(() => companion.setDefaultValue(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
             test("getValue", () => expect(() => companion.getValue(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
             test("getName", () => expect(() => companion.getName(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
             test("getOrdinal", () => expect(() => companion.getOrdinal(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
@@ -116,36 +116,36 @@ describe("GeneralEnumTest", () => {
         const companion = Enum1.CompanionEnum.get,
             equivalentValue = Enum1.A,
             defaultValue = Enum1.B
-        test("set default", () => {
+        test("set defaultValue", () => {
             if (it.name == 'B')
                 fail("The test could not be done since the value has 'B' as its name",)
-            companion.default = defaultValue
-            companion.default = it
-            expect(companion.default,).toBe(equivalentValue,)
-            companion.default = defaultValue
+            companion.defaultValue = defaultValue
+            companion.defaultValue = it
+            expect(companion.defaultValue,).toBe(equivalentValue,)
+            companion.defaultValue = defaultValue
         },)
-        test("setDefault", () => {
+        test("setDefaultValue", () => {
             if (it.name == 'B')
                 fail("The test could not be done since the value has 'B' as its name",)
-            expect(companion.setDefault(defaultValue,).setDefault(it,).default,).toBe(equivalentValue,)
-            companion.setDefault(defaultValue,)
+            expect(companion.setDefaultValue(defaultValue,).setDefaultValue(it,).defaultValue,).toBe(equivalentValue,)
+            companion.setDefaultValue(defaultValue,)
         },)
         test("getValue", () => expect(companion.getValue(it,),).toBe(equivalentValue,),)
         test("getName", () => expect(companion.getName(it,),).toBe(equivalentValue.name,),)
         test("getOrdinal", () => expect(companion.getOrdinal(it,),).toBe(equivalentValue.ordinal,),)
     },),)
-    describe("default validation", () => {
+    describe("defaultValue validation", () => {
         describe("Construction init", () => {
             const companion = EnumWithDefault.CompanionEnum.get
-            test("first get", () => expect(companion.default,).toBe(EnumWithDefault.A,),)
-            test("get after set to 'B'", () => expect(companion.setDefault('B',).default,).toBe(EnumWithDefault.B,),)
-            test("get after set to null", () => expect(() => companion.setDefault(null,).default,).toThrow(NullEnumerableException,),)
+            test("first get", () => expect(companion.defaultValue,).toBe(EnumWithDefault.A,),)
+            test("get after set to 'B'", () => expect(companion.setDefaultValue('B',).defaultValue,).toBe(EnumWithDefault.B,),)
+            test("get after set to null", () => expect(() => companion.setDefaultValue(null,).defaultValue,).toThrow(NullEnumerableException,),)
         },)
         describe("Late init", () => {
             const companion = EnumWithLateDefault.CompanionEnum.get
-            test("first get", () => expect(() => companion.default,).toThrow(NullEnumerableException,),)
-            test("get after set to 'B'", () => expect(companion.setDefault('B',).default,).toBe(EnumWithLateDefault.B,),)
-            test("get after set to null", () => expect(() => companion.setDefault(null,).default,).toThrow(NullEnumerableException,),)
+            test("first get", () => expect(() => companion.defaultValue,).toThrow(NullEnumerableException,),)
+            test("get after set to 'B'", () => expect(companion.setDefaultValue('B',).defaultValue,).toBe(EnumWithLateDefault.B,),)
+            test("get after set to null", () => expect(() => companion.setDefaultValue(null,).defaultValue,).toThrow(NullEnumerableException,),)
         },)
     },)
 
@@ -155,9 +155,9 @@ describe("GeneralEnumTest", () => {
             describe("Child #1", () => {
                 const value = Child1Enum.B
                 // @ts-expect-error
-                test("set default", () => expect(() => companion.default = value,).toThrow(InvalidEnumerableException,),)
+                test("set defaultValue", () => expect(() => companion.defaultValue = value,).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
-                test("setDefault", () => expect(() => companion.setDefault(value,),).toThrow(InvalidEnumerableException,),)
+                test("setDefaultValue", () => expect(() => companion.setDefaultValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
                 test("getValue", () => expect(() => companion.getValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
@@ -168,9 +168,9 @@ describe("GeneralEnumTest", () => {
             describe("Child #2", () => {
                 const value = Child2Enum.B
                 // @ts-expect-error
-                test("set default", () => expect(() => companion.default = value,).toThrow(InvalidEnumerableException,),)
+                test("set defaultValue", () => expect(() => companion.defaultValue = value,).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
-                test("setDefault", () => expect(() => companion.setDefault(value,),).toThrow(InvalidEnumerableException,),)
+                test("setDefaultValue", () => expect(() => companion.setDefaultValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
                 test("getValue", () => expect(() => companion.getValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
@@ -181,9 +181,9 @@ describe("GeneralEnumTest", () => {
             describe("Child #3", () => {
                 const value = Child3Enum.B
                 // @ts-expect-error
-                test("set default", () => expect(() => companion.default = value,).toThrow(InvalidEnumerableException,),)
+                test("set defaultValue", () => expect(() => companion.defaultValue = value,).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
-                test("setDefault", () => expect(() => companion.setDefault(value,),).toThrow(InvalidEnumerableException,),)
+                test("setDefaultValue", () => expect(() => companion.setDefaultValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
                 test("getValue", () => expect(() => companion.getValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
@@ -194,9 +194,9 @@ describe("GeneralEnumTest", () => {
             describe("Another child", () => {
                 const value = AnotherChildEnum.B
                 // @ts-expect-error
-                test("set default", () => expect(() => companion.default = value,).toThrow(InvalidEnumerableException,),)
+                test("set defaultValue", () => expect(() => companion.defaultValue = value,).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
-                test("setDefault", () => expect(() => companion.setDefault(value,),).toThrow(InvalidEnumerableException,),)
+                test("setDefaultValue", () => expect(() => companion.setDefaultValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
                 test("getValue", () => expect(() => companion.getValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
@@ -211,15 +211,15 @@ describe("GeneralEnumTest", () => {
                 equivalentValue = Child1Enum.B
             describe("Parent", () => {
                 const value = ParentEnum.B
-                test("set default", () => {
-                    companion.default = otherValue
-                    companion.default = value
-                    expect(companion.default,).toBe(equivalentValue,)
-                    companion.default = otherValue
+                test("set defaultValue", () => {
+                    companion.defaultValue = otherValue
+                    companion.defaultValue = value
+                    expect(companion.defaultValue,).toBe(equivalentValue,)
+                    companion.defaultValue = otherValue
                 },)
-                test("setDefault", () => {
-                    expect(companion.setDefault(otherValue,).setDefault(value,).default,).toBe(equivalentValue,)
-                    companion.setDefault(otherValue)
+                test("setDefaultValue", () => {
+                    expect(companion.setDefaultValue(otherValue,).setDefaultValue(value,).defaultValue,).toBe(equivalentValue,)
+                    companion.setDefaultValue(otherValue)
                 },)
                 test("getValue", () => expect(companion.getValue(value,),).toBe(equivalentValue,),)
                 test("getName", () => expect(companion.getName(value,),).toBe(equivalentValue.name,),)
@@ -228,9 +228,9 @@ describe("GeneralEnumTest", () => {
             describe("Child #2", () => {
                 const value = Child2Enum.B
                 // @ts-expect-error
-                test("set default", () => expect(() => companion.default = value,).toThrow(InvalidEnumerableException,),)
+                test("set defaultValue", () => expect(() => companion.defaultValue = value,).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
-                test("setDefault", () => expect(() => companion.setDefault(value,),).toThrow(InvalidEnumerableException,),)
+                test("setDefaultValue", () => expect(() => companion.setDefaultValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
                 test("getValue", () => expect(() => companion.getValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
@@ -241,9 +241,9 @@ describe("GeneralEnumTest", () => {
             describe("Child #3", () => {
                 const value = Child3Enum.B
                 // @ts-expect-error
-                test("set default", () => expect(() => companion.default = value,).toThrow(InvalidEnumerableException,),)
+                test("set defaultValue", () => expect(() => companion.defaultValue = value,).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
-                test("setDefault", () => expect(() => companion.setDefault(value,),).toThrow(InvalidEnumerableException,),)
+                test("setDefaultValue", () => expect(() => companion.setDefaultValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
                 test("getValue", () => expect(() => companion.getValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
@@ -254,9 +254,9 @@ describe("GeneralEnumTest", () => {
             describe("Another child", () => {
                 const value = AnotherChildEnum.B
                 // @ts-expect-error
-                test("setDefault", () => expect(() => companion.default = value,).toThrow(InvalidEnumerableException,),)
+                test("setDefaultValue", () => expect(() => companion.defaultValue = value,).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
-                test("setDefault", () => expect(() => companion.setDefault(value,),).toThrow(InvalidEnumerableException,),)
+                test("setDefaultValue", () => expect(() => companion.setDefaultValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
                 test("getValue", () => expect(() => companion.getValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
@@ -271,15 +271,15 @@ describe("GeneralEnumTest", () => {
                 equivalentValue = Child2Enum.B
             describe("Parent", () => {
                 const value = ParentEnum.B
-                test("set default", () => {
-                    companion.default = otherValue
-                    companion.default = value
-                    expect(companion.default,).toBe(equivalentValue,)
-                    companion.default = otherValue
+                test("set defaultValue", () => {
+                    companion.defaultValue = otherValue
+                    companion.defaultValue = value
+                    expect(companion.defaultValue,).toBe(equivalentValue,)
+                    companion.defaultValue = otherValue
                 },)
-                test("setDefault", () => {
-                    expect(companion.setDefault(otherValue,).setDefault(value,).default,).toBe(equivalentValue,)
-                    companion.setDefault(otherValue)
+                test("setDefaultValue", () => {
+                    expect(companion.setDefaultValue(otherValue,).setDefaultValue(value,).defaultValue,).toBe(equivalentValue,)
+                    companion.setDefaultValue(otherValue)
                 },)
                 test("getValue", () => expect(companion.getValue(value,),).toBe(equivalentValue,),)
                 test("getName", () => expect(companion.getName(value,),).toBe(equivalentValue.name,),)
@@ -287,15 +287,15 @@ describe("GeneralEnumTest", () => {
             },)
             describe("Child #1", () => {
                 const value = Child1Enum.B
-                test("set default", () => {
-                    companion.default = otherValue
-                    companion.default = value
-                    expect(companion.default,).toBe(equivalentValue,)
-                    companion.default = otherValue
+                test("set defaultValue", () => {
+                    companion.defaultValue = otherValue
+                    companion.defaultValue = value
+                    expect(companion.defaultValue,).toBe(equivalentValue,)
+                    companion.defaultValue = otherValue
                 },)
-                test("setDefault", () => {
-                    expect(companion.setDefault(otherValue,).setDefault(value,).default,).toBe(equivalentValue,)
-                    companion.setDefault(otherValue)
+                test("setDefaultValue", () => {
+                    expect(companion.setDefaultValue(otherValue,).setDefaultValue(value,).defaultValue,).toBe(equivalentValue,)
+                    companion.setDefaultValue(otherValue)
                 },)
                 test("getValue", () => expect(companion.getValue(value,),).toBe(equivalentValue,),)
                 test("getName", () => expect(companion.getName(value,),).toBe(equivalentValue.name,),)
@@ -304,9 +304,9 @@ describe("GeneralEnumTest", () => {
             describe("Child #3", () => {
                 const value = Child3Enum.B
                 // @ts-expect-error
-                test("set default", () => expect(() => companion.default = value,).toThrow(InvalidEnumerableException,),)
+                test("set defaultValue", () => expect(() => companion.defaultValue = value,).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
-                test("setDefault", () => expect(() => companion.setDefault(value,),).toThrow(InvalidEnumerableException,),)
+                test("setDefaultValue", () => expect(() => companion.setDefaultValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
                 test("getValue", () => expect(() => companion.getValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
@@ -317,9 +317,9 @@ describe("GeneralEnumTest", () => {
             describe("Another child", () => {
                 const value = AnotherChildEnum.B
                 // @ts-expect-error
-                test("set default", () => expect(() => companion.default = value,).toThrow(InvalidEnumerableException,),)
+                test("set defaultValue", () => expect(() => companion.defaultValue = value,).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
-                test("setDefault", () => expect(() => companion.setDefault(value,),).toThrow(InvalidEnumerableException,),)
+                test("setDefaultValue", () => expect(() => companion.setDefaultValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
                 test("getValue", () => expect(() => companion.getValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
@@ -334,15 +334,15 @@ describe("GeneralEnumTest", () => {
                 equivalentValue = Child3Enum.B
             describe("Parent", () => {
                 const value = ParentEnum.B
-                test("set default", () => {
-                    companion.default = otherValue
-                    companion.default = value
-                    expect(companion.default,).toBe(equivalentValue,)
-                    companion.default = otherValue
+                test("set defaultValue", () => {
+                    companion.defaultValue = otherValue
+                    companion.defaultValue = value
+                    expect(companion.defaultValue,).toBe(equivalentValue,)
+                    companion.defaultValue = otherValue
                 },)
-                test("setDefault", () => {
-                    expect(companion.setDefault(otherValue,).setDefault(value,).default,).toBe(equivalentValue,)
-                    companion.setDefault(otherValue,)
+                test("setDefaultValue", () => {
+                    expect(companion.setDefaultValue(otherValue,).setDefaultValue(value,).defaultValue,).toBe(equivalentValue,)
+                    companion.setDefaultValue(otherValue,)
                 },)
                 test("getValue", () => expect(companion.getValue(value,),).toBe(equivalentValue,),)
                 test("getName", () => expect(companion.getName(value,),).toBe(equivalentValue.name,),)
@@ -350,15 +350,15 @@ describe("GeneralEnumTest", () => {
             },)
             describe("Child #1", () => {
                 const value = Child1Enum.B
-                test("set default", () => {
-                    companion.default = otherValue
-                    companion.default = value
-                    expect(companion.default,).toBe(equivalentValue,)
-                    companion.default = otherValue
+                test("set defaultValue", () => {
+                    companion.defaultValue = otherValue
+                    companion.defaultValue = value
+                    expect(companion.defaultValue,).toBe(equivalentValue,)
+                    companion.defaultValue = otherValue
                 },)
-                test("setDefault", () => {
-                    expect(companion.setDefault(otherValue,).setDefault(value,).default,).toBe(equivalentValue,)
-                    companion.setDefault(otherValue)
+                test("setDefaultValue", () => {
+                    expect(companion.setDefaultValue(otherValue,).setDefaultValue(value,).defaultValue,).toBe(equivalentValue,)
+                    companion.setDefaultValue(otherValue)
                 },)
                 test("getValue", () => expect(companion.getValue(value,),).toBe(equivalentValue,),)
                 test("getName", () => expect(companion.getName(value,),).toBe(equivalentValue.name,),)
@@ -366,15 +366,15 @@ describe("GeneralEnumTest", () => {
             },)
             describe("Child #2", () => {
                 const value = Child2Enum.B
-                test("set default", () => {
-                    companion.default = otherValue
-                    companion.default = value
-                    expect(companion.default,).toBe(equivalentValue,)
-                    companion.default = otherValue
+                test("set defaultValue", () => {
+                    companion.defaultValue = otherValue
+                    companion.defaultValue = value
+                    expect(companion.defaultValue,).toBe(equivalentValue,)
+                    companion.defaultValue = otherValue
                 },)
-                test("setDefault", () => {
-                    expect(companion.setDefault(otherValue,).setDefault(value,).default,).toBe(equivalentValue,)
-                    companion.setDefault(otherValue)
+                test("setDefaultValue", () => {
+                    expect(companion.setDefaultValue(otherValue,).setDefaultValue(value,).defaultValue,).toBe(equivalentValue,)
+                    companion.setDefaultValue(otherValue)
                 },)
                 test("getValue", () => expect(companion.getValue(value,),).toBe(equivalentValue,),)
                 test("getName", () => expect(companion.getName(value,),).toBe(equivalentValue.name,),)
@@ -383,9 +383,9 @@ describe("GeneralEnumTest", () => {
             describe("Another child", () => {
                 const value = AnotherChildEnum.B
                 // @ts-expect-error
-                test("set default", () => expect(() => companion.default = value,).toThrow(InvalidEnumerableException,),)
+                test("set defaultValue", () => expect(() => companion.defaultValue = value,).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
-                test("setDefault", () => expect(() => companion.setDefault(value,),).toThrow(InvalidEnumerableException,),)
+                test("setDefaultValue", () => expect(() => companion.setDefaultValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
                 test("getValue", () => expect(() => companion.getValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
@@ -400,15 +400,15 @@ describe("GeneralEnumTest", () => {
                 equivalentValue = AnotherChildEnum.B
             describe("Parent", () => {
                 const value = ParentEnum.B
-                test("set default", () => {
-                    companion.default = otherValue
-                    companion.default = value
-                    expect(companion.default,).toBe(equivalentValue,)
-                    companion.default = otherValue
+                test("set defaultValue", () => {
+                    companion.defaultValue = otherValue
+                    companion.defaultValue = value
+                    expect(companion.defaultValue,).toBe(equivalentValue,)
+                    companion.defaultValue = otherValue
                 },)
-                test("setDefault", () => {
-                    expect(companion.setDefault(otherValue,).setDefault(value,).default,).toBe(equivalentValue,)
-                    companion.setDefault(otherValue)
+                test("setDefaultValue", () => {
+                    expect(companion.setDefaultValue(otherValue,).setDefaultValue(value,).defaultValue,).toBe(equivalentValue,)
+                    companion.setDefaultValue(otherValue)
                 },)
                 test("getValue", () => expect(companion.getValue(value,),).toBe(equivalentValue,),)
                 test("getName", () => expect(companion.getName(value,),).toBe(equivalentValue.name,),)
@@ -417,9 +417,9 @@ describe("GeneralEnumTest", () => {
             describe("Child #1", () => {
                 const value = Child1Enum.B
                 // @ts-expect-error
-                test("set default", () => expect(() => companion.default = value,).toThrow(InvalidEnumerableException,),)
+                test("set defaultValue", () => expect(() => companion.defaultValue = value,).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
-                test("setDefault", () => expect(() => companion.setDefault(value,),).toThrow(InvalidEnumerableException,),)
+                test("setDefaultValue", () => expect(() => companion.setDefaultValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
                 test("getValue", () => expect(() => companion.getValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
@@ -430,9 +430,9 @@ describe("GeneralEnumTest", () => {
             describe("Child #2", () => {
                 const value = Child2Enum.B
                 // @ts-expect-error
-                test("set default", () => expect(() => companion.default = value,).toThrow(InvalidEnumerableException,),)
+                test("set defaultValue", () => expect(() => companion.defaultValue = value,).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
-                test("setDefault", () => expect(() => companion.setDefault(value,),).toThrow(InvalidEnumerableException,),)
+                test("setDefaultValue", () => expect(() => companion.setDefaultValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
                 test("getValue", () => expect(() => companion.getValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
@@ -443,9 +443,9 @@ describe("GeneralEnumTest", () => {
             describe("Child #3", () => {
                 const value = Child3Enum.B
                 // @ts-expect-error
-                test("set default", () => expect(() => companion.default = value,).toThrow(InvalidEnumerableException,),)
+                test("set defaultValue", () => expect(() => companion.defaultValue = value,).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
-                test("setDefault", () => expect(() => companion.setDefault(value,),).toThrow(InvalidEnumerableException,),)
+                test("setDefaultValue", () => expect(() => companion.setDefaultValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error
                 test("getValue", () => expect(() => companion.getValue(value,),).toThrow(InvalidEnumerableException,),)
                 // @ts-expect-error

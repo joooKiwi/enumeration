@@ -1,12 +1,11 @@
-/******************************************************************************
- * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
- *                                                                            *
- * This project is free to use.                                               *
- * All the right is reserved to the author of this project.                   *
+/*******************************************************************************
+ Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {EnumerableWithGrandParent} from "../EnumerableWithGrandParent"
-import type {EnumerableWithParent}      from "../EnumerableWithParent"
+import type {EnumWithGreatGrandParentGeneralType} from "../Enumerable.types"
 
 import {EnumWithGreatGrandParent} from "../EnumWithGreatGrandParent"
 
@@ -15,6 +14,6 @@ import {EnumWithGreatGrandParent} from "../EnumWithGreatGrandParent"
  *
  * @param value The value to compare
  */
-export function isEnumWithGreatGrandParent(value: unknown,): value is EnumWithGreatGrandParent<number, string, EnumerableWithGrandParent, EnumerableWithParent> {
+export function isEnumWithGreatGrandParent(value: unknown,): value is EnumWithGreatGrandParentGeneralType {
     return value instanceof EnumWithGreatGrandParent
 }

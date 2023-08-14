@@ -1,6 +1,6 @@
 {
   "name": "@joookiwi/enumerable",
-  "version": "2.7.0",
+  "version": "3.0.0",
   "description": "A Javascript implementation of an enum class",
 
   "scripts": {
@@ -18,6 +18,7 @@
     "test-helper-known-enum-constructors": "jest --testNamePattern=KnownEnumConstructorsTest",
     "test-companion-enum":                 "jest --testNamePattern=CompanionEnumTest",
     "test-enum-inheritor":                 "jest --testNamePattern=EnumInheritorTest",
+    "test-typescript":                     "tsc --build test/typescript",
 
     "test-pack":    "npm pack --dry-run",
     "test-publish": "npm publish --@access=public --dry-run",
@@ -155,14 +156,14 @@
   "author": "JóôòKiwi",
   "license": "MIT",
   "dependencies": {
-    "@joookiwi/collection": "^1.2.0"
+    "@joookiwi/collection": "^1.3.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.3",
-    "@types/node": "^20.4.5",
+    "@types/node": "^20.5.0",
     "del-cli": "^5.0.0",
     "jest-environment-jsdom": "^29.6.2",
-    "jest-extended": "^4.0.0",
+    "jest-extended": "^4.0.1",
     "npm-run-all": "^4.1.5",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",

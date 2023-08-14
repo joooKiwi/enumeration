@@ -1,8 +1,8 @@
-/******************************************************************************
- * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
- *                                                                            *
- * This project is free to use.                                               *
- * All the right is reserved to the author of this project.                   *
+/*******************************************************************************
+ Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
  ******************************************************************************/
 
 import type {EnumerableWithGrandParent} from "../EnumerableWithGrandParent"
@@ -15,7 +15,7 @@ import {EnumConstants} from "../EnumConstants"
  *
  * @param value The value to compare
  */
-export function isEnumWithGrandParentByStructure(value: unknown,): value is (& object & Record<keyof EnumerableWithGrandParent, unknown>) {
+export function isEnumWithGrandParentByStructure(value: unknown,): value is (& object & Record<keyof EnumerableWithGrandParent<never, never>, unknown>) {
     if (value == null || typeof value != "object")
         return false
 

@@ -1,23 +1,23 @@
-/******************************************************************************
- * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
- *                                                                            *
- * This project is free to use.                                               *
- * All the right is reserved to the author of this project.                   *
+/*******************************************************************************
+ Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
  ******************************************************************************/
 
 import type {Nullable, PossibleStringOrNumeric} from "../general type"
 import type {ExceptionWithValue}                from "./declaration/ExceptionWithValue"
 
-import {IllegalAccessException} from "./generic/IllegalAccessException"
+import {IllegalArgumentException} from "./generic/IllegalArgumentException"
 
 /**
  * An exception to tell that an edge case numeric ({@link Number} or {@link BigInt})
  * or a name ({@link EnumConstants.EDGE_CASE_NUMERIC_NAME ±∞ / NaN}) was used
  *
- * @see EnumConstants.EDGE_CASE_NUMERIC_NAME
+ * @see EnumConstants.EDGE_CASE_NUMERIC_NAMES
  */
 export class ForbiddenNumericException<const T extends PossibleStringOrNumeric, const ERROR extends Error = never, >
-    extends IllegalAccessException<ERROR>
+    extends IllegalArgumentException<ERROR>
     implements ExceptionWithValue<T> {
 
     readonly #value

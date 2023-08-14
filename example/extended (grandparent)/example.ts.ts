@@ -1,5 +1,5 @@
-import type {CompanionEnumWithGrandParentSingleton, EnumerableWithGrandParent} from "@joookiwi/enumerable"
-import {CompanionEnumWithGrandParent, Enum}                                    from "@joookiwi/enumerable"
+import type {CompanionEnumWithGrandParentSingleton}                from "@joookiwi/enumerable"
+import {CompanionEnumWithGrandParent, EnumWithNullableGrandParent} from "@joookiwi/enumerable"
 
 import type {Names3, Ordinals3} from "../type"
 
@@ -7,18 +7,17 @@ import {SimpleEnum}   from "simple/example.ts"
 import {ExtendedEnum} from "extended (parent)/example.ts"
 
 export class SecondExtendedEnum
-    extends Enum<Names3, Ordinals3>
-    implements EnumerableWithGrandParent<Names3, Ordinals3, ExtendedEnum, SimpleEnum> {
+    extends EnumWithNullableGrandParent<ExtendedEnum, SimpleEnum, Names3, Ordinals3> {
 
-    public static readonly A = new SecondExtendedEnum(ExtendedEnum.A, SimpleEnum.A,)
-    public static readonly B = new SecondExtendedEnum(ExtendedEnum.B, SimpleEnum.B,)
-    public static readonly C = new SecondExtendedEnum(ExtendedEnum.C, SimpleEnum.C,)
-    public static readonly D = new SecondExtendedEnum(ExtendedEnum.D,)
-    public static readonly E = new SecondExtendedEnum(ExtendedEnum.E,)
-    public static readonly F = new SecondExtendedEnum(ExtendedEnum.F,)
-    public static readonly G = new SecondExtendedEnum()
-    public static readonly H = new SecondExtendedEnum()
-    public static readonly I = new SecondExtendedEnum()
+    public static readonly A = new SecondExtendedEnum()
+    public static readonly B = new SecondExtendedEnum()
+    public static readonly C = new SecondExtendedEnum()
+    public static readonly D = new SecondExtendedEnum(ExtendedEnum.D, null,)
+    public static readonly E = new SecondExtendedEnum(ExtendedEnum.E, null,)
+    public static readonly F = new SecondExtendedEnum(ExtendedEnum.F, null,)
+    public static readonly G = new SecondExtendedEnum(null, null,)
+    public static readonly H = new SecondExtendedEnum(null, null,)
+    public static readonly I = new SecondExtendedEnum(null, null,)
 
     public static readonly CompanionEnum: CompanionEnumWithGrandParentSingleton<SecondExtendedEnum, typeof SecondExtendedEnum, ExtendedEnum, typeof ExtendedEnum, SimpleEnum, typeof SimpleEnum> = class CompanionEnum_SecondExtendedEnum
         extends CompanionEnumWithGrandParent<SecondExtendedEnum, typeof SecondExtendedEnum,
@@ -33,16 +32,11 @@ export class SecondExtendedEnum
 
     }
 
-    readonly #parent
-    readonly #grandParent
-
-    private constructor(parent: ExtendedEnum | null = null, grandParent: SimpleEnum | null = null,) {
-        super()
-        this.#grandParent = grandParent
-        this.#parent = parent
+    private constructor()
+    private constructor(parent: ExtendedEnum | null,)
+    private constructor(parent: ExtendedEnum, grandParent: SimpleEnum | null,)
+    private constructor(...args: readonly [(ExtendedEnum | null)?, (SimpleEnum | null)?]) {
+        super(...args,)
     }
-
-    public get parent(): ExtendedEnum | null { return this.#parent }
-    public get grandParent(): SimpleEnum | null { return this.#grandParent }
 
 }

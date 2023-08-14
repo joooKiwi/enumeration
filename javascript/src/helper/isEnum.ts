@@ -1,8 +1,8 @@
-/******************************************************************************
- * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
- *                                                                            *
- * This project is free to use.                                               *
- * All the right is reserved to the author of this project.                   *
+/*******************************************************************************
+ Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
  ******************************************************************************/
 
 import {Enum} from "../Enum"
@@ -12,6 +12,6 @@ import {Enum} from "../Enum"
  *
  * @param value The value to compare
  */
-export function isEnum(value: unknown,): value is Enum<number, string> {
+export function isEnum(value: unknown,): value is Enum {
     return value instanceof Enum
 }

@@ -1,8 +1,8 @@
-/******************************************************************************
- * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
- *                                                                            *
- * This project is free to use.                                               *
- * All the right is reserved to the author of this project.                   *
+/*******************************************************************************
+ Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
  ******************************************************************************/
 
 import type {Lazy} from "@joookiwi/lazy"
@@ -35,12 +35,13 @@ import {KnownEnumConstructors}        from "./helper/KnownEnumConstructors"
  *
  * @see EnumWithGreatGrandParent
  */
-export class EnumWithNullableGreatGrandParent<const ORDINAL extends PossibleOrdinalOf<number, PARENT>, const NAME extends PossibleNameOf<string, PARENT>,
-    const PARENT extends EnumerableWithNullableGrandParent<PossibleOrdinalOf<number, GRAND_PARENT>, PossibleNameOf<string, GRAND_PARENT>, GRAND_PARENT, GREAT_GRAND_PARENT>,
-    const GRAND_PARENT extends EnumerableWithNullableParent<PossibleOrdinalOf<number, GREAT_GRAND_PARENT>, PossibleNameOf<string, GREAT_GRAND_PARENT>, GREAT_GRAND_PARENT>,
-    const GREAT_GRAND_PARENT extends Enumerable = Enumerable, >
-    extends EnumWithNullableGrandParent<ORDINAL, NAME, PARENT, GRAND_PARENT>
-    implements EnumerableWithNullableGreatGrandParent<ORDINAL, NAME, PARENT, GRAND_PARENT, GREAT_GRAND_PARENT> {
+export class EnumWithNullableGreatGrandParent<const out PARENT extends EnumerableWithNullableGrandParent<GRAND_PARENT, GREAT_GRAND_PARENT>,
+    const out GRAND_PARENT extends EnumerableWithNullableParent<GREAT_GRAND_PARENT>,
+    const out GREAT_GRAND_PARENT extends Enumerable,
+    const out ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,
+    const out NAME extends PossibleNameOf<string, PARENT> = PossibleNameOf<string, PARENT>, >
+    extends EnumWithNullableGrandParent<PARENT, GRAND_PARENT, ORDINAL, NAME>
+    implements EnumerableWithNullableGreatGrandParent<PARENT, GRAND_PARENT, GREAT_GRAND_PARENT, ORDINAL, NAME> {
 
     //#region -------------------- Fields --------------------
 

@@ -1,8 +1,8 @@
-/******************************************************************************
- * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
- *                                                                            *
- * This project is free to use.                                               *
- * All the right is reserved to the author of this project.                   *
+/*******************************************************************************
+ Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
  ******************************************************************************/
 
 import type {Nullable, NullOr}           from "../../general type"
@@ -11,7 +11,7 @@ import type {ExceptionWithNullableCause} from "../declaration/ExceptionWithNulla
 /**
  * A simple generic exception made to tell that the access should not be done
  *
- * @see https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/NoSuchFieldException.html Java IllegalAccessException
+ * @see https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/IllegalAccessException.html Java IllegalAccessException
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect.full/-illegal-callable-access-exception Kotlin IllegalCallableAccessException
  * @see https://learn.microsoft.com/dotnet/api/system.indexoutofrangeexception C# IndexOutOfRangeException
  */

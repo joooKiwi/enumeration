@@ -1,8 +1,8 @@
-/******************************************************************************
- * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
- *                                                                            *
- * This project is free to use.                                               *
- * All the right is reserved to the author of this project.                   *
+/*******************************************************************************
+ Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
  ******************************************************************************/
 
 import type {CompanionEnumDeclaration}                                                                                      from "../companion"
@@ -123,15 +123,17 @@ export abstract class CompanionTypes<const TYPE extends PossibleCompanionTypeNam
      * @throws {NullReferenceException}
      */
     public getInstance(instance: Enumerable,): CompanionEnumDeclaration<Enumerable, any> {
+        let companionEnum: CompanionEnumDeclaration<Enumerable, any>
         try {
-            return this._getInstance(getCompanion(getLastPrototype(instance,),),)
+            companionEnum = getCompanion(getLastPrototype(instance,),)
         } catch (exception) {
             if (exception instanceof InvalidEnumerableException
                 || exception instanceof InvalidInstanceException
                 || exception instanceof NullReferenceException)
                 throw new NullReferenceException("There were an error while retrieving the companion enum", instance, exception,)
-            throw new NullReferenceException(`An unknown error has been thrown while retrieving the companion enum on the "${instance.constructor}.${instance.name}".`, instance, exception as Error,)
+            throw exception
         }
+        return this._getInstance(companionEnum,)
     }
 
 }

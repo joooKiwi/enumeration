@@ -1,8 +1,8 @@
-/******************************************************************************
- * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
- *                                                                            *
- * This project is free to use.                                               *
- * All the right is reserved to the author of this project.                   *
+/*******************************************************************************
+ Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
  ******************************************************************************/
 
 import type {Nullable}           from "../general type"
@@ -15,6 +15,8 @@ import {ClassCastException} from "./generic/ClassCastException"
  * {@link CompanionEnumDeclaration.getValue getValue}, {@link CompanionEnumDeclaration.getName getName}
  * and {@link CompanionEnumDeclaration.getOrdinal getOrdinal}
  * that the value received was not a {@link String}, {@link Number}, {@link BigInt} or {@link Enumerable}
+ *
+ * @uniqueToJavascript
  */
 export class UnhandledValueException<const T, const ERROR extends Error = never, >
     extends ClassCastException<ERROR>

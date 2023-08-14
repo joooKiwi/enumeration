@@ -1,8 +1,8 @@
-/******************************************************************************
- * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
- *                                                                            *
- * This project is free to use.                                               *
- * All the right is reserved to the author of this project.                   *
+/*******************************************************************************
+ Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
  ******************************************************************************/
 
 import type {Lazy} from "@joookiwi/lazy"
@@ -28,10 +28,11 @@ import {KnownEnumConstructors} from "./helper/KnownEnumConstructors"
  *
  * @see EnumWithParent
  */
-export abstract class EnumWithNullableParent<const ORDINAL extends PossibleOrdinalOf<number, PARENT>, const NAME extends PossibleNameOf<string, PARENT>,
-    const PARENT extends Enumerable = Enumerable, >
+export abstract class EnumWithNullableParent<const out PARENT extends Enumerable,
+    const out ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,
+    const out NAME extends PossibleNameOf<string, PARENT> = PossibleNameOf<string, PARENT>, >
     extends Enum<ORDINAL, NAME>
-    implements EnumerableWithNullableParent<ORDINAL, NAME, PARENT> {
+    implements EnumerableWithNullableParent<PARENT, ORDINAL, NAME> {
 
     //#region -------------------- Fields --------------------
 

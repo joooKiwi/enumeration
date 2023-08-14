@@ -1,16 +1,16 @@
-/******************************************************************************
- * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
- *                                                                            *
- * This project is free to use.                                               *
- * All the right is reserved to the author of this project.                   *
+/*******************************************************************************
+ Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {Enumerable}                                                                        from "../Enumerable"
-import type {EnumerableConstructor}                                                             from "../EnumerableConstructor"
-import type {CompanionOf}                                                                       from "../Enumerable.types"
-import type {CompanionEnumDeclaration}                                                          from "../companion/CompanionEnum.declaration"
-import type {CompanionEnumFromEnumerableConstructorOrCompanionEnum, PossibleEnumerableInstance} from "../companion/types"
-import type {Nullable, NullOrUndefined}                                                         from "../general type"
+import type {Enumerable}                                                                                                      from "../Enumerable"
+import type {EnumerableConstructor}                                                                                           from "../EnumerableConstructor"
+import type {CompanionOf}                                                                                                     from "../Enumerable.types"
+import type {CompanionEnumDeclaration}                                                                                        from "../companion/CompanionEnum.declaration"
+import type {CompanionEnumDeclarationType, CompanionEnumFromEnumerableConstructorOrCompanionEnum, PossibleEnumerableInstance} from "../companion/types"
+import type {Nullable, NullOrUndefined}                                                                                       from "../general type"
 
 import {InvalidInstanceException}   from "../exception/InvalidInstanceException"
 import {NullInstanceException}      from "../exception/NullInstanceException"
@@ -32,7 +32,7 @@ export function getCompanion(instance: NullOrUndefined,): never
  * @param companion The {@link CompanionEnumDeclaration companion} instance
  * @throws {NullInstanceException}
  */
-export function getCompanion<const ENUMERABLE extends Enumerable, const COMPANION_ENUM extends CompanionEnumDeclaration<any, any> = CompanionEnumDeclaration<ENUMERABLE, any>, >(companion: Nullable<COMPANION_ENUM>,): COMPANION_ENUM
+export function getCompanion<const ENUM extends Enumerable, const COMPANION_ENUM extends CompanionEnumDeclaration<any, any> = CompanionEnumDeclarationType<ENUM>, >(companion: Nullable<COMPANION_ENUM>,): COMPANION_ENUM
 /**
  * Get a {@link CompanionEnumDeclaration companion} instance from an {@link Enumerable} class.
  * And if in the {@link CompanionEnumDeclaration companion} values or class type, there is no valid value, then exception can be thrown.
@@ -43,7 +43,7 @@ export function getCompanion<const ENUMERABLE extends Enumerable, const COMPANIO
  * @throws {NonExistantKeyException}
  * @throws {NullReferenceException}
  */
-export function getCompanion<const ENUMERABLE extends Enumerable, const ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<any, any> = EnumerableConstructor<ENUMERABLE, any>, >(constructorClass: Nullable<ENUMERABLE_CONSTRUCTOR>,): CompanionOf<ENUMERABLE_CONSTRUCTOR>
+export function getCompanion<const ENUM extends Enumerable, const ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any> = EnumerableConstructor<ENUM, CompanionEnumDeclarationType<ENUM>>, >(constructorClass: Nullable<ENUM_CONSTRUCTOR>,): CompanionOf<ENUM_CONSTRUCTOR>
 /**
  * Get the {@link CompanionEnumDeclaration companion} from any values ({@link EnumerableConstructor} or {@link CompanionEnumDeclaration companion})
  *
@@ -55,7 +55,7 @@ export function getCompanion<const ENUMERABLE extends Enumerable, const ENUMERAB
  * @throws {NonExistantKeyException}
  * @throws {NullReferenceException}
  */
-export function getCompanion<const ENUMERABLE extends Enumerable, const INSTANCE extends PossibleEnumerableInstance<any> = PossibleEnumerableInstance<ENUMERABLE>, >(instance: Nullable<INSTANCE>,): CompanionEnumFromEnumerableConstructorOrCompanionEnum<INSTANCE>
+export function getCompanion<const ENUM extends Enumerable, const INSTANCE extends PossibleEnumerableInstance<any> = PossibleEnumerableInstance<ENUM>, >(instance: Nullable<INSTANCE>,): CompanionEnumFromEnumerableConstructorOrCompanionEnum<INSTANCE>
 export function getCompanion(instance: Nullable<PossibleEnumerableInstance>,): CompanionEnumDeclaration<any, any> {
     if (instance == null)
         throw new NullInstanceException()

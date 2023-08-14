@@ -1,24 +1,25 @@
-/******************************************************************************
- * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
- *                                                                            *
- * This project is free to use.                                               *
- * All the right is reserved to the author of this project.                   *
+/*******************************************************************************
+ Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
  ******************************************************************************/
 
 import {invalidInstances, nullValues, validValues} from "./Enum.constants"
 
-import type {NullOr}                                       from "../../src/general type"
-import type {Enumerable}                                   from "../../src/Enumerable"
-import type {EnumerableConstructor}                        from "../../src/EnumerableConstructor"
-import type {EnumerableWithNullableGrandParent}            from "../../src/EnumerableWithNullableGrandParent"
-import type {EnumerableWithNullableGreatGrandParent}       from "../../src/EnumerableWithNullableGreatGrandParent"
-import type {EnumerableWithNullableParent}                 from "../../src/EnumerableWithNullableParent"
-import type {CompanionEnumDeclaration}                     from "../../src/companion/CompanionEnum.declaration"
-import type {CompanionEnumWithGrandParentDeclaration}      from "../../src/companion/CompanionEnumWithGrandParent.declaration"
-import type {CompanionEnumWithGreatGrandParentDeclaration} from "../../src/companion/CompanionEnumWithGreatGrandParent.declaration"
-import type {CompanionEnumWithParentDeclaration}           from "../../src/companion/CompanionEnumWithParent.declaration"
+import type {NullOr}                                                                                                                                   from "../../src/general type"
+import type {Enumerable}                                                                                                                               from "../../src/Enumerable"
+import type {EnumerableConstructor}                                                                                                                    from "../../src/EnumerableConstructor"
+import type {CompanionEnumDeclaration}                                                                                                                 from "../../src/companion/CompanionEnum.declaration"
+import type {CompanionEnumWithGrandParentDeclaration}                                                                                                  from "../../src/companion/CompanionEnumWithGrandParent.declaration"
+import type {CompanionEnumWithGreatGrandParentDeclaration}                                                                                             from "../../src/companion/CompanionEnumWithGreatGrandParent.declaration"
+import type {CompanionEnumWithParentDeclaration}                                                                                                       from "../../src/companion/CompanionEnumWithParent.declaration"
+import type {EnumerableWithNullableGrandParentGeneralType, EnumerableWithNullableGreatGrandParentGeneralType, EnumerableWithNullableParentGeneralType} from "../../src/Enumerable.types"
 
 import {Enum}                              from "../../src/Enum"
+import {EnumWithNullableGrandParent}       from "../../src/EnumWithNullableGrandParent"
+import {EnumWithNullableGreatGrandParent}  from "../../src/EnumWithNullableGreatGrandParent"
+import {EnumWithNullableParent}            from "../../src/EnumWithNullableParent"
 import {CompanionEnum}                     from "../../src/companion/CompanionEnum"
 import {CompanionEnumWithGrandParent}      from "../../src/companion/CompanionEnumWithGrandParent"
 import {CompanionEnumWithGreatGrandParent} from "../../src/companion/CompanionEnumWithGreatGrandParent"
@@ -33,7 +34,7 @@ import {NullInstanceException}             from "../../src/exception/NullInstanc
 
 //#region -------------------- Helper enum class declaration --------------------
 
-class BasicEnum extends Enum<number, string> {
+class BasicEnum extends Enum {
     static readonly A = new BasicEnum()
     static CompanionEnum = class CompanionEnum_BasicEnum extends CompanionEnum<BasicEnum, any> {
         static #instance?: CompanionEnum_BasicEnum
@@ -42,15 +43,12 @@ class BasicEnum extends Enum<number, string> {
     }
 }
 
-class BasicEnumWithParent extends Enum<number, string> implements EnumerableWithNullableParent<number, string, BasicEnum> {
+class BasicEnumWithParent extends EnumWithNullableParent<BasicEnum> {
     static readonly A = new BasicEnumWithParent(BasicEnum.A,)
     static readonly B = new BasicEnumWithParent()
-    readonly #parent
     constructor(parent: NullOr<BasicEnum> = null,) {
-        super()
-        this.#parent = parent
+        super(parent,)
     }
-    get parent(): NullOr<BasicEnum> { return this.#parent }
     static CompanionEnum = class CompanionEnum_BasicEnumWithParent extends CompanionEnumWithParent<BasicEnumWithParent, any, BasicEnum, typeof BasicEnum> {
         static #instance?: CompanionEnum_BasicEnumWithParent
         private constructor() { super(BasicEnumWithParent, BasicEnum,) }
@@ -58,19 +56,13 @@ class BasicEnumWithParent extends Enum<number, string> implements EnumerableWith
     }
 }
 
-class BasicEnumWithGrandParent extends Enum<number, string> implements EnumerableWithNullableGrandParent<number, string, BasicEnumWithParent, BasicEnum> {
+class BasicEnumWithGrandParent extends EnumWithNullableGrandParent<BasicEnumWithParent, BasicEnum> {
     static readonly A = new BasicEnumWithGrandParent(BasicEnumWithParent.A, BasicEnum.A,)
     static readonly B = new BasicEnumWithGrandParent(BasicEnumWithParent.B,)
     static readonly C = new BasicEnumWithGrandParent()
-    readonly #parent
-    readonly #grandParent
     constructor(parent: NullOr<BasicEnumWithParent> = null, grandParent: NullOr<BasicEnum> = null,) {
-        super()
-        this.#parent = parent
-        this.#grandParent = grandParent
+        super(parent, grandParent,)
     }
-    get parent(): NullOr<BasicEnumWithParent> { return this.#parent }
-    get grandParent(): NullOr<BasicEnum> { return this.#grandParent }
     static CompanionEnum = class CompanionEnum_BasicEnumWithGrandParent extends CompanionEnumWithGrandParent<BasicEnumWithGrandParent, any, BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum> {
         static #instance?: CompanionEnum_BasicEnumWithGrandParent
         private constructor() { super(BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum,) }
@@ -78,23 +70,14 @@ class BasicEnumWithGrandParent extends Enum<number, string> implements Enumerabl
     }
 }
 
-class BasicEnumWithGreatGrandParent extends Enum<number, string> implements EnumerableWithNullableGreatGrandParent<number, string, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
+class BasicEnumWithGreatGrandParent extends EnumWithNullableGreatGrandParent<BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
     static readonly A = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.A, BasicEnumWithParent.A, BasicEnum.A,)
     static readonly B = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.B, BasicEnumWithParent.B,)
     static readonly C = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.C,)
     static readonly D = new BasicEnumWithGreatGrandParent()
-    readonly #parent
-    readonly #grandParent
-    readonly #greatGrandParent
     constructor(parent: NullOr<BasicEnumWithGrandParent> = null, grandParent: NullOr<BasicEnumWithParent> = null, greatGrandParent: NullOr<BasicEnum> = null,) {
-        super()
-        this.#parent = parent
-        this.#grandParent = grandParent
-        this.#greatGrandParent = greatGrandParent
+        super(parent, grandParent, greatGrandParent,)
     }
-    get parent(): NullOr<BasicEnumWithGrandParent> { return this.#parent }
-    get grandParent(): NullOr<BasicEnumWithParent> { return this.#grandParent }
-    get greatGrandParent(): NullOr<BasicEnum> { return this.#greatGrandParent }
     static CompanionEnum = class CompanionEnum_BasicEnumWithGreatGrandParent extends CompanionEnumWithGreatGrandParent<BasicEnumWithGreatGrandParent, any, BasicEnumWithGrandParent, typeof BasicEnumWithGrandParent, BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum> {
         static #instance?: CompanionEnum_BasicEnumWithGreatGrandParent
         private constructor() { super(BasicEnumWithGreatGrandParent, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum,) }
@@ -113,7 +96,7 @@ class CompanionEnum_TestClassHelper
 }
 
 class CompanionEnumWithParent_TestClassHelper
-    extends CompanionEnumWithParent<EnumerableWithNullableParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
+    extends CompanionEnumWithParent<EnumerableWithNullableParentGeneralType, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
         Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
     constructor(instance: EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
                 parentInstance: EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>) {
@@ -122,8 +105,8 @@ class CompanionEnumWithParent_TestClassHelper
 }
 
 class CompanionEnumWithGrandParent_TestClassHelper
-    extends CompanionEnumWithGrandParent<EnumerableWithNullableGrandParent, EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
-        EnumerableWithNullableParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
+    extends CompanionEnumWithGrandParent<EnumerableWithNullableGrandParentGeneralType, EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
+        EnumerableWithNullableParentGeneralType, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
         Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
     constructor(instance: EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
                 parentInstance: EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
@@ -133,9 +116,9 @@ class CompanionEnumWithGrandParent_TestClassHelper
 }
 
 class CompanionEnumWithGreatGrandParent_TestClassHelper
-    extends CompanionEnumWithGreatGrandParent<EnumerableWithNullableGreatGrandParent, EnumerableConstructor<any, CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, any, any>>,
-        EnumerableWithNullableGrandParent, EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
-        EnumerableWithNullableParent, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
+    extends CompanionEnumWithGreatGrandParent<EnumerableWithNullableGreatGrandParentGeneralType, EnumerableConstructor<any, CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, any, any>>,
+        EnumerableWithNullableGrandParentGeneralType, EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
+        EnumerableWithNullableParentGeneralType, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
         Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
     constructor(instance: EnumerableConstructor<any, CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, any, any>>,
                 parentInstance: EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
@@ -175,16 +158,16 @@ describe("CompanionEnumTest", () => {
             let instance: CompanionEnum_TestClassHelper
             beforeEach(() => instance = new InstanceHelper(Child,),)
 
-            describe("setDefault", () => {
+            describe("setDefaultValue", () => {
                 test.each(nullValues,)("%s", it => {
-                    expect(() => instance.setDefault(it,),).not.toThrow()
-                    expect(() => instance.default,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
+                    expect(() => instance.setDefaultValue(it,),).not.toThrow()
+                    expect(() => instance.defaultValue,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
                 },)
-                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefault(it,).default,).toEqual(value,),)
-                test("instance.A", () => expect(instance.setDefault(value,).default,).toEqual(value,),)
-                test("instance with parent.A", () => expect(() => instance.setDefault(parentValue,),).toThrow(InvalidEnumerableException,),)
-                test("instance with grandparent.A", () => expect(() => instance.setDefault(grandParentValue,),).toThrow(InvalidEnumerableException,),)
-                test("instance with great-grandparent.A", () => expect(() => instance.setDefault(greatGrandParentValue,),).toThrow(InvalidEnumerableException,),)
+                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefaultValue(it,).defaultValue,).toEqual(value,),)
+                test("instance.A", () => expect(instance.setDefaultValue(value,).defaultValue,).toEqual(value,),)
+                test("instance with parent.A", () => expect(() => instance.setDefaultValue(parentValue,),).toThrow(InvalidEnumerableException,),)
+                test("instance with grandparent.A", () => expect(() => instance.setDefaultValue(grandParentValue,),).toThrow(InvalidEnumerableException,),)
+                test("instance with great-grandparent.A", () => expect(() => instance.setDefaultValue(greatGrandParentValue,),).toThrow(InvalidEnumerableException,),)
             },)
             describe("getValue", () => {
                 test.each(nullValues,)("%s", it => expect(() => instance.getValue(it,),).toThrow(NullEnumerableException,),)
@@ -243,16 +226,16 @@ describe("CompanionEnumTest", () => {
             let instance: CompanionEnumWithParent_TestClassHelper
             beforeEach(() => instance = new InstanceHelper(Parent, Child,),)
 
-            describe("setDefault", () => {
+            describe("setDefaultValue", () => {
                 test.each(nullValues,)("%s", it => {
-                    expect(() => instance.setDefault(it,),).not.toThrow()
-                    expect(() => instance.default,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
+                    expect(() => instance.setDefaultValue(it,),).not.toThrow()
+                    expect(() => instance.defaultValue,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
                 },)
-                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefault(it,).default,).toEqual(parentValue,),)
-                test("instance.A", () => expect(instance.setDefault(value,).default,).toEqual(parentValue,),)
-                test("instance with parent.A", () => expect(instance.setDefault(parentValue,).default,).toEqual(parentValue,),)
-                test("instance with grandparent.A", () => expect(() => instance.setDefault(grandParentValue,),).toThrow(InvalidEnumerableException,),)
-                test("instance with great-grandparent.A", () => expect(() => instance.setDefault(greatGrandParentValue,),).toThrow(InvalidEnumerableException,),)
+                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefaultValue(it,).defaultValue,).toEqual(parentValue,),)
+                test("instance.A", () => expect(instance.setDefaultValue(value,).defaultValue,).toEqual(parentValue,),)
+                test("instance with parent.A", () => expect(instance.setDefaultValue(parentValue,).defaultValue,).toEqual(parentValue,),)
+                test("instance with grandparent.A", () => expect(() => instance.setDefaultValue(grandParentValue,),).toThrow(InvalidEnumerableException,),)
+                test("instance with great-grandparent.A", () => expect(() => instance.setDefaultValue(greatGrandParentValue,),).toThrow(InvalidEnumerableException,),)
             },)
             describe("getValue", () => {
                 test.each(nullValues,)("%s", it => expect(() => instance.getValue(it,),).toThrow(NullEnumerableException,),)
@@ -324,16 +307,16 @@ describe("CompanionEnumTest", () => {
             let instance: CompanionEnumWithGrandParent_TestClassHelper
             beforeEach(() => instance = new InstanceHelper(GrandParent, Parent, Child,),)
 
-            describe("setDefault", () => {
+            describe("setDefaultValue", () => {
                 test.each(nullValues,)("%s", it => {
-                    expect(() => instance.setDefault(it,),).not.toThrow()
-                    expect(() => instance.default,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
+                    expect(() => instance.setDefaultValue(it,),).not.toThrow()
+                    expect(() => instance.defaultValue,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
                 },)
-                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefault(it,).default,).toEqual(grandParentValue,),)
-                test("instance.A", () => expect(instance.setDefault(value,).default,).toEqual(grandParentValue,),)
-                test("instance with parent.A", () => expect(instance.setDefault(parentValue,).default,).toEqual(grandParentValue,),)
-                test("instance with grandparent.A", () => expect(instance.setDefault(grandParentValue,).default,).toEqual(grandParentValue,),)
-                test("instance with great-grandparent.A", () => expect(() => instance.setDefault(greatGrandParentValue,),).toThrow(InvalidEnumerableException,),)
+                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefaultValue(it,).defaultValue,).toEqual(grandParentValue,),)
+                test("instance.A", () => expect(instance.setDefaultValue(value,).defaultValue,).toEqual(grandParentValue,),)
+                test("instance with parent.A", () => expect(instance.setDefaultValue(parentValue,).defaultValue,).toEqual(grandParentValue,),)
+                test("instance with grandparent.A", () => expect(instance.setDefaultValue(grandParentValue,).defaultValue,).toEqual(grandParentValue,),)
+                test("instance with great-grandparent.A", () => expect(() => instance.setDefaultValue(greatGrandParentValue,),).toThrow(InvalidEnumerableException,),)
             },)
             describe("getValue", () => {
                 test.each(nullValues,)("%s", it => expect(() => instance.getValue(it,),).toThrow(NullEnumerableException,),)
@@ -447,16 +430,16 @@ describe("CompanionEnumTest", () => {
             let instance: CompanionEnumWithGreatGrandParent_TestClassHelper
             beforeEach(() => instance = new InstanceHelper(GreatGrandParent, GrandParent, Parent, Child,),)
 
-            describe("setDefault", () => {
+            describe("setDefaultValue", () => {
                 test.each(nullValues,)("%s", it => {
-                    expect(() => instance.setDefault(it,),).not.toThrow()
-                    expect(() => instance.default,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
+                    expect(() => instance.setDefaultValue(it,),).not.toThrow()
+                    expect(() => instance.defaultValue,).toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
                 },)
-                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefault(it,).default,).toEqual(greatGrandParentValue,),)
-                test("instance.A", () => expect(instance.setDefault(value,).default,).toEqual(greatGrandParentValue,),)
-                test("instance with parent.A", () => expect(instance.setDefault(parentValue,).default,).toEqual(greatGrandParentValue,),)
-                test("instance with grandparent.A", () => expect(instance.setDefault(grandParentValue,).default,).toEqual(greatGrandParentValue,),)
-                test("instance with great-grandparent.A", () => expect(instance.setDefault(greatGrandParentValue,).default,).toEqual(greatGrandParentValue,),)
+                test.each(validValues)("%s", ({value: it,},) => expect(instance.setDefaultValue(it,).defaultValue,).toEqual(greatGrandParentValue,),)
+                test("instance.A", () => expect(instance.setDefaultValue(value,).defaultValue,).toEqual(greatGrandParentValue,),)
+                test("instance with parent.A", () => expect(instance.setDefaultValue(parentValue,).defaultValue,).toEqual(greatGrandParentValue,),)
+                test("instance with grandparent.A", () => expect(instance.setDefaultValue(grandParentValue,).defaultValue,).toEqual(greatGrandParentValue,),)
+                test("instance with great-grandparent.A", () => expect(instance.setDefaultValue(greatGrandParentValue,).defaultValue,).toEqual(greatGrandParentValue,),)
             },)
             describe("getValue", () => {
                 test.each(nullValues,)("%s", it => expect(() => instance.getValue(it,),).toThrow(NullEnumerableException,),)

@@ -1,15 +1,14 @@
-/******************************************************************************
- * Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi                             *
- *                                                                            *
- * This project is free to use.                                               *
- * All the right is reserved to the author of this project.                   *
+/*******************************************************************************
+ Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
  ******************************************************************************/
 
 import type {Enumerable}                                      from "./Enumerable"
-import type {EnumerableConstructor}                           from "./EnumerableConstructor"
 import type {EnumerableName, EnumerableToPrimitive}           from "./Enumerable.types"
 import type {Nullable, PossiblePrimitiveHint, PossibleString} from "./general type"
-import type {CompanionEnumDeclaration}                        from "./companion/CompanionEnum.declaration"
+import type {CompanionEnumDeclarationType}                    from "./companion/types"
 
 import {EnumConstants}          from "./EnumConstants"
 import {NullReferenceException} from "./exception/NullReferenceException"
@@ -18,7 +17,8 @@ import {NullPointerException}   from "./exception/generic/NullPointerException"
 import {getCompanion}           from "./helper/getCompanion"
 import {getLastPrototype}       from "./helper/getLastPrototype"
 
-export abstract class Enum<const ORDINAL extends number = number, const NAME extends string = string, >
+export abstract class Enum<const out ORDINAL extends number = number,
+    const out NAME extends string = string, >
     implements Enumerable<ORDINAL, NAME> {
 
     //#region -------------------- Fields --------------------
@@ -26,7 +26,7 @@ export abstract class Enum<const ORDINAL extends number = number, const NAME ext
     #name?: NAME
     readonly #ordinal: ORDINAL
     readonly #prototypeConstructor
-    #companion?: CompanionEnumDeclaration<Enum<ORDINAL, NAME>, EnumerableConstructor<Enum<ORDINAL, NAME>, any>>
+    #companion?: CompanionEnumDeclarationType<Enum>
 
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------
@@ -91,21 +91,16 @@ export abstract class Enum<const ORDINAL extends number = number, const NAME ext
 
     /**
      * Get the {@link Enumerable enumerable} {@link Enumerable.name name}
-     * by utilising the {@link CompanionEnumDeclaration.values companion values}
+     * by utilizing the {@link CompanionEnumDeclaration.values companion values}
      *
      * @throws {NullReferenceException} The current instance was not found in the {@link CompanionEnumDeclaration.values companion values}
      */
     get #nameOnCurrentInstance(): NAME {
         const companion = this.#__companion,
             iterator = companion.iterator
-        let value = iterator.next()
-        let index = 0
-        while (!value.done) {
-            if (value.value === this)
-                return companion.names[index]!
-            value = iterator.next()
-            index++
-        }
+        while (!iterator.hasNext)
+            if (iterator.nextValue === this)
+                return companion.names[iterator.index] as NAME
         throw new NullReferenceException(`Reference not found! No name to the "${companion.instance.name}" were found. Or it was called during its construction.`, this,)
     }
 
