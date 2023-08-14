@@ -31,7 +31,7 @@ getCompanion(new Number(0,),)
 // @ts-expect-error
 getCompanion(0n as bigint,)
 // @ts-expect-error
-getCompanion(BigInt(0n,),)
+getCompanion(Object(0n,) as BigInt,)
 
 // @ts-expect-error
 getCompanion(Symbol(),)
