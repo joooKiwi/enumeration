@@ -5,6 +5,8 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
+import type {EnumWithNullableParentGeneralType} from "../Enumerable.types"
+
 import {EnumWithNullableParent} from "../EnumWithNullableParent"
 
 /**
@@ -12,6 +14,6 @@ import {EnumWithNullableParent} from "../EnumWithNullableParent"
  *
  * @param value The value to compare
  */
-export function isEnumWithNullableParent(value: unknown,): value is EnumWithNullableParent<number, string> {
+export function isEnumWithNullableParent(value: unknown,): value is EnumWithNullableParentGeneralType {
     return value instanceof EnumWithNullableParent
 }

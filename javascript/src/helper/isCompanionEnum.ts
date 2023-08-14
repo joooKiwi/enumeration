@@ -5,8 +5,8 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {Enumerable}            from "../Enumerable"
-import type {EnumerableConstructor} from "../EnumerableConstructor"
+import type {Enumerable}        from "../Enumerable"
+import type {CompanionEnumType} from "../companion/types"
 
 import {CompanionEnum} from "../companion/CompanionEnum"
 
@@ -15,6 +15,6 @@ import {CompanionEnum} from "../companion/CompanionEnum"
  *
  * @param value The value to compare
  */
-export function isCompanionEnum(value: unknown,): value is CompanionEnum<Enumerable, EnumerableConstructor<Enumerable, any>> {
+export function isCompanionEnum(value: unknown,): value is CompanionEnumType<Enumerable> {
     return value instanceof CompanionEnum
 }

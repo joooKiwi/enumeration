@@ -5,7 +5,7 @@
  * All the right is reserved to the author of this project.                   *
  ******************************************************************************/
 
-import type {EnumerableWithParent} from "../EnumerableWithParent"
+import type {EnumWithGrandParentGeneralType} from "../Enumerable.types"
 
 import {EnumWithGrandParent} from "../EnumWithGrandParent"
 
@@ -14,6 +14,6 @@ import {EnumWithGrandParent} from "../EnumWithGrandParent"
  *
  * @param value The value to compare
  */
-export function isEnumWithGrandParent(value: unknown,): value is EnumWithGrandParent<number, string, EnumerableWithParent> {
+export function isEnumWithGrandParent(value: unknown,): value is EnumWithGrandParentGeneralType {
     return value instanceof EnumWithGrandParent
 }
