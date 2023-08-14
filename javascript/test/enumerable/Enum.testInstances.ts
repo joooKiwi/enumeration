@@ -48,7 +48,7 @@ export class BasicEnum extends Enum<number, Name> {
         public static get get(): CompanionEnum_BasicEnum { return CompanionEnum_BasicEnum.#instance ??= new CompanionEnum_BasicEnum() }
     }
 }
-export class BasicEnumWithParent extends EnumWithParent<number, Name, BasicEnum> {
+export class BasicEnumWithParent extends EnumWithParent<BasicEnum, number, Name> {
     public static readonly A = new BasicEnumWithParent()
     public static readonly B = new BasicEnumWithParent()
     public static readonly C = new BasicEnumWithParent()
@@ -59,7 +59,7 @@ export class BasicEnumWithParent extends EnumWithParent<number, Name, BasicEnum>
         public static get get(): CompanionEnum_BasicEnumWithParent { return CompanionEnum_BasicEnumWithParent.#instance ??= new CompanionEnum_BasicEnumWithParent() }
     }
 }
-export class BasicEnumWithGrandParent extends EnumWithGrandParent<number, Name, BasicEnumWithParent, BasicEnum> {
+export class BasicEnumWithGrandParent extends EnumWithGrandParent<BasicEnumWithParent, BasicEnum, number, Name> {
     public static readonly A = new BasicEnumWithGrandParent()
     public static readonly B = new BasicEnumWithGrandParent()
     public static readonly C = new BasicEnumWithGrandParent()
@@ -76,7 +76,7 @@ export class BasicEnumWithGrandParent extends EnumWithGrandParent<number, Name, 
 
 //#region -------------------- EnumWithParent test instances --------------------
 
-export class Parent_TestInstance_Direct extends EnumWithParent<number, NameWithAdditional, BasicEnum> {
+export class Parent_TestInstance_Direct extends EnumWithParent<BasicEnum, number, NameWithAdditional> {
     public static readonly A = new Parent_TestInstance_Direct()
     public static readonly B = new Parent_TestInstance_Direct()
     public static readonly C = new Parent_TestInstance_Direct()
@@ -94,7 +94,7 @@ export class Parent_TestInstance_Direct extends EnumWithParent<number, NameWithA
         public static get get(): CompanionEnum_ParentTestInstanceDirect1 { return CompanionEnum_ParentTestInstanceDirect1.#instance ??= new CompanionEnum_ParentTestInstanceDirect1() }
     }
 }
-export class Parent_TestInstance_BySymbol extends EnumWithParent<number, NameWithD, BasicEnum> {
+export class Parent_TestInstance_BySymbol extends EnumWithParent<BasicEnum, number, NameWithD> {
     public static readonly A = new Parent_TestInstance_BySymbol()
     public static readonly B = new Parent_TestInstance_BySymbol()
     public static readonly C = new Parent_TestInstance_BySymbol()
@@ -107,7 +107,7 @@ export class Parent_TestInstance_BySymbol extends EnumWithParent<number, NameWit
         public static get get(): CompanionEnum_ParentTestInstanceBySymbol1 { return CompanionEnum_ParentTestInstanceBySymbol1.#instance ??= new CompanionEnum_ParentTestInstanceBySymbol1() }
     }
 }
-export class Parent_TestInstance_ByCallbackSymbol extends EnumWithParent<number, NameWithD, BasicEnum> {
+export class Parent_TestInstance_ByCallbackSymbol extends EnumWithParent<BasicEnum, number, NameWithD> {
     public static readonly A = new Parent_TestInstance_ByCallbackSymbol()
     public static readonly B = new Parent_TestInstance_ByCallbackSymbol()
     public static readonly C = new Parent_TestInstance_ByCallbackSymbol()
@@ -124,7 +124,7 @@ export class Parent_TestInstance_ByCallbackSymbol extends EnumWithParent<number,
 //#endregion -------------------- EnumWithParent test instances --------------------
 //#region -------------------- EnumWithNullableParent test instances --------------------
 
-export class NullableParent_TestInstance_Direct extends EnumWithNullableParent<number, NameWithAdditional, BasicEnum> {
+export class NullableParent_TestInstance_Direct extends EnumWithNullableParent<BasicEnum, number, NameWithAdditional> {
     public static readonly A = new NullableParent_TestInstance_Direct()
     public static readonly B = new NullableParent_TestInstance_Direct()
     public static readonly C = new NullableParent_TestInstance_Direct()
@@ -142,7 +142,7 @@ export class NullableParent_TestInstance_Direct extends EnumWithNullableParent<n
         public static get get(): CompanionEnum_NullableParentTestInstance { return CompanionEnum_NullableParentTestInstance.#instance ??= new CompanionEnum_NullableParentTestInstance() }
     }
 }
-export class NullableParent_TestInstance_BySymbol extends EnumWithNullableParent<number, NameWithD, BasicEnum> {
+export class NullableParent_TestInstance_BySymbol extends EnumWithNullableParent<BasicEnum, number, NameWithD> {
     public static readonly A = new NullableParent_TestInstance_BySymbol()
     public static readonly B = new NullableParent_TestInstance_BySymbol()
     public static readonly C = new NullableParent_TestInstance_BySymbol()
@@ -155,7 +155,7 @@ export class NullableParent_TestInstance_BySymbol extends EnumWithNullableParent
         public static get get(): CompanionEnum_NullableParentTestInstanceBySymbol { return CompanionEnum_NullableParentTestInstanceBySymbol.#instance ??= new CompanionEnum_NullableParentTestInstanceBySymbol() }
     }
 }
-export class NullableParent_TestInstance_ByCallbackSymbol extends EnumWithNullableParent<number, NameWithD, BasicEnum> {
+export class NullableParent_TestInstance_ByCallbackSymbol extends EnumWithNullableParent<BasicEnum, number, NameWithD> {
     public static readonly A = new NullableParent_TestInstance_ByCallbackSymbol()
     public static readonly B = new NullableParent_TestInstance_ByCallbackSymbol()
     public static readonly C = new NullableParent_TestInstance_ByCallbackSymbol()
@@ -172,7 +172,7 @@ export class NullableParent_TestInstance_ByCallbackSymbol extends EnumWithNullab
 //#endregion -------------------- EnumWithNullableParent test instances --------------------
 //#region -------------------- EnumWithGrandParent test instances --------------------
 
-export class GrandParent_TestInstance_Direct1 extends EnumWithGrandParent<number, NameWithAdditional, BasicEnumWithParent, BasicEnum> {
+export class GrandParent_TestInstance_Direct1 extends EnumWithGrandParent<BasicEnumWithParent, BasicEnum, number, NameWithAdditional> {
     public static readonly A = new GrandParent_TestInstance_Direct1()
     public static readonly B = new GrandParent_TestInstance_Direct1()
     public static readonly C = new GrandParent_TestInstance_Direct1()
@@ -190,7 +190,7 @@ export class GrandParent_TestInstance_Direct1 extends EnumWithGrandParent<number
         public static get get(): CompanionEnum_GrandParentTestInstanceDirect1 { return CompanionEnum_GrandParentTestInstanceDirect1.#instance ??= new CompanionEnum_GrandParentTestInstanceDirect1() }
     }
 }
-export class GrandParent_TestInstance_Direct2 extends EnumWithGrandParent<number, NameWithAdditional, BasicEnumWithParent, BasicEnum> {
+export class GrandParent_TestInstance_Direct2 extends EnumWithGrandParent<BasicEnumWithParent, BasicEnum, number, NameWithAdditional> {
     public static readonly A = new GrandParent_TestInstance_Direct2()
     public static readonly B = new GrandParent_TestInstance_Direct2()
     public static readonly C = new GrandParent_TestInstance_Direct2()
@@ -208,7 +208,7 @@ export class GrandParent_TestInstance_Direct2 extends EnumWithGrandParent<number
         public static get get(): CompanionEnum_GrandParentTestInstanceDirect2 { return CompanionEnum_GrandParentTestInstanceDirect2.#instance ??= new CompanionEnum_GrandParentTestInstanceDirect2() }
     }
 }
-export class GrandParent_TestInstance_BySymbol extends EnumWithGrandParent<number, NameWithD, BasicEnumWithParent, BasicEnum> {
+export class GrandParent_TestInstance_BySymbol extends EnumWithGrandParent<BasicEnumWithParent, BasicEnum, number, NameWithD> {
     public static readonly A = new GrandParent_TestInstance_BySymbol()
     public static readonly B = new GrandParent_TestInstance_BySymbol()
     public static readonly C = new GrandParent_TestInstance_BySymbol()
@@ -221,7 +221,7 @@ export class GrandParent_TestInstance_BySymbol extends EnumWithGrandParent<numbe
         public static get get(): CompanionEnum_GrandParentTestInstanceBySymbol { return CompanionEnum_GrandParentTestInstanceBySymbol.#instance ??= new CompanionEnum_GrandParentTestInstanceBySymbol() }
     }
 }
-export class GrandParent_TestInstance_ByCallbackSymbol extends EnumWithGrandParent<number, NameWithD, BasicEnumWithParent, BasicEnum> {
+export class GrandParent_TestInstance_ByCallbackSymbol extends EnumWithGrandParent<BasicEnumWithParent, BasicEnum, number, NameWithD> {
     public static readonly A = new GrandParent_TestInstance_ByCallbackSymbol()
     public static readonly B = new GrandParent_TestInstance_ByCallbackSymbol()
     public static readonly C = new GrandParent_TestInstance_ByCallbackSymbol()
@@ -238,7 +238,7 @@ export class GrandParent_TestInstance_ByCallbackSymbol extends EnumWithGrandPare
 //#endregion -------------------- EnumWithGrandParent test instances --------------------
 //#region -------------------- EnumWithNullableGrandParent test instances --------------------
 
-export class NullableGrandParent_TestInstance_Direct1 extends EnumWithNullableGrandParent<number, NameWithAdditional, BasicEnumWithParent, BasicEnum> {
+export class NullableGrandParent_TestInstance_Direct1 extends EnumWithNullableGrandParent<BasicEnumWithParent, BasicEnum, number, NameWithAdditional> {
     public static readonly A = new NullableGrandParent_TestInstance_Direct1()
     public static readonly B = new NullableGrandParent_TestInstance_Direct1()
     public static readonly C = new NullableGrandParent_TestInstance_Direct1()
@@ -256,7 +256,7 @@ export class NullableGrandParent_TestInstance_Direct1 extends EnumWithNullableGr
         public static get get(): CompanionEnum_NullableGrandParentTestInstanceDirect1 { return CompanionEnum_NullableGrandParentTestInstanceDirect1.#instance ??= new CompanionEnum_NullableGrandParentTestInstanceDirect1() }
     }
 }
-export class NullableGrandParent_TestInstance_Direct2 extends EnumWithNullableGrandParent<number, NameWithAdditional, BasicEnumWithParent, BasicEnum> {
+export class NullableGrandParent_TestInstance_Direct2 extends EnumWithNullableGrandParent<BasicEnumWithParent, BasicEnum, number, NameWithAdditional> {
     public static readonly A = new NullableGrandParent_TestInstance_Direct2()
     public static readonly B = new NullableGrandParent_TestInstance_Direct2()
     public static readonly C = new NullableGrandParent_TestInstance_Direct2()
@@ -274,7 +274,7 @@ export class NullableGrandParent_TestInstance_Direct2 extends EnumWithNullableGr
         public static get get(): CompanionEnum_NullableGrandParentTestInstanceDirect2 { return CompanionEnum_NullableGrandParentTestInstanceDirect2.#instance ??= new CompanionEnum_NullableGrandParentTestInstanceDirect2() }
     }
 }
-export class NullableGrandParent_TestInstance_BySymbol extends EnumWithNullableGrandParent<number, NameWithD, BasicEnumWithParent, BasicEnum> {
+export class NullableGrandParent_TestInstance_BySymbol extends EnumWithNullableGrandParent<BasicEnumWithParent, BasicEnum, number, NameWithD> {
     public static readonly A = new NullableGrandParent_TestInstance_BySymbol()
     public static readonly B = new NullableGrandParent_TestInstance_BySymbol()
     public static readonly C = new NullableGrandParent_TestInstance_BySymbol()
@@ -287,7 +287,7 @@ export class NullableGrandParent_TestInstance_BySymbol extends EnumWithNullableG
         public static get get(): CompanionEnum_NullableGrandParentTestInstanceBySymbol { return CompanionEnum_NullableGrandParentTestInstanceBySymbol.#instance ??= new CompanionEnum_NullableGrandParentTestInstanceBySymbol() }
     }
 }
-export class NullableGrandParent_TestInstance_ByCallbackSymbol extends EnumWithNullableGrandParent<number, NameWithD, BasicEnumWithParent, BasicEnum> {
+export class NullableGrandParent_TestInstance_ByCallbackSymbol extends EnumWithNullableGrandParent<BasicEnumWithParent, BasicEnum, number, NameWithD> {
     public static readonly A = new NullableGrandParent_TestInstance_ByCallbackSymbol()
     public static readonly B = new NullableGrandParent_TestInstance_ByCallbackSymbol()
     public static readonly C = new NullableGrandParent_TestInstance_ByCallbackSymbol()
@@ -304,7 +304,7 @@ export class NullableGrandParent_TestInstance_ByCallbackSymbol extends EnumWithN
 //#endregion -------------------- EnumWithNullableGrandParent test instances --------------------
 //#region -------------------- EnumWithGreatGrandParent test instances --------------------
 
-export class GreatGrandParent_TestInstance_Direct1 extends EnumWithGreatGrandParent<number, NameWithAdditional, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
+export class GreatGrandParent_TestInstance_Direct1 extends EnumWithGreatGrandParent<BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum, number, NameWithAdditional> {
     public static readonly A = new GreatGrandParent_TestInstance_Direct1()
     public static readonly B = new GreatGrandParent_TestInstance_Direct1()
     public static readonly C = new GreatGrandParent_TestInstance_Direct1()
@@ -322,7 +322,7 @@ export class GreatGrandParent_TestInstance_Direct1 extends EnumWithGreatGrandPar
         public static get get(): CompanionEnum_GreatGrandParentTestInstanceDirect1 { return CompanionEnum_GreatGrandParentTestInstanceDirect1.#instance ??= new CompanionEnum_GreatGrandParentTestInstanceDirect1() }
     }
 }
-export class GreatGrandParent_TestInstance_Direct2 extends EnumWithGreatGrandParent<number, NameWithAdditional, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
+export class GreatGrandParent_TestInstance_Direct2 extends EnumWithGreatGrandParent<BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum, number, NameWithAdditional> {
     public static readonly A = new GreatGrandParent_TestInstance_Direct2()
     public static readonly B = new GreatGrandParent_TestInstance_Direct2()
     public static readonly C = new GreatGrandParent_TestInstance_Direct2()
@@ -340,7 +340,7 @@ export class GreatGrandParent_TestInstance_Direct2 extends EnumWithGreatGrandPar
         public static get get(): CompanionEnum_GreatGrandParentTestInstanceDirect2 { return CompanionEnum_GreatGrandParentTestInstanceDirect2.#instance ??= new CompanionEnum_GreatGrandParentTestInstanceDirect2() }
     }
 }
-export class GreatGrandParent_TestInstance_Direct3 extends EnumWithGreatGrandParent<number, NameWithAdditional, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
+export class GreatGrandParent_TestInstance_Direct3 extends EnumWithGreatGrandParent<BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum, number, NameWithAdditional> {
     public static readonly A = new GreatGrandParent_TestInstance_Direct3()
     public static readonly B = new GreatGrandParent_TestInstance_Direct3()
     public static readonly C = new GreatGrandParent_TestInstance_Direct3()
@@ -358,7 +358,7 @@ export class GreatGrandParent_TestInstance_Direct3 extends EnumWithGreatGrandPar
         public static get get(): CompanionEnum_GreatGrandParentTestInstanceDirect3 { return CompanionEnum_GreatGrandParentTestInstanceDirect3.#instance ??= new CompanionEnum_GreatGrandParentTestInstanceDirect3() }
     }
 }
-export class GreatGrandParent_TestInstance_BySymbol extends EnumWithGreatGrandParent<number, NameWithD, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
+export class GreatGrandParent_TestInstance_BySymbol extends EnumWithGreatGrandParent<BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum, number, NameWithD> {
     public static readonly A = new GreatGrandParent_TestInstance_BySymbol()
     public static readonly B = new GreatGrandParent_TestInstance_BySymbol()
     public static readonly C = new GreatGrandParent_TestInstance_BySymbol()
@@ -371,7 +371,7 @@ export class GreatGrandParent_TestInstance_BySymbol extends EnumWithGreatGrandPa
         public static get get(): CompanionEnum_GrandParentTestInstanceBySymbol { return CompanionEnum_GrandParentTestInstanceBySymbol.#instance ??= new CompanionEnum_GrandParentTestInstanceBySymbol() }
     }
 }
-export class GreatGrandParent_TestInstance_ByCallbackSymbol extends EnumWithGreatGrandParent<number, NameWithD, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
+export class GreatGrandParent_TestInstance_ByCallbackSymbol extends EnumWithGreatGrandParent<BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum, number, NameWithD> {
     public static readonly A = new GreatGrandParent_TestInstance_ByCallbackSymbol()
     public static readonly B = new GreatGrandParent_TestInstance_ByCallbackSymbol()
     public static readonly C = new GreatGrandParent_TestInstance_ByCallbackSymbol()
@@ -388,7 +388,7 @@ export class GreatGrandParent_TestInstance_ByCallbackSymbol extends EnumWithGrea
 //#endregion -------------------- EnumWithGreatGrandParent test instances --------------------
 //#region -------------------- EnumWithNullableGreatGrandParent test instances --------------------
 
-export class NullableGreatGrandParent_TestInstance_Direct1 extends EnumWithNullableGreatGrandParent<number, NameWithAdditional, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
+export class NullableGreatGrandParent_TestInstance_Direct1 extends EnumWithNullableGreatGrandParent<BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum, number, NameWithAdditional> {
     public static readonly A = new NullableGreatGrandParent_TestInstance_Direct1()
     public static readonly B = new NullableGreatGrandParent_TestInstance_Direct1()
     public static readonly C = new NullableGreatGrandParent_TestInstance_Direct1()
@@ -406,7 +406,7 @@ export class NullableGreatGrandParent_TestInstance_Direct1 extends EnumWithNulla
         public static get get(): CompanionEnum_NullableGreatGrandParentTestInstanceDirect1 { return CompanionEnum_NullableGreatGrandParentTestInstanceDirect1.#instance ??= new CompanionEnum_NullableGreatGrandParentTestInstanceDirect1() }
     }
 }
-export class NullableGreatGrandParent_TestInstance_Direct2 extends EnumWithNullableGreatGrandParent<number, NameWithAdditional, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
+export class NullableGreatGrandParent_TestInstance_Direct2 extends EnumWithNullableGreatGrandParent<BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum, number, NameWithAdditional> {
     public static readonly A = new NullableGreatGrandParent_TestInstance_Direct2()
     public static readonly B = new NullableGreatGrandParent_TestInstance_Direct2()
     public static readonly C = new NullableGreatGrandParent_TestInstance_Direct2()
@@ -424,7 +424,7 @@ export class NullableGreatGrandParent_TestInstance_Direct2 extends EnumWithNulla
         public static get get(): CompanionEnum_NullableGreatGrandParentTestInstanceDirect2 { return CompanionEnum_NullableGreatGrandParentTestInstanceDirect2.#instance ??= new CompanionEnum_NullableGreatGrandParentTestInstanceDirect2() }
     }
 }
-export class NullableGreatGrandParent_TestInstance_Direct3 extends EnumWithNullableGreatGrandParent<number, NameWithAdditional, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
+export class NullableGreatGrandParent_TestInstance_Direct3 extends EnumWithNullableGreatGrandParent<BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum, number, NameWithAdditional> {
     public static readonly A = new NullableGreatGrandParent_TestInstance_Direct3()
     public static readonly B = new NullableGreatGrandParent_TestInstance_Direct3()
     public static readonly C = new NullableGreatGrandParent_TestInstance_Direct3()
@@ -442,7 +442,7 @@ export class NullableGreatGrandParent_TestInstance_Direct3 extends EnumWithNulla
         public static get get(): CompanionEnum_NullableGreatGrandParentTestInstanceDirect3 { return CompanionEnum_NullableGreatGrandParentTestInstanceDirect3.#instance ??= new CompanionEnum_NullableGreatGrandParentTestInstanceDirect3() }
     }
 }
-export class NullableGreatGrandParent_TestInstance_BySymbol extends EnumWithNullableGreatGrandParent<number, NameWithD, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
+export class NullableGreatGrandParent_TestInstance_BySymbol extends EnumWithNullableGreatGrandParent<BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum, number, NameWithD> {
     public static readonly A = new NullableGreatGrandParent_TestInstance_BySymbol()
     public static readonly B = new NullableGreatGrandParent_TestInstance_BySymbol()
     public static readonly C = new NullableGreatGrandParent_TestInstance_BySymbol()
@@ -455,7 +455,7 @@ export class NullableGreatGrandParent_TestInstance_BySymbol extends EnumWithNull
         public static get get(): CompanionEnum_NullableGreatGrandParentTestInstanceBySymbol { return CompanionEnum_NullableGreatGrandParentTestInstanceBySymbol.#instance ??= new CompanionEnum_NullableGreatGrandParentTestInstanceBySymbol() }
     }
 }
-export class NullableGreatGrandParent_TestInstance_ByCallbackSymbol extends EnumWithNullableGreatGrandParent<number, NameWithD, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
+export class NullableGreatGrandParent_TestInstance_ByCallbackSymbol extends EnumWithNullableGreatGrandParent<BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum, number, NameWithD> {
     public static readonly A = new NullableGreatGrandParent_TestInstance_ByCallbackSymbol()
     public static readonly B = new NullableGreatGrandParent_TestInstance_ByCallbackSymbol()
     public static readonly C = new NullableGreatGrandParent_TestInstance_ByCallbackSymbol()
