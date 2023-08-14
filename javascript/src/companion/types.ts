@@ -58,25 +58,31 @@ export type PossibleEnumerableInstance<ENUMERABLE extends Enumerable = Enumerabl
 
 //#region -------------------- Recursive companion enum type --------------------
 
+/** A simple type for the {@link CompanionEnum} with its {@link EnumerableConstructor} referencing itself */
 export type CompanionEnumType<ENUM extends Enumerable, >
     = CompanionEnum<ENUM, EnumerableConstructor<ENUM, CompanionEnumType<ENUM>>>
+/** A simple type for the {@link CompanionEnumDeclaration} with its {@link EnumerableConstructor} referencing itself */
 export type CompanionEnumDeclarationType<ENUM extends Enumerable, >
     = CompanionEnumDeclaration<ENUM, EnumerableConstructor<ENUM, CompanionEnumDeclarationType<ENUM>>>
 
+/** A simple type for the {@link CompanionEnumWithParent} with its {@link EnumerableConstructor} referencing itself */
 export type CompanionEnumWithParentType<ENUM extends EnumerableWithNullableParent<PARENT_ENUM>,
     PARENT_ENUM extends Enumerable, >
     = CompanionEnumWithParent<ENUM, EnumerableConstructor<ENUM, CompanionEnumWithParentType<ENUM, PARENT_ENUM>>,
     PARENT_ENUM, EnumerableConstructor<PARENT_ENUM, CompanionEnumDeclarationType<PARENT_ENUM>>>
+/** A simple type for the {@link CompanionEnumWithParentDeclaration} with its {@link EnumerableConstructor} referencing itself */
 export type CompanionEnumWithParentDeclarationType<ENUM extends EnumerableWithNullableParent<PARENT_ENUM>, PARENT_ENUM extends Enumerable, >
     = CompanionEnumWithParentDeclaration<ENUM, EnumerableConstructor<ENUM, CompanionEnumWithParentDeclarationType<ENUM, PARENT_ENUM>>,
     PARENT_ENUM, EnumerableConstructor<PARENT_ENUM, CompanionEnumDeclarationType<PARENT_ENUM>>>
 
+/** A simple type for the {@link CompanionEnumWithGrandParent} with its {@link EnumerableConstructor} referencing itself */
 export type CompanionEnumWithGrandParentType<ENUM extends EnumerableWithNullableGrandParent<PARENT_ENUM, GRAND_PARENT_ENUM>,
     PARENT_ENUM extends EnumerableWithNullableParent<GRAND_PARENT_ENUM>,
     GRAND_PARENT_ENUM extends Enumerable, >
     = CompanionEnumWithGrandParent<ENUM, EnumerableConstructor<ENUM, CompanionEnumWithGrandParentType<ENUM, PARENT_ENUM, GRAND_PARENT_ENUM>>,
     PARENT_ENUM, EnumerableConstructor<PARENT_ENUM, CompanionEnumWithParentDeclarationType<PARENT_ENUM, GRAND_PARENT_ENUM>>,
     GRAND_PARENT_ENUM, EnumerableConstructor<GRAND_PARENT_ENUM, CompanionEnumDeclarationType<GRAND_PARENT_ENUM>>>
+/** A simple type for the {@link CompanionEnumWithGrandParentDeclaration} with its {@link EnumerableConstructor} referencing itself */
 export type CompanionEnumWithGrandParentDeclarationType<ENUM extends EnumerableWithNullableGrandParent<PARENT_ENUM, GRAND_PARENT_ENUM>,
     PARENT_ENUM extends EnumerableWithNullableParent<GRAND_PARENT_ENUM>,
     GRAND_PARENT_ENUM extends Enumerable, >
@@ -84,6 +90,7 @@ export type CompanionEnumWithGrandParentDeclarationType<ENUM extends EnumerableW
     PARENT_ENUM, EnumerableConstructor<PARENT_ENUM, CompanionEnumWithParentDeclarationType<PARENT_ENUM, GRAND_PARENT_ENUM>>,
     GRAND_PARENT_ENUM, EnumerableConstructor<GRAND_PARENT_ENUM, CompanionEnumDeclarationType<GRAND_PARENT_ENUM>>>
 
+/** A simple type for the {@link CompanionEnumWithGreatGrandParent} with its {@link EnumerableConstructor} referencing itself */
 export type CompanionEnumWithGreatGrandParentType<ENUM extends EnumerableWithNullableGreatGrandParent<PARENT_ENUM, GRAND_PARENT_ENUM, GREAT_GRAND_PARENT_ENUM>,
     PARENT_ENUM extends EnumerableWithNullableGrandParent<GRAND_PARENT_ENUM, GREAT_GRAND_PARENT_ENUM>,
     GRAND_PARENT_ENUM extends EnumerableWithNullableParent<GREAT_GRAND_PARENT_ENUM>,
@@ -92,6 +99,7 @@ export type CompanionEnumWithGreatGrandParentType<ENUM extends EnumerableWithNul
     PARENT_ENUM, EnumerableConstructor<PARENT_ENUM, CompanionEnumWithGrandParentDeclarationType<PARENT_ENUM, GRAND_PARENT_ENUM, GREAT_GRAND_PARENT_ENUM>>,
     GRAND_PARENT_ENUM, EnumerableConstructor<GRAND_PARENT_ENUM, CompanionEnumWithParentDeclarationType<GRAND_PARENT_ENUM, GREAT_GRAND_PARENT_ENUM>>,
     GREAT_GRAND_PARENT_ENUM, EnumerableConstructor<GREAT_GRAND_PARENT_ENUM, CompanionEnumDeclarationType<GREAT_GRAND_PARENT_ENUM>>>
+/** A simple type for the {@link CompanionEnumWithGreatGrandParentDeclaration} with its {@link EnumerableConstructor} referencing itself */
 export type CompanionEnumWithGreatGrandParentDeclarationType<ENUM extends EnumerableWithNullableGreatGrandParent<PARENT_ENUM, GRAND_PARENT_ENUM, GREAT_GRAND_PARENT_ENUM>,
     PARENT_ENUM extends EnumerableWithNullableGrandParent<GRAND_PARENT_ENUM, GREAT_GRAND_PARENT_ENUM>,
     GRAND_PARENT_ENUM extends EnumerableWithNullableParent<GREAT_GRAND_PARENT_ENUM>,
