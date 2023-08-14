@@ -7,7 +7,7 @@
 
 import type {CollectionHolder, CollectionIterator} from "@joookiwi/collection"
 
-import type {Nullable, NullOrUndefined, PossibleBigInt, PossibleBigIntOrTemplate, PossibleNumberOrTemplate, PossibleNumeric, PossibleString}                                                                                                                                                                                                                                    from "../general type"
+import type {Nullable, NullOrUndefined, PossibleBigIntOrTemplate, PossibleNumberOrTemplate, PossibleNumeric, PossibleNumericOrTemplate, PossibleString}                                                                                                                                                                                                                         from "../general type"
 import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                        from "../Enumerable"
 import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                             from "../EnumerableConstructor"
 import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, PossibleEnumerableValue, PossibleEnumerableValueBy, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "../Enumerable.types"
@@ -178,6 +178,17 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
     getValue(ordinal: Nullable<PossibleBigIntOrTemplate>,): ENUM
 
     /**
+     * Get an {@link Enumerable} by an {@link Enumerable.ordinal ordinal}
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link Number}, {@link BigInt} or {@link String} template)
+     * @throws {ForbiddenNumericException}
+     * @throws {ImpossibleOrdinalException}
+     * @throws {NullEnumerableException}
+     * @throws {NullReferenceException}
+     */
+    getValue(ordinal: Nullable<PossibleNumericOrTemplate>,): ENUM
+
+    /**
      * Get an {@link Enumerable} by a {@link Enumerable.name name}
      *
      * @param name The {@link Enumerable.name name} to find
@@ -231,7 +242,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullReferenceException}
      * @typescriptDefinition
      */
-    getValue<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM, >(value: Nullable<| ORDINAL | `${ORDINAL}` | NAME | String | Number | PossibleBigInt | INSTANCE>,): | ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | ValueByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME> | INSTANCE
+    getValue<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM, >(value: Nullable<| PossibleNumericOrTemplate<ORDINAL> | PossibleString<NAME> | INSTANCE>,): | ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | ValueByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME> | INSTANCE
 
     //#endregion -------------------- "Get value" methods --------------------
     //#region -------------------- "Get name" methods --------------------
@@ -293,6 +304,17 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
     getName(ordinal: Nullable<PossibleBigIntOrTemplate>,): NameOf<ENUM>
 
     /**
+     * Get a {@link Enumerable.name name} by an {@link Enumerable.ordinal ordinal}
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link Number}, {@link BigInt} or {@link String} template)
+     * @throws {ForbiddenNumericException}
+     * @throws {ImpossibleOrdinalException}
+     * @throws {NullEnumerableException}
+     * @throws {NullReferenceException}
+     */
+    getName(ordinal: Nullable<PossibleNumericOrTemplate>,): NameOf<ENUM>
+
+    /**
      * Get the {@link Enumerable.name name} by a {@link Enumerable.name name}
      *
      * @param name The {@link Enumerable.name name} to find
@@ -346,7 +368,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullReferenceException}
      * @typescriptDefinition
      */
-    getName<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<ORDINAL | `${ORDINAL}` | Number | PossibleBigInt | NAME | String | INSTANCE>,): | EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | SpecificNameOf<NAME, ENUM> | NameOf<INSTANCE>
+    getName<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<| PossibleNumericOrTemplate<ORDINAL> | PossibleString<NAME> | INSTANCE>,): | EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | SpecificNameOf<NAME, ENUM> | NameOf<INSTANCE>
 
     //#endregion -------------------- "Get name" methods --------------------
     //#region -------------------- "Get ordinal" methods --------------------
@@ -406,6 +428,17 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
     getOrdinal(ordinal: Nullable<PossibleBigIntOrTemplate>,): OrdinalOf<ENUM>
 
     /**
+     * Get the {@link Enumerable.ordinal ordinal} by a {@link Enumerable.ordinal ordinal}
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link Number}, {@link BigInt} or {@link String} template)
+     * @throws {ForbiddenNumericException}
+     * @throws {ImpossibleOrdinalException}
+     * @throws {NullEnumerableException}
+     * @typescriptDefinition
+     */
+    getOrdinal(ordinal: Nullable<PossibleNumericOrTemplate>,): OrdinalOf<ENUM>
+
+    /**
      * Get the {@link Enumerable.ordinal ordinal} by a {@link Enumerable.name name}
      *
      * @param name The {@link Enumerable.name name} to find
@@ -458,7 +491,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullReferenceException}
      * @typescriptDefinition
      */
-    getOrdinal<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<ORDINAL | `${ORDINAL}` | Number | PossibleBigInt | NAME | String | INSTANCE>,): | SpecificOrdinalOf<ORDINAL, ENUM> | EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME> | OrdinalOf<INSTANCE>
+    getOrdinal<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<| PossibleNumericOrTemplate<ORDINAL> | PossibleString<NAME> | INSTANCE>,): | SpecificOrdinalOf<ORDINAL, ENUM> | EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME> | OrdinalOf<INSTANCE>
 
     //#endregion -------------------- "Get ordinal" methods --------------------
 
