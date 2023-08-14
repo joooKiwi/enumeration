@@ -13,9 +13,10 @@ import type {EnumerableConstructor}                                             
 import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, PossibleEnumerableValue, PossibleEnumerableValueBy, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "../Enumerable.types"
 import type {CompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                          from "./CompanionEnum.declaration"
 import type {CompanionEnumName, ImpossibleNames}                                                                                                                                                                                                                                                                                                                                from "./types"
-import type {Nullable, NullOr, NullOrUndefined, PossibleBigInt, PossibleNumber, PossibleNumeric, PossibleString}                                                                                                                                                                                                                                                                from "../general type"
+import type {Nullable, NullOr, NullOrUndefined, NumberTemplate, PossibleBigInt, PossibleNumber, PossibleNumberOrTemplate, PossibleNumeric, PossibleNumericOrTemplate, PossibleString}                                                                                                                                                                                           from "../general type"
 
 import {EnumConstants}                               from "../EnumConstants"
+import {ForbiddenNameException}                      from "../exception/ForbiddenNameException"
 import {ForbiddenNumericException}                   from "../exception/ForbiddenNumericException"
 import {ForbiddenInheritedEnumerableMemberException} from "../exception/ForbiddenInheritedEnumerableMemberException"
 import {ImpossibleOrdinalException}                  from "../exception/ImpossibleOrdinalException"
@@ -398,108 +399,412 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     }
 
     //#endregion -------------------- Initialization methods --------------------
-    //#region -------------------- Validation & conversion methods --------------------
+    //#region -------------------- Validation methods --------------------
+
+    //#region -------------------- Validation (is not in "edge case numeric") methods --------------------
 
     /**
-     * Validate that the {@link nameOrOrdinal name or ordinal received} is not <b>null</b> and has the structure of an {@link Enumerable}
+     * Validate that the {@link nameOrOrdinal} is not an {@link EnumConstants.EDGE_CASE_NUMERIC_NAMES edge case number}
+     * in the {@link String} format
      *
-     * @param nameOrOrdinal The name or ordinal to retrieve
-     * @throws {NullReferenceException} The {@link nameOrOrdinal name or ordinal received} is not present in the {@link instance}
-     * @throws {NullReferenceException} The value from reflection is <b>null</b>
-     * @throws {InvalidInstanceException} The value is not in the structure of an {@link Enumerable}
+     * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link nameOrOrdinal}
+     * @throws {ForbiddenNumericException}
      */
-    #validateIsEnumerableFromReflection(nameOrOrdinal: | string | number,): Enumerable {
-        const instance = this.instance
+    protected _isNotInEdgeCaseNumericByString(nameOrOrdinal: string, originalValue: PossibleString,) {
+        if (nameOrOrdinal === "NaN")
+            throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be a NaN.", originalValue,)
+        if (nameOrOrdinal === "-Infinity")
+            throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be the negative infinity.", originalValue,)
+        if (nameOrOrdinal === "Infinity")
+            throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be the positive infinity.", originalValue,)
+    }
+
+    /**
+     * Validate that the {@link ordinal} is not an {@link EnumConstants.EDGE_CASE_NUMERIC_NAMES edge case number}
+     * in the {@link Number} format
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ForbiddenNumericException}
+     */
+    protected _isNotInEdgeCaseNumericByNumber(ordinal: number, originalValue: PossibleNumber,) {
+        if (Number.isNaN(ordinal,))
+            throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be a NaN.", originalValue,)
+        if (ordinal == Number.NEGATIVE_INFINITY)
+            throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be the negative infinity.", originalValue,)
+        if (ordinal == Number.POSITIVE_INFINITY)
+            throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be the positive infinity.", originalValue,)
+    }
+
+    //#endregion -------------------- Validation (is not in "edge case numeric") methods --------------------
+    //#region -------------------- Validation (is not in "inherited enumerable members") methods --------------------
+
+    /**
+     * Validate that the {@link nameOrOrdinal} is not a {@link EnumConstants.EVERY_ENUMERABLE_MEMBERS enumerable member}
+     *
+     * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link nameOrOrdinal}
+     * @throws {ForbiddenInheritedEnumerableMemberException}
+     */
+    protected _isNotInInheritedEnumerableMembers(nameOrOrdinal: string, originalValue: PossibleString,) {
+        const enumerableMembers = EnumConstants.EVERY_ENUMERABLE_MEMBERS
+        if (enumerableMembers.hasOne(nameOrOrdinal,))
+            throw new ForbiddenInheritedEnumerableMemberException(`Forbidden inherited enumerable member. The string value "${originalValue}" cannot be an inherited member of the inherited Enum static methods (${enumerableMembers.join(", ", '(', ')', null, null, it => `"${typeof it == "symbol" ? it.description : it}"`)}).`, originalValue,)
+    }
+
+    //#endregion -------------------- Validation (is not in "inherited enumerable members") methods --------------------
+    //#region -------------------- Validation (is not in "excluded names") methods --------------------
+
+    /**
+     * Validate that the {@link nameOrOrdinal} is not one of the {@link _excludedNames excluded names}
+     *
+     * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link nameOrOrdinal}
+     * @throws {ForbiddenNameException}
+     */
+    protected _isNotInExcludedNames(nameOrOrdinal: string, originalValue: PossibleString,) {
+        const excludedNames = this._excludedNames
+        if (excludedNames.hasOne(nameOrOrdinal,))
+            throw new ForbiddenNameException(`Forbidden name. The char value "${nameOrOrdinal}" is one of the excluded names ${excludedNames.join(", ", '(', ')', null, null, it => `"${it}"`,)}.`, originalValue,)
+    }
+
+    //#endregion -------------------- Validation (is not in "excluded names") methods --------------------
+    //#region -------------------- Validation (is in ordinal) methods --------------------
+
+    /**
+     * Validate that the {@link ordinal} is in the {@link ordinals instance ordinals}
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ImpossibleOrdinalException}
+     */
+    protected _isInOrdinalsByString(ordinal: NumberTemplate, originalValue: PossibleString,) {
+        const ordinals = this.ordinals
+        if (ordinals.hasOne(Number(ordinal,),))
+            return
+        throw new ImpossibleOrdinalException(`The String value "${ordinal}" is not within a valid ordinal ${ordinals.join(", ", '(', ')',)}.`, originalValue,)
+    }
+
+    /**
+     * Validate that the {@link ordinal} is in the {@link ordinals instance ordinals}
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @returns number The {@link ordinal}
+     * @throws {ImpossibleOrdinalException}
+     */
+    protected _isInOrdinalsByNumber(ordinal: number, originalValue: PossibleNumber,): OrdinalOf<ENUMERABLE> {
+        const ordinals = this.ordinals
+        if (ordinals.hasOne(ordinal,))
+            return ordinal
+        throw new ImpossibleOrdinalException(`The Number value "${ordinal}" is not within a valid ordinal ${ordinals.join(", ", '(', ')',)}.`, originalValue,)
+    }
+
+    /**
+     * Validate that the {@link ordinal} is in the {@link ordinals instance ordinals}
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @returns number The converted {@link ordinal} as a {@link Number}
+     * @throws {ImpossibleOrdinalException}
+     */
+    protected _isInOrdinalsByBigInt(ordinal: bigint, originalValue: PossibleBigInt,): OrdinalOf<ENUMERABLE> {
+        const convertedOrdinal = Number(ordinal,),
+            ordinals = this.ordinals
+        if (ordinals.hasOne(convertedOrdinal,))
+            return convertedOrdinal
+        throw new ImpossibleOrdinalException(`The BigInt value "${ordinal}" is not within a valid ordinal ${ordinals.join(", ", '(', ')',)}.`, originalValue,)
+    }
+
+    //#endregion -------------------- Validation (is in ordinal) methods --------------------
+    //#region -------------------- Validation (is positive) methods --------------------
+
+    /**
+     * Validate that the {@link ordinal} is positive
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ImpossibleOrdinalException}
+     */
+    protected _isPositiveByString(ordinal: NumberTemplate, originalValue: PossibleString,) {
+        if (ordinal[0] === '-')
+            throw new ImpossibleOrdinalException(`The String value "${ordinal}" cannot be under 0.`, originalValue,)
+    }
+
+    /**
+     * Validate that the {@link ordinal} is positive
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ImpossibleOrdinalException}
+     */
+    protected _isPositiveByNumber(ordinal: number, originalValue: PossibleNumber,) {
+        if (ordinal < 0)
+            throw new ImpossibleOrdinalException(`The Number value "${ordinal}" cannot be under 0.`, originalValue,)
+    }
+
+    /**
+     * Validate that the {@link ordinal} is positive
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ImpossibleOrdinalException}
+     */
+    protected _isPositiveByBigInt(ordinal: bigint, originalValue: PossibleBigInt,) {
+        if (ordinal < 0n)
+            throw new ImpossibleOrdinalException(`The BigInt value "${ordinal}" cannot be under 0.`, originalValue,)
+    }
+
+    //#endregion -------------------- Validation (is positive) methods --------------------
+    //#region -------------------- Validation (is not over MAX_VALUE) methods --------------------
+
+    /**
+     * Validate that the {@link ordinal} is not over the {@link EnumConstants.MAX_VALUE_AS_NUMBER maximum value}
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ImpossibleOrdinalException}
+     */
+    protected _isNotOverMaxValueByString(ordinal: NumberTemplate, originalValue: PossibleString,) {
+        if (ordinal.length > EnumConstants.MAX_VALUE_SIZE)
+            throw new ImpossibleOrdinalException(`The String value "${ordinal}" cannot be over the maximum value (${EnumConstants.MAX_VALUE_AS_NUMBER}) of an int.`, originalValue,)
+        if (Number(ordinal,) > EnumConstants.MAX_VALUE_AS_NUMBER)
+            throw new ImpossibleOrdinalException(`The String value "${ordinal}" cannot be over the maximum value (${EnumConstants.MAX_VALUE_AS_NUMBER}) of an int.`, originalValue,)
+    }
+
+    /**
+     * Validate that the {@link ordinal} is not over the {@link EnumConstants.MAX_VALUE_AS_NUMBER maximum value}
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ImpossibleOrdinalException}
+     */
+    protected _isNotOverMaxValueByNumber(ordinal: number, originalValue: PossibleNumber,) {
+        if (ordinal > EnumConstants.MAX_VALUE_AS_NUMBER)
+            throw new ImpossibleOrdinalException(`The Number value "${ordinal}" cannot be over the maximum value (${EnumConstants.MAX_VALUE_AS_NUMBER}) of an int.`, originalValue,)
+    }
+
+    /**
+     * Validate that the {@link ordinal} is not over the {@link EnumConstants.MAX_VALUE_AS_BIG_INT maximum value}
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ImpossibleOrdinalException}
+     */
+    protected _isNotOverMaxValueByBigInt(ordinal: bigint, originalValue: PossibleBigInt,) {
+        if (ordinal > EnumConstants.MAX_VALUE_AS_BIG_INT)
+            throw new ImpossibleOrdinalException(`The BigInt value "${ordinal}" cannot be over the maximum value (${EnumConstants.MAX_VALUE_AS_NUMBER}) of an int.`, originalValue,)
+    }
+
+    //#endregion -------------------- Validation (is not over MAX_VALUE) methods --------------------
+    //#region -------------------- Validation (is not a floating value) methods --------------------
+
+    /**
+     * Validate that the {@link ordinal} is not a floating {@link Number}
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ImpossibleOrdinalException}
+     */
+    protected _isNotAFloatingNumberByString(ordinal: NumberTemplate, originalValue: PossibleString,) {
+        const size = ordinal.length
+        let index = -1
+        while (++index < size)
+            if (ordinal[index] == '.')
+                throw new ImpossibleOrdinalException(`The string value "${ordinal}" cannot be a floating value.`, originalValue,)
+    }
+
+    /**
+     * Validate that the {@link ordinal} is not a floating {@link Number}
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ImpossibleOrdinalException}
+     */
+    protected _isNotAFloatingNumberByNumber(ordinal: number, originalValue: PossibleNumber,) {
+        if (ordinal % 1 != 0)
+            throw new ImpossibleOrdinalException(`The number value "${ordinal}" cannot be a floating value.`, originalValue,)
+    }
+
+    //#endregion -------------------- Validation (is not a floating value) methods --------------------
+
+    //#region -------------------- Get value (validated) methods --------------------
+
+    /**
+     * Get the field from the {@link instance} with a validation that it exist
+     *
+     * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} that can exist
+     * @param originalValue The original {@link nameOrOrdinal} received
+     * @param instance The instance to tell if the value exists
+     * @throws {NullReferenceException}
+     */
+    #getField(nameOrOrdinal: string, originalValue: PossibleString, instance: ENUMERABLE_CONSTRUCTOR,): unknown {
         if (!Reflect.has(instance, nameOrOrdinal,))
-            throw new NullReferenceException(`No value exist in "${instance.name}.${nameOrOrdinal}".`, nameOrOrdinal,)
+            throw new NullReferenceException(`No value exist in "${instance.name}.${nameOrOrdinal}".`, originalValue,)
+        return Reflect.get(instance, nameOrOrdinal,)
+    }
 
-        const value = Reflect.get(instance, nameOrOrdinal,)
+    /**
+     * Validate that the {@link value} is not <b>null</b>
+     *
+     * @param value the value to validate
+     * @param nameOrOrdinal the {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal}
+     * @param originalValue The original {@link nameOrOrdinal} received
+     * @param instance The instance (to avoid recalling the {@link CompanionEnumDeclaration.instance getter})
+     * @throws {NullReferenceException}
+     */
+    #getValue<const T = unknown, >(value: T, nameOrOrdinal: string, originalValue: PossibleString, instance: ENUMERABLE_CONSTRUCTOR,): NonNullable<T> {
         if (value == null)
-            throw new NullReferenceException(`The value "${instance.name}.${nameOrOrdinal}" cannot be a null reference."`, nameOrOrdinal,)
-
-        if (isEnum(value))
-            return value
-        if (isEnumByStructure(value))
-            return value as Enumerable
-        throw new InvalidInstanceException(`The reference "${instance.name}.${nameOrOrdinal}" is not instance of Enumerable.`, nameOrOrdinal,)
+            throw new NullReferenceException(`The value "${instance.name}.CompanionEnum.get.${nameOrOrdinal}" cannot be a null reference.`, originalValue,)
+        return value
     }
 
 
     /**
-     * Validate that the {@link value value received} is a valid {@link String} to be used as either
-     * a {@link Enumerable enumerable} {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal}
+     * Get the valid value that is a valid {@link Enumerable}
+     * for the current {@link instance}
+     *
+     * @param enumerable The instance to validate
+     * @throws {InvalidEnumerableException}
+     * @throws {NullReferenceException}
+     */
+    protected _getValidValueByEnumerable(enumerable: Enumerable,): ENUMERABLE {
+        const instance = this.instance
+        if (!(enumerable instanceof instance))
+            throw new InvalidEnumerableException(`The enumerable "${getLastPrototype(enumerable).name}.${enumerable.name}" is not an instance of "${instance.name}".`, enumerable, [instance,],)
+        return this._getValueFromValues(enumerable,)
+    }
+
+    /**
+     * Get a valid value that is a valid {@link Enumerable} for the current instance
      *
      * @param value The value to validate
-     * @param originalValue The original value received in a method ({@link _getValue}, {@link _getName} or {@link _getOrdinal})
-     * @throws {ForbiddenNumericException} The {@link value} is one of the {@link EnumConstants.EDGE_CASE_NUMERIC_NAME edge-case numeric name}
-     * @throws {ForbiddenInheritedEnumerableMemberException} The {@link value} is one of the {@link EnumConstants.INHERITED_ENUMERABLE_MEMBERS inherited enumerable member}
-     * @throws {ImpossibleOrdinalException} The {@link value} is under 0, over {@link Number.MAX_VALUE max value} or a floating {@link Number}
+     * @param nameOrOrdinal Either the {@link Enumerable.name name} or the {@link Enumerable.ordinal ordinal}
+     * @param originalValue The original {@link nameOrOrdinal} received
+     * @param instance The instance to tell if it is an instance of it
+     * @throws {InvalidInstanceException}
      */
-    #getValidStringValue(value: string, originalValue: PossibleString,): string {
-        if (EnumConstants.EDGE_CASE_NUMERIC_NAME.includes(value as never,))
-            throw new ForbiddenNumericException(`Forbidden numeric. The string value "${originalValue}" cannot have any reference in (${EnumConstants.EDGE_CASE_NUMERIC_NAME.join(", ")}).`, originalValue,)
-        if (EnumConstants.INHERITED_ENUMERABLE_MEMBERS.includes(value as never,))
-            throw new ForbiddenInheritedEnumerableMemberException(`Forbidden inherited enumerable member. The string value "${originalValue}" cannot be an inherited member of the inherited Enum static methods (${EnumConstants.INHERITED_ENUMERABLE_MEMBERS.map(it => `"${it}"`).join(", ")}).`, originalValue,)
+    protected _getValidValueByString(value: NonNullable<unknown>, nameOrOrdinal: string, originalValue: PossibleString, instance: ENUMERABLE_CONSTRUCTOR,): ENUMERABLE {
+        if (value instanceof instance)
+            return value as ENUMERABLE
+        throw new InvalidInstanceException(`The reference "${instance.name}.${nameOrOrdinal}" is not an instance of ${instance.name}.`, originalValue,)
+    }
 
-        if (!EnumConstants.NUMBER_ONLY_REGEX.test(value,))
-            return value // Validations are finished (no possible number)
+    //#endregion -------------------- Get value (validated) methods --------------------
+    //#region -------------------- Get value from … methods --------------------
 
-        if (EnumConstants.INTEGER_ONLY_REGEX.test(value,)) {
-            const bigIntValue = BigInt(value,)
-            if (bigIntValue.toString() === value) {
-                if (bigIntValue < 0n)
-                    throw new ImpossibleOrdinalException(`The string value "${originalValue}" cannot be under 0.`, originalValue,)
-                if (bigIntValue > MAX_VALUE_AS_BIGINT)
-                    throw new ImpossibleOrdinalException(`The string value "${originalValue}" cannot be over the maximum value of a number.`, originalValue,)
-            }
+    /**
+     * Get an {@link Enumerable} via reflection
+     *
+     * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link nameOrOrdinal}
+     * @throws {InvalidInstanceException}
+     * @throws {NullReferenceException}
+     */
+    protected _getValueFromReflection(nameOrOrdinal: string, originalValue: PossibleString,) {
+        const instance = this.instance,
+            field = this.#getField(nameOrOrdinal, originalValue, instance,),
+            value = this.#getValue(field, nameOrOrdinal, originalValue, instance,)
+        return this._getValidValueByString(value, nameOrOrdinal, originalValue, instance,)
+    }
+
+    /**
+     * Get an {@link Enumerable} from the {@link ordinals instance ordinals}
+     * (utilizing the {@link values instance values})
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {NullReferenceException}
+     */
+    protected _getValueFromOrdinals(ordinal: OrdinalOf<ENUMERABLE>, originalValue: PossibleNumeric,) {
+        const valueFound = this.values.getOrNull(ordinal,)
+        if (valueFound == null)
+            throw new NullReferenceException(`No value could be found by the ordinal "${ordinal}".`, originalValue,)
+        return valueFound
+    }
+
+    /**
+     * Get an {@link Enumerable} from the {@link values}
+     *
+     * @param value The {@link Enumerable} to find
+     * @throws {NullReferenceException}
+     */
+    protected _getValueFromValues(value: Enumerable,): ENUMERABLE {
+        const valueFound = this.values.find(it => it === value,)
+        if (valueFound == null)
+            throw new NullReferenceException(`No "${value.name}" could be found on the "${this.instance.name}".`, value,)
+        return valueFound
+    }
+
+    //#endregion -------------------- Get value from … methods --------------------
+    //#region -------------------- Get name (validated) methods --------------------
+
+    /**
+     * The main validator method to tell if the {@link nameOrOrdinal} is valid
+     *
+     * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link nameOrOrdinal}
+     * @throws {ForbiddenInheritedEnumerableMemberException}
+     * @throws {ForbiddenNameException}
+     * @throws {ForbiddenNumericException}
+     * @throws {ImpossibleOrdinalException}
+     */
+    protected _getValidName(nameOrOrdinal: string, originalValue: PossibleString,): string {
+        this._isNotInEdgeCaseNumericByString(nameOrOrdinal, originalValue,)
+        this._isNotInInheritedEnumerableMembers(nameOrOrdinal, originalValue,)
+        this._isNotInExcludedNames(nameOrOrdinal, originalValue,)
+
+        if (EnumConstants.INTEGER_REGEX.test(nameOrOrdinal,)) {
+            this._isPositiveByString(nameOrOrdinal as NumberTemplate, originalValue,)
+            this._isNotOverMaxValueByString(nameOrOrdinal as NumberTemplate, originalValue,)
+            this._isInOrdinalsByString(nameOrOrdinal as NumberTemplate, originalValue,)
+            return nameOrOrdinal
+        }
+        if (EnumConstants.DECIMAL_REGEX.test(nameOrOrdinal,)) {
+            this._isPositiveByString(nameOrOrdinal as NumberTemplate, originalValue,)
+            this._isNotAFloatingNumberByString(nameOrOrdinal as NumberTemplate, originalValue,)
+            this._isNotOverMaxValueByString(nameOrOrdinal as NumberTemplate, originalValue,)
+            this._isInOrdinalsByString(nameOrOrdinal as NumberTemplate, originalValue,)
+            return nameOrOrdinal
         }
 
-        const numberValue = Number(value,)
-        if (numberValue.toString() !== value)
-            return value // It is not a number string value or the cast was not a possible number
-        if (numberValue % 1 != 0)
-            throw new ImpossibleOrdinalException(`The string value "${originalValue}" cannot be a floating value.`, originalValue,)
-        if (numberValue < 0)
-            throw new ImpossibleOrdinalException(`The string value "${originalValue}" cannot be under 0.`, originalValue,)
-        return value
+        return nameOrOrdinal
+    }
+
+    //#endregion -------------------- Get name (validated) methods --------------------
+    //#region -------------------- Get ordinal (validated) methods --------------------
+
+    /**
+     * The main validator to tell if the {@link ordinal} is valid
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ForbiddenNumericException}
+     * @throws {ImpossibleOrdinalException}
+     */
+    protected _getValidOrdinalByNumber(ordinal: number, originalValue: PossibleNumber,) {
+        this._isNotInEdgeCaseNumericByNumber(ordinal, originalValue,)
+        this._isPositiveByNumber(ordinal, originalValue,)
+        this._isNotAFloatingNumberByNumber(ordinal, originalValue,)
+        this._isNotOverMaxValueByNumber(ordinal, originalValue,)
+        return this._isInOrdinalsByNumber(ordinal, originalValue,)
     }
 
     /**
-     * Validate that the {@link Number} is a valid value for the {@link Enumerable enumerable} {@link Enumerable.ordinal ordinal}
+     * The main validator to tell if the {@link ordinal} is valid
      *
-     * @param value The value to validate (as a primitive only)
-     * @param originalValue The original {@link Number} or {@link BigInt} value
-     * @throws {ForbiddenNumericException} The number is {@link Number.NaN NaN} or ±∞
-     * @throws {ImpossibleOrdinalException} The number is negative or a floating value
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ImpossibleOrdinalException}
      */
-    #getValidNumericValue(value: number, originalValue: PossibleNumeric,): number {
-        if (Number.isNaN(value,))
-            throw new ForbiddenNumericException("Forbidden numeric. The number value cannot be a NaN.", originalValue,)
-        if (value == Number.NEGATIVE_INFINITY)
-            throw new ForbiddenNumericException("Forbidden numeric. The number value cannot be the negative infinity.", originalValue,)
-        if (value == Number.POSITIVE_INFINITY)
-            throw new ForbiddenNumericException("Forbidden numeric. The number value cannot be the positive infinity.", originalValue,)
-        if (value % 1 != 0)
-            throw new ImpossibleOrdinalException(`The number value "${value}" cannot be a floating value.`, originalValue,)
-        if (value < 0)
-            throw new ImpossibleOrdinalException(`The number value "${value}" cannot be under 0.`, originalValue,)
-        return value
+    protected _getValidOrdinalByBigInt(ordinal: bigint, originalValue: PossibleBigInt,) {
+        this._isPositiveByBigInt(ordinal, originalValue,)
+        this._isNotOverMaxValueByBigInt(ordinal, originalValue,)
+        return this._isInOrdinalsByBigInt(ordinal, originalValue,)
     }
 
-    /**
-     * Validate that the {@link BigInt} is a valid value for the {@link Enumerable enumerable} {@link Enumerable.ordinal ordinal}
-     *
-     * @param value The value to validate its {@link BigInt} limit
-     * @param originalValue The original {@link BigInt}
-     * @throws {ImpossibleOrdinalException} The number is negative or over the {@link Number.MAX_VALUE}
-     */
-    #getValidBigIntValue(value: bigint, originalValue: PossibleBigInt,): bigint {
-        if (value < 0n)
-            throw new ImpossibleOrdinalException(`The bigint value "${value}" cannot be under 0.`, originalValue,)
-        if (value > EnumConstants.MAX_VALUE_AS_BIGINT)
-            throw new ImpossibleOrdinalException(`The bigint value "${value}" cannot be over the maximum value of a number.`, originalValue,)
-        return value
-    }
+    //#endregion -------------------- Get ordinal (validated) methods --------------------
 
     /**
      * Throw a specific error message to give a user-friendly feedback on what they sent as an invalid value
@@ -532,7 +837,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         throw new UnhandledValueException(`The value received is not of type String, Number, BigInt or Enumerable. It cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
     }
 
-    //#endregion -------------------- Validation & conversion methods --------------------
+    //#endregion -------------------- Validation methods --------------------
 
     //#region -------------------- "Get non null value" methods --------------------
 
@@ -602,8 +907,8 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {ForbiddenInheritedEnumerableMemberException}
      * @throws {ForbiddenNumericException}
      * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidInstanceException}
      * @throws {InvalidEnumerableException}
+     * @throws {InvalidInstanceException}
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      * @throws {UnhandledValueException}
@@ -613,7 +918,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         value = this._getNonNullValueFromGetValue(value,)
 
         if (typeof value == "string")
-            return this._getValueByString(value, value)
+            return this._getValueByString(value, value,)
         if (typeof value == "number")
             return this._getValueByNumber(value, value,)
         if (typeof value == "bigint")
@@ -632,101 +937,66 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         this.#throwInvalidCases(value, "getValue",)
     }
 
-    //#endregion -------------------- "Get value" methods --------------------
-    //#region -------------------- "Open get value" methods --------------------
+    //#region -------------------- "Get value" with original methods --------------------
 
     /**
-     * Get a {@link Enumerable} from the current {@link instance} with validation associated to a {@link String}
+     * Get a valid {@link Enumerable} by an {@link Enumerable}
      *
-     * @param name The name to find a {@link Enumerable}
-     * @param originalName The original value of the {@link name} received in the {@link getValue} method
+     * @param enumerable The enumerable to validate
+     * @throws {InvalidEnumerableException}
+     * @throws {NullReferenceException}
+     */
+    protected _getValueByEnumerable(enumerable: Enumerable,){
+        return this._getValidValueByEnumerable(enumerable,)
+    }
+
+    /**
+     * Get a valid {@link Enumerable} by a {@link String}
+     *
+     * @param name The name to validate
+     * @param originalValue The original {@link name}
      * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidEnumerableException}
-     * @throws {NullReferenceException}
-     */
-    protected _getValueByString(name: string, originalName: PossibleString,): ENUMERABLE {
-        return this._getValueByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidStringValue(name, originalName,),),)
-    }
-
-    /**
-     * Get a {@link Enumerable} from the current {@link instance} with validation associated to a {@link Number}
-     *
-     * @param ordinal The ordinal to find a {@link Enumerable}
-     * @param originalOrdinal The original value of the {@link ordinal} received in the {@link getValue} method
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidEnumerableException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullReferenceException}
-     */
-    protected _getValueByNumber(ordinal: number, originalOrdinal: PossibleNumber,): ENUMERABLE {
-        return this._getValueByNumeric(ordinal, originalOrdinal,)
-    }
-
-    /**
-     * Get a {@link Enumerable} from the current {@link instance} with validation associated to a {@link BigInt}
-     *
-     * @param ordinal The ordinal to find a {@link Enumerable}
-     * @param originalOrdinal The original value of the {@link ordinal} received in the {@link getValue} method
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidEnumerableException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullReferenceException}
-     */
-    protected _getValueByBigInt(ordinal: bigint, originalOrdinal: PossibleBigInt,): ENUMERABLE {
-        return this._getValueByNumeric(Number(this.#getValidBigIntValue(ordinal, originalOrdinal,),), originalOrdinal,)
-    }
-
-    /**
-     * Get a {@link Enumerable} from the current {@link instance} with validation associated
-     * to a numeric value (either {@link Number} or {@link BigInt})
-     *
-     * @param ordinal The ordinal to find a {@link Enumerable}
-     * @param originalOrdinal The original value of the {@link ordinal} received in the {@link getValue} method
+     * @throws {ForbiddenNameException}
      * @throws {ForbiddenNumericException}
      * @throws {ImpossibleOrdinalException}
      * @throws {InvalidInstanceException}
-     * @throws {InvalidEnumerableException}
      * @throws {NullReferenceException}
+     * @readonly
      */
-    protected _getValueByNumeric(ordinal: number, originalOrdinal: PossibleNumeric,): ENUMERABLE {
-        return this._getValueByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidNumericValue(ordinal, originalOrdinal,),),)
+    protected _getValueByString(name: string, originalValue: PossibleString,) {
+        return this._getValueFromReflection(this._getValidName(name, originalValue,), originalValue,)
     }
 
     /**
-     * Get a {@link Enumerable enumerable} by validating it is the {@link instance} (enumerable constructor)
+     * Get a valid {@link Enumerable} by a {@link Number}
      *
-     * @param value The value to compare its class type to the type ({@link instance})
-     * @throws {InvalidEnumerableException}
+     * @param ordinal The ordinal to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ForbiddenNumericException}
+     * @throws {ImpossibleOrdinalException}
      * @throws {NullReferenceException}
+     * @readonly
      */
-    protected _getValueByEnumerable(value: Enumerable,): ENUMERABLE {
-        const instance = this.instance
-
-        if (value instanceof instance)
-            return this._getValueFromValues(value,)
-
-        throw new InvalidEnumerableException(`The enumerable "${getLastPrototype(value).name}.${value.name}" is not an instance of "${instance.name}".`, value, [instance,],)
+    protected _getValueByNumber(ordinal: number, originalValue: PossibleNumber,) {
+        return this._getValueFromOrdinals(this._getValidOrdinalByNumber(ordinal, originalValue,), originalValue,)
     }
 
     /**
-     * Get an {@link Enumerable enumerable} from the {@link values} by the instance directly
-     * or throw a {@link NullReferenceException} if never found
+     * Get a valid {@link Enumerable} from a {@link BigInt}
      *
-     * @param value The {@link Enumerable enumerable} to find
+     * @param ordinal The ordinal
+     * @param originalValue The original {@link ordinal}
+     * @throws {ImpossibleOrdinalException}
      * @throws {NullReferenceException}
+     * @readonly
      */
-    protected _getValueFromValues(value: Enumerable,): ENUMERABLE {
-        const valueFound = this.values.find(it => it === value)
-        if (valueFound == null)
-            throw new NullReferenceException(`No "${value.name}" could be found on the "${this.instance.name}".`, value,)
-        return valueFound
+    protected _getValueByBigInt(ordinal: bigint, originalValue: PossibleBigInt,) {
+        return this._getValueFromOrdinals(this._getValidOrdinalByBigInt(ordinal, originalValue,), originalValue,)
     }
 
-    //#endregion -------------------- "Open get value" methods --------------------
+    //#endregion -------------------- "Get value" with original methods --------------------
+
+    //#endregion -------------------- "Get value" methods --------------------
     //#region -------------------- "Get name" methods --------------------
 
     public getName                                                                                                           (value: Nullable<ImpossibleNames>,):                                                             never
@@ -753,8 +1023,8 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {ForbiddenNumericException}
      * @throws {ForbiddenNumericException}
      * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidInstanceException}
      * @throws {InvalidEnumerableException}
+     * @throws {InvalidInstanceException}
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      * @throws {UnhandledValueException}
@@ -764,7 +1034,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         value = this._getNonNullValueFromGetName(value,)
 
         if (typeof value == "string")
-            return this._getNameByString(value, value)
+            return this._getNameByString(value, value,)
         if (typeof value == "number")
             return this._getNameByNumber(value, value,)
         if (typeof value == "bigint")
@@ -783,82 +1053,67 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         this.#throwInvalidCases(value, "getName",)
     }
 
-    //#endregion -------------------- "Get name" methods --------------------
-    //#region -------------------- "Open get name" methods --------------------
+    //#region -------------------- "Get name" with original methods --------------------
 
     /**
-     * Get a {@link Enumerable} from the current {@link instance} with validation associated to a {@link String}
+     * Get a valid {@link Enumerable.name} by an {@link Enumerable}
      *
-     * @param name The name to find a {@link Enumerable}
-     * @param originalName The original value of the {@link name} received in the {@link getName} method
+     * @param enumerable The {@link Enumerable} to validate
+     * @throws {InvalidEnumerableException}
+     * @throws {NullReferenceException}
+     * @readonly
+     */
+    protected _getNameByEnumerable(enumerable: Enumerable,): NameOf<ENUMERABLE> {
+        return this._getValidValueByEnumerable(enumerable,).name
+    }
+
+    /**
+     * Get a valid {@link Enumerable.name} by a {@link String}
+     *
+     * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link nameOrOrdinal}
      * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidEnumerableException}
-     * @throws {NullReferenceException}
-     */
-    protected _getNameByString(name: string, originalName: PossibleString,) {
-        return this._getNameByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidStringValue(name, originalName,),),)
-    }
-
-    /**
-     * Get a {@link Enumerable} from the current {@link instance} with validation associated to a {@link Number}
-     *
-     * @param ordinal The ordinal to find a {@link Enumerable}
-     * @param originalOrdinal The original value of the {@link ordinal} received in the {@link getName} method
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidEnumerableException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullReferenceException}
-     */
-    protected _getNameByNumber(ordinal: number, originalOrdinal: PossibleNumber,) {
-        return this._getNameByNumeric(ordinal, originalOrdinal,)
-    }
-
-    /**
-     * Get a {@link Enumerable} {@link Enumerable.name name} from the current {@link instance} with validation associated to a {@link BigInt}
-     *
-     * @param ordinal The ordinal to find a {@link Enumerable} {@link Enumerable.name name}
-     * @param originalOrdinal The original value of the {@link ordinal} received in the {@link getName} method
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidEnumerableException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullReferenceException}
-     */
-    protected _getNameByBigInt(ordinal: bigint, originalOrdinal: PossibleBigInt,) {
-        return this._getNameByNumeric(Number(this.#getValidBigIntValue(ordinal, originalOrdinal,),), originalOrdinal,)
-    }
-
-    /**
-     * Get a {@link Enumerable} {@link Enumerable.name name} from the current {@link instance} with validation associated
-     * to a numeric value (either {@link Number} or {@link BigInt})
-     *
-     * @param ordinal The ordinal to find a {@link Enumerable} {@link Enumerable.name name}
-     * @param originalOrdinal The original value of the {@link ordinal} received in the {@link getName} method
+     * @throws {ForbiddenNameException}
      * @throws {ForbiddenNumericException}
      * @throws {ImpossibleOrdinalException}
      * @throws {InvalidInstanceException}
-     * @throws {InvalidEnumerableException}
      * @throws {NullReferenceException}
+     * @readonly
      */
-    protected _getNameByNumeric(ordinal: number, originalOrdinal: PossibleNumeric,) {
-        return this._getNameByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidNumericValue(ordinal, originalOrdinal,),),)
+    protected _getNameByString(nameOrOrdinal: string, originalValue: PossibleString,): NameOf<ENUMERABLE> {
+        return this._getValueFromReflection(this._getValidName(nameOrOrdinal, originalValue), originalValue,).name
     }
 
     /**
-     * Get a {@link Enumerable} {@link Enumerable.name name} by validating it is the {@link instance} (enumerable constructor)
+     * Get a valid {@link Enumerable.name} by a {@link Number}
      *
-     * @param value The value to compare its class type to the {@link instance instance type}
-     * @throws {InvalidEnumerableException}
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ForbiddenNumericException}
+     * @throws {ImpossibleOrdinalException}
      * @throws {NullReferenceException}
+     * @readonly
      */
-    protected _getNameByEnumerable(value: Enumerable,): NameOf<ENUMERABLE> {
-        return this._getValueByEnumerable(value,).name
+    protected _getNameByNumber(ordinal: number, originalValue: PossibleNumber,): NameOf<ENUMERABLE> {
+        return this._getValueFromOrdinals(this._getValidOrdinalByNumber(ordinal, originalValue,), originalValue,).name
     }
 
-    //#endregion -------------------- "Open get name" methods --------------------
+    /**
+     * Get a valid {@link Enumerable.name} by a {@link BigInt}
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ImpossibleOrdinalException}
+     * @throws {NullReferenceException}
+     * @readonly
+     */
+    protected _getNameByBigInt(ordinal: bigint, originalValue: PossibleBigInt,): NameOf<ENUMERABLE> {
+        return this._getValueFromOrdinals(this._getValidOrdinalByBigInt(ordinal, originalValue,), originalValue,).name
+    }
+
+    //#endregion -------------------- "Get name" with original methods --------------------
+
+    //#endregion -------------------- "Get name" methods --------------------
     //#region -------------------- "Get ordinal" methods --------------------
 
     public getOrdinal                                                                                                           (value: Nullable<ImpossibleNames>,):                                                             never
@@ -885,8 +1140,8 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {ForbiddenNumericException}
      * @throws {ForbiddenNumericException}
      * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidInstanceException}
      * @throws {InvalidEnumerableException}
+     * @throws {InvalidInstanceException}
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      * @throws {UnhandledValueException}
@@ -896,7 +1151,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         value = this._getNonNullValueFromGetOrdinal(value,)
 
         if (typeof value == "string")
-            return this._getOrdinalByString(value, value)
+            return this._getOrdinalByString(value, value,)
         if (typeof value == "number")
             return this._getOrdinalByNumber(value, value,)
         if (typeof value == "bigint")
@@ -915,81 +1170,65 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         this.#throwInvalidCases(value, "getOrdinal",)
     }
 
+    //#region -------------------- "Get ordinal" with original methods --------------------
+
+    /**
+     * Get a valid {@link Enumerable.ordinal} by an {@link Enumerable}
+     *
+     * @param enumerable The enumerable to validate
+     * @throws {InvalidEnumerableException}
+     * @throws {NullReferenceException}
+     * @readonly
+     */
+    protected _getOrdinalByEnumerable(enumerable: Enumerable,): OrdinalOf<ENUMERABLE> {
+        return this._getValidValueByEnumerable(enumerable,).ordinal
+    }
+
+    /**
+     * Get a valid {@link Enumerable.ordinal} by a {@link String}
+     *
+     * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link nameOrOrdinal}
+     * @throws {ForbiddenInheritedEnumerableMemberException}
+     * @throws {ForbiddenNameException}
+     * @throws {ForbiddenNumericException}
+     * @throws {ImpossibleOrdinalException}
+     * @throws {InvalidInstanceException}
+     * @throws {NullReferenceException}
+     * @readonly
+     */
+    protected _getOrdinalByString(nameOrOrdinal: string, originalValue: PossibleString,): OrdinalOf<ENUMERABLE> {
+        return this._getValueFromReflection(this._getValidName(nameOrOrdinal,originalValue,),originalValue,).ordinal
+    }
+
+    /**
+     * Get a valid {@link Enumerable.ordinal} by a {@link Number}
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ForbiddenNumericException}
+     * @throws {ImpossibleOrdinalException}
+     * @readonly
+     */
+    protected _getOrdinalByNumber(ordinal: number, originalValue: PossibleNumber,): OrdinalOf<ENUMERABLE> {
+        return this._getValidOrdinalByNumber(ordinal, originalValue,)
+    }
+
+    /**
+     * Get a valid {@link Enumerable.ordinal} by a {@link BigInt}
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
+     * @param originalValue The original {@link ordinal}
+     * @throws {ImpossibleOrdinalException}
+     * @readonly
+     */
+    protected _getOrdinalByBigInt(ordinal: bigint, originalValue: PossibleBigInt,): OrdinalOf<ENUMERABLE> {
+        return this._getValidOrdinalByBigInt(ordinal, originalValue,)
+    }
+
+    //#endregion -------------------- "Get ordinal" with original methods --------------------
+
     //#endregion -------------------- "Get ordinal" methods --------------------
-    //#region -------------------- "Open get ordinal" methods --------------------
-
-    /**
-     * Get an {@link Enumerable} {@link Enumerable.ordinal ordinal} from the current {@link instance} with validation associated to a {@link String}
-     *
-     * @param name The {@link String} value to retrieve an {@link Enumerable} {@link Enumerable.ordinal ordinal}
-     * @param originalName The original {@link String} value received in the {@link getOrdinal} method
-     * @throws ForbiddenInheritedEnumerableMemberException
-     * @throws ForbiddenNumericException
-     * @throws ImpossibleOrdinalException
-     * @throws InvalidEnumerableException
-     * @throws InvalidInstanceException
-     * @throws NullReferenceException
-     */
-    protected _getOrdinalByString(name: string, originalName: PossibleString,): OrdinalOf<ENUMERABLE> {
-        return this._getOrdinalByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidStringValue(name, originalName,),),)
-    }
-
-    /**
-     * Get a {@link Enumerable} {@link Enumerable.ordinal ordinal} from the current {@link instance} with validation associated to a {@link Number}
-     *
-     * @param ordinal The ordinal to find a {@link Enumerable} {@link Enumerable.ordinal ordinal}
-     * @param originalOrdinal The original value of the {@link ordinal} received in the {@link getValue} method
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidEnumerableException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullReferenceException}
-     */
-    protected _getOrdinalByNumber(ordinal: number, originalOrdinal: PossibleNumber,): OrdinalOf<ENUMERABLE> {
-        return this._getOrdinalByNumeric(ordinal, originalOrdinal,)
-    }
-
-    /**
-     * Get a {@link Enumerable} {@link Enumerable.ordinal ordinal} from the current {@link instance} with validation associated to a {@link BigInt}
-     *
-     * @param ordinal The ordinal to find a {@link Enumerable} {@link Enumerable.ordinal ordinal}
-     * @param originalOrdinal The original value of the {@link ordinal} received in the {@link getValue} method
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidEnumerableException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullReferenceException}
-     */
-    protected _getOrdinalByBigInt(ordinal: bigint, originalOrdinal: PossibleBigInt,): OrdinalOf<ENUMERABLE> {
-        return this._getOrdinalByNumeric(Number(this.#getValidBigIntValue(ordinal, originalOrdinal,),), originalOrdinal,)
-    }
-
-    /**
-     * Get an {@link Enumerable} {@link Enumerable.ordinal ordinal} from the current {@link instance} with validation associated to a {@link Number}
-     *
-     * @param ordinal The {@link Number} value to retrieve an {@link Enumerable} {@link Enumerable.ordinal ordinal}
-     * @param originalOrdinal The original {@link ordinal} value
-     * @throws ForbiddenNumericException
-     * @throws ImpossibleOrdinalException
-     * @throws InvalidEnumerableException
-     * @throws InvalidInstanceException
-     * @throws NullReferenceException
-     */
-    protected _getOrdinalByNumeric(ordinal: number, originalOrdinal: PossibleNumeric,): OrdinalOf<ENUMERABLE> {
-        return this._getOrdinalByEnumerable(this.#validateIsEnumerableFromReflection(this.#getValidNumericValue(ordinal, originalOrdinal,),),)
-    }
-
-    /**
-     * Get {@link Enumerable} {@link Enumerable.ordinal ordinal} from a {@link Enumerable} directly
-     *
-     * @param value The value to retrieve its {@link Enumerable.ordinal ordinal}
-     * @throws InvalidEnumerableException
-     */
-    protected _getOrdinalByEnumerable(value: Enumerable,): OrdinalOf<ENUMERABLE> {
-        return this._getValueByEnumerable(value,).ordinal
-    }
-
-    //#endregion -------------------- "Open get ordinal" methods --------------------
 
     public [Symbol.iterator](): CollectionIterator<ENUMERABLE> {
         return this.values[Symbol.iterator]()
