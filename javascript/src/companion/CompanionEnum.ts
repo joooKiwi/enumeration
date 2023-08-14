@@ -278,7 +278,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         if (!isEnum(defaultValue) && !isEnumByStructure(defaultValue))
             throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT) was not an Enum or in the structure of an Enumerable.`, defaultValue,)
         try {
-            EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByEnumerable(defaultValue as Enumerable,),)
+            EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByEnumerable(defaultValue,),)
             return true
         } catch (exception) {
             if (exception instanceof InvalidEnumerableException)
@@ -301,28 +301,27 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         } catch (exception) {
             throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". An exception was thrown when attempting to retrieve the value.`, exception as never,)
         }
-
         if (defaultName == null)
             return false
 
         if (typeof defaultName != "string" && !(defaultName instanceof String))
             throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT_NAME) was not an string (primitive or object).`, defaultName,)
         try {
-            if (typeof defaultName == "string") {
-                EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByString(defaultName, defaultName,),)
-                return true
-            }
-            EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByString(defaultName.valueOf(), defaultName,),)
+            EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this.#getValueFromGenericName(defaultName,),)
             return true
         } catch (exception) {
             if (exception instanceof ForbiddenInheritedEnumerableMemberException)
                 throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value "${defaultName}" is one possible value of the inherited field name ${EnumConstants.EVERY_ENUMERABLE_MEMBERS_JOINED}.`, exception,)
+            if (exception instanceof ForbiddenNameException)
+                throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value "${defaultName}" is an excluded name ${this._excludedNames.join(", ", '(', ')', null, null, it => `"${it}"`,)}.`, exception,)
             if (exception instanceof ForbiddenNumericException)
                 throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value "${defaultName}" is equivalent to ±∞ or NaN.`, exception,)
             if (exception instanceof ImpossibleOrdinalException)
                 throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value "${defaultName}" is an impossible ordinal value.`, exception,)
-            if (exception instanceof InvalidEnumerableException)
+            if (exception instanceof InvalidInstanceException)
                 throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value "${this.instance.name}.${defaultName}" is not a valid instance for the companion enum.`, exception,)
+            if (exception instanceof NullReferenceException)
+                throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value "${this.instance.name}.${defaultName}" does not exist.`, exception,)
             throw exception
         }
     }
@@ -341,38 +340,61 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         } catch (exception) {
             throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". An exception was thrown when attempting to retrieve the value.`, exception as never,)
         }
-
         if (defaultOrdinal == null)
             return false
 
         if (typeof defaultOrdinal != "number" && typeof defaultOrdinal != "bigint" && !(defaultOrdinal instanceof Number) && !(defaultOrdinal instanceof BigInt))
             throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL) was not an number or bigint (primitive or object).`, defaultOrdinal,)
         try {
-            if (typeof defaultOrdinal == "number") {
-                EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByNumber(defaultOrdinal, defaultOrdinal,),)
-                return true
-            }
-            if (typeof defaultOrdinal == "bigint") {
-                EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByBigInt(defaultOrdinal, defaultOrdinal,),)
-                return true
-            }
-            if (defaultOrdinal instanceof Number) {
-                EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByNumber(defaultOrdinal.valueOf(), defaultOrdinal,),)
-                return true
-            }
-            EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByBigInt(defaultOrdinal.valueOf(), defaultOrdinal,),)
+            EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this.#getValueFromGenericOrdinal(defaultOrdinal,),)
             return true
         } catch (exception) {
             if (exception instanceof ForbiddenNumericException)
                 throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". The value "${defaultOrdinal}" is ±∞ or NaN.`, exception,)
             if (exception instanceof ImpossibleOrdinalException)
                 throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". The value "${defaultOrdinal}" is negative, over the Number.MAX_VALUE or a floating value.`, exception,)
-            if (exception instanceof InvalidEnumerableException)
-                throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". The value "${this.instance.name}.${defaultOrdinal}" is not a valid instance for the companion enum.`, exception,)
-            if (exception instanceof InvalidInstanceException)
-                throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". The value "${this.instance.name}.${defaultOrdinal}" is not an Enumerable valid for the companion enum.`, exception,)
+            if (exception instanceof NullReferenceException)
+                throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". The value "${this.instance.name}.${defaultOrdinal}" does not exist.`, exception,)
             throw exception
         }
+    }
+
+
+    /**
+     * Get the {@link Enumerable} from a name,
+     * but not directly related to the {@link _getValue} method
+     *
+     * @param name The {@link Enumerable.name name} to search
+     * @throws {ForbiddenInheritedEnumerableMemberException}
+     * @throws {ForbiddenNameException}
+     * @throws {ForbiddenNumericException}
+     * @throws {ImpossibleOrdinalException}
+     * @throws {InvalidInstanceException}
+     * @throws {NullReferenceException}
+     */
+    #getValueFromGenericName(name: PossibleString,): ENUMERABLE {
+        if (typeof name == "string")
+            return this._getValueByString(name, name,)
+        return this._getValueByString(name.valueOf(), name,)
+    }
+
+    /**
+     * Get the {@link Enumerable} from an ordinal,
+     * but not directly related to the {@link _getValue} method
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to search
+     * @throws {ForbiddenNumericException}
+     * @throws {ImpossibleOrdinalException}
+     * @throws {NullReferenceException}
+     */
+    #getValueFromGenericOrdinal(ordinal: PossibleNumeric,): ENUMERABLE {
+        if (typeof ordinal == "number")
+            return this._getValueByNumber(ordinal, ordinal,)
+        if (typeof ordinal == "bigint")
+            return this._getValueByBigInt(ordinal, ordinal,)
+        if (ordinal instanceof Number)
+            return this._getValueByNumber(ordinal.valueOf(), ordinal,)
+        return this._getValueByBigInt(ordinal.valueOf(), ordinal,)
     }
 
     //#endregion -------------------- Initialization methods --------------------
