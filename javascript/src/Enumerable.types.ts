@@ -14,6 +14,12 @@ import type {EnumerableWithNullableParent}           from "./EnumerableWithNulla
 import type {EnumerableWithGrandParent}              from "./EnumerableWithGrandParent"
 import type {EnumerableWithGreatGrandParent}         from "./EnumerableWithGreatGrandParent"
 import type {EnumerableWithParent}                   from "./EnumerableWithParent"
+import type {EnumWithNullableGrandParent}            from "./EnumWithNullableGrandParent"
+import type {EnumWithNullableGreatGrandParent}       from "./EnumWithNullableGreatGrandParent"
+import type {EnumWithNullableParent}                 from "./EnumWithNullableParent"
+import type {EnumWithGrandParent}                    from "./EnumWithGrandParent"
+import type {EnumWithGreatGrandParent}               from "./EnumWithGreatGrandParent"
+import type {EnumWithParent}                         from "./EnumWithParent"
 import type {Nullable, PossibleBigInt}               from "./general type"
 
 /** The {@link Enumerable} name in a {@link Object.toString toString()} method */
@@ -107,3 +113,33 @@ export type EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<
     = NameOf<& ENUM_CONSTRUCTOR[& ORDINAL & keyof ENUM_CONSTRUCTOR] & ENUM>
 
 //#endregion -------------------- Enumerable by Enumerable & EnumerableConstructor --------------------
+//#region -------------------- General types --------------------
+
+/** The simple generic value of an {@link EnumWithNullableParent} with its default values */
+export type EnumWithNullableParentGeneralType = EnumWithNullableParent<Enumerable>
+/** The simple generic value of an {@link EnumWithParent} with its default values */
+export type EnumWithParentGeneralType = EnumWithParent<Enumerable>
+/** The simple generic value of an {@link EnumWithNullableGrandParent} with its default values */
+export type EnumWithNullableGrandParentGeneralType = EnumWithNullableGrandParent<EnumerableWithNullableParent<Enumerable>, Enumerable>
+/** The simple generic value of an {@link EnumWithGrandParent} with its default values */
+export type EnumWithGrandParentGeneralType = EnumWithGrandParent<EnumerableWithParent<Enumerable>, Enumerable>
+/** The simple generic value of an {@link EnumWithNullableGreatGrandParent} with its default values */
+export type EnumWithNullableGreatGrandParentGeneralType = EnumWithNullableGreatGrandParent<EnumerableWithNullableGrandParent<EnumerableWithNullableParent<Enumerable>, Enumerable>, EnumerableWithNullableParent<Enumerable>, Enumerable>
+/** The simple generic value of an {@link EnumWithGreatGrandParent} with its default values */
+export type EnumWithGreatGrandParentGeneralType = EnumWithGreatGrandParent<EnumerableWithGrandParent<EnumerableWithParent<Enumerable>, Enumerable>, EnumerableWithParent<Enumerable>, Enumerable>
+
+
+/** The simple generic value of an {@link EnumerableWithNullableParent} with its default values */
+export type EnumerableWithNullableParentGeneralType = EnumerableWithNullableParent<Enumerable>
+/** The simple generic value of an {@link EnumerableWithParent} with its default values */
+export type EnumerableWithParentGeneralType = EnumerableWithParent<Enumerable>
+/** The simple generic value of an {@link EnumerableWithNullableGrandParent} with its default values */
+export type EnumerableWithNullableGrandParentGeneralType = EnumerableWithNullableGrandParent<EnumerableWithNullableParent<Enumerable>, Enumerable>
+/** The simple generic value of an {@link EnumerableWithGrandParent} with its default values */
+export type EnumerableWithGrandParentGeneralType = EnumerableWithGrandParent<EnumerableWithParent<Enumerable>, Enumerable>
+/** The simple generic value of an {@link EnumerableWithNullableGreatGrandParent} with its default values */
+export type EnumerableWithNullableGreatGrandParentGeneralType = EnumerableWithNullableGreatGrandParent<EnumerableWithNullableGrandParent<EnumerableWithNullableParent<Enumerable>, Enumerable>, EnumerableWithNullableParent<Enumerable>, Enumerable>
+/** The simple generic value of an {@link EnumerableWithGreatGrandParent} with its default values */
+export type EnumerableWithGreatGrandParentGeneralType = EnumerableWithGreatGrandParent<EnumerableWithGrandParent<EnumerableWithParent<Enumerable>, Enumerable>, EnumerableWithParent<Enumerable>, Enumerable>
+
+//#endregion -------------------- General types --------------------
