@@ -15,7 +15,7 @@ import {EnumConstants} from "../EnumConstants"
  *
  * @param value The value to compare
  */
-export function isEnumWithGrandParentByStructure(value: unknown,): value is (& object & Record<keyof EnumerableWithGrandParent, unknown>) {
+export function isEnumWithGrandParentByStructure(value: unknown,): value is (& object & Record<keyof EnumerableWithGrandParent<never, never>, unknown>) {
     if (value == null || typeof value != "object")
         return false
 
