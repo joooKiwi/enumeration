@@ -169,13 +169,13 @@ export namespace EnumConstants {
     export const ENUMERABLE_MEMBERS: CollectionHolder<keyof Enumerable>
         = new GenericCollectionHolder(["name", "ordinal", Symbol.toPrimitive, Symbol.toStringTag,],)
     /** Every member of an {@link EnumerableWithNullableParent} or {@link EnumerableWithParent} */
-    export const ENUMERABLE_WITH_PARENT_MEMBERS: CollectionHolder<keyof (| EnumerableWithNullableParent | EnumerableWithParent)>
+    export const ENUMERABLE_WITH_PARENT_MEMBERS: CollectionHolder<keyof (| EnumerableWithNullableParent<never> | EnumerableWithParent<never>)>
         = new GenericCollectionHolder(["name", "ordinal", "parent", Symbol.toPrimitive, Symbol.toStringTag,],)
     /** Every member of an {@link EnumerableWithNullableGrandParent} or {@link EnumerableWithGrandParent} */
-    export const ENUMERABLE_WITH_GRAND_PARENT_MEMBERS: CollectionHolder<keyof (| EnumerableWithNullableGrandParent | EnumerableWithGrandParent)>
+    export const ENUMERABLE_WITH_GRAND_PARENT_MEMBERS: CollectionHolder<keyof (| EnumerableWithNullableGrandParent<never, never> | EnumerableWithGrandParent<never, never>)>
         = new GenericCollectionHolder(["name", "ordinal", "parent", "grandParent", Symbol.toPrimitive, Symbol.toStringTag,],)
     /** Every member of an {@link EnumerableWithNullableGreatGrandParent} or {@link EnumerableWithGreatGrandParent} */
-    export const ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS: CollectionHolder<keyof (| EnumerableWithNullableGreatGrandParent | EnumerableWithGreatGrandParent)>
+    export const ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS: CollectionHolder<keyof (| EnumerableWithNullableGreatGrandParent<never, never, never> | EnumerableWithGreatGrandParent<never, never, never>)>
         = new GenericCollectionHolder(["name", "ordinal", "parent", "grandParent", "greatGrandParent", Symbol.toPrimitive, Symbol.toStringTag,],)
 
 
