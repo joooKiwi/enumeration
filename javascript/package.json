@@ -18,6 +18,7 @@
     "test-helper-known-enum-constructors": "jest --testNamePattern=KnownEnumConstructorsTest",
     "test-companion-enum":                 "jest --testNamePattern=CompanionEnumTest",
     "test-enum-inheritor":                 "jest --testNamePattern=EnumInheritorTest",
+    "test-typescript":                     "tsc --build test/typescript",
 
     "test-pack":    "npm pack --dry-run",
     "test-publish": "npm publish --@access=public --dry-run",
