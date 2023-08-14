@@ -99,7 +99,7 @@ export abstract class Enum<const out ORDINAL extends number = number,
         const companion = this.#__companion,
             iterator = companion.iterator
         while (!iterator.hasNext)
-            if (iterator.next().value === this)
+            if (iterator.nextValue === this)
                 return companion.names[iterator.index] as NAME
         throw new NullReferenceException(`Reference not found! No name to the "${companion.instance.name}" were found. Or it was called during its construction.`, this,)
     }
