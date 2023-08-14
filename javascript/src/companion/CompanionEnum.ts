@@ -495,17 +495,29 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @param value The value that is not a {@link String}, {@link Number}, {@link BigInt} or {@link Enumerable}
      * @param methodCalled The method calling it
      * @throws {UnhandledValueException} An exception with a personalized message depending on the invalid type
+     *
+     * @uniqueToJavascript
      */
     #throwInvalidCases(value: unknown, methodCalled: MethodCalledName,): never {
         if (typeof value == "boolean" || value instanceof Boolean)
-            throw new UnhandledValueException(`A boolean value cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`A Boolean value cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
         if (typeof value == "symbol" || value instanceof Symbol)
-            throw new UnhandledValueException(`A symbol value cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`A Symbol value cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
         if (typeof value == "function" || value instanceof Function)
-            throw new UnhandledValueException(`A function value cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`A Function value cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
         if (value instanceof RegExp)
-            throw new UnhandledValueException(`A regex value cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
-        throw new UnhandledValueException(`The value received is not of type string, number, bigint or enumerable. It cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`A Regex value cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+        if (value instanceof Array)
+            throw new UnhandledValueException(`An Array value cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+        if (value instanceof Set)
+            throw new UnhandledValueException(`A Set value cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+        if (value instanceof Map)
+            throw new UnhandledValueException(`A Map value cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+        if (value instanceof WeakSet)
+            throw new UnhandledValueException(`A WeakSet value cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+        if (value instanceof WeakMap)
+            throw new UnhandledValueException(`A WeakMap value cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+        throw new UnhandledValueException(`The value received is not of type String, Number, BigInt or Enumerable. It cannot be received in "${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
     }
 
     //#endregion -------------------- Validation & conversion methods --------------------
