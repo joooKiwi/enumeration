@@ -6,12 +6,12 @@
  ******************************************************************************/
 
 import type {NullOr}                                                                                                                                      from "../src/general type"
-import type {EnumerableWithNullableGrandParent}                                                                                                           from "../src/EnumerableWithNullableGrandParent"
-import type {EnumerableWithNullableGreatGrandParent}                                                                                                      from "../src/EnumerableWithNullableGreatGrandParent"
-import type {EnumerableWithNullableParent}                                                                                                                from "../src/EnumerableWithNullableParent"
 import type {CompanionEnumSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumWithParentSingleton} from "../src/Singleton.types"
 
 import {Enum}                              from "../src/Enum"
+import {EnumWithNullableGrandParent}       from "../src/EnumWithNullableGrandParent"
+import {EnumWithNullableGreatGrandParent}  from "../src/EnumWithNullableGreatGrandParent"
+import {EnumWithNullableParent}            from "../src/EnumWithNullableParent"
 import {CompanionEnum}                     from "../src/companion/CompanionEnum"
 import {CompanionEnumWithGrandParent}      from "../src/companion/CompanionEnumWithGrandParent"
 import {CompanionEnumWithGreatGrandParent} from "../src/companion/CompanionEnumWithGreatGrandParent"
@@ -161,7 +161,8 @@ export class EmptyEnumWithVariables
 
 }
 
-export class EnumWithDifferentComportment<const ORDINAL extends Ordinals2 = Ordinals2, const NAME extends Names2 = Names2,>
+export class EnumWithDifferentComportment<const out ORDINAL extends Ordinals2 = Ordinals2,
+    const out NAME extends Names2 = Names2,>
     extends Enum<ORDINAL, NAME> {
 
     public static readonly A = new class EnumWithDifferentComportment_A extends EnumWithDifferentComportment<0, 'A'> {
@@ -409,8 +410,7 @@ export class ParentEnum
 }
 
 export class Child1Enum
-    extends Enum<Ordinals2, Names2>
-    implements EnumerableWithNullableParent<Ordinals2, Names2, ParentEnum> {
+    extends EnumWithNullableParent<ParentEnum, Ordinals2, Names2> {
 
     public static readonly A = new Child1Enum(ParentEnum.A,)
     public static readonly B = new Child1Enum(ParentEnum.B,)
@@ -436,15 +436,8 @@ export class Child1Enum
 
     }
 
-    readonly #parent
-
     protected constructor(parent: NullOr<ParentEnum> = null,) {
-        super()
-        this.#parent = parent
-    }
-
-    public get parent(): NullOr<ParentEnum> {
-        return this.#parent
+        super(parent,)
     }
 
     public methodFromChildEnum1() {
@@ -453,8 +446,7 @@ export class Child1Enum
 }
 
 export class Child2Enum
-    extends Enum<Ordinals3, Names3>
-    implements EnumerableWithNullableGrandParent<Ordinals3, Names3, Child1Enum, ParentEnum> {
+    extends EnumWithNullableGrandParent<Child1Enum, ParentEnum, Ordinals3, Names3> {
 
     public static readonly A = new Child2Enum(Child1Enum.A, ParentEnum.A,)
     public static readonly B = new Child2Enum(Child1Enum.B, ParentEnum.B,)
@@ -483,31 +475,16 @@ export class Child2Enum
 
     }
 
-    readonly #parent
-    readonly #grandParent
-
     protected constructor(parent: NullOr<Child1Enum> = null, grandParent: NullOr<ParentEnum> = null,) {
-        super()
-        this.#parent = parent
-        this.#grandParent = grandParent
+        super(parent, grandParent,)
     }
 
-    public get parent(): NullOr<Child1Enum> {
-        return this.#parent
-    }
-
-    public get grandParent(): NullOr<ParentEnum> {
-        return this.#grandParent
-    }
-
-    public methodFromChildEnum2() {
-    }
+    public methodFromChildEnum2() {}
 
 }
 
 export class Child3Enum
-    extends Enum<Ordinals4, Names4>
-    implements EnumerableWithNullableGreatGrandParent<Ordinals4, Names4, Child2Enum, Child1Enum, ParentEnum> {
+    extends EnumWithNullableGreatGrandParent<Child2Enum, Child1Enum, ParentEnum, Ordinals4, Names4> {
 
     public static readonly A = new Child3Enum(Child2Enum.A, Child1Enum.A, ParentEnum.A,)
     public static readonly B = new Child3Enum(Child2Enum.B, Child1Enum.B, ParentEnum.B,)
@@ -541,27 +518,8 @@ export class Child3Enum
 
     }
 
-    readonly #parent
-    readonly #grandParent
-    readonly #greatGrandParent
-
     private constructor(parent: NullOr<Child2Enum> = null, grandParent: NullOr<Child1Enum> = null, greatGrandParent: NullOr<ParentEnum> = null,) {
-        super()
-        this.#parent = parent
-        this.#grandParent = grandParent
-        this.#greatGrandParent = greatGrandParent
-    }
-
-    public get parent(): NullOr<Child2Enum> {
-        return this.#parent
-    }
-
-    public get grandParent(): NullOr<Child1Enum> {
-        return this.#grandParent
-    }
-
-    public get greatGrandParent(): NullOr<ParentEnum> {
-        return this.#greatGrandParent
+        super(parent, grandParent, greatGrandParent,)
     }
 
     public methodFromChildEnum3() {
@@ -570,8 +528,7 @@ export class Child3Enum
 }
 
 export class AnotherChildEnum
-    extends Enum<Ordinals2, Names2>
-    implements EnumerableWithNullableParent<Ordinals2, Names2, ParentEnum> {
+    extends EnumWithNullableParent<ParentEnum, Ordinals2, Names2> {
 
     public static readonly A = new AnotherChildEnum(ParentEnum.A,)
     public static readonly B = new AnotherChildEnum(ParentEnum.B,)
@@ -597,15 +554,8 @@ export class AnotherChildEnum
 
     }
 
-    readonly #parent
-
     protected constructor(parent: NullOr<ParentEnum> = null,) {
-        super()
-        this.#parent = parent
-    }
-
-    public get parent(): NullOr<ParentEnum> {
-        return this.#parent
+        super(parent,)
     }
 
     public methodFromAnotherChildEnum() {
