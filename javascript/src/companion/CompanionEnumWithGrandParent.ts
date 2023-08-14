@@ -84,6 +84,56 @@ export class CompanionEnumWithGrandParent<const ENUMERABLE extends EnumerableWit
     //#endregion -------------------- Getter & setter methods --------------------
     //#region -------------------- Methods --------------------
 
+    //#region -------------------- Validation methods --------------------
+
+    //#region -------------------- Get value (validated) methods --------------------
+
+    /**
+     * Get a valid value that is a valid {@link EnumerableWithNullableGrandParent}
+     * for the current {@link instance}, {@link parentInstance} or {@link grandParentInstance}
+     *
+     * @param enumerable The instance to validate
+     * @throws {InvalidEnumerableException}
+     * @throws {NullReferenceException}
+     */
+    protected override _getValidValueByEnumerable(enumerable: Enumerable,): ENUM {
+        const instance = this.instance
+        if (enumerable instanceof instance)
+            return this._getValueFromValues(enumerable,)
+
+        const parentInstance = this.parentInstance
+        if (enumerable instanceof parentInstance)
+            return this._getValueFromValuesByParent(enumerable,)
+
+        const grandParentInstance = this.grandParentInstance
+        if (enumerable instanceof grandParentInstance)
+            return this._getValueFromValuesByGrandParent(enumerable,)
+
+        throw new InvalidEnumerableException(`The enumerable "${instance.name}.${enumerable.name}" is not an instance of "${instance.name}", "${parentInstance.name}" or "${grandParentInstance.name}".`, enumerable, [instance, parentInstance, grandParentInstance,],)
+    }
+
+    //#endregion -------------------- Get value (validated) methods --------------------
+    //#region -------------------- Get value from … methods --------------------
+
+    /**
+     * Get an {@link Enumerable}
+     * by the {@link EnumerableWithNullableGrandParent.grandParent grandparent}
+     * or throw a {@link NullReferenceException} if never found
+     *
+     * @param value The {@link Enumerable} to find
+     * @throws {NullReferenceException}
+     */
+    protected _getValueFromValuesByGrandParent(value: Enumerable,): ENUM {
+        const valueFound = this.values.find(it => it.grandParent === value)
+        if (valueFound == null)
+            throw new NullReferenceException(`No grandparent "${value}" could be found on the "${this.instance.name}".`, value,)
+        return valueFound
+    }
+
+    //#endregion -------------------- Get value from … methods --------------------
+
+    //#endregion -------------------- Validation methods --------------------
+
     public override getValue                                                                                                                                                                                                            (value: Nullable<ImpossibleNames>,):                                                                                                         never
     public override getValue<const ORDINAL extends number, >                                                                                                                                                                            (ordinal: Nullable<ORDINAL>,):                                                                                                               ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
     public override getValue<const ORDINAL extends number, >                                                                                                                                                                            (ordinal: Nullable<`${ORDINAL}`>,):                                                                                                          ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
@@ -95,42 +145,6 @@ export class CompanionEnumWithGrandParent<const ENUMERABLE extends EnumerableWit
     public override getValue<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUMERABLE, const PARENT_INSTANCE extends PARENT_ENUMERABLE, const GRAND_PARENT_INSTANCE extends GRAND_PARENT_ENUMERABLE, >(value: Nullable<| ORDINAL | `${ORDINAL}` | Number | PossibleBigInt | NAME | String | INSTANCE | PARENT_INSTANCE | GRAND_PARENT_INSTANCE>,): | ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL> | ValueByEnumerableConstructorAndEnumerableNameAndName<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, NAME> | INSTANCE | ValueByEnumerableConstructorAndEnumerableOrdinal<ENUMERABLE_CONSTRUCTOR, PARENT_INSTANCE> | ValueByEnumerableConstructorAndEnumerableOrdinal<ENUMERABLE_CONSTRUCTOR, GRAND_PARENT_INSTANCE>
     public override getValue(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE | GRAND_PARENT_ENUMERABLE>,): ENUMERABLE {
         return this._getValue(value,)
-    }
-
-    /**
-     * Get a {@link EnumerableWithNullableGrandParent enumerable} by validating it is the {@link instance}, {@link parentInstance parent instance} or {@link grandParentInstance grandparent instance} (enumerable constructor)
-     *
-     * @param value The value to compare its class type to the type ({@link instance}, {@link parentInstance} or {@link grandParentInstance})
-     * @throws {InvalidEnumerableException}
-     * @throws {NullReferenceException}
-     */
-    protected override _getValueByEnumerable(value: Enumerable,): ENUMERABLE {
-        const instance = this.instance,
-            parentInstance = this.parentInstance,
-            grandParentInstance = this.grandParentInstance
-
-        if (value instanceof instance)
-            return this._getValueFromValues(value,)
-        if (value instanceof parentInstance)
-            return this._getValueFromParentInValues(value,)
-        if (value instanceof grandParentInstance)
-            return this._getValueFromGrandParentInValues(value,)
-
-        throw new InvalidEnumerableException(`The enumerable "${instance.name}.${value.name}" is not an instance of "${instance.name}", "${parentInstance.name}" or "${grandParentInstance.name}".`, value, [instance, parentInstance, grandParentInstance,] as const,)
-    }
-
-    /**
-     * Get an {@link EnumerableWithNullableGrandParent enumerable} from the {@link values} by the {@link EnumerableWithNullableGrandParent.grandParent grandparent} instance
-     * or throw a {@link NullReferenceException} if never found
-     *
-     * @param value The {@link EnumerableWithNullableGrandParent enumerable} {@link EnumerableWithNullableGrandParent.grandParent grandparent} to find
-     * @throws {NullReferenceException}
-     */
-    protected _getValueFromGrandParentInValues(value: Enumerable,): ENUMERABLE {
-        const valueFound = this.values.find(it => it.grandParent === value)
-        if (valueFound == null)
-            throw new NullReferenceException(`No grandparent "${value}" could be found on the "${this.instance.name}".`, value,)
-        return valueFound
     }
 
 

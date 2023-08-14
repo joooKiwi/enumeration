@@ -77,6 +77,53 @@ export class CompanionEnumWithParent<const ENUMERABLE extends EnumerableWithNull
     //#endregion -------------------- Getter & setter methods --------------------
     //#region -------------------- Methods --------------------
 
+    //#region -------------------- Validation methods --------------------
+
+    //#region -------------------- Get value (validated) methods --------------------
+
+    /**
+     * Get a valid value that is a valid {@link EnumerableWithNullableParent}
+     * for the current {@link instance} or {@link parentInstance}
+     *
+     * @param enumerable The instance to validate
+     * @throws {InvalidEnumerableException}
+     * @throws {NullReferenceException}
+     */
+    protected override _getValidValueByEnumerable(enumerable: Enumerable,): ENUM {
+        const instance = this.instance
+        if (enumerable instanceof instance)
+            return this._getValueFromValues(enumerable)
+
+        const parentInstance = this.parentInstance
+        if (enumerable instanceof parentInstance)
+            return this._getValueFromValuesByParent(enumerable,)
+
+        throw new InvalidEnumerableException(`The enumerable "${instance.name}.${enumerable.name}" is not an instance of "${instance.name}" or "${parentInstance.name}".`, enumerable, [instance, parentInstance,],)
+    }
+
+    //#endregion -------------------- Get value (validated) methods --------------------
+    //#region -------------------- Get value from … methods --------------------
+
+    /**
+     * Get an {@link Enumerable} from the {@link values}
+     * by the {@link EnumerableWithNullableParent.parent parent}
+     * or throw a {@link NullReferenceException} if never found
+     *
+     * @param value The {@link Enumerable} to find
+     * @throws {NullReferenceException}
+     */
+    protected _getValueFromValuesByParent(value: Enumerable,): ENUM {
+        const valueFound = this.values.find(it => it.parent === value)
+        if (valueFound == null)
+            throw new NullReferenceException(`No parent "${value}" could be found on the "${this.instance.name}".`, value,)
+        return valueFound
+    }
+
+    //#endregion -------------------- Get value from … methods --------------------
+
+    //#endregion -------------------- Validation methods --------------------
+
+
     public override getValue                                                                                                                                               (value: Nullable<ImpossibleNames>,):                                                                                 never
     public override getValue<const ORDINAL extends number, >                                                                                                               (ordinal: Nullable<ORDINAL>,):                                                                                       ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
     public override getValue<const ORDINAL extends number, >                                                                                                               (ordinal: Nullable<`${ORDINAL}`>,):                                                                                  ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL>
@@ -87,39 +134,6 @@ export class CompanionEnumWithParent<const ENUMERABLE extends EnumerableWithNull
     public override getValue<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUMERABLE, const PARENT_INSTANCE extends PARENT_ENUMERABLE, >(value: Nullable<| ORDINAL | `${ORDINAL}` | NAME | String | Number | PossibleBigInt | INSTANCE | PARENT_INSTANCE>,): | ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, ORDINAL> | ValueByEnumerableConstructorAndEnumerableNameAndName<ENUMERABLE_CONSTRUCTOR, ENUMERABLE, NAME> | INSTANCE | ValueByEnumerableConstructorAndEnumerableOrdinal<ENUMERABLE_CONSTRUCTOR, PARENT_INSTANCE>
     public override getValue(value: Nullable<| PossibleStringOrNumeric | ENUMERABLE | PARENT_ENUMERABLE>,): ENUMERABLE {
         return this._getValue(value,)
-    }
-
-    /**
-     * Get a {@link EnumerableWithNullableParent enumerable} by validating it is the {@link instance} or {@link parentInstance parent instance} (enumerable constructor)
-     *
-     * @param value The value to compare its class type to the type ({@link instance} or {@link parentInstance})
-     * @throws {InvalidEnumerableException}
-     * @throws {NullReferenceException}
-     */
-    protected override _getValueByEnumerable(value: Enumerable,): ENUMERABLE {
-        const instance = this.instance,
-            parentInstance = this.parentInstance
-
-        if (value instanceof instance)
-            return this._getValueFromValues(value)
-        if (value instanceof parentInstance)
-            return this._getValueFromParentInValues(value,)
-
-        throw new InvalidEnumerableException(`The enumerable "${instance.name}.${value.name}" is not an instance of "${instance.name}" or "${parentInstance.name}".`, value, [instance, parentInstance,] as const,)
-    }
-
-    /**
-     * Get an {@link EnumerableWithNullableParent enumerable} from the {@link values} by the {@link EnumerableWithNullableParent.parent parent} instance
-     * or throw a {@link NullReferenceException} if never found
-     *
-     * @param value The {@link EnumerableWithNullableParent enumerable} {@link EnumerableWithNullableParent.parent parent} to find
-     * @throws {NullReferenceException}
-     */
-    protected _getValueFromParentInValues(value: Enumerable,): ENUMERABLE {
-        const valueFound = this.values.find(it => it.parent === value)
-        if (valueFound == null)
-            throw new NullReferenceException(`No parent "${value}" could be found on the "${this.instance.name}".`, value,)
-        return valueFound
     }
 
 
