@@ -730,7 +730,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @param value The {@link Enumerable} to find
      * @throws {NullReferenceException}
      */
-    protected _getValueFromValues(value: Enumerable,): ENUMERABLE {
+    protected _getValueFromValues(value: Enumerable,) {
         const valueFound = this.values.find(it => it === value,)
         if (valueFound == null)
             throw new NullReferenceException(`No "${value.name}" could be found on the "${this.instance.name}".`, value,)
