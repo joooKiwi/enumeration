@@ -179,15 +179,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     //#region -------------------- Initialization methods --------------------
 
     /**
-     * Initialize every map for the current {@link instance instance} stored.
-     *
-     *
-     * The initialization includes:
-     *  - {@link values} <i>(final)</i>
-     *  - {@link names} <i>(final)</i>
-     *  - {@link ordinals} <i>(final)</i>
-     *
-     * It also initialize the individual {@link Enumerable.ordinal ordinals} & {@link Enumerable.name names} on each {@link instance instance}
+     * Initialize every map for the current {@link instance} stored
+     * for each individual {@link Enumerable.name name} and {@link Enumerable.ordinal ordinal}.
+     * It also initializes the group of variables ({@link values}, {@link names} & {@link ordinals}).
      *
      * @see EnumConstants.VALUES_MAP
      * @see EnumConstants.NAME_MAP
