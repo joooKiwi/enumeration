@@ -51,6 +51,10 @@ class Example extends Enum {}
 // Typescript (strict types)
 class Example extends Enum<Ordinals, Names> {}
 ```
+```typescript
+// Typescript (strict specific types)
+class Example<out ORDINAL extends Ordinals = Ordinals, out NAMES extends Names = Names,> extends Enum<ORDINAL, NAME> {}
+```
 
 </details>
 <details>
