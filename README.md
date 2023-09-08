@@ -51,6 +51,10 @@ class Example extends Enum {}
 // Typescript (strict types)
 class Example extends Enum<Ordinals, Names> {}
 ```
+```typescript
+// Typescript (strict specific types)
+class Example<out ORDINAL extends Ordinals = Ordinals, out NAMES extends Names = Names,> extends Enum<ORDINAL, NAME> {}
+```
 
 </details>
 <details>
@@ -99,40 +103,15 @@ Implementing the enum with a "kind-of" inheritance can be used through the usage
 
 ```javascript
 class EnumExample extends Enum {}
-```
 
-```javascript
-class ParentingEnumExample extends Enum {
-    #parent
-    /**
-     * @param {EnumExample} parent
-     * @private
-     */
-    constructor(parent = null) {
-        super()
-        this.#parent = parent
-    }
-    get parent() { return this.#parent }
-}
-```
+class NullableParentingEnumExample extends EnumWithNullableParent {}
+class ParentingEnumExample extends EnumWithParent {}
 
-```javascript
-class GrandParentingEnumExample extends Enum {
-    #parent
-    #grandParent
-    /**
-     * @param {EnumExample} grandParent
-     * @param {ParentingEnumExample} parent
-     * @private
-     */
-    constructor(parent = null, grandParent = null) {
-        super()
-        this.#parent = parent
-        this.#grandParent = grandParent
-    }
-    get parent() { return this.#parent }
-    get grandParent() { return this.#grandParent }
-}
+class NullableGrandParentingEnumExample extends EnumWithNullableGrandParent {}
+class GrandParentingEnumExample extends EnumWithGrandParent {}
+
+class NullableGreatGrandParentingEnumExample extends EnumWithNullableGreatGrandParent {}
+class GreatGrandParentingEnumExample extends EnumWithGreatGrandParent {}
 ```
 
 </details>
@@ -141,34 +120,15 @@ class GrandParentingEnumExample extends Enum {
 
 ```typescript
 class EnumExample extends Enum {}
-```
 
-```typescript
-class ParentingEnumExample
-    extends Enum
-    implements EnumerableWithParent<EnumExample | null> {
-    #parent
-    private constructor(parent: EnumExample | null = null) {
-        super()
-        this.#parent = parent
-    }
-    get parent(): EnumExample | null { return this.#parent }
-}
-```
+class NullableParentingEnumExample extends EnumWithNullableParent<EnumExample> {}
+class ParentingEnumExample extends EnumWithParent<EnumExample> {}
 
-```typescript
-class GrandParentingEnumExample
-    extends Enum {
-    #parent
-    #grandParent
-    private constructor(parent: EnumExample | null = null, grandParent: ParentingEnumExample | null = null) {
-        super()
-        this.#parent = parent
-        this.#grandParent = grandParent
-    }
-    get parent(): EnumExample | null { return this.#parent }
-    get grandParent(): ParentingEnumExample | null { return this.#grandParent }
-}
+class NullableGrandParentingEnumExample extends EnumWithNullableGrandParent<EnumExample, NullableParentingEnumExample> {}
+class GrandParentingEnumExample extends EnumWithGrandParent<EnumExample, ParentingEnumExample> {}
+
+class NullableGreatGrandParentingEnumExample extends EnumWithNullableGreatGrandParent<NullableGrandParentingEnumExample, NullableParentingEnumExample, EnumExample> {}
+class GreatGrandParentingEnumExample extends EnumWithGreatGrandParent<GrandParentingEnumExample, ParentingEnumExample, EnumExample> {}
 ```
 
 </details>
@@ -562,6 +522,7 @@ But it can become so much more by the contributions.
 
 | JS / TS version                                                            | Date                | Quick note                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 |----------------------------------------------------------------------------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 3.1.0                                                                      | September 8th, 2023 | Update from 1.3.0 to [1.4.0](https://github.com/joooKiwi/collection/releases/tag/v1.4.0-js) on the [joookiwi/collection](https://github.com/joooKiwi/collection) dependency                                                                                                                                                                                                                                                                                       |
 | [3.0.0](https://github.com/joooKiwi/enumeration/releases/tag/v3.0.0-js)    | August 14th, 2023   | Big changes to make the [CompanionEnum](https://github.com/joooKiwi/enumeration/blob/main/javascript/src/companion/CompanionEnum.ts) more extensible via its protected methods                                                                                                                                                                                                                                                                                    |
 | [2.7.0](https://github.com/joooKiwi/enumeration/releases/tag/v2.7.0-js)    | July 27th, 2023     | Update from 1.1.0 to [1.2.0](https://github.com/joooKiwi/collection/releases/tag/v1.2.0-js) on the [joookiwi/collection](https://github.com/joooKiwi/collection) dependency                                                                                                                                                                                                                                                                                       |
 | 2.6.1                                                                      | July 26th, 2023     | Fix on the **\[Symbol.iterator]()** that gave an error since it uses the **yield***                                                                                                                                                                                                                                                                                                                                                                               |
