@@ -14,6 +14,7 @@ import type {ExceptionWithNullableCause} from "../declaration/ExceptionWithNulla
  * @see https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/util/NoSuchElementException.html Java NoSuchElementException
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-no-such-element-exception/ Kotlin NoSuchElementException
  * @see https://learn.microsoft.com/dotnet/api/system.missingmemberexception C# MissingMemberException
+ * @deprecated The class will be entirely removed in the next version
  */
 export class NoSuchElementException<const ERROR extends Error = never, >
     extends TypeError

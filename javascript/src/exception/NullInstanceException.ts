@@ -5,16 +5,31 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {Nullable} from "../general type"
+import type {Nullable, NullOr}           from "../general type"
+import type {ExceptionWithNullableCause} from "./declaration/ExceptionWithNullableCause"
 
-import {NullPointerException} from "./generic/NullPointerException"
+/**
+ * An instance was received as <b>null</b> value
+ *
+ * @see https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/NullPointerException.html Java NullPointerException
+ * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-null-pointer-exception Kotlin NullPointerException
+ * @see https://learn.microsoft.com/dotnet/api/system.nullreferenceexception C# NullReferenceException
+ */
+export class NullInstanceException<const out CAUSE extends Error = never, >
+    extends TypeError
+    implements ExceptionWithNullableCause<CAUSE> {
 
-/** An instance was received as <b>null</b> value */
-export class NullInstanceException<const ERROR extends Error = never, >
-    extends NullPointerException<ERROR> {
 
-    public constructor(cause?: Nullable<ERROR>,) {
-        super("The instance received cannot be null!", cause,)
+    public override readonly name = this.constructor.name
+    readonly #cause
+
+    public constructor(cause?: Nullable<CAUSE>,) {
+        super("The instance received cannot be null!",)
+        this.#cause = cause ?? null
+    }
+
+    public override get cause(): NullOr<CAUSE> {
+        return this.#cause
     }
 
 }

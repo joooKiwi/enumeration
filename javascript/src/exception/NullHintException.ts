@@ -7,34 +7,25 @@
 
 import type {Nullable, NullOr}           from "../general type"
 import type {ExceptionWithNullableCause} from "./declaration/ExceptionWithNullableCause"
-import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
 
 /**
- * The {@link value reference to retrieve} was not expected to be <b>null</b>
+ * A hint was received as <b>null</b> value
  *
  * @see https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/NullPointerException.html Java NullPointerException
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-null-pointer-exception Kotlin NullPointerException
  * @see https://learn.microsoft.com/dotnet/api/system.nullreferenceexception C# NullReferenceException
  */
-export class NullReferenceException<const out T,
-    const out CAUSE extends Error = never, >
+export class NullHintException<const out CAUSE extends Error = never, >
     extends TypeError
-    implements ExceptionWithValue<T>,
-               ExceptionWithNullableCause<CAUSE> {
+    implements ExceptionWithNullableCause<CAUSE> {
+
 
     public override readonly name = this.constructor.name
-    readonly #value
     readonly #cause
 
-    public constructor(message: string, value: T, cause?: Nullable<CAUSE>,) {
+    public constructor(message: string, cause?: Nullable<CAUSE>,) {
         super(message,)
-        this.#value = value
         this.#cause = cause ?? null
-    }
-
-    /** The value that had a <b>null</b> reference or could not be found by something */
-    public get value(): T {
-        return this.#value
     }
 
     public override get cause(): NullOr<CAUSE> {

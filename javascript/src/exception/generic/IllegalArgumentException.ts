@@ -14,6 +14,7 @@ import type {ExceptionWithNullableCause} from "../declaration/ExceptionWithNulla
  * @see https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/IllegalArgumentException.html Java IllegalArgumentException
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-illegal-argument-exception Kotlin IllegalArgumentException
  * @see https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception C# ArgumentOutOfRangeException
+ * @deprecated The class will be entirely removed in the next version
  */
 export class IllegalArgumentException<const ERROR extends Error = never, >
     extends ReferenceError

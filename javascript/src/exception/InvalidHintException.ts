@@ -10,30 +10,30 @@ import type {ExceptionWithNullableCause} from "./declaration/ExceptionWithNullab
 import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
 
 /**
- * The {@link value reference to retrieve} was not expected to be <b>null</b>
+ * A hint was received as not a {@link PossiblePrimitiveHint}
  *
- * @see https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/NullPointerException.html Java NullPointerException
- * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-null-pointer-exception Kotlin NullPointerException
- * @see https://learn.microsoft.com/dotnet/api/system.nullreferenceexception C# NullReferenceException
+ * @see https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html Java ClassCastException
+ * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-class-cast-exception Kotlin ClassCastException
+ * @see https://learn.microsoft.com/dotnet/api/system.invalidcastexception C# InvalidCastException
  */
-export class NullReferenceException<const out T,
+export class InvalidHintException<const out HINT extends string,
     const out CAUSE extends Error = never, >
     extends TypeError
-    implements ExceptionWithValue<T>,
+    implements ExceptionWithValue<HINT>,
                ExceptionWithNullableCause<CAUSE> {
 
     public override readonly name = this.constructor.name
     readonly #value
     readonly #cause
 
-    public constructor(message: string, value: T, cause?: Nullable<CAUSE>,) {
+    public constructor(message: string, value: HINT, cause?: Nullable<CAUSE>,) {
         super(message,)
         this.#value = value
         this.#cause = cause ?? null
     }
 
-    /** The value that had a <b>null</b> reference or could not be found by something */
-    public get value(): T {
+    /** The invalid hint */
+    public get value(): HINT {
         return this.#value
     }
 
