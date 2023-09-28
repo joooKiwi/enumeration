@@ -5,26 +5,40 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {Nullable}           from "../general type"
-import type {ExceptionWithValue} from "./declaration/ExceptionWithValue"
+import type {Nullable, NullOr}           from "../general type"
+import type {ExceptionWithNullableCause} from "./declaration/ExceptionWithNullableCause"
+import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
 
-import {ClassCastException} from "./generic/ClassCastException"
+/**
+ * The {@link value value received} was expected to be in a specific structure or an instance
+ *
+ * @see https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html Java ClassCastException
+ * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-class-cast-exception Kotlin ClassCastException
+ * @see https://learn.microsoft.com/dotnet/api/system.invalidcastexception C# InvalidCastException
+ */
+export class InvalidInstanceException<const out T,
+    const out CAUSE extends Error = never, >
+    extends TypeError
+    implements ExceptionWithValue<T>,
+               ExceptionWithNullableCause<CAUSE> {
 
-/** The {@link value value received} was expected to be in a specific structure or an instance */
-export class InvalidInstanceException<const T, const ERROR extends Error = never, >
-    extends ClassCastException<ERROR>
-    implements ExceptionWithValue<T> {
-
+    public override readonly name = this.constructor.name
     readonly #value
+    readonly #cause
 
-    public constructor(message: string, value: T, cause?: Nullable<ERROR>,) {
-        super(message, cause,)
+    public constructor(message: string, value: T, cause?: Nullable<CAUSE>,) {
+        super(message,)
         this.#value = value
+        this.#cause = cause ?? null
     }
 
     /** The value that was an invalid instance */
     public get value(): T {
         return this.#value
+    }
+
+    public override get cause(): NullOr<CAUSE> {
+        return this.#cause
     }
 
 }

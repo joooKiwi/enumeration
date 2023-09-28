@@ -14,6 +14,7 @@ import type {ExceptionWithNullableCause} from "../declaration/ExceptionWithNulla
  * @see https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/IndexOutOfBoundsException.html Java IndexOutOfBoundsException
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-index-out-of-bounds-exception Kotlin IndexOutOfBoundsException
  * @see https://learn.microsoft.com/dotnet/api/system.indexoutofrangeexception C# IndexOutOfRangeException
+ * @deprecated The class will be entirely removed in the next version
  */
 export class IndexOutOfBoundsException<const ERROR extends Error = never, >
     extends RangeError

@@ -14,6 +14,7 @@ import type {ExceptionWithNullableCause} from "../declaration/ExceptionWithNulla
  * @see https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/ClassCastException.html Java ClassCastException
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-class-cast-exception Kotlin ClassCastException
  * @see https://learn.microsoft.com/dotnet/api/system.invalidcastexception C# InvalidCastException
+ * @deprecated The class will be entirely removed in the next version
  */
 export class ClassCastException<const ERROR extends Error = never, >
     extends TypeError

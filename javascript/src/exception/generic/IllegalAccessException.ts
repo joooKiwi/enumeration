@@ -14,6 +14,7 @@ import type {ExceptionWithNullableCause} from "../declaration/ExceptionWithNulla
  * @see https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/IllegalAccessException.html Java IllegalAccessException
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect.full/-illegal-callable-access-exception Kotlin IllegalCallableAccessException
  * @see https://learn.microsoft.com/dotnet/api/system.indexoutofrangeexception C# IndexOutOfRangeException
+ * @deprecated The class will be entirely removed in the next version
  */
 export class IllegalAccessException<const ERROR extends Error = never, >
     extends ReferenceError

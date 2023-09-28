@@ -14,6 +14,7 @@ import type {ExceptionWithNullableCause} from "../declaration/ExceptionWithNulla
  * @see https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/NullPointerException.html Java NullPointerException
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-null-pointer-exception Kotlin NullPointerException
  * @see https://learn.microsoft.com/dotnet/api/system.nullreferenceexception C# NullReferenceException
+ * @deprecated The class will be entirely removed in the next version
  */
 export class NullPointerException<const ERROR extends Error = never, >
     extends TypeError

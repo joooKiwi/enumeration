@@ -11,9 +11,9 @@ import type {Nullable, PossiblePrimitiveHint, PossibleString} from "./general ty
 import type {CompanionEnumDeclarationType}                    from "./companion/types"
 
 import {EnumConstants}          from "./EnumConstants"
+import {InvalidHintException}   from "./exception/InvalidHintException"
+import {NullHintException}      from "./exception/NullHintException"
 import {NullReferenceException} from "./exception/NullReferenceException"
-import {ClassCastException}     from "./exception/generic/ClassCastException"
-import {NullPointerException}   from "./exception/generic/NullPointerException"
 import {getCompanion}           from "./helper/getCompanion"
 import {getLastPrototype}       from "./helper/getLastPrototype"
 
@@ -59,12 +59,18 @@ export abstract class Enum<const out ORDINAL extends number = number,
     public [Symbol.toPrimitive](hint: Nullable<PossibleString>,): EnumerableToPrimitive<PossiblePrimitiveHint, this>
     public [Symbol.toPrimitive](hint: Nullable<PossibleString>,): | ORDINAL | NAME {
         if (hint == null)
-            throw new NullPointerException(`Invalid null hint: The "${this.#__companion.instance.name}" cannot be converted to a string or number primitive`,)
+            throw new NullHintException(`Invalid null hint: The "${this.#__companion.instance.name}" cannot be converted to a string or number primitive`,)
         if (hint instanceof String)
             return this[Symbol.toPrimitive](hint.valueOf(),)
-        if (!EnumConstants.TO_PRIMITIVE_VALUES.test(hint,))
-            throw new ClassCastException(`Invalid hint "${hint}": The "${this.#__companion.instance.name}" could only be converted to a string or number primitive`,)
-        return hint.toLowerCase() === "number" ? this.ordinal : this.name
+
+        const lowerCaseHint = hint.toLowerCase()
+        if(lowerCaseHint === "number")
+            return this.ordinal
+        if(lowerCaseHint === "string")
+            return this.name
+        if(lowerCaseHint === "default")
+            return this.name
+        throw new InvalidHintException(`Invalid hint "${hint}": The "${this.#__companion.instance.name}" could only be converted to a string or number primitive`, hint,)
     }
 
     public get [Symbol.toStringTag](): EnumerableName {

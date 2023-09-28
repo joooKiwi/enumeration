@@ -27,7 +27,7 @@ export interface Enumerable<out ORDINAL extends number = number, out NAME extend
      * If it receive a <b>null</b>, then a {@link TypeError} will be thrown.
      *
      * @param value The value (either "string", "number" or "default")
-     * @throws {NullPointerException} The hint received was <b>null</b>
+     * @throws {NullHintException} The hint received was <b>null</b>
      * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toPrimitive
      */
     [Symbol.toPrimitive]<const HINT extends string, >(value: Nullable<HINT>,): EnumerableToPrimitive<HINT, this>
@@ -38,8 +38,8 @@ export interface Enumerable<out ORDINAL extends number = number, out NAME extend
      * If it receive a <b>null</b> or a value that is not {@link PossiblePrimitiveHint a hint}, then a {@link TypeError} will be thrown.
      *
      * @param value The value (either "string", "number" or "default") as an object or a primitive
-     * @throws {NullPointerException} The hint received was <b>null</b>
-     * @throws {ClassCastException} The hint was not a {@link PossiblePrimitiveHint} (in any casing)
+     * @throws {NullHintException} The hint received was <b>null</b>
+     * @throws {InvalidHintException} The hint was not a {@link PossiblePrimitiveHint} (in any casing)
      * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toPrimitive
      */
     [Symbol.toPrimitive](value: Nullable<PossibleString>,): EnumerableToPrimitive<PossiblePrimitiveHint, this>
