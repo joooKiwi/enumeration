@@ -513,7 +513,7 @@ class Example<const out NAME extends Names = Names, const out ORDINAL extends Or
     // Whatever is needed inside
 }
 
-// Is not correcty handled
+// Is now correcty handled
 Example.CompanionEnum.get.getValue(Example.A,)
 ```
 
