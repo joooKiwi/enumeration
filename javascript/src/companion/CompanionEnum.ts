@@ -450,7 +450,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     protected _isNotInInheritedEnumerableMembers(nameOrOrdinal: string, originalValue: PossibleString,) {
         const enumerableMembers = EnumConstants.EVERY_ENUMERABLE_MEMBERS
         if (enumerableMembers.hasOne(nameOrOrdinal,))
-            throw new ForbiddenInheritedEnumerableMemberException(`Forbidden inherited enumerable member. The string value "${originalValue}" cannot be an inherited member of the inherited Enum static methods (${enumerableMembers.join(", ", '(', ')', null, null, it => `"${typeof it == "symbol" ? it.description : it}"`)}).`, originalValue,)
+            throw new ForbiddenInheritedEnumerableMemberException(`Forbidden inherited enumerable member. The string value "${originalValue}" cannot be an inherited member of the inherited Enum static methods ${enumerableMembers.join(", ", '(', ')', null, null, it => `"${typeof it == "symbol" ? it.description : it}"`)}.`, originalValue,)
     }
 
     //#endregion -------------------- Validation (is not in "inherited enumerable members") methods --------------------
