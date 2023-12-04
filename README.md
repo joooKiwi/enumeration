@@ -23,9 +23,17 @@ And in `C#`, it uses the type system to its advantage (like for the [ValueTuple]
 | Java                      |                                                                                              Maven _(in progress)_                                                                                               | yes                 | yes                               |                 | yes                    | `EnumHelper`, `EnumConstant`, `EnumMethods`   |
 | Kotlin                    |                                                                                              Maven _(in progress)_                                                                                               | yes                 | yes                               |                 | yes                    | `EnumConstant`, `EnumExtension`               |
 | PHP                       |                                                                                                     Composer                                                                                                     | not necessary       | not necessary                     | yes             | yes                    | `EnumHelper`, `EnumConstant`  `EnumMethods`   |
-| C#                        |                                                                                                      Nugget                                                                                                      | yes                 | yes                               |                 | yes                    | `EnumHelper`, `EnumConstant`, `EnumExtension` |
+| C#                        |                                                                                                      Nuget                                                                                                       | yes                 | yes                               |                 | yes                    | `EnumHelper`, `EnumConstant`, `EnumExtension` |
 
 _(This may change once the implementation is made)_
+
+
+## Related projects
+
+Here is a list of the related projects made by me
+ - lazy ([GitHub](https://github.com/joooKiwi/lazy) | [NPM](https://www.npmjs.com/package/@joookiwi/lazy))
+ - collection ([GitHub](https://github.com/joooKiwi/collection) | [NPM](https://www.npmjs.com/package/@joookiwi/collection))
+
 
 ### Javascript and Typescript implementation
 
