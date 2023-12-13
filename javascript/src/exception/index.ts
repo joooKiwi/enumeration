@@ -6,7 +6,6 @@
  ******************************************************************************/
 
 export *                                             from "./declaration/index"
-export *                                             from "./generic/index"
 export {ForbiddenNameException}                      from "./ForbiddenNameException"
 export {ForbiddenInheritedEnumerableMemberException} from "./ForbiddenInheritedEnumerableMemberException"
 export {ForbiddenNumericException}                   from "./ForbiddenNumericException"
