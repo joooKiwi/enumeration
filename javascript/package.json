@@ -1,6 +1,6 @@
 {
   "name": "@joookiwi/enumerable",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "description": "A Javascript implementation of an enum class",
 
   "scripts": {
@@ -156,7 +156,7 @@
   "author": "JóôòKiwi",
   "license": "MIT",
   "dependencies": {
-    "@joookiwi/collection": "^1.6.0"
+    "@joookiwi/collection": "^1.6.1"
   },
   "devDependencies": {
     "@types/jest": "^29.5.10",
