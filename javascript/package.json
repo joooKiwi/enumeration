@@ -12,7 +12,8 @@
     "build-umd":   "tsc --project tsconfig.umd.json",
     "build-types": "tsc --project tsconfig.types.json",
 
-    "test": "jest",
+    "test":                                "jest",
+    "test-with-coverage":                  "jest --coverage",
     "test-general-enum":                   "jest --testNamePattern=GeneralEnumTest",
     "test-helper-methods":                 "jest --testNamePattern=HelperMethodsTest",
     "test-helper-known-enum-constructors": "jest --testNamePattern=KnownEnumConstructorsTest",
