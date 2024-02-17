@@ -191,12 +191,12 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @see EnumConstants.ORDINALS_MAP
      */
     #initializeMaps(): void {
-        const instance = this.instance,
-            excludedNames = this._excludedNames,
-            everyFields = Object.entries(Object.getOwnPropertyDescriptors(instance,),),
-            everyOrdinals = [] as OrdinalOf<ENUMERABLE>[],
-            everyNames = [] as NameOf<ENUMERABLE>[],
-            everyEnumerable = [] as ENUMERABLE[]
+        const instance = this.instance
+        const excludedNames = this._excludedNames
+        const everyFields = Object.entries(Object.getOwnPropertyDescriptors(instance,),)
+        const everyOrdinals = [] as OrdinalOf<ENUMERABLE>[]
+        const everyNames = [] as NameOf<ENUMERABLE>[]
+        const everyEnumerable = [] as ENUMERABLE[]
 
         const everyFieldSize = everyFields.length
         let currentOrdinal = 0
