@@ -413,11 +413,11 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      */
     protected _isNotInEdgeCaseNumericByString(nameOrOrdinal: string, originalValue: PossibleString,) {
         if (nameOrOrdinal === "NaN")
-            throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be a NaN.", originalValue,)
+            throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be NaN.", originalValue,)
         if (nameOrOrdinal === "-Infinity")
-            throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be the negative infinity.", originalValue,)
+            throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be -∞.", originalValue,)
         if (nameOrOrdinal === "Infinity")
-            throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be the positive infinity.", originalValue,)
+            throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be +∞.", originalValue,)
     }
 
     /**
@@ -430,11 +430,11 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      */
     protected _isNotInEdgeCaseNumericByNumber(ordinal: number, originalValue: PossibleNumber,) {
         if (Number.isNaN(ordinal,))
-            throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be a NaN.", originalValue,)
-        if (ordinal == Number.NEGATIVE_INFINITY)
-            throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be the negative infinity.", originalValue,)
-        if (ordinal == Number.POSITIVE_INFINITY)
-            throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be the positive infinity.", originalValue,)
+            throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be NaN.", originalValue,)
+        if (ordinal == -Infinity)
+            throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be -∞.", originalValue,)
+        if (ordinal == Infinity)
+            throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be +∞.", originalValue,)
     }
 
     //#endregion -------------------- Validation (is not in "edge case numeric") methods --------------------
