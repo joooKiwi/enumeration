@@ -177,9 +177,9 @@ companionEnum.getOrdinal(2,).toString()
 
 //#endregion -------------------- getName --------------------
 
-/** The simple {@link EnumWithGrandParentTestInstance} reference */
+/** The {@link EnumWithGrandParentTestInstance} reference */
 type EnumValue = typeof EnumWithGrandParentTestInstance.A
-/** The simple {@link EnumWithGrandParentTestInstance.A} reference ordinal */
+/** The {@link EnumWithGrandParentTestInstance.A} reference ordinal */
 type SpecificOrdinal = 0
-/** The simple {@link EnumWithGrandParentTestInstance.A} name */
+/** The {@link EnumWithGrandParentTestInstance.A} name */
 type SpecificName = 'A'

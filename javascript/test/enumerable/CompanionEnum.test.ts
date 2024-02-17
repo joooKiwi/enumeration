@@ -133,13 +133,17 @@ class CompanionEnumWithGreatGrandParent_TestClassHelper
 //#endregion -------------------- Helper class declaration --------------------
 
 describe("CompanionEnumTest", () => {
-    const /** A simple alias to the {@link BasicEnum} */Child = BasicEnum,
-        /** A simple alias to the {@link BasicEnumWithParent} */Parent = BasicEnumWithParent,
-        /** A simple alias to the {@link BasicEnumWithGreatGrandParent} */GrandParent = BasicEnumWithGrandParent,
-        /** A simple alias to the {@link BasicEnumWithGreatGrandParent} */GreatGrandParent = BasicEnumWithGreatGrandParent
+    /** An alias to the {@link BasicEnum} */
+    const Child = BasicEnum
+    /** An alias to the {@link BasicEnumWithParent} */
+    const Parent = BasicEnumWithParent
+    /** An alias to the {@link BasicEnumWithGreatGrandParent} */
+    const GrandParent = BasicEnumWithGrandParent
+    /** An alias to the {@link BasicEnumWithGreatGrandParent} */
+    const GreatGrandParent = BasicEnumWithGreatGrandParent
 
     describe("CompanionEnum", () => {
-        /** A simple alias to the {@link CompanionEnum_TestClassHelper} */
+        /** An alias to the {@link CompanionEnum_TestClassHelper} */
         const InstanceHelper = CompanionEnum_TestClassHelper
 
         describe("invalid argument", () => {
@@ -196,7 +200,7 @@ describe("CompanionEnumTest", () => {
         },)
     },)
     describe("CompanionEnumWithParent", () => {
-        /** A simple alias to the {@link CompanionEnumWithParent_TestClassHelper} */
+        /** An alias to the {@link CompanionEnumWithParent_TestClassHelper} */
         const InstanceHelper = CompanionEnumWithParent_TestClassHelper
 
         describe("invalid argument #1", () => {
@@ -264,7 +268,7 @@ describe("CompanionEnumTest", () => {
         },)
     },)
     describe("CompanionEnumWithGrandParent", () => {
-        /** A simple alias to the {@link CompanionEnumWithGrandParent_TestClassHelper} */
+        /** An alias to the {@link CompanionEnumWithGrandParent_TestClassHelper} */
         const InstanceHelper = CompanionEnumWithGrandParent_TestClassHelper
 
         describe("invalid argument #1", () => {
@@ -345,7 +349,7 @@ describe("CompanionEnumTest", () => {
         },)
     },)
     describe("CompanionEnumWithGreatGrandParent", () => {
-        /** A simple alias to the {@link CompanionEnumWithGreatGrandParent_TestClassHelper} */
+        /** An alias to the {@link CompanionEnumWithGreatGrandParent_TestClassHelper} */
         const InstanceHelper = CompanionEnumWithGreatGrandParent_TestClassHelper
 
         describe("invalid argument #1", () => {

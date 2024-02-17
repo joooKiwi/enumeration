@@ -77,7 +77,7 @@ export const valueByCompanion = getCompanion(EnumWithDifferentComportment.Compan
 // @ts-expect-error
 getCompanion(valueInstance,)
 
-/*** The simple enum type */
+/*** The enum type */
 type EnumValue = EnumWithDifferentComportment
 /** The companion instance of {@link EnumValue} */
 type CompanionValue = typeof EnumWithDifferentComportment["CompanionEnum"]["get"]

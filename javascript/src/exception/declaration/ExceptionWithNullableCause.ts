@@ -7,7 +7,7 @@
 
 import type {NullOr} from "../../general type"
 
-/** A simple {@link Error exception} declaration with a nullable {@link Error.cause cause} */
+/** An {@link Error exception} declaration with a nullable {@link Error.cause cause} */
 export interface ExceptionWithNullableCause<out ERROR extends Error = never, >
     extends Error {
 

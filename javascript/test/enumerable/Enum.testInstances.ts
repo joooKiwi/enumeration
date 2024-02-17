@@ -32,11 +32,11 @@ type NameWithAdditional = | NameWithD | `BY_${| "STRING" | "OBJECT_STRING"}${| '
 
 export const nameValues = ['A', 'B', 'C',] as const satisfies readonly Name[]
 /** The {@link EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL} reference */
-const nameSymbol = EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL as PossibleEnumSymbol,
-    /** The {@link EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL} encapsulated in a callback */
-    nameSymbolCallback = () => EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL as PossibleEnumSymbol,
-    /** A simple callback made to throw an error in any case that it is being called */
-    failCallback = () => fail("Unexpected callback to be called",)
+const nameSymbol = EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL as PossibleEnumSymbol
+/** The {@link EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL} encapsulated in a callback */
+const nameSymbolCallback = () => EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL as PossibleEnumSymbol
+/** A callback made to throw an error in any case that it is being called */
+const failCallback = () => fail("Unexpected callback to be called",)
 
 export class BasicEnum extends Enum<number, Name> {
     public static readonly A = new BasicEnum()

@@ -5,7 +5,7 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
-/** A simple {@link Error exception} with a value */
+/** An {@link Error exception} with a value */
 export interface ExceptionWithValue<out T, >
     extends Error {
 

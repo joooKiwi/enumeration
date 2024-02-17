@@ -20,7 +20,7 @@ import {NullReferenceException}     from "../exception/NullReferenceException"
 import {CompanionTypes}             from "./CompanionTypes"
 
 /**
- * A simple namespace to encapsulate the methods applicable
+ * A namespace to encapsulate the methods applicable
  * to the {@link Enum} children in the project
  *  - {@link EnumWithNullableParent}
  *  - {@link EnumWithParent}
@@ -40,7 +40,7 @@ export namespace Helper {
      * Get a {@link NonNullable non-nullable} value.
      *
      * If the {@link value value received} is <b>null</b> or <b>undefined</b>,
-     * a simple {@link NullReferenceException} is thrown.
+     * a {@link NullReferenceException} is thrown.
      *
      * If the {@link value value received} is a {@link String} (primitive or object),
      * it retrieves the value via {@link CompanionEnumDeclaration.getValue} method.

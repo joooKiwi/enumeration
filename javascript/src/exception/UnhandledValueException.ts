@@ -10,7 +10,7 @@ import type {ExceptionWithNullableCause} from "./declaration/ExceptionWithNullab
 import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
 
 /**
- * A simple exception made to tell that the type received by
+ * An {@link Error exception} made to tell that the type received by
  * {@link CompanionEnumDeclaration.getValue getValue}, {@link CompanionEnumDeclaration.getName getName}
  * and {@link CompanionEnumDeclaration.getOrdinal getOrdinal}
  * that the value received was not a {@link String}, {@link Number}, {@link BigInt} or {@link Enumerable}

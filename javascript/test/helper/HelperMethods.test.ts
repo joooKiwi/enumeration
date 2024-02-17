@@ -41,7 +41,7 @@ import {isEnumWithParentByStructure}                    from "../../src/helper/i
 describe("HelperMethodsTest", () => {
 
     describe("getCompanion", () => {
-        /** A simple alias of {@link getCompanion} */ const method = getCompanion
+        /** An alias of {@link getCompanion} */ const method = getCompanion
 
         describe("with invalid companion reference", () => {
             test.each(nullValues,)("%s", it => expect(() => method(it,),).toThrow(NullInstanceException,),)
@@ -68,7 +68,7 @@ describe("HelperMethodsTest", () => {
         },)
     },)
     describe("getLastPrototype", () => {
-        /** A simple alias of {@link getLastPrototype} */ const method = getLastPrototype
+        /** An alias of {@link getLastPrototype} */ const method = getLastPrototype
 
         // @ts-expect-error
         test.each(nullValues,)("%s", it => expect(() => method(it,),).toThrow(NullReferenceException,),)

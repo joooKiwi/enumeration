@@ -24,7 +24,7 @@ import type {CompanionEnumWithGreatGrandParentDeclaration} from "./companion/Com
 import type {CompanionEnumWithParentDeclaration}           from "./companion/CompanionEnumWithParent.declaration"
 import type {PossibleCompanionEnumMembers}                 from "./companion/types"
 
-/** A simple class containing every field used by an {@link Enumerable} helper, instance or companion */
+/** A class containing every field used by an {@link Enumerable} helper, instance or companion */
 export class EnumConstants {
     constructor() {
         throw new EvalError("The class EnumConstants cannot be created",)
@@ -82,7 +82,7 @@ export namespace EnumConstants {
     //#region -------------------- Initialization validation fields --------------------
 
     /**
-     * The simple <i>prototype</i> name of a class
+     * The <i>prototype</i> name of a class
      *
      * @uniqueToJavascript
      */
@@ -205,7 +205,7 @@ export namespace EnumConstants {
      */
     export const EVERY_ENUMERABLE_MEMBERS = ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS satisfies CollectionHolder<PossibleEnumerableMembers>
     /**
-     * A simple representation of the {@link EVERY_ENUMERABLE_MEMBERS} joined together as a single string
+     * A representation of the {@link EVERY_ENUMERABLE_MEMBERS} joined together as a single string
      * for the Javascript implementation
      */
     export const EVERY_ENUMERABLE_MEMBERS_JOINED = "(\"name\", \"ordinal\", \"parent\", \"grandParent\", \"greatGrandParent\", \"[Symbol.toPrimitive]\", \"[Symbol.toStringTag]\")"
@@ -219,7 +219,7 @@ export namespace EnumConstants {
      */
     export const EVERY_COMPANION_ENUM_MEMBERS = COMPANION_ENUM_WITH_GREAT_GRAND_PARENT_MEMBERS satisfies CollectionHolder<PossibleCompanionEnumMembers>
     /**
-     * A simple representation of the {@link EVERY_COMPANION_ENUM_MEMBERS} joined together as a single string
+     * A representation of the {@link EVERY_COMPANION_ENUM_MEMBERS} joined together as a single string
      * for the Javascript implementation
      */
     export const EVERY_COMPANION_ENUM_MEMBERS_JOINED = "(\"instance\", \"parentInstance\", \"grandParentInstance\", \"greatGrandParentInstance\", \"defaultValue\", \"setDefaultValue\", \"values\", \"names\", \"ordinals\", \"iterator\", \"getValue\", \"getName\", \"getOrdinal\", \"[Symbol.iterator]\", \"[Symbol.toStringTag]\")"
@@ -245,13 +245,13 @@ export namespace EnumConstants {
     //#region -------------------- Symbol.toString tags --------------------
 
     /**
-     * The simple {@link Symbol.toStringTag} of an {@link Enum}
+     * The {@link Symbol.toStringTag} of an {@link Enum}
      *
      * @uniqueToJavascript
      */
     export const ENUM_TO_STRING_TAG = "Enum"
     /**
-     * The simple {@link Symbol.toStringTag} of a companion enum
+     * The {@link Symbol.toStringTag} of a companion enum
      * ({@link CompanionEnumDeclaration}, {@link CompanionEnumWithParentDeclaration}, {@link CompanionEnumWithGrandParentDeclaration}, {@link CompanionEnumWithGreatGrandParentDeclaration})
      *
      * @uniqueToJavascript

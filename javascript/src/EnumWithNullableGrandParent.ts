@@ -20,7 +20,7 @@ import {Helper}                       from "./helper/Helper"
 import {KnownEnumConstructors}        from "./helper/KnownEnumConstructors"
 
 /**
- * A simple {@link Enum} class in conjuncture with the {@link EnumerableWithNullableGrandParent}.
+ * An {@link Enum} class in conjuncture with the {@link EnumerableWithNullableGrandParent}.
  *
  * Compared to its sibling {@link EnumWithGrandParent}, it can receive <b>null</b>.
  *

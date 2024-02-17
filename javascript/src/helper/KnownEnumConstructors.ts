@@ -35,7 +35,7 @@ export class KnownEnumConstructors {
     /** Tell that the values have changed between the calls of {@link KnownEnumConstructors.values} */
     #isValuesDifferentBetweenCalls = false
     #values?: Function[]
-    /** A simple {@link CollectionHolder} to encapsulate the values on the {@link KnownEnumConstructors.values} */
+    /** A {@link CollectionHolder} to encapsulate the values on the {@link KnownEnumConstructors.values} */
     #collection?: CollectionHolder<Function>
 
     //#endregion -------------------- Fields --------------------
@@ -59,7 +59,7 @@ export class KnownEnumConstructors {
         return this.#collection ??= new GenericCollectionHolder(this.#__values,)
     }
 
-    /** A simple alias toward the {@link KnownEnumConstructors} instance {@link KnownEnumConstructors.values "values method"} */
+    /** An alias toward the {@link KnownEnumConstructors} instance {@link KnownEnumConstructors.values "values method"} */
     public static get values() {
         return KnownEnumConstructors.get.values
     }
@@ -95,7 +95,7 @@ export class KnownEnumConstructors {
     }
 
     /**
-     * A simple alias toward the {@link KnownEnumConstructors} instance {@link KnownEnumConstructors.add "add(...values) method"}.
+     * An alias toward the {@link KnownEnumConstructors} instance {@link KnownEnumConstructors.add "add(...values) method"}.
      *
      * Note that no duplicate value can be inserted.
      *
@@ -145,7 +145,7 @@ export class KnownEnumConstructors {
     }
 
     /**
-     * A simple alias toward the {@link KnownEnumConstructors} instance {@link KnownEnumConstructors.remove "remove(...values) method"}
+     * An alias toward the {@link KnownEnumConstructors} instance {@link KnownEnumConstructors.remove "remove(...values) method"}
      *
      * @param values The values to remove
      */

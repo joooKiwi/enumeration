@@ -189,9 +189,9 @@ companionEnum.getOrdinal(2,).toString()
 
 //#endregion -------------------- getName --------------------
 
-/** The simple {@link EnumDeclarationTestInstance} reference */
+/** The {@link EnumDeclarationTestInstance} reference */
 type EnumValue = typeof EnumDeclarationTestInstance.A
-/** The simple {@link EnumDeclarationTestInstance.A} reference ordinal */
+/** The {@link EnumDeclarationTestInstance.A} reference ordinal */
 type SpecificOrdinal = 0
-/** The simple {@link EnumDeclarationTestInstance.A} name */
+/** The {@link EnumDeclarationTestInstance.A} name */
 type SpecificName = 'A'

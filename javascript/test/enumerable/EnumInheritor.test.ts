@@ -25,9 +25,9 @@ describe("EnumInheritorTest", () => {
     //README: The tests are not made to be code efficient,
     // they are made to be debuggable and descriptive.
 
-    /** A simple reference to the {@link EnumConstants.NULL_ENUM_REFERENCE_SYMBOL} */
+    /** A reference to the {@link EnumConstants.NULL_ENUM_REFERENCE_SYMBOL} */
     const nullReferenceSymbol = EnumConstants.NULL_ENUM_REFERENCE_SYMBOL as PossibleEnumSymbol,
-        /** A simple instance name that is valid */
+        /** An instance name that is valid */
         validInstanceName = 'A'
 
     describe("parent tests", () => {

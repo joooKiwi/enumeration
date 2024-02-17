@@ -114,7 +114,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
     /** Every {@link Enumerable.ordinal ordinal} for the {@link instance} */
     get ordinals(): CollectionHolder<OrdinalOf<ENUM>>
 
-    /** A simple {@link IterableIterator iterator} for the {@link instance} */
+    /** An {@link IterableIterator iterator} for the {@link instance} */
     get iterator(): CollectionIterator<ENUM>
 
     //#endregion -------------------- Values getter methods --------------------
@@ -499,7 +499,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
     [Symbol.iterator](): CollectionIterator<ENUM>
 
     /**
-     * A simple output for the call from {@link Object.prototype.toString.call} [object CompanionEnum] instead of [object Object]
+     * An output for the call from {@link Object.prototype.toString.call} [object CompanionEnum] instead of [object Object]
      *
      * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toStringTag
      */
