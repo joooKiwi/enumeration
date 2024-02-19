@@ -32,17 +32,17 @@ export function getLastPrototype<const T extends Enumerable, >(instance: object,
         throw new NullReferenceException(`No prototype on a EnumerableConstructor could be found by a null value.`, instance,)
 
     if (isEnum(instance,)) {
-        const prototypeConstructorChain = getPrototypeConstructorChain(instance,),
-            knownEnumConstructors = KnownEnumConstructors.get.values,
-            indexFound = prototypeConstructorChain.indexOfFirst(prototypeConstructor => knownEnumConstructors.any(it => it == prototypeConstructor,),)
+        const prototypeConstructorChain = getPrototypeConstructorChain(instance,)
+        const knownEnumConstructors = KnownEnumConstructors.get.values
+        const indexFound = prototypeConstructorChain.indexOfFirst(prototypeConstructor => knownEnumConstructors.any(it => it == prototypeConstructor,),)
         if (indexFound == null)
             throw new NullReferenceException(`No known constructor ${knownEnumConstructors.join(", ", "(", ")", null, null, it => it.name,)} was found in the prototype chain ${prototypeConstructorChain.join(" → ", '"', '"',)}.`, instance,)
         return prototypeConstructorChain.get(indexFound - 1,) as EnumerableConstructor<T, any>
     }
 
     if (isEnumByStructure(instance,)) {
-        const prototypeConstructorChain = getPrototypeConstructorChain(instance,),
-            prototypeFound = prototypeConstructorChain.findLast(it => isEnumByStructure(it.prototype,),)
+        const prototypeConstructorChain = getPrototypeConstructorChain(instance,)
+        const prototypeFound = prototypeConstructorChain.findLast(it => isEnumByStructure(it.prototype,),)
         if (prototypeFound == null)
             throw new NullReferenceException(`No Enumerable-like could be found from the prototype chain ${prototypeConstructorChain.join(", ", '"', '"',)}.`, instance,)
         return prototypeFound as EnumerableConstructor<T, any>

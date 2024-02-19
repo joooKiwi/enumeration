@@ -19,8 +19,8 @@ export function isEnumByStructure(value: unknown,): value is (& object & Record<
     if (value == null || typeof value != "object")
         return false
 
-    const members = EnumConstants.ENUMERABLE_MEMBERS,
-        size = members.length
+    const members = EnumConstants.ENUMERABLE_MEMBERS
+    const size = members.length
     let index = -1
     while (++index < size)
         if (!(members[index]! in value))

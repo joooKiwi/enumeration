@@ -102,8 +102,9 @@ export class EnumWithNullableGrandParent<const out PARENT extends EnumerableWith
             return
         }
         this.#parent = lazy(() => {
-            const parent = super.parent,
-                grandParent = this.grandParent
+            const parent = super.parent
+            const grandParent = this.grandParent
+
             if (parent == null && grandParent != null)
                 throw new ImpossibleIntegrityException(`The parent reference in "${this.constructor.name}" was not expected to be null when its grandparent is not-null.`, this,)
             return parent

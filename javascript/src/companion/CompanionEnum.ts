@@ -509,8 +509,8 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {ImpossibleOrdinalException}
      */
     protected _isInOrdinalsByBigInt(ordinal: bigint, originalValue: PossibleBigInt,): OrdinalOf<ENUMERABLE> {
-        const convertedOrdinal = Number(ordinal,),
-            ordinals = this.ordinals
+        const convertedOrdinal = Number(ordinal,)
+        const ordinals = this.ordinals
         if (ordinals.hasOne(convertedOrdinal,))
             return convertedOrdinal
         throw new ImpossibleOrdinalException(`The BigInt value "${ordinal}" is not within a valid ordinal ${ordinals.join(", ", '(', ')',)}.`, originalValue,)
@@ -702,9 +702,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {NullReferenceException}
      */
     protected _getValueFromReflection(nameOrOrdinal: string, originalValue: PossibleString,) {
-        const instance = this.instance,
-            field = this.#getField(nameOrOrdinal, originalValue, instance,),
-            value = this.#getValue(field, nameOrOrdinal, originalValue, instance,)
+        const instance = this.instance
+        const field = this.#getField(nameOrOrdinal, originalValue, instance,)
+        const value = this.#getValue(field, nameOrOrdinal, originalValue, instance,)
         return this._getValidValueByString(value, nameOrOrdinal, originalValue, instance,)
     }
 

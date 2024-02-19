@@ -19,8 +19,8 @@ export function isEnumWithParentByStructure(value: unknown,): value is (& object
     if (value == null || typeof value != "object")
         return false
 
-    const members = EnumConstants.ENUMERABLE_WITH_PARENT_MEMBERS,
-        size = members.length
+    const members = EnumConstants.ENUMERABLE_WITH_PARENT_MEMBERS
+    const size = members.length
     let index = -1
     while (++index < size)
         if (!(members[index]! in value))

@@ -79,8 +79,8 @@ export class KnownEnumConstructors {
         if (size == 0)
             return this // Nothing can be added
 
-        const instanceValues = this.#__values,
-            instanceSize = instanceValues.length
+        const instanceValues = this.#__values
+        const instanceSize = instanceValues.length
         let index = -1
         while (++index < size) {
             const value = values[index]!
@@ -118,8 +118,8 @@ export class KnownEnumConstructors {
 
         const newArray = [] as Function[]
 
-        const instanceValues = this.#__values,
-            instanceSize = instanceValues.length
+        const instanceValues = this.#__values
+        const instanceSize = instanceValues.length
         let instanceIndex = -1
         instanceLoop:while (++instanceIndex < instanceSize) {
             const instanceValue = instanceValues[instanceIndex]!

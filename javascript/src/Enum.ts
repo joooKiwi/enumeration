@@ -88,8 +88,8 @@ export abstract class Enum<const out ORDINAL extends number = number,
      * @onlyCalledAtConstruction
      */
     get #lastOrdinalPlus1(): ORDINAL {
-        const instance = this.#prototypeConstructor,
-            map = EnumConstants.LAST_ORDINAL_MAP
+        const instance = this.#prototypeConstructor
+        const map = EnumConstants.LAST_ORDINAL_MAP
         const nextValue = (map.get(instance,) ?? -1) + 1 as ORDINAL
         map.set(instance, nextValue,)
         return nextValue
@@ -102,8 +102,8 @@ export abstract class Enum<const out ORDINAL extends number = number,
      * @throws {NullReferenceException} The current instance was not found in the {@link CompanionEnumDeclaration.values companion values}
      */
     get #nameOnCurrentInstance(): NAME {
-        const companion = this.#__companion,
-            iterator = companion.iterator
+        const companion = this.#__companion
+        const iterator = companion.iterator
         while (iterator.hasNext)
             if (iterator.nextValue === this)
                 return companion.names.get(iterator.index - 1,) as NAME
