@@ -17,6 +17,7 @@
   * [Forgetting the type declaration on the companion enum](#forgetting-the-type-declaration-on-the-companion-enum)
   * [Calling a `companion enum` methods, but giving an error on valid instances](#calling-a-companion-enum-methods-but-giving-an-error-on-valid-instances)
   * [Having an `Enumerable` to not have a value from `getLastPrototype`](#having-an-enumerable-to-not-have-a-value-from-getlastprototype)
+* [Known error](#known-error)
 * [Contribution](#contribution)
 
 ## Installation
@@ -654,6 +655,44 @@ class EnumLike {
 ```
 
 </details>
+
+## Known error
+
+There is a known error for the optional index type being set on an Enum on **Typescript** exclusively.
+Currently, it is unknown where it is located,
+but just commenting the type resolve the thing.
+An alternative to it is to put the optional types over the declared constants.
+
+```typescript
+// Known error
+class ChildEnum {
+    public static readonly A = new ChildEnum()
+    public static readonly 0: typeof ChildEnum.A
+}
+// ChildEnum.A is fine
+// ChildEnum[0] is always being set to undefined
+```
+
+```typescript
+// Solution 1
+class ChildEnum {
+    public static readonly A = new ChildEnum()
+    // public static readonly 0: typeof ChildEnum.A
+}
+// ChildEnum.A is fine
+// ChildEnum[0] is fine
+```
+
+```typescript
+// Solution 2
+class ChildEnum {
+    public static readonly 0: typeof ChildEnum.A
+    public static readonly A = new ChildEnum()
+}
+// ChildEnum.A is fine
+// ChildEnum[0] is fine
+```
+
 
 ## Contribution
 You can contribute to the project in 2 different ways:
