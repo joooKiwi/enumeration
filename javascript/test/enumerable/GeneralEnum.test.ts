@@ -21,21 +21,23 @@ describe("GeneralEnumTest", () => {
 
     describe("throws exceptions", () => {
 
-        describe("UnhandledValueException", () => describe.each(unhandledValues,)("%s", ({value: it,},) => {
+        describe("UnhandledValueException", () => {
+        describe.each(unhandledValues,)("%s", ({value: it,},) => {
             const companion = EmptyEnum.CompanionEnum.get
             test("set defaultValue", () => expect(() => companion.defaultValue = it,).toThrow(UnhandledValueException,),)
             test("setDefaultValue", () => expect(() => companion.setDefaultValue(it,),).toThrow(UnhandledValueException,),)
             test("getValue", () => expect(() => companion.getValue(it,),).toThrow(UnhandledValueException,),)
             test("getName", () => expect(() => companion.getName(it,),).toThrow(UnhandledValueException,),)
             test("getOrdinal", () => expect(() => companion.getOrdinal(it,),).toThrow(UnhandledValueException,),)
-        },),)
-        describe("NullEnumerableException", () => describe.each(nullValues,)("%s", it => {
+        },) },)
+        describe("NullEnumerableException", () => {
+        describe.each(nullValues,)("%s", it => {
             const companion = EmptyEnum.CompanionEnum.get
             test("get defaultValue", () => expect(() => companion.defaultValue,).toThrow(NullEnumerableException,),)
             test("getValue", () => expect(() => companion.getValue(it,),).toThrow(NullEnumerableException,),)
             test("getName", () => expect(() => companion.getName(it,),).toThrow(NullEnumerableException,),)
             test("getOrdinal", () => expect(() => companion.getOrdinal(it,),).toThrow(NullEnumerableException,),)
-        },),)
+        },) },)
         describe("InvalidEnumerableException", () => {
             const companion = Enum1.CompanionEnum.get
             // @ts-expect-error
@@ -49,26 +51,28 @@ describe("GeneralEnumTest", () => {
             // @ts-expect-error
             test("getOrdinal", () => expect(() => companion.getOrdinal(Enum2.A,),).toThrow(InvalidEnumerableException,),)
         },)
-        describe("InvalidInstanceException", () => describe.each(simpleEnumVariables,)("%s", it => {
+        describe("InvalidInstanceException", () => {
+        describe.each(simpleEnumVariables,)("%s", it => {
             const companion = EmptyEnumWithVariables.CompanionEnum.get
             test("set defaultValue", () => expect(() => companion.defaultValue = it,).toThrow(InvalidInstanceException,),)
             test("setDefaultValue", () => expect(() => companion.setDefaultValue(it,),).toThrow(InvalidInstanceException,),)
             test("getValue", () => expect(() => companion.getValue(it,),).toThrow(InvalidInstanceException,),)
             test("getName", () => expect(() => companion.getName(it,),).toThrow(InvalidInstanceException,),)
             test("getOrdinal", () => expect(() => companion.getOrdinal(it,),).toThrow(InvalidInstanceException,),)
-        },),)
+        },) },)
 
-        describe("ImpossibleOrdinalException", () => describe.each(impossibleOrdinals,)("%s", ({value: it,},) => {
+        describe("ImpossibleOrdinalException", () => {
+        describe.each(impossibleOrdinals,)("%s", ({value: it,},) => {
             const companion = Enum1.CompanionEnum.get
             test("set defaultValue", () => expect(() => companion.defaultValue = it,).toThrow(ImpossibleOrdinalException,),)
             test("setDefaultValue", () => expect(() => companion.setDefaultValue(it,),).toThrow(ImpossibleOrdinalException,),)
             test("getValue", () => expect(() => companion.getValue(it,),).toThrow(ImpossibleOrdinalException,),)
             test("getName", () => expect(() => companion.getName(it,),).toThrow(ImpossibleOrdinalException,),)
             test("getOrdinal", () => expect(() => companion.getOrdinal(it,),).toThrow(ImpossibleOrdinalException,),)
-        },),)
+        },) },)
         describe("NonExistantReferenceException", () => {
-            const companion = EmptyEnum.CompanionEnum.get,
-                somethingInvalid = "somethingInvalid"
+            const companion = EmptyEnum.CompanionEnum.get
+            const somethingInvalid = "somethingInvalid"
 
             test("set defaultValue", () => expect(() => companion.defaultValue = somethingInvalid,).toThrow(NullReferenceException),)
             test("setDefaultValue", () => expect(() => companion.setDefaultValue(somethingInvalid,),).toThrow(NullReferenceException),)
@@ -77,22 +81,24 @@ describe("GeneralEnumTest", () => {
             test("getOrdinal", () => expect(() => companion.getOrdinal(somethingInvalid,),).toThrow(NullReferenceException),)
         },)
 
-        describe("ForbiddenNumericException", () => describe.each(forbiddenNumbers,)("%s", ({value: it,},) => {
+        describe("ForbiddenNumericException", () => {
+        describe.each(forbiddenNumbers,)("%s", ({value: it,},) => {
             const companion = Enum1.CompanionEnum.get
             test("set defaultValue", () => expect(() => companion.defaultValue = it,).toThrow(ForbiddenNumericException,),)
             test("setDefaultValue", () => expect(() => companion.setDefaultValue(it,),).toThrow(ForbiddenNumericException,),)
             test("getValue", () => expect(() => companion.getValue(it,),).toThrow(ForbiddenNumericException,),)
             test("getName", () => expect(() => companion.getName(it,),).toThrow(ForbiddenNumericException,),)
             test("getOrdinal", () => expect(() => companion.getOrdinal(it,),).toThrow(ForbiddenNumericException,),)
-        }),)
-        describe("ForbiddenInheritedEnumerableMemberException", () => describe.each(everyStringEnumerableMember,)("%s", ({value: it,},) => {
+        },) },)
+        describe("ForbiddenInheritedEnumerableMemberException", () => {
+        describe.each(everyStringEnumerableMember,)("%s", ({value: it,},) => {
             const companion = Enum1.CompanionEnum.get
             test("set defaultValue", () => expect(() => companion.defaultValue = it,).toThrow(ForbiddenInheritedEnumerableMemberException,),)
             test("setDefaultValue", () => expect(() => companion.setDefaultValue(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
             test("getValue", () => expect(() => companion.getValue(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
             test("getName", () => expect(() => companion.getName(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
             test("getOrdinal", () => expect(() => companion.getOrdinal(it,),).toThrow(ForbiddenInheritedEnumerableMemberException,),)
-        }),)
+        })},)
 
     },)
 
@@ -112,7 +118,8 @@ describe("GeneralEnumTest", () => {
         test("size of 3 on \"another child\"", () => expect(AnotherChildEnum.CompanionEnum.get.values,).toHaveLength(3,),)
     },)
 
-    describe("valid value (0 and 'A')", () => describe.each(validValues,)("%s", ({value: it,},) => {
+    describe("valid value (0 and 'A')", () => {
+    describe.each(validValues,)("%s", ({value: it,},) => {
         const companion = Enum1.CompanionEnum.get
         const equivalentValue = Enum1.A
         const defaultValue = Enum1.B
@@ -133,7 +140,7 @@ describe("GeneralEnumTest", () => {
         test("getValue", () => expect(companion.getValue(it,),).toBe(equivalentValue,),)
         test("getName", () => expect(companion.getName(it,),).toBe(equivalentValue.name,),)
         test("getOrdinal", () => expect(companion.getOrdinal(it,),).toBe(equivalentValue.ordinal,),)
-    },),)
+    },) },)
     describe("defaultValue validation", () => {
         describe("Construction init", () => {
             const companion = EnumWithDefault.CompanionEnum.get
