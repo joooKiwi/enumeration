@@ -78,11 +78,12 @@ export class EmptyEnum
 export class Enum1
     extends Enum<Ordinals, Names> {
 
-    public static readonly A = new Enum1()
-    public static readonly B = new Enum1()
-
+    // FIXME: For some reason Typescript or Jest doesn't properly set the indexes normally
     public static readonly 0: typeof Enum1.A
     public static readonly 1: typeof Enum1.B
+
+    public static readonly A = new Enum1()
+    public static readonly B = new Enum1()
 
     public static readonly CompanionEnum: CompanionEnumSingleton<Enum1, typeof Enum1> = class CompanionEnum_Enum1
         extends CompanionEnum<Enum1, typeof Enum1> {
