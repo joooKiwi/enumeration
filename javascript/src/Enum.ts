@@ -64,11 +64,11 @@ export abstract class Enum<const out ORDINAL extends number = number,
             return this[Symbol.toPrimitive](hint.valueOf(),)
 
         const lowerCaseHint = hint.toLowerCase()
-        if(lowerCaseHint === "number")
+        if (lowerCaseHint === "number")
             return this.ordinal
-        if(lowerCaseHint === "string")
+        if (lowerCaseHint === "string")
             return this.name
-        if(lowerCaseHint === "default")
+        if (lowerCaseHint === "default")
             return this.name
         throw new InvalidHintException(`Invalid hint "${hint}": The "${this.#__companion.instance.name}" could only be converted to a string or number primitive`, hint,)
     }
