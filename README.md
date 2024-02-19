@@ -40,6 +40,12 @@ You can contribute to my projects in 2 different ways
 - [GitHub sponsor](https://github.com/sponsors/joooKiwi) or
 - [!["Buy me a Coffee"](https://img.buymeacoffee.com/button-api/?&button_colour=40DCA5&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00)](https://www.buymeacoffee.com/joookiwi)
 
+## Implementation by language
+
+The implementations are different across the different languages,
+but they should not change in their implementation
+_(it's only the syntax that is different for the most part)_.
+
 ### Javascript and Typescript implementation
 
 This project (currently published on [NPM](https://www.npmjs.com/package/@joookiwi/enumerable))
