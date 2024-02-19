@@ -7,11 +7,12 @@
 
 import type {PossibleEnumerableMembers} from "../../src/Enumerable.types"
 import {EnumConstants}                  from "../../src/EnumConstants"
+import MAX_VALUE_AS_NUMBER =  EnumConstants.MAX_VALUE_AS_NUMBER
+import MAX_VALUE_AS_BIG_INT = EnumConstants.MAX_VALUE_AS_BIG_INT
 
 import type {EmptyEnumWithVariables} from "../TemplateEnums"
 import {Holder}                      from "../Holder"
 
-const MAX_VALUE_AS_BIG_INT = EnumConstants.MAX_VALUE_AS_BIG_INT
 const MIN_SAFE_NUMBER_VALUE_AS_BIG_INT = BigInt(Number.MIN_SAFE_INTEGER,)
 const MAX_SAFE_NUMBER_VALUE_AS_BIG_INT = BigInt(Number.MAX_SAFE_INTEGER,)
 const MIN_NUMBER_VALUE_AS_BIG_INT = BigInt(-Number.MAX_VALUE,)
@@ -57,10 +58,12 @@ export const impossibleOrdinals = [
     new Holder(new String(-1,),                                    `-1 as object string`,),
 
 
+    new Holder(MAX_VALUE_AS_NUMBER + 1,                            `"MAX_VALUE + 1" as number`,),
+    new Holder(Object(MAX_VALUE_AS_NUMBER + 1,),                   `"MAX_VALUE + 1" as object number`,),
     new Holder(MAX_VALUE_AS_BIG_INT + 1n,                          `"MAX_VALUE + 1" as bigint`,),
     new Holder(Object(MAX_VALUE_AS_BIG_INT + 1n,),                 `"MAX_VALUE + 1" as object bigint`,),
-    new Holder((MAX_VALUE_AS_BIG_INT + 1n).toString(),                   `"MAX_VALUE + 1" as string`,),
-    new Holder(new String(MAX_VALUE_AS_BIG_INT + 1n,),             `"MAX_VALUE + 1" as object string`,),
+    new Holder((MAX_VALUE_AS_NUMBER + 1).toString(),                     `"MAX_VALUE + 1" as string`,),
+    new Holder(new String(MAX_VALUE_AS_NUMBER + 1,),               `"MAX_VALUE + 1" as object string`,),
 
     new Holder(BigInt(MAX_VALUE_AS_BIG_INT * 2n,),                 `"MAX_VALUE * 2" as bigint`,),
     new Holder(Object(BigInt(MAX_VALUE_AS_BIG_INT * 2n,),),        `"MAX_VALUE * 2" as object bigint`,),
