@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+ Copyright (c) 2023-2024. Jonathan Bédard ~ JóôòKiwi
 
  This project is free to use.
  All the right is reserved to the author of this project.
@@ -32,9 +32,9 @@ export type EnumerableToPrimitive<HINT extends string, ENUM extends Enumerable =
 
 //#region -------------------- Name / ordinal of --------------------
 
-/** A simple {@link String} or {@link Enumerable.name} value */
+/** A {@link String} or {@link Enumerable.name} value */
 export type PossibleNameOf<NAME extends string, ENUM extends Enumerable, > = | NAME | NameOf<ENUM>
-/** A simple {@link String} or {@link Enumerable.ordinal} value */
+/** A {@link String} or {@link Enumerable.ordinal} value */
 export type PossibleOrdinalOf<ORDINAL extends number, ENUM extends Enumerable, > = | ORDINAL | OrdinalOf<ENUM>
 
 /** A join of both {@link String} and {@link Enumerable.name} */
@@ -43,7 +43,7 @@ export type SpecificNameOf<NAME extends string, ENUM extends Enumerable, > = & N
 export type SpecificOrdinalOf<ORDINAL extends number, ENUM extends Enumerable, > = & ORDINAL & OrdinalOf<ENUM>
 
 /**
- * A simple type to retrieve the {@link Enumerable.name name} of an {@link Enumerable}
+ * A type to retrieve the {@link Enumerable.name name} of an {@link Enumerable}
  * with the combinaison of an {@link EnumerableConstructor} keys
  * and a {@link CompanionEnum} {@link CompanionEnum.instance instance} keys
  *
@@ -51,7 +51,7 @@ export type SpecificOrdinalOf<ORDINAL extends number, ENUM extends Enumerable, >
  */
 export type NameOf<ENUM extends Enumerable, > = ENUM["name"]
 /**
- * A simple type to retrieve the {@link Enumerable.ordinal ordinal} of an {@link Enumerable}
+ * A type to retrieve the {@link Enumerable.ordinal ordinal} of an {@link Enumerable}
  * with the combinaison of an {@link EnumerableConstructor} keys
  * and a {@link CompanionEnum} {@link CompanionEnum.instance instance} keys
  *
@@ -92,11 +92,11 @@ export type PossibleEnumerableValueBy<ENUM extends Enumerable, >
 
 /**
  * Every possible {@link Symbol} passed to a {@link Enum} child
- * in order to create a {@link import('@joookiwi/lazy').Lazy Lazy}
+ * to create a {@link import('@joookiwi/lazy').Lazy Lazy}
  */
 export type PossibleEnumSymbol = typeof EnumConstants[| "ENUM_REFERENCE_BY_ITS_NAME_SYMBOL" | "NULL_ENUM_REFERENCE_SYMBOL"]
 /**
- * A simple type of {@link Enumerable} by its value or its {@link Enumerable.name name} (object or primitive)
+ * A type of {@link Enumerable} by its value or its {@link Enumerable.name name} (object or primitive)
  * via the {@link Nullable} value itself or a callback returning the {@link Nullable} value
  */
 export type PossibleEnumerableValueOrNameByValueOrCallback<T extends Enumerable = Enumerable, > = Nullable<| T | NameOf<T> | String | PossibleEnumSymbol | (() => Nullable<T | NameOf<T> | String | PossibleEnumSymbol>)>
@@ -121,31 +121,31 @@ export type EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<
 //#endregion -------------------- Enumerable by Enumerable & EnumerableConstructor --------------------
 //#region -------------------- General types --------------------
 
-/** The simple generic value of an {@link EnumWithNullableParent} with its default values */
+/** The generic value of an {@link EnumWithNullableParent} with its default values */
 export type EnumWithNullableParentGeneralType = EnumWithNullableParent<Enumerable>
-/** The simple generic value of an {@link EnumWithParent} with its default values */
+/** The generic value of an {@link EnumWithParent} with its default values */
 export type EnumWithParentGeneralType = EnumWithParent<Enumerable>
-/** The simple generic value of an {@link EnumWithNullableGrandParent} with its default values */
+/** The generic value of an {@link EnumWithNullableGrandParent} with its default values */
 export type EnumWithNullableGrandParentGeneralType = EnumWithNullableGrandParent<EnumerableWithNullableParent<Enumerable>, Enumerable>
-/** The simple generic value of an {@link EnumWithGrandParent} with its default values */
+/** The generic value of an {@link EnumWithGrandParent} with its default values */
 export type EnumWithGrandParentGeneralType = EnumWithGrandParent<EnumerableWithParent<Enumerable>, Enumerable>
-/** The simple generic value of an {@link EnumWithNullableGreatGrandParent} with its default values */
+/** The generic value of an {@link EnumWithNullableGreatGrandParent} with its default values */
 export type EnumWithNullableGreatGrandParentGeneralType = EnumWithNullableGreatGrandParent<EnumerableWithNullableGrandParent<EnumerableWithNullableParent<Enumerable>, Enumerable>, EnumerableWithNullableParent<Enumerable>, Enumerable>
-/** The simple generic value of an {@link EnumWithGreatGrandParent} with its default values */
+/** The generic value of an {@link EnumWithGreatGrandParent} with its default values */
 export type EnumWithGreatGrandParentGeneralType = EnumWithGreatGrandParent<EnumerableWithGrandParent<EnumerableWithParent<Enumerable>, Enumerable>, EnumerableWithParent<Enumerable>, Enumerable>
 
 
-/** The simple generic value of an {@link EnumerableWithNullableParent} with its default values */
+/** The generic value of an {@link EnumerableWithNullableParent} with its default values */
 export type EnumerableWithNullableParentGeneralType = EnumerableWithNullableParent<Enumerable>
-/** The simple generic value of an {@link EnumerableWithParent} with its default values */
+/** The generic value of an {@link EnumerableWithParent} with its default values */
 export type EnumerableWithParentGeneralType = EnumerableWithParent<Enumerable>
-/** The simple generic value of an {@link EnumerableWithNullableGrandParent} with its default values */
+/** The generic value of an {@link EnumerableWithNullableGrandParent} with its default values */
 export type EnumerableWithNullableGrandParentGeneralType = EnumerableWithNullableGrandParent<EnumerableWithNullableParent<Enumerable>, Enumerable>
-/** The simple generic value of an {@link EnumerableWithGrandParent} with its default values */
+/** The generic value of an {@link EnumerableWithGrandParent} with its default values */
 export type EnumerableWithGrandParentGeneralType = EnumerableWithGrandParent<EnumerableWithParent<Enumerable>, Enumerable>
-/** The simple generic value of an {@link EnumerableWithNullableGreatGrandParent} with its default values */
+/** The generic value of an {@link EnumerableWithNullableGreatGrandParent} with its default values */
 export type EnumerableWithNullableGreatGrandParentGeneralType = EnumerableWithNullableGreatGrandParent<EnumerableWithNullableGrandParent<EnumerableWithNullableParent<Enumerable>, Enumerable>, EnumerableWithNullableParent<Enumerable>, Enumerable>
-/** The simple generic value of an {@link EnumerableWithGreatGrandParent} with its default values */
+/** The generic value of an {@link EnumerableWithGreatGrandParent} with its default values */
 export type EnumerableWithGreatGrandParentGeneralType = EnumerableWithGreatGrandParent<EnumerableWithGrandParent<EnumerableWithParent<Enumerable>, Enumerable>, EnumerableWithParent<Enumerable>, Enumerable>
 
 //#endregion -------------------- General types --------------------

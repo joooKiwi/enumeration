@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+ Copyright (c) 2023-2024. Jonathan Bédard ~ JóôòKiwi
 
  This project is free to use.
  All the right is reserved to the author of this project.
@@ -16,9 +16,9 @@ import {CompanionEnumWithGrandParent}      from "../../src/companion/CompanionEn
 import {CompanionEnumWithGreatGrandParent} from "../../src/companion/CompanionEnumWithGreatGrandParent"
 import {CompanionEnumWithParent}           from "../../src/companion/CompanionEnumWithParent"
 
-/** The simple enums ordinals */
+/** The enums ordinals */
 type Ordinals = | 0 | 1
-/** The simple enums names */
+/** The enums names */
 type Names = | 'A' | 'B'
 
 export class EnumTestInstance<out ORDINAL extends Ordinals = Ordinals, out NAME extends Names = Names, >

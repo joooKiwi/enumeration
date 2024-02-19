@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+ Copyright (c) 2023-2024. Jonathan Bédard ~ JóôòKiwi
 
  This project is free to use.
  All the right is reserved to the author of this project.
@@ -183,10 +183,10 @@ companionEnum.getOrdinal(2,).toString()
 
 //#endregion -------------------- getName --------------------
 
-/** The simple {@link EnumWithParentDeclarationTestInstance} reference */
+/** The {@link EnumWithParentDeclarationTestInstance} reference */
 type EnumValue = typeof EnumWithParentDeclarationTestInstance.A
-/** The simple {@link EnumWithParentDeclarationTestInstance.A} reference ordinal */
+/** The {@link EnumWithParentDeclarationTestInstance.A} reference ordinal */
 type SpecificOrdinal = 0
-/** The simple {@link EnumWithParentDeclarationTestInstance.A} name */
+/** The {@link EnumWithParentDeclarationTestInstance.A} name */
 type SpecificName = 'A'
 

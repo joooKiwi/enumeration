@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+ Copyright (c) 2023-2024. Jonathan Bédard ~ JóôòKiwi
 
  This project is free to use.
  All the right is reserved to the author of this project.
@@ -19,7 +19,7 @@ import {Helper}                from "./helper/Helper"
 import {KnownEnumConstructors} from "./helper/KnownEnumConstructors"
 
 /**
- * A simple {@link Enum} class in conjuncture with the {@link EnumerableWithGrandParent}.
+ * An {@link Enum} class in conjuncture with the {@link EnumerableWithGrandParent}.
  *
  * Compared to its sibling {@link EnumWithNullableGrandParent}, it does not want <b>null</b>.
  *

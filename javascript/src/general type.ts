@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+ Copyright (c) 2023-2024. Jonathan Bédard ~ JóôòKiwi
 
  This project is free to use.
  All the right is reserved to the author of this project.
@@ -7,15 +7,15 @@
 
 //TODO relocate into a single typescript project
 /**
- * A simple encapsulation type toward a specified type to be the value, <b>null</b>
+ * An encapsulation type toward a specified type to be the value, <b>null</b>
  *
  * @see Nullable
  */
 export type NullOr<T, > = | T | null
-/** A simple type to join both nullable value (<b>null</b> and <b>undefined</b>) */
+/** A type to join both nullable value (<b>null</b> and <b>undefined</b>) */
 export type NullOrUndefined = | null | undefined
 /**
- * A simple encapsulation type toward a specified type to be the value, <b>null</b> or <b>undefined</b>
+ * An encapsulation type toward a specified type to be the value, <b>null</b> or <b>undefined</b>
  *
  * @see NullOr
  */
@@ -26,14 +26,14 @@ export type PossiblePrimitiveHint = "string" | "number" | "default"
 
 /** A possible {@link Number} (primitive or object) */
 export type PossibleNumber<T extends number = number, > = | T | Number
-/** A simple {@link Number} in a {@link String} template */
+/** A {@link Number} in a {@link String} template */
 export type NumberTemplate<T extends number = number, > = `${T}`
 /** A possible {@link Number} (primitive, object or in a {@link String} template) */
 export type PossibleNumberOrTemplate<T extends number = number, > = | T | Number | `${T}`
 
 /** A possible {@link BigInt} (primitive or object) */
 export type PossibleBigInt<T extends bigint = bigint, > = | T | BigInt
-/** A simple {@link BigInt} in a {@link String} template */
+/** A {@link BigInt} in a {@link String} template */
 export type BigIntTemplate<T extends bigint = bigint, > = `${T}`
 /** A possible {@link BigInt} (primitive, object or in a {@link String} template) */
 export type PossibleBigIntOrTemplate<T extends bigint = bigint, > = | T | BigInt | `${T}`

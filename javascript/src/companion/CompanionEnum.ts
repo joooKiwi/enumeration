@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+ Copyright (c) 2023-2024. Jonathan Bédard ~ JóôòKiwi
 
  This project is free to use.
  All the right is reserved to the author of this project.
@@ -191,12 +191,12 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @see EnumConstants.ORDINALS_MAP
      */
     #initializeMaps(): void {
-        const instance = this.instance,
-            excludedNames = this._excludedNames,
-            everyFields = Object.entries(Object.getOwnPropertyDescriptors(instance,),),
-            everyOrdinals = [] as OrdinalOf<ENUMERABLE>[],
-            everyNames = [] as NameOf<ENUMERABLE>[],
-            everyEnumerable = [] as ENUMERABLE[]
+        const instance = this.instance
+        const excludedNames = this._excludedNames
+        const everyFields = Object.entries(Object.getOwnPropertyDescriptors(instance,),)
+        const everyOrdinals = [] as OrdinalOf<ENUMERABLE>[]
+        const everyNames = [] as NameOf<ENUMERABLE>[]
+        const everyEnumerable = [] as ENUMERABLE[]
 
         const everyFieldSize = everyFields.length
         let currentOrdinal = 0
@@ -212,9 +212,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
             const name = field[0]
             if (name === EnumConstants.PROTOTYPE_NAME)
                 continue
-            if(excludedNames.hasOne(name))
+            if(excludedNames.hasOne(name,))
                 continue
-            if (EnumConstants.DECIMAL_REGEX.test(name))
+            if (EnumConstants.DECIMAL_REGEX.test(name,))
                 continue
 
             const {value,} = property
@@ -312,7 +312,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
             return true
         } catch (exception) {
             if (exception instanceof ForbiddenInheritedEnumerableMemberException)
-                throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value "${defaultName}" is one possible value of the inherited field name ${EnumConstants.EVERY_ENUMERABLE_MEMBERS_JOINED}.`, exception,)
+                throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value "${defaultName}" is one possible value of the inherited field name (\"name\", \"ordinal\", \"parent\", \"grandParent\", \"greatGrandParent\", \"[Symbol.toPrimitive]\", \"[Symbol.toStringTag]\").`, exception,)
             if (exception instanceof ForbiddenNameException)
                 throw new NullEnumerableException(`Unable to initialize the default value by the "${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value "${defaultName}" is an excluded name ${this._excludedNames.join(", ", '(', ')', null, null, it => `"${it}"`,)}.`, exception,)
             if (exception instanceof ForbiddenNumericException)
@@ -413,11 +413,11 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      */
     protected _isNotInEdgeCaseNumericByString(nameOrOrdinal: string, originalValue: PossibleString,) {
         if (nameOrOrdinal === "NaN")
-            throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be a NaN.", originalValue,)
+            throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be NaN.", originalValue,)
         if (nameOrOrdinal === "-Infinity")
-            throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be the negative infinity.", originalValue,)
+            throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be -∞.", originalValue,)
         if (nameOrOrdinal === "Infinity")
-            throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be the positive infinity.", originalValue,)
+            throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be +∞.", originalValue,)
     }
 
     /**
@@ -430,11 +430,11 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      */
     protected _isNotInEdgeCaseNumericByNumber(ordinal: number, originalValue: PossibleNumber,) {
         if (Number.isNaN(ordinal,))
-            throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be a NaN.", originalValue,)
-        if (ordinal == Number.NEGATIVE_INFINITY)
-            throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be the negative infinity.", originalValue,)
-        if (ordinal == Number.POSITIVE_INFINITY)
-            throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be the positive infinity.", originalValue,)
+            throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be NaN.", originalValue,)
+        if (ordinal == -Infinity)
+            throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be -∞.", originalValue,)
+        if (ordinal == Infinity)
+            throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be +∞.", originalValue,)
     }
 
     //#endregion -------------------- Validation (is not in "edge case numeric") methods --------------------
@@ -448,9 +448,8 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {ForbiddenInheritedEnumerableMemberException}
      */
     protected _isNotInInheritedEnumerableMembers(nameOrOrdinal: string, originalValue: PossibleString,) {
-        const enumerableMembers = EnumConstants.EVERY_ENUMERABLE_MEMBERS
-        if (enumerableMembers.hasOne(nameOrOrdinal,))
-            throw new ForbiddenInheritedEnumerableMemberException(`Forbidden inherited enumerable member. The string value "${originalValue}" cannot be an inherited member of the inherited Enum static methods ${enumerableMembers.join(", ", '(', ')', null, null, it => `"${typeof it == "symbol" ? it.description : it}"`)}.`, originalValue,)
+        if (EnumConstants.EVERY_ENUMERABLE_MEMBERS.hasOne(nameOrOrdinal,))
+            throw new ForbiddenInheritedEnumerableMemberException(`Forbidden inherited enumerable member. The string value "${originalValue}" cannot be an inherited member of the inherited Enum static methods (\"name\", \"ordinal\", \"parent\", \"grandParent\", \"greatGrandParent\").`, originalValue,)
     }
 
     //#endregion -------------------- Validation (is not in "inherited enumerable members") methods --------------------
@@ -510,8 +509,8 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {ImpossibleOrdinalException}
      */
     protected _isInOrdinalsByBigInt(ordinal: bigint, originalValue: PossibleBigInt,): OrdinalOf<ENUMERABLE> {
-        const convertedOrdinal = Number(ordinal,),
-            ordinals = this.ordinals
+        const convertedOrdinal = Number(ordinal,)
+        const ordinals = this.ordinals
         if (ordinals.hasOne(convertedOrdinal,))
             return convertedOrdinal
         throw new ImpossibleOrdinalException(`The BigInt value "${ordinal}" is not within a valid ordinal ${ordinals.join(", ", '(', ')',)}.`, originalValue,)
@@ -567,10 +566,10 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {ImpossibleOrdinalException}
      */
     protected _isNotOverMaxValueByString(ordinal: NumberTemplate, originalValue: PossibleString,) {
-        if (ordinal.length > EnumConstants.MAX_VALUE_SIZE)
-            throw new ImpossibleOrdinalException(`The String value "${ordinal}" cannot be over the maximum value (${EnumConstants.MAX_VALUE_AS_NUMBER}) of an int.`, originalValue,)
-        if (Number(ordinal,) > EnumConstants.MAX_VALUE_AS_NUMBER)
-            throw new ImpossibleOrdinalException(`The String value "${ordinal}" cannot be over the maximum value (${EnumConstants.MAX_VALUE_AS_NUMBER}) of an int.`, originalValue,)
+        if (ordinal.length > 10)
+            throw new ImpossibleOrdinalException(`The String value "${ordinal}" cannot be over the maximum value (2 147 483 647) of an int.`, originalValue,)
+        if (Number(ordinal,) > 0b111_1111_1111_1111_1111_1111_1111_1111)
+            throw new ImpossibleOrdinalException(`The String value "${ordinal}" cannot be over the maximum value (2 147 483 647) of an int.`, originalValue,)
     }
 
     /**
@@ -581,8 +580,8 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {ImpossibleOrdinalException}
      */
     protected _isNotOverMaxValueByNumber(ordinal: number, originalValue: PossibleNumber,) {
-        if (ordinal > EnumConstants.MAX_VALUE_AS_NUMBER)
-            throw new ImpossibleOrdinalException(`The Number value "${ordinal}" cannot be over the maximum value (${EnumConstants.MAX_VALUE_AS_NUMBER}) of an int.`, originalValue,)
+        if (ordinal > 0b111_1111_1111_1111_1111_1111_1111_1111)
+            throw new ImpossibleOrdinalException(`The Number value "${ordinal}" cannot be over the maximum value (2 147 483 647) of an int.`, originalValue,)
     }
 
     /**
@@ -593,8 +592,8 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {ImpossibleOrdinalException}
      */
     protected _isNotOverMaxValueByBigInt(ordinal: bigint, originalValue: PossibleBigInt,) {
-        if (ordinal > EnumConstants.MAX_VALUE_AS_BIG_INT)
-            throw new ImpossibleOrdinalException(`The BigInt value "${ordinal}" cannot be over the maximum value (${EnumConstants.MAX_VALUE_AS_NUMBER}) of an int.`, originalValue,)
+        if (ordinal > 0b111_1111_1111_1111_1111_1111_1111_1111n)
+            throw new ImpossibleOrdinalException(`The BigInt value "${ordinal}" cannot be over the maximum value (2 147 483 647) of an int.`, originalValue,)
     }
 
     //#endregion -------------------- Validation (is not over MAX_VALUE) methods --------------------
@@ -703,9 +702,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {NullReferenceException}
      */
     protected _getValueFromReflection(nameOrOrdinal: string, originalValue: PossibleString,) {
-        const instance = this.instance,
-            field = this.#getField(nameOrOrdinal, originalValue, instance,),
-            value = this.#getValue(field, nameOrOrdinal, originalValue, instance,)
+        const instance = this.instance
+        const field = this.#getField(nameOrOrdinal, originalValue, instance,)
+        const value = this.#getValue(field, nameOrOrdinal, originalValue, instance,)
         return this._getValidValueByString(value, nameOrOrdinal, originalValue, instance,)
     }
 
@@ -1238,7 +1237,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     }
 
     public get [Symbol.toStringTag](): CompanionEnumName {
-        return EnumConstants.COMPANION_ENUM_TO_STRING_TAG
+        return "CompanionEnum"
     }
 
 

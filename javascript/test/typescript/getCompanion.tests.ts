@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+ Copyright (c) 2023-2024. Jonathan Bédard ~ JóôòKiwi
 
  This project is free to use.
  All the right is reserved to the author of this project.
@@ -77,7 +77,7 @@ export const valueByCompanion = getCompanion(EnumWithDifferentComportment.Compan
 // @ts-expect-error
 getCompanion(valueInstance,)
 
-/*** The simple enum type */
+/*** The enum type */
 type EnumValue = EnumWithDifferentComportment
 /** The companion instance of {@link EnumValue} */
 type CompanionValue = typeof EnumWithDifferentComportment["CompanionEnum"]["get"]

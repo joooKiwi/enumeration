@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+ Copyright (c) 2023-2024. Jonathan Bédard ~ JóôòKiwi
 
  This project is free to use.
  All the right is reserved to the author of this project.
@@ -35,7 +35,7 @@ export class KnownEnumConstructors {
     /** Tell that the values have changed between the calls of {@link KnownEnumConstructors.values} */
     #isValuesDifferentBetweenCalls = false
     #values?: Function[]
-    /** A simple {@link CollectionHolder} to encapsulate the values on the {@link KnownEnumConstructors.values} */
+    /** A {@link CollectionHolder} to encapsulate the values on the {@link KnownEnumConstructors.values} */
     #collection?: CollectionHolder<Function>
 
     //#endregion -------------------- Fields --------------------
@@ -59,7 +59,7 @@ export class KnownEnumConstructors {
         return this.#collection ??= new GenericCollectionHolder(this.#__values,)
     }
 
-    /** A simple alias toward the {@link KnownEnumConstructors} instance {@link KnownEnumConstructors.values "values method"} */
+    /** An alias toward the {@link KnownEnumConstructors} instance {@link KnownEnumConstructors.values "values method"} */
     public static get values() {
         return KnownEnumConstructors.get.values
     }
@@ -79,8 +79,8 @@ export class KnownEnumConstructors {
         if (size == 0)
             return this // Nothing can be added
 
-        const instanceValues = this.#__values,
-            instanceSize = instanceValues.length
+        const instanceValues = this.#__values
+        const instanceSize = instanceValues.length
         let index = -1
         while (++index < size) {
             const value = values[index]!
@@ -95,7 +95,7 @@ export class KnownEnumConstructors {
     }
 
     /**
-     * A simple alias toward the {@link KnownEnumConstructors} instance {@link KnownEnumConstructors.add "add(...values) method"}.
+     * An alias toward the {@link KnownEnumConstructors} instance {@link KnownEnumConstructors.add "add(...values) method"}.
      *
      * Note that no duplicate value can be inserted.
      *
@@ -118,8 +118,8 @@ export class KnownEnumConstructors {
 
         const newArray = [] as Function[]
 
-        const instanceValues = this.#__values,
-            instanceSize = instanceValues.length
+        const instanceValues = this.#__values
+        const instanceSize = instanceValues.length
         let instanceIndex = -1
         instanceLoop:while (++instanceIndex < instanceSize) {
             const instanceValue = instanceValues[instanceIndex]!
@@ -145,7 +145,7 @@ export class KnownEnumConstructors {
     }
 
     /**
-     * A simple alias toward the {@link KnownEnumConstructors} instance {@link KnownEnumConstructors.remove "remove(...values) method"}
+     * An alias toward the {@link KnownEnumConstructors} instance {@link KnownEnumConstructors.remove "remove(...values) method"}
      *
      * @param values The values to remove
      */

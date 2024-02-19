@@ -656,5 +656,6 @@ class EnumLike {
 </details>
 
 ## Contribution
-You can contribute to the project by the [GitHub sponsor](https://github.com/sponsors/joooKiwi).
-But eventually, more ways to contribute should be present.
+You can contribute to the project in 2 different ways:
+- [GitHub sponsor](https://github.com/sponsors/joooKiwi) or
+- [!["Buy me a Coffee"](https://img.buymeacoffee.com/button-api/?&button_colour=40DCA5&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00)](https://www.buymeacoffee.com/joookiwi)

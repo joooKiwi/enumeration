@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+ Copyright (c) 2023-2024. Jonathan Bédard ~ JóôòKiwi
 
  This project is free to use.
  All the right is reserved to the author of this project.
@@ -21,7 +21,7 @@ import {Helper}                       from "./helper/Helper"
 import {KnownEnumConstructors}        from "./helper/KnownEnumConstructors"
 
 /**
- * A simple {@link Enum} class in conjuncture with the {@link EnumerableWithNullableGreatGrandParent}.
+ * An {@link Enum} class in conjuncture with the {@link EnumerableWithNullableGreatGrandParent}.
  *
  * Compared to its sibling {@link EnumWithGreatGrandParent}, it can receive <b>null</b>.
  *
@@ -173,8 +173,8 @@ export class EnumWithNullableGreatGrandParent<const out PARENT extends Enumerabl
             return
         }
         this.#grandParent = lazy(() => {
-            const grandParent = super.grandParent,
-                greatGrandParent = this.greatGrandParent
+            const grandParent = super.grandParent
+            const greatGrandParent = this.greatGrandParent
 
             if (grandParent == null && greatGrandParent != null)
                 throw new ImpossibleIntegrityException(`The grandparent reference in "${this.constructor.name}" was not expected to be null when its great-grandparent is not-null.`, this,)

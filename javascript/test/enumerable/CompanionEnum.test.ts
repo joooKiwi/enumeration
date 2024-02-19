@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+ Copyright (c) 2023-2024. Jonathan Bédard ~ JóôòKiwi
 
  This project is free to use.
  All the right is reserved to the author of this project.
@@ -133,13 +133,17 @@ class CompanionEnumWithGreatGrandParent_TestClassHelper
 //#endregion -------------------- Helper class declaration --------------------
 
 describe("CompanionEnumTest", () => {
-    const /** A simple alias to the {@link BasicEnum} */Child = BasicEnum,
-        /** A simple alias to the {@link BasicEnumWithParent} */Parent = BasicEnumWithParent,
-        /** A simple alias to the {@link BasicEnumWithGreatGrandParent} */GrandParent = BasicEnumWithGrandParent,
-        /** A simple alias to the {@link BasicEnumWithGreatGrandParent} */GreatGrandParent = BasicEnumWithGreatGrandParent
+    /** An alias to the {@link BasicEnum} */
+    const Child = BasicEnum
+    /** An alias to the {@link BasicEnumWithParent} */
+    const Parent = BasicEnumWithParent
+    /** An alias to the {@link BasicEnumWithGreatGrandParent} */
+    const GrandParent = BasicEnumWithGrandParent
+    /** An alias to the {@link BasicEnumWithGreatGrandParent} */
+    const GreatGrandParent = BasicEnumWithGreatGrandParent
 
     describe("CompanionEnum", () => {
-        /** A simple alias to the {@link CompanionEnum_TestClassHelper} */
+        /** An alias to the {@link CompanionEnum_TestClassHelper} */
         const InstanceHelper = CompanionEnum_TestClassHelper
 
         describe("invalid argument", () => {
@@ -149,12 +153,12 @@ describe("CompanionEnumTest", () => {
         },)
         test("valid construction", () => expect(() => new InstanceHelper(Child,),).not.toThrow(),)
         describe("methods", () => {
-            const value = Child.A,
-                parentValue = Parent.A,
-                grandParentValue = GrandParent.A,
-                greatGrandParentValue = GreatGrandParent.A,
-                name = 'A',
-                ordinal = 0
+            const value = Child.A
+            const parentValue = Parent.A
+            const grandParentValue = GrandParent.A
+            const greatGrandParentValue = GreatGrandParent.A
+            const name = 'A'
+            const ordinal = 0
             let instance: CompanionEnum_TestClassHelper
             beforeEach(() => instance = new InstanceHelper(Child,),)
 
@@ -196,7 +200,7 @@ describe("CompanionEnumTest", () => {
         },)
     },)
     describe("CompanionEnumWithParent", () => {
-        /** A simple alias to the {@link CompanionEnumWithParent_TestClassHelper} */
+        /** An alias to the {@link CompanionEnumWithParent_TestClassHelper} */
         const InstanceHelper = CompanionEnumWithParent_TestClassHelper
 
         describe("invalid argument #1", () => {
@@ -217,12 +221,12 @@ describe("CompanionEnumTest", () => {
         },)
         test("valid construction", () => expect(() => new InstanceHelper(Parent, Child,),).not.toThrow(),)
         describe("methods", () => {
-            const value = Child.A,
-                parentValue = Parent.A,
-                grandParentValue = GrandParent.A,
-                greatGrandParentValue = GreatGrandParent.A,
-                name = 'A',
-                ordinal = 0
+            const value = Child.A
+            const parentValue = Parent.A
+            const grandParentValue = GrandParent.A
+            const greatGrandParentValue = GreatGrandParent.A
+            const name = 'A'
+            const ordinal = 0
             let instance: CompanionEnumWithParent_TestClassHelper
             beforeEach(() => instance = new InstanceHelper(Parent, Child,),)
 
@@ -264,7 +268,7 @@ describe("CompanionEnumTest", () => {
         },)
     },)
     describe("CompanionEnumWithGrandParent", () => {
-        /** A simple alias to the {@link CompanionEnumWithGrandParent_TestClassHelper} */
+        /** An alias to the {@link CompanionEnumWithGrandParent_TestClassHelper} */
         const InstanceHelper = CompanionEnumWithGrandParent_TestClassHelper
 
         describe("invalid argument #1", () => {
@@ -298,12 +302,12 @@ describe("CompanionEnumTest", () => {
         },)
         test("valid construction", () => expect(() => new InstanceHelper(GrandParent, Parent, Child,),).not.toThrow(),)
         describe("methods", () => {
-            const value = Child.A,
-                parentValue = Parent.A,
-                grandParentValue = GrandParent.A,
-                greatGrandParentValue = GreatGrandParent.A,
-                name = 'A',
-                ordinal = 0
+            const value = Child.A
+            const parentValue = Parent.A
+            const grandParentValue = GrandParent.A
+            const greatGrandParentValue = GreatGrandParent.A
+            const name = 'A'
+            const ordinal = 0
             let instance: CompanionEnumWithGrandParent_TestClassHelper
             beforeEach(() => instance = new InstanceHelper(GrandParent, Parent, Child,),)
 
@@ -345,7 +349,7 @@ describe("CompanionEnumTest", () => {
         },)
     },)
     describe("CompanionEnumWithGreatGrandParent", () => {
-        /** A simple alias to the {@link CompanionEnumWithGreatGrandParent_TestClassHelper} */
+        /** An alias to the {@link CompanionEnumWithGreatGrandParent_TestClassHelper} */
         const InstanceHelper = CompanionEnumWithGreatGrandParent_TestClassHelper
 
         describe("invalid argument #1", () => {
@@ -421,12 +425,12 @@ describe("CompanionEnumTest", () => {
         },)
         test("valid construction", () => expect(() => new InstanceHelper(GreatGrandParent, GrandParent, Parent, Child,),).not.toThrow(),)
         describe("methods", () => {
-            const value = Child.A,
-                parentValue = Parent.A,
-                grandParentValue = GrandParent.A,
-                greatGrandParentValue = GreatGrandParent.A,
-                name = 'A',
-                ordinal = 0
+            const value = Child.A
+            const parentValue = Parent.A
+            const grandParentValue = GrandParent.A
+            const greatGrandParentValue = GreatGrandParent.A
+            const name = 'A'
+            const ordinal = 0
             let instance: CompanionEnumWithGreatGrandParent_TestClassHelper
             beforeEach(() => instance = new InstanceHelper(GreatGrandParent, GrandParent, Parent, Child,),)
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+ Copyright (c) 2023-2024. Jonathan Bédard ~ JóôòKiwi
 
  This project is free to use.
  All the right is reserved to the author of this project.
@@ -7,7 +7,7 @@
 
 import type {NullOr} from "../../general type"
 
-/** A simple {@link Error exception} declaration with a nullable {@link Error.cause cause} */
+/** An {@link Error exception} declaration with a nullable {@link Error.cause cause} */
 export interface ExceptionWithNullableCause<out ERROR extends Error = never, >
     extends Error {
 

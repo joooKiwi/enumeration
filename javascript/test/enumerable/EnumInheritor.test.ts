@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c) 2023. Jonathan Bédard ~ JóôòKiwi
+ Copyright (c) 2023-2024. Jonathan Bédard ~ JóôòKiwi
 
  This project is free to use.
  All the right is reserved to the author of this project.
@@ -25,17 +25,17 @@ describe("EnumInheritorTest", () => {
     //README: The tests are not made to be code efficient,
     // they are made to be debuggable and descriptive.
 
-    /** A simple reference to the {@link EnumConstants.NULL_ENUM_REFERENCE_SYMBOL} */
-    const nullReferenceSymbol = EnumConstants.NULL_ENUM_REFERENCE_SYMBOL as PossibleEnumSymbol,
-        /** A simple instance name that is valid */
-        validInstanceName = 'A'
+    /** A reference to the {@link EnumConstants.NULL_ENUM_REFERENCE_SYMBOL} */
+    const nullReferenceSymbol = EnumConstants.NULL_ENUM_REFERENCE_SYMBOL as PossibleEnumSymbol
+    /** An instance name that is valid */
+    const validInstanceName = 'A'
 
     describe("parent tests", () => {
         describe("EnumWithParent", () => {
-            const ReferencedEnum = BasicEnum,
-                DirectInstance = Parent_TestInstance_Direct,
-                SymbolInstance = Parent_TestInstance_BySymbol,
-                SymbolCallbackInstance = Parent_TestInstance_ByCallbackSymbol
+            const ReferencedEnum = BasicEnum
+            const DirectInstance = Parent_TestInstance_Direct
+            const SymbolInstance = Parent_TestInstance_BySymbol
+            const SymbolCallbackInstance = Parent_TestInstance_ByCallbackSymbol
 
             describe.each(nullValues,)("%s", it => {
                 test("value", () => expect(() => new DirectInstance(it,).parent,).toThrow(NullReferenceException,),)
@@ -84,10 +84,10 @@ describe("EnumInheritorTest", () => {
             },)
         },)
         describe("EnumWithGrandParent", () => {
-            const ReferencedEnum = BasicEnumWithParent,
-                DirectInstance = GrandParent_TestInstance_Direct1,
-                SymbolInstance = GrandParent_TestInstance_BySymbol,
-                SymbolCallbackInstance = GrandParent_TestInstance_ByCallbackSymbol
+            const ReferencedEnum = BasicEnumWithParent
+            const DirectInstance = GrandParent_TestInstance_Direct1
+            const SymbolInstance = GrandParent_TestInstance_BySymbol
+            const SymbolCallbackInstance = GrandParent_TestInstance_ByCallbackSymbol
 
             describe.each(nullValues,)("%s", it => {
                 test("value", () => expect(() => new DirectInstance(it,).parent,).toThrow(NullReferenceException,),)
@@ -136,10 +136,10 @@ describe("EnumInheritorTest", () => {
             },)
         },)
         describe("EnumWithGreatGrandParent", () => {
-            const ReferencedEnum = BasicEnumWithGrandParent,
-                DirectInstance = GreatGrandParent_TestInstance_Direct1,
-                SymbolInstance = GreatGrandParent_TestInstance_BySymbol,
-                SymbolCallbackInstance = GreatGrandParent_TestInstance_ByCallbackSymbol
+            const ReferencedEnum = BasicEnumWithGrandParent
+            const DirectInstance = GreatGrandParent_TestInstance_Direct1
+            const SymbolInstance = GreatGrandParent_TestInstance_BySymbol
+            const SymbolCallbackInstance = GreatGrandParent_TestInstance_ByCallbackSymbol
 
             describe.each(nullValues,)("%s", it => {
                 test("value", () => expect(() => new DirectInstance(it,).parent,).toThrow(NullReferenceException,),)
@@ -189,10 +189,10 @@ describe("EnumInheritorTest", () => {
         },)
 
         describe("EnumWithNullableParent", () => {
-            const ReferencedEnum = BasicEnum,
-                DirectInstance = NullableParent_TestInstance_Direct,
-                SymbolInstance = NullableParent_TestInstance_BySymbol,
-                SymbolCallbackInstance = NullableParent_TestInstance_ByCallbackSymbol
+            const ReferencedEnum = BasicEnum
+            const DirectInstance = NullableParent_TestInstance_Direct
+            const SymbolInstance = NullableParent_TestInstance_BySymbol
+            const SymbolCallbackInstance = NullableParent_TestInstance_ByCallbackSymbol
 
             describe.each(nullValues,)("%s", it => {
                 test("value", () => expect(new DirectInstance(it,).parent,).toBeNull(),)
@@ -241,12 +241,12 @@ describe("EnumInheritorTest", () => {
             },)
         },)
         describe("EnumWithNullableGrandParent", () => {
-            const ReferencedEnum = BasicEnumWithParent,
-                DirectInstance = NullableGrandParent_TestInstance_Direct1,
-                SymbolInstance = NullableGrandParent_TestInstance_BySymbol,
-                SymbolCallbackInstance = NullableGrandParent_TestInstance_ByCallbackSymbol,
-                newInstanceWithNull = (value: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnumWithParent>,) => new DirectInstance(value, null,),
-                newValidInstance = (value: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnumWithParent>,) => new DirectInstance(value, validInstanceName,)
+            const ReferencedEnum = BasicEnumWithParent
+            const DirectInstance = NullableGrandParent_TestInstance_Direct1
+            const SymbolInstance = NullableGrandParent_TestInstance_BySymbol
+            const SymbolCallbackInstance = NullableGrandParent_TestInstance_ByCallbackSymbol
+            const newInstanceWithNull = (value: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnumWithParent>,) => new DirectInstance(value, null,)
+            const newValidInstance = (value: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnumWithParent>,) => new DirectInstance(value, validInstanceName,)
 
             describe.each(nullValues,)("%s", it => {
                 test("value", () => expect(newInstanceWithNull(it,).parent,).toBeNull(),)
@@ -303,12 +303,12 @@ describe("EnumInheritorTest", () => {
             },)
         },)
         describe("EnumWithNullableGreatGrandParent", () => {
-            const ReferencedEnum = BasicEnumWithGrandParent,
-                DirectInstance = NullableGreatGrandParent_TestInstance_Direct1,
-                SymbolInstance = NullableGreatGrandParent_TestInstance_BySymbol,
-                SymbolCallbackInstance = NullableGreatGrandParent_TestInstance_ByCallbackSymbol,
-                newInstanceWithNull = (value: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnumWithGrandParent>,) => new DirectInstance(value, null, null,),
-                newValidInstance = (value: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnumWithGrandParent>,) => new DirectInstance(value, validInstanceName, validInstanceName,)
+            const ReferencedEnum = BasicEnumWithGrandParent
+            const DirectInstance = NullableGreatGrandParent_TestInstance_Direct1
+            const SymbolInstance = NullableGreatGrandParent_TestInstance_BySymbol
+            const SymbolCallbackInstance = NullableGreatGrandParent_TestInstance_ByCallbackSymbol
+            const newInstanceWithNull = (value: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnumWithGrandParent>,) => new DirectInstance(value, null, null,)
+            const newValidInstance = (value: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnumWithGrandParent>,) => new DirectInstance(value, validInstanceName, validInstanceName,)
 
             describe.each(nullValues,)("%s", it => {
                 test("value", () => expect(newInstanceWithNull(it,).parent,).toBeNull(),)
@@ -367,10 +367,10 @@ describe("EnumInheritorTest", () => {
     },)
     describe("grandparent tests", () => {
         describe("EnumWithGrandParent", () => {
-            const ReferencedEnum = BasicEnum,
-                DirectInstance = GrandParent_TestInstance_Direct2,
-                SymbolInstance = GrandParent_TestInstance_BySymbol,
-                SymbolCallbackInstance = GrandParent_TestInstance_ByCallbackSymbol
+            const ReferencedEnum = BasicEnum
+            const DirectInstance = GrandParent_TestInstance_Direct2
+            const SymbolInstance = GrandParent_TestInstance_BySymbol
+            const SymbolCallbackInstance = GrandParent_TestInstance_ByCallbackSymbol
 
             describe.each(nullValues,)("%s", it => {
                 test("value", () => expect(() => new DirectInstance(it,).grandParent,).toThrow(NullReferenceException,),)
@@ -419,10 +419,10 @@ describe("EnumInheritorTest", () => {
             },)
         },)
         describe("EnumWithGreatGrandParent", () => {
-            const ReferencedEnum = BasicEnumWithParent,
-                DirectInstance = GreatGrandParent_TestInstance_Direct2,
-                SymbolInstance = GreatGrandParent_TestInstance_BySymbol,
-                SymbolCallbackInstance = GreatGrandParent_TestInstance_ByCallbackSymbol
+            const ReferencedEnum = BasicEnumWithParent
+            const DirectInstance = GreatGrandParent_TestInstance_Direct2
+            const SymbolInstance = GreatGrandParent_TestInstance_BySymbol
+            const SymbolCallbackInstance = GreatGrandParent_TestInstance_ByCallbackSymbol
 
             describe.each(nullValues,)("%s", it => {
                 test("value", () => expect(() => new DirectInstance(it,).grandParent,).toThrow(NullReferenceException,),)
@@ -472,10 +472,10 @@ describe("EnumInheritorTest", () => {
         },)
 
         describe("EnumWithNullableGrandParent", () => {
-            const ReferencedEnum = BasicEnum,
-                DirectInstance = NullableGrandParent_TestInstance_Direct2,
-                SymbolInstance = NullableGrandParent_TestInstance_BySymbol,
-                SymbolCallbackInstance = NullableGrandParent_TestInstance_ByCallbackSymbol
+            const ReferencedEnum = BasicEnum
+            const DirectInstance = NullableGrandParent_TestInstance_Direct2
+            const SymbolInstance = NullableGrandParent_TestInstance_BySymbol
+            const SymbolCallbackInstance = NullableGrandParent_TestInstance_ByCallbackSymbol
 
             describe.each(nullValues,)("%s", it => {
                 test("value", () => expect(new DirectInstance(it,).grandParent,).toBeNull(),)
@@ -524,12 +524,12 @@ describe("EnumInheritorTest", () => {
             },)
         },)
         describe("EnumWithNullableGreatGrandParent", () => {
-            const ReferencedEnum = BasicEnumWithParent,
-                DirectInstance = NullableGreatGrandParent_TestInstance_Direct2,
-                SymbolInstance = NullableGreatGrandParent_TestInstance_BySymbol,
-                SymbolCallbackInstance = NullableGreatGrandParent_TestInstance_ByCallbackSymbol,
-                newInstanceWithNull = (value: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnumWithParent>,) => new DirectInstance(value, null,),
-                newValidInstance = (value: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnumWithParent>,) => new DirectInstance(value, validInstanceName,)
+            const ReferencedEnum = BasicEnumWithParent
+            const DirectInstance = NullableGreatGrandParent_TestInstance_Direct2
+            const SymbolInstance = NullableGreatGrandParent_TestInstance_BySymbol
+            const SymbolCallbackInstance = NullableGreatGrandParent_TestInstance_ByCallbackSymbol
+            const newInstanceWithNull = (value: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnumWithParent>,) => new DirectInstance(value, null,)
+            const newValidInstance = (value: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnumWithParent>,) => new DirectInstance(value, validInstanceName,)
 
             describe.each(nullValues,)("%s", it => {
                 test("value", () => expect(newInstanceWithNull(it,).grandParent,).toBeNull(),)
@@ -588,10 +588,10 @@ describe("EnumInheritorTest", () => {
     },)
     describe("great-grandparent tests", () => {
         describe("EnumWithGreatGrandParent", () => {
-            const ReferencedEnum = BasicEnum,
-                DirectInstance = GreatGrandParent_TestInstance_Direct3,
-                SymbolInstance = GreatGrandParent_TestInstance_BySymbol,
-                SymbolCallbackInstance = GreatGrandParent_TestInstance_ByCallbackSymbol
+            const ReferencedEnum = BasicEnum
+            const DirectInstance = GreatGrandParent_TestInstance_Direct3
+            const SymbolInstance = GreatGrandParent_TestInstance_BySymbol
+            const SymbolCallbackInstance = GreatGrandParent_TestInstance_ByCallbackSymbol
 
             describe.each(nullValues,)("%s", it => {
                 test("value", () => expect(() => new DirectInstance(it,).greatGrandParent,).toThrow(NullReferenceException,),)
@@ -640,10 +640,10 @@ describe("EnumInheritorTest", () => {
             },)
         },)
         describe("EnumWithNullableGreatGrandParent", () => {
-            const ReferencedEnum = BasicEnum,
-                DirectInstance = NullableGreatGrandParent_TestInstance_Direct3,
-                SymbolInstance = NullableGreatGrandParent_TestInstance_BySymbol,
-                SymbolCallbackInstance = NullableGreatGrandParent_TestInstance_ByCallbackSymbol
+            const ReferencedEnum = BasicEnum
+            const DirectInstance = NullableGreatGrandParent_TestInstance_Direct3
+            const SymbolInstance = NullableGreatGrandParent_TestInstance_BySymbol
+            const SymbolCallbackInstance = NullableGreatGrandParent_TestInstance_ByCallbackSymbol
 
             describe.each(nullValues,)("%s", it => {
                 test("value", () => expect(new DirectInstance(it,).greatGrandParent,).toBeNull(),)

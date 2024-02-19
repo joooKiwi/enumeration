@@ -1,3 +1,10 @@
+/*******************************************************************************
+ Copyright (c) 2024. Jonathan Bédard ~ JóôòKiwi
+
+ This project is free to use.
+ All the right is reserved to the author of this project.
+ ******************************************************************************/
+
 import type {Config} from "jest"
 
 /*
@@ -7,15 +14,16 @@ import type {Config} from "jest"
 const config: Config = {
     clearMocks:               true,
     collectCoverage:          true,
-    collectCoverageFrom:      ["./src/util/enumerable/**",],
-    coverageDirectory:        "../coverage",
+    collectCoverageFrom:      ["./src/**/*.ts", "!./src/exception/**/*", "!**/index.ts", "!**/*.types.ts", "!**/*.declaration.ts", "!**/Enumerable*.ts",],
+    coverageDirectory:        "./coverage",
     coverageProvider:         "v8",
+    coverageReporters:        ["lcov" , ["text", {skipFull: true,},],],
     errorOnDeprecated:        true,
     extensionsToTreatAsEsm:   [".ts",],
     moduleDirectories:        ["node_modules", "src/util",],
     modulePathIgnorePatterns: ["./dist/", "./example/",],
     preset:                   "ts-jest",
-    rootDir:                  "./test",
+    roots:                    ["./test", "./src",],
     setupFilesAfterEnv:       ["jest-extended/all",],
     testEnvironment:          "jsdom",
     verbose:                  true,

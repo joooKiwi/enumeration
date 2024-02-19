@@ -1,18 +1,18 @@
 {
   "name": "@joookiwi/enumerable",
-  "version": "3.3.1",
+  "version": "3.4.0",
   "description": "A Javascript implementation of an enum class",
 
   "scripts": {
-    "prebuild": "del-cli dist/",
-    "build": "npm-run-all --parallel build-*",
-    "build-esm":   "tsc --project tsconfig.esm.json",
-    "build-cjs":   "tsc --project tsconfig.cjs.json",
-    "build-amd":   "tsc --project tsconfig.amd.json",
-    "build-umd":   "tsc --project tsconfig.umd.json",
-    "build-types": "tsc --project tsconfig.types.json",
+    "clear-dist-folder": "del-cli dist/",
+    "build-esm":         "tsc --project tsconfig.esm.json",
+    "build-cjs":         "tsc --project tsconfig.cjs.json",
+    "build-amd":         "tsc --project tsconfig.amd.json",
+    "build-umd":         "tsc --project tsconfig.umd.json",
+    "build-types":       "tsc --project tsconfig.types.json",
 
-    "test": "jest",
+    "test":                                "jest",
+    "test-with-coverage":                  "jest --coverage",
     "test-general-enum":                   "jest --testNamePattern=GeneralEnumTest",
     "test-helper-methods":                 "jest --testNamePattern=HelperMethodsTest",
     "test-helper-known-enum-constructors": "jest --testNamePattern=KnownEnumConstructorsTest",
@@ -21,20 +21,17 @@
     "test-typescript":                     "tsc --build test/typescript",
 
     "test-pack":    "npm pack --dry-run",
-    "test-publish": "npm publish --@access=public --dry-run",
+    "test-publish": "npm publish --access=public --dry-run",
 
     "pack": "npm pack",
 
-    "prelocal-publish": "npm run build",
-    "local-publish":    "npm link",
-
-    "prepublish-to-npm": "npm-run-all build test",
-    "publish-to-npm":    "npm publish --access=public"
+    "local-publish":  "npm link",
+    "publish-to-npm": "npm publish --access=public"
   },
 
   "directories": {
-    "example": "./example",
-    "lib": "./src/util/enumerable",
+    "example": "../example",
+    "lib": "./src",
     "test": "./test"
   },
   "main": "./dist/common javascript/index.js",
@@ -149,24 +146,23 @@
     "enum class",
     "enumeration"
   ],
-  "funding": {
-    "type": "github",
-    "url": "https://github.com/sponsors/joooKiwi"
-  },
+  "funding": [
+    { "type": "github",          "url": "https://github.com/sponsors/joooKiwi" },
+    { "type": "buy-me-a-coffee", "url": "https://www.buymeacoffee.com/joookiwi" }
+  ],
   "author": "JóôòKiwi",
   "license": "MIT",
   "dependencies": {
-    "@joookiwi/collection": "^1.6.1"
+    "@joookiwi/collection": "^1.7.0"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.10",
-    "@types/node": "^20.10.3",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.19",
     "del-cli": "^5.1.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-extended": "^4.0.2",
-    "npm-run-all": "^4.1.5",
-    "ts-jest": "^29.1.1",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   }
 }
