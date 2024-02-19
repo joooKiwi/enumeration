@@ -150,10 +150,10 @@
     "enum class",
     "enumeration"
   ],
-  "funding": {
-    "type": "github",
-    "url": "https://github.com/sponsors/joooKiwi"
-  },
+  "funding": [
+    { "type": "github",          "url": "https://github.com/sponsors/joooKiwi" },
+    { "type": "buy-me-a-coffee", "url": "https://www.buymeacoffee.com/joookiwi" }
+  ],
   "author": "JóôòKiwi",
   "license": "MIT",
   "dependencies": {
