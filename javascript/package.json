@@ -153,7 +153,7 @@
   "author": "JóôòKiwi",
   "license": "MIT",
   "dependencies": {
-    "@joookiwi/collection": "^1.6.1"
+    "@joookiwi/collection": "^1.7.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
