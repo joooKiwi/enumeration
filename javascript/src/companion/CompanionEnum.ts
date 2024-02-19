@@ -1237,7 +1237,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     }
 
     public get [Symbol.toStringTag](): CompanionEnumName {
-        return EnumConstants.COMPANION_ENUM_TO_STRING_TAG
+        return "CompanionEnum"
     }
 
 

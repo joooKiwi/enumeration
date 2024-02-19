@@ -74,7 +74,7 @@ export abstract class Enum<const out ORDINAL extends number = number,
     }
 
     public get [Symbol.toStringTag](): EnumerableName {
-        return EnumConstants.ENUM_TO_STRING_TAG
+        return "Enum"
     }
 
     //#endregion -------------------- Getter methods --------------------
