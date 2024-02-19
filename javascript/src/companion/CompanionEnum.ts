@@ -212,9 +212,9 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
             const name = field[0]
             if (name === EnumConstants.PROTOTYPE_NAME)
                 continue
-            if(excludedNames.hasOne(name))
+            if(excludedNames.hasOne(name,))
                 continue
-            if (EnumConstants.DECIMAL_REGEX.test(name))
+            if (EnumConstants.DECIMAL_REGEX.test(name,))
                 continue
 
             const {value,} = property
