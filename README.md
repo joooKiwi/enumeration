@@ -34,6 +34,11 @@ Here is a list of the related projects made by me
  - lazy ([GitHub](https://github.com/joooKiwi/lazy) | [NPM](https://www.npmjs.com/package/@joookiwi/lazy))
  - collection ([GitHub](https://github.com/joooKiwi/collection) | [NPM](https://www.npmjs.com/package/@joookiwi/collection))
 
+## Contribution
+
+You can contribute to my projects in 2 different ways
+- [GitHub sponsor](https://github.com/sponsors/joooKiwi) or
+- [!["Buy me a Coffee"](https://img.buymeacoffee.com/button-api/?&button_colour=40DCA5&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00)](https://www.buymeacoffee.com/joookiwi)
 
 ### Javascript and Typescript implementation
 
@@ -518,13 +523,6 @@ class GrandParentingEnumExample:
 ```
 
 </details>
-
-## Contribution
-
-You can contribute to the project by the [GitHub sponsor](https://github.com/sponsors/joooKiwi)
-_(and eventually other methods)_.
-This is still an early project.
-But it can become so much more by the contributions.
 
 ## Version history
 
