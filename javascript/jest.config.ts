@@ -7,7 +7,7 @@ import type {Config} from "jest"
 const config: Config = {
     clearMocks:               true,
     collectCoverage:          true,
-    collectCoverageFrom:      ["./src/**/*.ts", "!./src/exception/**/*", "!**/index.ts", "!**/*.types.ts", "!**/*.declaration.ts",],
+    collectCoverageFrom:      ["./src/**/*.ts", "!./src/exception/**/*", "!**/index.ts", "!**/*.types.ts", "!**/*.declaration.ts", "!**/Enumerable*.ts",],
     coverageDirectory:        "./coverage",
     coverageProvider:         "v8",
     coverageReporters:        ["lcov" , ["text", {skipFull: true,},],],
