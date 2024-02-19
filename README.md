@@ -34,6 +34,17 @@ Here is a list of the related projects made by me
  - lazy ([GitHub](https://github.com/joooKiwi/lazy) | [NPM](https://www.npmjs.com/package/@joookiwi/lazy))
  - collection ([GitHub](https://github.com/joooKiwi/collection) | [NPM](https://www.npmjs.com/package/@joookiwi/collection))
 
+## Contribution
+
+You can contribute to my projects in 2 different ways
+- [GitHub sponsor](https://github.com/sponsors/joooKiwi) or
+- [!["Buy me a Coffee"](https://img.buymeacoffee.com/button-api/?&button_colour=40DCA5&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00)](https://www.buymeacoffee.com/joookiwi)
+
+## Implementation by language
+
+The implementations are different across the different languages,
+but they should not change in their implementation
+_(it's only the syntax that is different for the most part)_.
 
 ### Javascript and Typescript implementation
 
@@ -519,17 +530,11 @@ class GrandParentingEnumExample:
 
 </details>
 
-## Contribution
-
-You can contribute to the project by the [GitHub sponsor](https://github.com/sponsors/joooKiwi)
-_(and eventually other methods)_.
-This is still an early project.
-But it can become so much more by the contributions.
-
 ## Version history
 
 | JS / TS version                                                            | Date                 | Quick note                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 |----------------------------------------------------------------------------|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 3.4.0                                                                      | February 19rth, 2024 | Formatting across the whole project,<br/>[collection](https://github.com/joooKiwi/collection) (~~1.6.1~~ → [1.7.0](https://github.com/joooKiwi/collection/releases/tag/v1.7.0-js))                                                                                                                                                                                                                                                                                |
 | 3.3.1                                                                      | December 23rd, 2023  | [collection](https://github.com/joooKiwi/collection) (~~1.6.0~~ → 1.6.1)                                                                                                                                                                                                                                                                                                                                                                                          |
 | 3.3.0                                                                      | December 4th, 2023   | [collection](https://github.com/joooKiwi/collection) (~~1.5.0~~ → [1.6.0](https://github.com/joooKiwi/collection/releases/tag/v1.6.0-js))                                                                                                                                                                                                                                                                                                                         |
 | 3.2.0                                                                      | September 28th, 2023 | [collection](https://github.com/joooKiwi/collection) (~~1.4.0~~ → [1.5.0](https://github.com/joooKiwi/collection/releases/tag/v1.5.0-js)),<br/>Change of the exception hierarchy to be only toward the Javascript instead of Java-like                                                                                                                                                                                                                            |
