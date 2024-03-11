@@ -115,11 +115,11 @@ export class Example extends Enum<Ordinals, Names> {
     public static readonly B = new Example()
     public static readonly C = new Example()
 
-    // Optional number typing (start)
+    // Optional ordinal typing (start)
     public static readonly 0: typeof Example.A
     public static readonly 1: typeof Example.B
     public static readonly 2: typeof Example.C
-    // Optional number typing (end)
+    // Optional ordinal typing (end)
 
     public static readonly CompanionEnum: CompanionEnumSingleton<Example, typeof Example> =
         class CompanionEnum_Example extends CompanionEnum<Example, typeof Example> {
@@ -173,13 +173,9 @@ since they can only be retrieved 1 time.
 
 ```javascript
 class CompanionEnum_Example extends CompanionEnum {
-
     _DEFAULT = condition1 ? Example.B : null
-
     _DEFAULT_NAME = condition2 ? 'C' : null
-
     _DEFAULT_ORDINAL = condition3 ? 4 : null
-
 }
 ```
 </details>
@@ -188,13 +184,9 @@ class CompanionEnum_Example extends CompanionEnum {
 
 ```typescript
 class CompanionEnum_Example extends CompanionEnum<Example, typeof Example> {
-
     protected override readonly _DEFAULT = condition1 ? Example.B : null
-
     protected override readonly _DEFAULT_NAME = condition2 ? 'C' : null
-
     protected override readonly _DEFAULT_ORDINAL = condition3 ? 4 : null
-
 }
 ```
 </details>
@@ -209,6 +201,7 @@ In this case, just override the **excluded names** in the **companion enum**.
 
 ```javascript
 class Example extends Enum {
+
     static A = new Example()
     static B = new Example()
     static C = new Example()
@@ -218,15 +211,10 @@ class Example extends Enum {
     static CompanionEnum = class CompanionEnum_Example extends CompanionEnum {
         _EXCLUDED_NAMES = ['D', "SOME_FIELD",]
         static #instance
-
-        constructor() {
-            super(Example,)
-        }
-
-        static get get() {
-            return CompanionEnum_Example.#instance ??= new CompanionEnum_Example()
-        }
+        constructor() { super(Example,) }
+        static get get() { return CompanionEnum_Example.#instance ??= new CompanionEnum_Example() }
     }
+
 }
 ```
 </details>
@@ -235,6 +223,7 @@ class Example extends Enum {
 
 ```typescript
 class Example extends Enum<Ordinals, Names> {
+
     public static readonly A = new Example()
     public static readonly B = new Example()
     public static readonly C = new Example()
@@ -248,6 +237,7 @@ class Example extends Enum<Ordinals, Names> {
         private constructor() { super(Example,) }
         public get get() { return CompanionEnum_Example.#instance ??= new CompanionEnum_Example() }
     }
+
 }
 ```
 </details>
@@ -272,20 +262,16 @@ it will not be possible (in practice).
 ```javascript
 // ParentEnum.js
 export class ParentEnum extends Enum {
+
     static A = new ParentEnum()
     static B = new ParentEnum()
 
     static CompanionEnum = class CompanionEnum_ParentEnum extends CompanionEnum {
         static #instance
-
-        constructor() {
-            super(ParentEnum,)
-        }
-
-        static get get() {
-            return CompanionEnum.#instance ??= new CompanionEnum()
-        }
+        constructor() { super(ParentEnum,) }
+        static get get() { return CompanionEnum.#instance ??= new CompanionEnum() }
     }
+
 }
 ```
 
@@ -295,6 +281,7 @@ import {ParentEnum} from "./ParentEnum"
 
 /** @implements {EnumerableWithParent} */
 export class ChildEnum extends Enum {
+
     static A = new ChildEnum(ParentEnum.A,)
     static B = new ChildEnum(ParentEnum.B,)
     static C = new ChildEnum()
@@ -309,6 +296,7 @@ export class ChildEnum extends Enum {
     #parent
     constructor(parent = null) { super(); this.#parent = parent }
     get parent() { return this.#parent }
+
 }
 ```
 
@@ -321,11 +309,14 @@ export class ChildEnum extends Enum {
 import type {ParentOrdinals, ParentNames} from "./ParentEnum.types"
 
 export class ParentEnum extends Enum<ParentOrdinals, ParentNames> {
+
    public static readonly A = new ParentEnum()
    public static readonly B = new ParentEnum()
 
+    // Optional ordinal typing (start)
    public static readonly 0: typeof ParentEnum.A
    public static readonly 1: typeof ParentEnum.B
+    // Optional ordinal typing (end)
 
    public static readonly CompanionEnum: CompanionEnumSingleton<ParentEnum, typeof ParentEnum> =
         class CompanionEnum_ParentEnum extends CompanionEnum<ParentEnum, typeof ParentEnum> {
@@ -335,6 +326,7 @@ export class ParentEnum extends Enum<ParentOrdinals, ParentNames> {
         }
 
    private constructor() { super() }
+
 }
 ```
 ```typescript
@@ -354,15 +346,18 @@ import {ParentEnum} from "./ParentEnum"
 
 class ChildEnum extends Enum<ChildOrdinals, ChildNames>
     implements EnumerableWithParent<ChildOrdinals, ChildNames, ParentEnum> {
+
     public static readonly A = new ChildEnum(ParentEnum.A,)
     public static readonly B = new ChildEnum(ParentEnum.B,)
     public static readonly C = new ChildEnum()
     public static readonly D = new ChildEnum()
 
+    // Optional ordinal typing (start)
     public static readonly 0: typeof ChildEnum.A
     public static readonly 1: typeof ChildEnum.B
     public static readonly 2: typeof ChildEnum.C
     public static readonly 3: typeof ChildEnum.D
+    // Optional ordinal typing (end)
 
     public static readonly CompanionEnum: CompanionEnumWithParent<ChildEnum, typeof ChildEnum, ParentEnum, typeof ParentEnum> =
             class CompanionEnum_ChildEnum extends CompanionEnumWithParent<ChildEnum, typeof ChildEnum, ParentEnum, typeof ParentEnum> {
@@ -374,6 +369,7 @@ class ChildEnum extends Enum<ChildOrdinals, ChildNames>
     readonly #parent
     private constructor(parent: ParentEnum | null = null,) { super(); this.#parent = parent }
     public get parent(): ParentEnum | null { return this.#parent }
+
 }
 ```
 ```typescript
