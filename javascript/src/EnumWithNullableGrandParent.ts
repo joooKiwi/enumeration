@@ -5,14 +5,14 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {Lazy} from "@joookiwi/lazy"
-import {lazy}      from "@joookiwi/lazy"
+import type {Lazy}             from "@joookiwi/lazy"
+import type {Nullable, NullOr} from "@joookiwi/type"
+import {lazy}                  from "@joookiwi/lazy"
 
 import type {EnumerableWithNullableGrandParent}                                                         from "./EnumerableWithNullableGrandParent"
 import type {NameOf, PossibleEnumerableValueOrNameByValueOrCallback, PossibleNameOf, PossibleOrdinalOf} from "./Enumerable.types"
 import type {EnumerableWithNullableParent}                                                              from "./EnumerableWithNullableParent"
 import type {Enumerable}                                                                                from "./Enumerable"
-import type {Nullable, NullOr}                                                                          from "./general type"
 
 import {EnumWithNullableParent}       from "./EnumWithNullableParent"
 import {ImpossibleIntegrityException} from "./exception/ImpossibleIntegrityException"
@@ -34,7 +34,7 @@ import {KnownEnumConstructors}        from "./helper/KnownEnumConstructors"
  * @see EnumWithGrandParent
  */
 export class EnumWithNullableGrandParent<const out PARENT extends EnumerableWithNullableParent<GRAND_PARENT>,
-    const out GRAND_PARENT extends Enumerable ,
+    const out GRAND_PARENT extends Enumerable,
     const out ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,
     const out NAME extends PossibleNameOf<string, PARENT> = PossibleNameOf<string, PARENT>, >
     extends EnumWithNullableParent<PARENT, ORDINAL, NAME>
@@ -110,7 +110,7 @@ export class EnumWithNullableGrandParent<const out PARENT extends EnumerableWith
             return parent
         },)
         if (args.length <= 1)
-            this.#grandParent = lazy(() => Helper.getValueFromInstanceName<GRAND_PARENT>(this,"grandparent",),)
+            this.#grandParent = lazy(() => Helper.getValueFromInstanceName<GRAND_PARENT>(this, "grandparent",),)
         else
             this.#grandParent = lazy(() => Helper.getNullableValue(this, args[1], "grandparent",),)
     }

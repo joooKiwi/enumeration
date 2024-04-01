@@ -14,9 +14,13 @@ import {EnumConstants} from "../EnumConstants"
  * without verifying its typing on the fields directly
  *
  * @param value The value to compare
+ * @see isEnumWithGrandParent
+ * @doesNotValidateTheTypes
  */
 export function isEnumWithGrandParentByStructure(value: unknown,): value is (& object & Record<keyof EnumerableWithGrandParent<never, never>, unknown>) {
-    if (value == null || typeof value != "object")
+    if (value == null)
+        return false
+    if (typeof value != "object")
         return false
 
     const members = EnumConstants.ENUMERABLE_WITH_GRAND_PARENT_MEMBERS

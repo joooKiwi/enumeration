@@ -14,6 +14,7 @@ import {CompanionEnum} from "../companion/CompanionEnum"
  * Tell if the value received is a {@link CompanionEnum}
  *
  * @param value The value to compare
+ * @see isCompanionEnumByStructure
  */
 export function isCompanionEnum(value: unknown,): value is CompanionEnumType<Enumerable> {
     return value instanceof CompanionEnum

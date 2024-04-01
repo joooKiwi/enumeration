@@ -5,9 +5,10 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {Nullable, NullOr, PossibleStringOrNumeric} from "../general type"
-import type {ExceptionWithNullableCause}                from "./declaration/ExceptionWithNullableCause"
-import type {ExceptionWithValue}                        from "./declaration/ExceptionWithValue"
+import {Nullable, NullOr, StringOrNumericOrObject} from "@joookiwi/type"
+
+import type {ExceptionWithNullableCause} from "./declaration/ExceptionWithNullableCause"
+import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
 
 /**
  * Tell that the value was not convertible to a {@link Enumerable.ordinal} by being a negative,
@@ -18,7 +19,7 @@ import type {ExceptionWithValue}                        from "./declaration/Exce
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-class-cast-exception Kotlin ClassCastException
  * @see https://learn.microsoft.com/dotnet/api/system.invalidcastexception C# InvalidCastException
  */
-export class ImpossibleOrdinalException<const out T extends PossibleStringOrNumeric,
+export class ImpossibleOrdinalException<const out T extends StringOrNumericOrObject,
     const out CAUSE extends Error = never, >
     extends TypeError
     implements ExceptionWithValue<T>,
@@ -35,7 +36,7 @@ export class ImpossibleOrdinalException<const out T extends PossibleStringOrNume
     }
 
     /**
-     * The value that was negative,
+     * The value, which was negative,
      * over the {@link Number.MAX_VALUE maximum number}
      * or a floating {@link Number number}
      */

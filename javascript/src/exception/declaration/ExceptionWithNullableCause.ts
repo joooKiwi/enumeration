@@ -5,7 +5,7 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {NullOr} from "../../general type"
+import type {NullOr} from "@joookiwi/type"
 
 /** An {@link Error exception} declaration with a nullable {@link Error.cause cause} */
 export interface ExceptionWithNullableCause<out ERROR extends Error = never, >

@@ -5,15 +5,15 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {Lazy} from "@joookiwi/lazy"
-import {lazy}      from "@joookiwi/lazy"
+import type {Lazy}             from "@joookiwi/lazy"
+import type {Nullable, NullOr} from "@joookiwi/type"
+import {lazy}                  from "@joookiwi/lazy"
 
 import type {EnumerableWithNullableGrandParent}                                                         from "./EnumerableWithNullableGrandParent"
 import type {EnumerableWithNullableGreatGrandParent}                                                    from "./EnumerableWithNullableGreatGrandParent"
 import type {NameOf, PossibleEnumerableValueOrNameByValueOrCallback, PossibleNameOf, PossibleOrdinalOf} from "./Enumerable.types"
 import type {EnumerableWithNullableParent}                                                              from "./EnumerableWithNullableParent"
 import type {Enumerable}                                                                                from "./Enumerable"
-import type {Nullable, NullOr}                                                                          from "./general type"
 
 import {EnumWithNullableGrandParent}  from "./EnumWithNullableGrandParent"
 import {ImpossibleIntegrityException} from "./exception/ImpossibleIntegrityException"

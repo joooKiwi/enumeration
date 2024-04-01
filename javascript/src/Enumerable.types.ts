@@ -5,6 +5,8 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
+import type {BigIntOrObject, Nullable, NumberOrObject, StringOrObject} from "@joookiwi/type"
+
 import type {EnumConstants}                          from "./EnumConstants"
 import type {Enumerable}                             from "./Enumerable"
 import type {EnumerableConstructor}                  from "./EnumerableConstructor"
@@ -20,7 +22,6 @@ import type {EnumWithNullableParent}                 from "./EnumWithNullablePar
 import type {EnumWithGrandParent}                    from "./EnumWithGrandParent"
 import type {EnumWithGreatGrandParent}               from "./EnumWithGreatGrandParent"
 import type {EnumWithParent}                         from "./EnumWithParent"
-import type {Nullable, PossibleBigInt}               from "./general type"
 
 /** The {@link Enumerable} name in a {@link Object.toString toString()} method */
 export type EnumerableName = typeof EnumConstants["ENUM_TO_STRING_TAG"]
@@ -81,13 +82,10 @@ export type PossibleEnumerableMembers = | keyof Enumerable
 
 /** A general {@link Enumerable} type possibility */
 export type PossibleEnumerableValue<ENUM extends Enumerable = Enumerable, ORDINAL extends number = number, NAME extends string = string, > =
-    | String | Number | PossibleBigInt
-    | ORDINAL | NAME | ENUM
+    | StringOrObject<NAME> | NumberOrObject<ORDINAL> | BigIntOrObject | ENUM
 /** A strict {@link Enumerable} type possibility */
 export type PossibleEnumerableValueBy<ENUM extends Enumerable, >
-    = | String | Number | PossibleBigInt
-      | ENUM[ | "ordinal" | "name"]
-      | ENUM
+    = | StringOrObject<ENUM["name"]> | NumberOrObject<ENUM["ordinal"]> | BigIntOrObject | ENUM
 
 
 /**
@@ -99,7 +97,7 @@ export type PossibleEnumSymbol = typeof EnumConstants[| "ENUM_REFERENCE_BY_ITS_N
  * A type of {@link Enumerable} by its value or its {@link Enumerable.name name} (object or primitive)
  * via the {@link Nullable} value itself or a callback returning the {@link Nullable} value
  */
-export type PossibleEnumerableValueOrNameByValueOrCallback<T extends Enumerable = Enumerable, > = Nullable<| T | NameOf<T> | String | PossibleEnumSymbol | (() => Nullable<T | NameOf<T> | String | PossibleEnumSymbol>)>
+export type PossibleEnumerableValueOrNameByValueOrCallback<T extends Enumerable = Enumerable, > = Nullable<| T | StringOrObject<NameOf<T>> | PossibleEnumSymbol | (() => Nullable<T | StringOrObject<NameOf<T>> | PossibleEnumSymbol>)>
 
 //#region -------------------- Enumerable by Enumerable & EnumerableConstructor --------------------
 
@@ -107,7 +105,7 @@ export type ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONS
     = ENUM_CONSTRUCTOR[& SpecificOrdinalOf<ORDINAL, ENUM> & keyof ENUM_CONSTRUCTOR]
 export type ValueByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUM extends Enumerable, NAME extends string, >
     = ENUM_CONSTRUCTOR[& SpecificNameOf<NAME, ENUM> & keyof ENUM_CONSTRUCTOR]
-/** @deprecated Use {@link ValueByEnumerableConstructorAndEnumerableName} instead */
+/** @deprecated Use {@link ValueByEnumerableConstructorAndEnumerableName} instead. This will be removed in version 3.6. */
 export type ValueByEnumerableConstructorAndEnumerableOrdinal<ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUM extends Enumerable, >
     = ENUM_CONSTRUCTOR[& OrdinalOf<ENUM> & keyof ENUM_CONSTRUCTOR]
 export type ValueByEnumerableConstructorAndEnumerableName<ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUM extends Enumerable, >

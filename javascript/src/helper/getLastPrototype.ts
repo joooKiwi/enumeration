@@ -6,11 +6,11 @@
  ******************************************************************************/
 
 import type {CollectionHolder}   from "@joookiwi/collection"
+import type {NullOr}             from "@joookiwi/type"
 import {GenericCollectionHolder} from "@joookiwi/collection"
 
 import type {Enumerable}            from "../Enumerable"
 import type {EnumerableConstructor} from "../EnumerableConstructor"
-import type {NullOr}                 from "../general type"
 
 import {NullReferenceException} from "../exception"
 import {KnownEnumConstructors}  from "./KnownEnumConstructors"
@@ -36,7 +36,7 @@ export function getLastPrototype<const T extends Enumerable, >(instance: object,
         const knownEnumConstructors = KnownEnumConstructors.get.values
         const indexFound = prototypeConstructorChain.indexOfFirst(prototypeConstructor => knownEnumConstructors.any(it => it == prototypeConstructor,),)
         if (indexFound == null)
-            throw new NullReferenceException(`No known constructor ${knownEnumConstructors.join(", ", "(", ")", null, null, it => it.name,)} was found in the prototype chain ${prototypeConstructorChain.join(" → ", '"', '"',)}.`, instance,)
+            throw new NullReferenceException(`No known constructor ${knownEnumConstructors.join(", ", '(', ')', null, null, it => it.name,)} was found in the prototype chain ${prototypeConstructorChain.join(" → ", '"', '"',)}.`, instance,)
         return prototypeConstructorChain.get(indexFound - 1,) as EnumerableConstructor<T, any>
     }
 

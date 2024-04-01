@@ -5,9 +5,9 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {CollectionHolder, CollectionIterator} from "@joookiwi/collection"
+import type {CollectionHolder, CollectionIterator}                                                                                                      from "@joookiwi/collection"
+import type {Nullable, NullOrUndefined, NumericOrObject, StringOrObject, TemplateOrBigIntOrObject, TemplateOrNumberOrObject, TemplateOrNumericOrObject} from "@joookiwi/type"
 
-import type {Nullable, NullOrUndefined, PossibleBigIntOrTemplate, PossibleNumberOrTemplate, PossibleNumeric, PossibleNumericOrTemplate, PossibleString}                                                                                                                                                                                                                         from "../general type"
 import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                        from "../Enumerable"
 import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                             from "../EnumerableConstructor"
 import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, PossibleEnumerableValue, PossibleEnumerableValueBy, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "../Enumerable.types"
@@ -22,13 +22,11 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
     //#region -------------------- Default getter & setter methods --------------------
 
     /**
-     * Get the default value.
-     *
-     * If the default value was not initialized, it will attempt to initialize it
-     * and then return it.
+     * Get the default value
      *
      * @throws {NullEnumerableException}
      * @throws {UnhandledValueException}
+     * @lateInititialization
      */
     get defaultValue(): ENUM
 
@@ -83,7 +81,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find ({@link Number}/{@link BigInt})
      * @removeIfNullReceived
      */
-    setDefaultValue(ordinal: Nullable<PossibleNumeric>,): this
+    setDefaultValue(ordinal: Nullable<NumericOrObject>,): this
 
     /**
      * Set the default value by a {@link String}
@@ -91,7 +89,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to find
      * @removeIfNullReceived
      */
-    setDefaultValue(nameOrOrdinal: Nullable<PossibleString>,): this
+    setDefaultValue(nameOrOrdinal: Nullable<StringOrObject>,): this
 
     /**
      * Set the default value by a {@link Enumerable}, {@link Number}, {@link BigInt} or {@link String}
@@ -105,13 +103,25 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
     //#endregion -------------------- Default getter & setter methods --------------------
     //#region -------------------- Values getter methods --------------------
 
-    /** Every {@link Enumerable instance} for the {@link instance} */
+    /**
+     * Every {@link Enumerable instance} for the {@link instance}
+     *
+     * @lateInitialization
+     */
     get values(): CollectionHolder<ENUM>
 
-    /** Every {@link Enumerable.name name} for the {@link instance} */
+    /**
+     * Every {@link Enumerable.name name} for the {@link instance}
+     *
+     * @lateInitialization
+     */
     get names(): CollectionHolder<NameOf<ENUM>>
 
-    /** Every {@link Enumerable.ordinal ordinal} for the {@link instance} */
+    /**
+     * Every {@link Enumerable.ordinal ordinal} for the {@link instance}
+     *
+     * @lateInitialization
+     */
     get ordinals(): CollectionHolder<OrdinalOf<ENUM>>
 
     /** An {@link IterableIterator iterator} for the {@link instance} */
@@ -154,7 +164,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullReferenceException}
      * @typescriptDefinition
      */
-    getValue<const ORDINAL extends number, >(ordinal: Nullable<PossibleNumberOrTemplate<ORDINAL>>,): ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
+    getValue<const ORDINAL extends number, >(ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,): ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
 
     /**
      * Get an {@link Enumerable} by an {@link Enumerable.ordinal ordinal}
@@ -165,7 +175,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      */
-    getValue(ordinal: Nullable<PossibleNumberOrTemplate>,): ENUM
+    getValue(ordinal: Nullable<TemplateOrNumberOrObject>,): ENUM
 
     /**
      * Get an {@link Enumerable} by an {@link Enumerable.ordinal ordinal}
@@ -175,7 +185,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      */
-    getValue(ordinal: Nullable<PossibleBigIntOrTemplate>,): ENUM
+    getValue(ordinal: Nullable<TemplateOrBigIntOrObject>,): ENUM
 
     /**
      * Get an {@link Enumerable} by an {@link Enumerable.ordinal ordinal}
@@ -186,7 +196,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      */
-    getValue(ordinal: Nullable<PossibleNumericOrTemplate>,): ENUM
+    getValue(ordinal: Nullable<TemplateOrNumericOrObject>,): ENUM
 
     /**
      * Get an {@link Enumerable} by a {@link Enumerable.name name}
@@ -201,7 +211,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullReferenceException}
      * @typescriptDefinition
      */
-    getValue<const NAME extends string, >(name: Nullable<PossibleString<NAME>>,): ValueByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME>
+    getValue<const NAME extends string, >(name: Nullable<StringOrObject<NAME>>,): ValueByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME>
 
     /**
      * Get an {@link Enumerable} by a {@link Enumerable.name name} or an {@link Enumerable.ordinal ordinal}
@@ -215,7 +225,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      */
-    getValue(nameOrOrdinal: Nullable<PossibleString>,): ENUM
+    getValue(nameOrOrdinal: Nullable<StringOrObject>,): ENUM
 
     /**
      * Get an {@link Enumerable} directly
@@ -242,7 +252,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullReferenceException}
      * @typescriptDefinition
      */
-    getValue<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM, >(value: Nullable<| PossibleNumericOrTemplate<ORDINAL> | PossibleString<NAME> | INSTANCE>,): | ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | ValueByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME> | INSTANCE
+    getValue<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM, >(value: Nullable<| TemplateOrNumericOrObject<ORDINAL> | StringOrObject<NAME> | INSTANCE>,): | ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | ValueByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME> | INSTANCE
 
     //#endregion -------------------- "Get value" methods --------------------
     //#region -------------------- "Get name" methods --------------------
@@ -280,7 +290,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullReferenceException}
      * @typescriptDefinition
      */
-    getName<const ORDINAL extends number, >(ordinal: Nullable<PossibleNumberOrTemplate<ORDINAL>>,): EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
+    getName<const ORDINAL extends number, >(ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,): EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
 
     /**
      * Get a {@link Enumerable.name name} by an {@link Enumerable.ordinal ordinal}
@@ -291,7 +301,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      */
-    getName(ordinal: Nullable<PossibleNumberOrTemplate>,): NameOf<ENUM>
+    getName(ordinal: Nullable<TemplateOrNumberOrObject>,): NameOf<ENUM>
 
     /**
      * Get a {@link Enumerable.name name} by an {@link Enumerable.ordinal ordinal}
@@ -301,7 +311,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      */
-    getName(ordinal: Nullable<PossibleBigIntOrTemplate>,): NameOf<ENUM>
+    getName(ordinal: Nullable<TemplateOrBigIntOrObject>,): NameOf<ENUM>
 
     /**
      * Get a {@link Enumerable.name name} by an {@link Enumerable.ordinal ordinal}
@@ -312,7 +322,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      */
-    getName(ordinal: Nullable<PossibleNumericOrTemplate>,): NameOf<ENUM>
+    getName(ordinal: Nullable<TemplateOrNumericOrObject>,): NameOf<ENUM>
 
     /**
      * Get the {@link Enumerable.name name} by a {@link Enumerable.name name}
@@ -327,7 +337,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullReferenceException}
      * @typescriptDefinition
      */
-    getName<const NAME extends string, >(name: Nullable<PossibleString<NAME>>,): SpecificNameOf<NAME, ENUM>
+    getName<const NAME extends string, >(name: Nullable<StringOrObject<NAME>>,): SpecificNameOf<NAME, ENUM>
 
     /**
      * Get the {@link Enumerable.name name} by a {@link Enumerable.name name} or an {@link Enumerable.ordinal ordinal}
@@ -341,7 +351,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      */
-    getName(nameOrOrdinal: Nullable<PossibleString>,): NameOf<ENUM>
+    getName(nameOrOrdinal: Nullable<StringOrObject>,): NameOf<ENUM>
 
     /**
      * Get the {@link Enumerable.name name} by the {@link Enumerable} directly
@@ -368,7 +378,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullReferenceException}
      * @typescriptDefinition
      */
-    getName<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<| PossibleNumericOrTemplate<ORDINAL> | PossibleString<NAME> | INSTANCE>,): | EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | SpecificNameOf<NAME, ENUM> | NameOf<INSTANCE>
+    getName<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<| TemplateOrNumericOrObject<ORDINAL> | StringOrObject<NAME> | INSTANCE>,): | EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | SpecificNameOf<NAME, ENUM> | NameOf<INSTANCE>
 
     //#endregion -------------------- "Get name" methods --------------------
     //#region -------------------- "Get ordinal" methods --------------------
@@ -404,7 +414,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullEnumerableException}
      * @typescriptDefinition
      */
-    getOrdinal<const ORDINAL extends number, >(ordinal: Nullable<PossibleNumberOrTemplate<ORDINAL>>,): SpecificOrdinalOf<ORDINAL, ENUM>
+    getOrdinal<const ORDINAL extends number, >(ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,): SpecificOrdinalOf<ORDINAL, ENUM>
 
     /**
      * Get the {@link Enumerable.ordinal ordinal} by a {@link Enumerable.ordinal ordinal}
@@ -415,7 +425,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullEnumerableException}
      * @typescriptDefinition
      */
-    getOrdinal(ordinal: Nullable<PossibleNumberOrTemplate>,): OrdinalOf<ENUM>
+    getOrdinal(ordinal: Nullable<TemplateOrNumberOrObject>,): OrdinalOf<ENUM>
 
     /**
      * Get the {@link Enumerable.ordinal ordinal} by a {@link Enumerable.ordinal ordinal}
@@ -425,7 +435,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullEnumerableException}
      * @typescriptDefinition
      */
-    getOrdinal(ordinal: Nullable<PossibleBigIntOrTemplate>,): OrdinalOf<ENUM>
+    getOrdinal(ordinal: Nullable<TemplateOrBigIntOrObject>,): OrdinalOf<ENUM>
 
     /**
      * Get the {@link Enumerable.ordinal ordinal} by a {@link Enumerable.ordinal ordinal}
@@ -436,7 +446,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullEnumerableException}
      * @typescriptDefinition
      */
-    getOrdinal(ordinal: Nullable<PossibleNumericOrTemplate>,): OrdinalOf<ENUM>
+    getOrdinal(ordinal: Nullable<TemplateOrNumericOrObject>,): OrdinalOf<ENUM>
 
     /**
      * Get the {@link Enumerable.ordinal ordinal} by a {@link Enumerable.name name}
@@ -450,7 +460,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      */
-    getOrdinal<const NAME extends string, >(name: Nullable<PossibleString<NAME>>,): EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME>
+    getOrdinal<const NAME extends string, >(name: Nullable<StringOrObject<NAME>>,): EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME>
 
     /**
      * Get the {@link Enumerable.ordinal ordinal} by a {@link Enumerable.name name}
@@ -464,7 +474,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullEnumerableException}
      * @throws {NullReferenceException}
      */
-    getOrdinal(nameOrOrdinal: Nullable<PossibleString>,): OrdinalOf<ENUM>
+    getOrdinal(nameOrOrdinal: Nullable<StringOrObject>,): OrdinalOf<ENUM>
 
     /**
      * Get the {@link Enumerable.ordinal ordinal} by an {@link Enumerable} directly
@@ -491,7 +501,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      * @throws {NullReferenceException}
      * @typescriptDefinition
      */
-    getOrdinal<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<| PossibleNumericOrTemplate<ORDINAL> | PossibleString<NAME> | INSTANCE>,): | SpecificOrdinalOf<ORDINAL, ENUM> | EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME> | OrdinalOf<INSTANCE>
+    getOrdinal<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<| TemplateOrNumericOrObject<ORDINAL> | StringOrObject<NAME> | INSTANCE>,): | SpecificOrdinalOf<ORDINAL, ENUM> | EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME> | OrdinalOf<INSTANCE>
 
     //#endregion -------------------- "Get ordinal" methods --------------------
 

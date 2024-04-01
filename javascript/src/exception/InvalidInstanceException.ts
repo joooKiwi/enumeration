@@ -5,7 +5,8 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {Nullable, NullOr}           from "../general type"
+import type {Nullable, NullOr} from "@joookiwi/type"
+
 import type {ExceptionWithNullableCause} from "./declaration/ExceptionWithNullableCause"
 import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
 
