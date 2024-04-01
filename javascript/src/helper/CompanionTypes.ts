@@ -127,10 +127,12 @@ export abstract class CompanionTypes<const TYPE extends PossibleCompanionTypeNam
         try {
             companionEnum = getCompanion(getLastPrototype(instance,),)
         } catch (exception) {
-            if (exception instanceof InvalidEnumerableException
-                || exception instanceof InvalidInstanceException
-                || exception instanceof NullReferenceException)
-                throw new NullReferenceException("There were an error while retrieving the companion enum", instance, exception,)
+            if (exception instanceof InvalidEnumerableException)
+                throw new NullReferenceException("There was an error while retrieving the companion enum", instance, exception,)
+            if (exception instanceof InvalidInstanceException)
+                throw new NullReferenceException("There was an error while retrieving the companion enum", instance, exception,)
+            if (exception instanceof NullReferenceException)
+                throw new NullReferenceException("There was an error while retrieving the companion enum", instance, exception,)
             throw exception
         }
         return this._getInstance(companionEnum,)

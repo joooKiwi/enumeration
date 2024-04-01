@@ -17,7 +17,9 @@ import {EnumConstants} from "../EnumConstants"
  * @doesNotValidateTheTypes
  */
 export function isCompanionEnumWithGrandParentByStructure(value: unknown,): value is (& object & Record<keyof CompanionEnumWithGrandParentDeclaration<never, never, never, never, never, never>, unknown>) {
-    if (value == null || typeof value != "object")
+    if (value == null)
+        return false
+    if (typeof value != "object")
         return false
 
     const members = EnumConstants.COMPANION_ENUM_WITH_GRAND_PARENT_MEMBERS

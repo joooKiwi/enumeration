@@ -16,7 +16,9 @@ import {EnumConstants} from "../EnumConstants"
  * @param value The value to compare
  */
 export function isEnumByStructure(value: unknown,): value is (& object & Record<keyof Enumerable, unknown>) {
-    if (value == null || typeof value != "object")
+    if (value == null)
+        return false
+    if (typeof value != "object")
         return false
 
     const members = EnumConstants.ENUMERABLE_MEMBERS

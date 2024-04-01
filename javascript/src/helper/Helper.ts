@@ -153,10 +153,12 @@ export namespace Helper {
         try {
             return companionEnum.getValue(name,)
         } catch (exception) {
-            if (exception instanceof InvalidEnumerableException
-                || exception instanceof InvalidInstanceException
-                || exception instanceof NullReferenceException)
-                throw new NullReferenceException(`There were an error while retrieving the parent value on the "${companionEnum.constructor.name}" companion enum.`, instance, exception,)
+            if (exception instanceof InvalidEnumerableException)
+                throw new NullReferenceException(`There was an error while retrieving the parent value on the "${companionEnum.constructor.name}" companion enum.`, instance, exception,)
+            if (exception instanceof InvalidInstanceException)
+                throw new NullReferenceException(`There was an error while retrieving the parent value on the "${companionEnum.constructor.name}" companion enum.`, instance, exception,)
+            if (exception instanceof NullReferenceException)
+                throw new NullReferenceException(`There was an error while retrieving the parent value on the "${companionEnum.constructor.name}" companion enum.`, instance, exception,)
             throw exception
         }
     }

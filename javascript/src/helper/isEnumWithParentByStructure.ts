@@ -16,7 +16,9 @@ import {EnumConstants} from "../EnumConstants"
  * @param value The value to compare
  */
 export function isEnumWithParentByStructure(value: unknown,): value is (& object & Record<keyof EnumerableWithParent<never>, unknown>) {
-    if (value == null || typeof value != "object")
+    if (value == null)
+        return false
+    if (typeof value != "object")
         return false
 
     const members = EnumConstants.ENUMERABLE_WITH_PARENT_MEMBERS
