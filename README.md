@@ -31,6 +31,7 @@ _(This may change once the implementation is made)_
 ## Related projects
 
 Here is a list of the related projects made by me
+ - type ([GitHub](https://github.com/joooKiwi/type) | [NPM](https://www.npmjs.com/package/@joookiwi/type))
  - lazy ([GitHub](https://github.com/joooKiwi/lazy) | [NPM](https://www.npmjs.com/package/@joookiwi/lazy))
  - collection ([GitHub](https://github.com/joooKiwi/collection) | [NPM](https://www.npmjs.com/package/@joookiwi/collection))
 
