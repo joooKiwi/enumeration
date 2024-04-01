@@ -256,7 +256,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         if (this.#initializeDefaultByOrdinal())
             return
 
-        throw new NullEnumerableException(`Unable to get the default value. There is no default stored for "${this.instance.name}".\n\tTry using the the "_DEFAULT", "_DEFAULT_NAME" or "_DEFAULT_ORDINAL" (at declaration)\n\tor call "${this.instance.name}.default = value".`,)
+        throw new NullEnumerableException(`Unable to get the default value. There is no default stored for "${this.instance.name}".\n\tTry using the the "_DEFAULT", "_DEFAULT_NAME" or "_DEFAULT_ORDINAL" (at declaration)\n\tor call "${this.instance.name}.defaultValue = value".`,)
     }
 
     /**
