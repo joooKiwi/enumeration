@@ -5,9 +5,10 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {Nullable, NullOr, PossibleStringOrNumeric} from "../general type"
-import type {ExceptionWithNullableCause}                from "./declaration/ExceptionWithNullableCause"
-import type {ExceptionWithValue}                        from "./declaration/ExceptionWithValue"
+import {Nullable, NullOr, StringOrNumericOrObject} from "@joookiwi/type"
+
+import type {ExceptionWithNullableCause} from "./declaration/ExceptionWithNullableCause"
+import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
 
 /**
  * An exception to tell that an edge case numeric ({@link Number} or {@link BigInt})
@@ -18,7 +19,7 @@ import type {ExceptionWithValue}                        from "./declaration/Exce
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-illegal-argument-exception Kotlin IllegalArgumentException
  * @see https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception C# ArgumentOutOfRangeException
  */
-export class ForbiddenNumericException<const T extends PossibleStringOrNumeric, const ERROR extends Error = never, >
+export class ForbiddenNumericException<const T extends StringOrNumericOrObject, const ERROR extends Error = never, >
     extends ReferenceError
     implements ExceptionWithValue<T>,
                ExceptionWithNullableCause<ERROR> {

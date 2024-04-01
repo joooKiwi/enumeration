@@ -5,9 +5,10 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
+import {NullOr} from "@joookiwi/type"
+
 import type {Enumerable}                        from "./Enumerable"
 import type {PossibleNameOf, PossibleOrdinalOf} from "./Enumerable.types"
-import type {NullOr}                            from "./general type"
 
 export interface EnumerableWithNullableParent<out PARENT extends Enumerable,
     out ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,

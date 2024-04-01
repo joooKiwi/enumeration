@@ -6,11 +6,11 @@
  ******************************************************************************/
 
 import type {CollectionHolder}   from "@joookiwi/collection"
+import type {NullOr}             from "@joookiwi/type"
 import {GenericCollectionHolder} from "@joookiwi/collection"
 
 import type {Enumerable}            from "../Enumerable"
 import type {EnumerableConstructor} from "../EnumerableConstructor"
-import type {NullOr}                 from "../general type"
 
 import {NullReferenceException} from "../exception"
 import {KnownEnumConstructors}  from "./KnownEnumConstructors"

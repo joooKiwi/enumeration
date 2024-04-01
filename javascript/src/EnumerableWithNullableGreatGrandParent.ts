@@ -5,11 +5,12 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
+import type {NullOr} from "@joookiwi/type"
+
 import type {Enumerable}                        from "./Enumerable"
 import type {PossibleNameOf, PossibleOrdinalOf} from "./Enumerable.types"
 import type {EnumerableWithNullableGrandParent} from "./EnumerableWithNullableGrandParent"
 import type {EnumerableWithNullableParent}      from "./EnumerableWithNullableParent"
-import type {NullOr}                            from "./general type"
 
 export interface EnumerableWithNullableGreatGrandParent<out PARENT extends EnumerableWithNullableGrandParent<GRAND_PARENT, GREAT_GRAND_PARENT>,
     out GRAND_PARENT extends EnumerableWithNullableParent<GREAT_GRAND_PARENT>,

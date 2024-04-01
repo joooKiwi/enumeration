@@ -5,12 +5,13 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
+import type {Nullable, NullOrUndefined} from "@joookiwi/type"
+
 import type {Enumerable}                                                                                                      from "../Enumerable"
 import type {EnumerableConstructor}                                                                                           from "../EnumerableConstructor"
 import type {CompanionOf}                                                                                                     from "../Enumerable.types"
 import type {CompanionEnumDeclaration}                                                                                        from "../companion/CompanionEnum.declaration"
 import type {CompanionEnumDeclarationType, CompanionEnumFromEnumerableConstructorOrCompanionEnum, PossibleEnumerableInstance} from "../companion/types"
-import type {Nullable, NullOrUndefined}                                                                                       from "../general type"
 
 import {InvalidInstanceException}   from "../exception/InvalidInstanceException"
 import {NullInstanceException}      from "../exception/NullInstanceException"

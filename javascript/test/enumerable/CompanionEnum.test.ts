@@ -5,9 +5,10 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
+import type {NullOr} from "@joookiwi/type"
+
 import {invalidInstances, nullValues, validValues} from "./Enum.constants"
 
-import type {NullOr}                                                                                                                                   from "../../src/general type"
 import type {Enumerable}                                                                                                                               from "../../src/Enumerable"
 import type {EnumerableConstructor}                                                                                                                    from "../../src/EnumerableConstructor"
 import type {CompanionEnumDeclaration}                                                                                                                 from "../../src/companion/CompanionEnum.declaration"

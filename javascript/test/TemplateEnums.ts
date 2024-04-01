@@ -5,7 +5,8 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {NullOr}                                                                                                                                      from "../src/general type"
+import type {NullOr} from "@joookiwi/type"
+
 import type {CompanionEnumSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumWithParentSingleton} from "../src/Singleton.types"
 
 import {Enum}                              from "../src/Enum"

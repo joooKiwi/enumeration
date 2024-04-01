@@ -5,8 +5,9 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
+import type {NullOr} from "@joookiwi/type"
+
 import type {CompanionEnumDeclaration}                       from "../companion"
-import type {NullOr}                                         from "../general type"
 import type {Enumerable}                                     from "../Enumerable"
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "../Enumerable.types"
 import type {PossibleCompanionTypeName}                      from "./CompanionTypes.types"

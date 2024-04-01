@@ -5,6 +5,8 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
+import type {PossibleEdgeCaseNumericName} from "@joookiwi/type"
+
 import type {EnumConstants}                                from "../EnumConstants"
 import type {Enumerable}                                   from "../Enumerable"
 import type {CompanionOf, PossibleEnumerableMembers}       from "../Enumerable.types"
@@ -12,7 +14,6 @@ import type {EnumerableWithNullableGrandParent}            from "../EnumerableWi
 import type {EnumerableWithNullableGreatGrandParent}       from "../EnumerableWithNullableGreatGrandParent"
 import type {EnumerableWithNullableParent}                 from "../EnumerableWithNullableParent"
 import type {EnumerableConstructor}                        from "../EnumerableConstructor"
-import type {PossibleEdgeCaseNumericName}                  from "../general type"
 import type {CompanionEnum}                                from "./CompanionEnum"
 import type {CompanionEnumDeclaration}                     from "./CompanionEnum.declaration"
 import type {CompanionEnumWithParent}                      from "./CompanionEnumWithParent"

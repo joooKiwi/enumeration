@@ -5,10 +5,11 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {Enumerable}                                      from "./Enumerable"
-import type {EnumerableName, EnumerableToPrimitive}           from "./Enumerable.types"
-import type {Nullable, PossiblePrimitiveHint, PossibleString} from "./general type"
-import type {CompanionEnumDeclarationType}                    from "./companion/types"
+import type {Nullable, PossiblePrimitiveHint, StringOrObject} from "@joookiwi/type"
+
+import type {Enumerable}                            from "./Enumerable"
+import type {EnumerableName, EnumerableToPrimitive} from "./Enumerable.types"
+import type {CompanionEnumDeclarationType}          from "./companion/types"
 
 import {EnumConstants}          from "./EnumConstants"
 import {InvalidHintException}   from "./exception/InvalidHintException"
@@ -56,8 +57,8 @@ export abstract class Enum<const out ORDINAL extends number = number,
     }
 
     public [Symbol.toPrimitive]<const HINT extends string, >(hint: Nullable<HINT>,): EnumerableToPrimitive<HINT, this>
-    public [Symbol.toPrimitive](hint: Nullable<PossibleString>,): EnumerableToPrimitive<PossiblePrimitiveHint, this>
-    public [Symbol.toPrimitive](hint: Nullable<PossibleString>,): | ORDINAL | NAME {
+    public [Symbol.toPrimitive](hint: Nullable<StringOrObject>,): EnumerableToPrimitive<PossiblePrimitiveHint, this>
+    public [Symbol.toPrimitive](hint: Nullable<StringOrObject>,): | ORDINAL | NAME {
         if (hint == null)
             throw new NullHintException(`Invalid null hint: The "${this.#__companion.instance.name}" cannot be converted to a string or number primitive`,)
         if (hint instanceof String)

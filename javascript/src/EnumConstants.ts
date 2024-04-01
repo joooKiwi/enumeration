@@ -5,8 +5,9 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {CollectionHolder}   from "@joookiwi/collection"
-import {GenericCollectionHolder} from "@joookiwi/collection"
+import type {CollectionHolder}                    from "@joookiwi/collection"
+import type {NullOr, PossibleEdgeCaseNumericName} from "@joookiwi/type"
+import {GenericCollectionHolder}                  from "@joookiwi/collection"
 
 import type {Enumerable}                                   from "./Enumerable"
 import type {PossibleEnumerableMembers}                    from "./Enumerable.types"
@@ -17,7 +18,6 @@ import type {EnumerableWithNullableParent}                 from "./EnumerableWit
 import type {EnumerableWithGrandParent}                    from "./EnumerableWithGrandParent"
 import type {EnumerableWithGreatGrandParent}               from "./EnumerableWithGreatGrandParent"
 import type {EnumerableWithParent}                         from "./EnumerableWithParent"
-import type {NullOr, PossibleEdgeCaseNumericName}          from "./general type"
 import type {CompanionEnumDeclaration}                     from "./companion/CompanionEnum.declaration"
 import type {CompanionEnumWithGrandParentDeclaration}      from "./companion/CompanionEnumWithGrandParent.declaration"
 import type {CompanionEnumWithGreatGrandParentDeclaration} from "./companion/CompanionEnumWithGreatGrandParent.declaration"

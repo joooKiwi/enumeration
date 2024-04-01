@@ -5,9 +5,10 @@
  All the right is reserved to the author of this project.
  ******************************************************************************/
 
-import type {Nullable, NullOr, PossibleString} from "../general type"
-import type {ExceptionWithNullableCause}       from "./declaration/ExceptionWithNullableCause"
-import type {ExceptionWithValue}               from "./declaration/ExceptionWithValue"
+import {Nullable, NullOr, StringOrObject} from "@joookiwi/type"
+
+import type {ExceptionWithNullableCause} from "./declaration/ExceptionWithNullableCause"
+import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
 
 /**
  * An exception to tell that an {@link EnumConstants.EVERY_ENUMERABLE_MEMBERS enumerable member} was used
@@ -17,7 +18,7 @@ import type {ExceptionWithValue}               from "./declaration/ExceptionWith
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-illegal-argument-exception Kotlin IllegalArgumentException
  * @see https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception C# ArgumentOutOfRangeException
  */
-export class ForbiddenInheritedEnumerableMemberException<const out T extends PossibleString,
+export class ForbiddenInheritedEnumerableMemberException<const out T extends StringOrObject,
     const out CAUSE extends Error = never, >
     extends ReferenceError
     implements ExceptionWithValue<T>,
