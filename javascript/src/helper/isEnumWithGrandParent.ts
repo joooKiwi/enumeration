@@ -13,6 +13,7 @@ import {EnumWithGrandParent} from "../EnumWithGrandParent"
  * Tell if the value received is a {@link EnumWithGrandParent}
  *
  * @param value The value to compare
+ * @see isEnumWithGrandParentByStructure
  */
 export function isEnumWithGrandParent(value: unknown,): value is EnumWithGrandParentGeneralType {
     return value instanceof EnumWithGrandParent

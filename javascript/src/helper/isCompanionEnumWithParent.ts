@@ -15,6 +15,7 @@ import {CompanionEnumWithParent} from "../companion/CompanionEnumWithParent"
  * Tell if the value received is a {@link CompanionEnumWithParent}
  *
  * @param value The value to compare
+ * @see isCompanionEnumWithParentByStructure
  */
 export function isCompanionEnumWithParent(value: unknown,): value is CompanionEnumWithParentType<EnumerableWithNullableParentGeneralType, Enumerable> {
     return value instanceof CompanionEnumWithParent

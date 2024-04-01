@@ -14,6 +14,8 @@ import {EnumConstants} from "../EnumConstants"
  * without verifying its typing on the fields directly
  *
  * @param value The value to compare
+ * @see isEnumWithGrandParent
+ * @doesNotValidateTheTypes
  */
 export function isEnumWithGrandParentByStructure(value: unknown,): value is (& object & Record<keyof EnumerableWithGrandParent<never, never>, unknown>) {
     if (value == null)

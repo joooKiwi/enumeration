@@ -13,7 +13,7 @@ import {EnumConstants} from "../EnumConstants"
  * Tell if the value received has the structure of a {@link CompanionEnumWithGrandParentDeclaration}
  *
  * @param value The value to compare
- *
+ * @see isCompanionEnumWithGrandParent
  * @doesNotValidateTheTypes
  */
 export function isCompanionEnumWithGrandParentByStructure(value: unknown,): value is (& object & Record<keyof CompanionEnumWithGrandParentDeclaration<never, never, never, never, never, never>, unknown>) {

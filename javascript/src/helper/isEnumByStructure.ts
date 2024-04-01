@@ -14,6 +14,8 @@ import {EnumConstants} from "../EnumConstants"
  * without verifying its typing on the fields directly
  *
  * @param value The value to compare
+ * @see isEnum
+ * @doesNotValidateTheTypes
  */
 export function isEnumByStructure(value: unknown,): value is (& object & Record<keyof Enumerable, unknown>) {
     if (value == null)
