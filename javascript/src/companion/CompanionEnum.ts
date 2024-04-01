@@ -465,7 +465,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     protected _isNotInExcludedNames(nameOrOrdinal: string, originalValue: StringOrObject,) {
         const excludedNames = this._excludedNames
         if (excludedNames.hasOne(nameOrOrdinal,))
-            throw new ForbiddenNameException(`Forbidden name. The char value "${nameOrOrdinal}" is one of the excluded names ${excludedNames.join(", ", "(", ")", null, null, it => `"${it}"`,)}.`, originalValue,)
+            throw new ForbiddenNameException(`Forbidden name. The char value "${nameOrOrdinal}" is one of the excluded names ${excludedNames.join(", ", '(', ')', null, null, it => `"${it}"`,)}.`, originalValue,)
     }
 
     //#endregion -------------------- Validation (is not in "excluded names") methods --------------------
