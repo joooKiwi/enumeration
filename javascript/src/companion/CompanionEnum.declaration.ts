@@ -22,13 +22,11 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
     //#region -------------------- Default getter & setter methods --------------------
 
     /**
-     * Get the default value.
-     *
-     * If the default value was not initialized, it will attempt to initialize it
-     * and then return it.
+     * Get the default value
      *
      * @throws {NullEnumerableException}
      * @throws {UnhandledValueException}
+     * @lateInititialization
      */
     get defaultValue(): ENUM
 
@@ -105,13 +103,25 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
     //#endregion -------------------- Default getter & setter methods --------------------
     //#region -------------------- Values getter methods --------------------
 
-    /** Every {@link Enumerable instance} for the {@link instance} */
+    /**
+     * Every {@link Enumerable instance} for the {@link instance}
+     *
+     * @lateInitialization
+     */
     get values(): CollectionHolder<ENUM>
 
-    /** Every {@link Enumerable.name name} for the {@link instance} */
+    /**
+     * Every {@link Enumerable.name name} for the {@link instance}
+     *
+     * @lateInitialization
+     */
     get names(): CollectionHolder<NameOf<ENUM>>
 
-    /** Every {@link Enumerable.ordinal ordinal} for the {@link instance} */
+    /**
+     * Every {@link Enumerable.ordinal ordinal} for the {@link instance}
+     *
+     * @lateInitialization
+     */
     get ordinals(): CollectionHolder<OrdinalOf<ENUM>>
 
     /** An {@link IterableIterator iterator} for the {@link instance} */
