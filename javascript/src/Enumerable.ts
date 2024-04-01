@@ -25,7 +25,7 @@ export interface Enumerable<out ORDINAL extends number = number, out NAME extend
     /**
      * Convert the {@link Enumerable} to a {@link String} or {@link Number}.
      *
-     * If it receive a <b>null</b>, then a {@link TypeError} will be thrown.
+     * If it receives a <b>null</b>, then a {@link TypeError} will be thrown.
      *
      * @param value The value (either "string", "number" or "default")
      * @throws {NullHintException} The hint received was <b>null</b>
@@ -36,7 +36,8 @@ export interface Enumerable<out ORDINAL extends number = number, out NAME extend
     /**
      * Convert the {@link Enumerable} to a {@link String} or {@link Number}.
      *
-     * If it receive a <b>null</b> or a value that is not {@link PossiblePrimitiveHint a hint}, then a {@link TypeError} will be thrown.
+     * If it receives a <b>null</b> or a value that is not {@link PossiblePrimitiveHint a hint},
+     * then a {@link TypeError} will be thrown.
      *
      * @param value The value (either "string", "number" or "default") as an object or a primitive
      * @throws {NullHintException} The hint received was <b>null</b>

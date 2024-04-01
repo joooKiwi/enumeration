@@ -242,11 +242,11 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * If all of them are <b>null</b>, then a {@link NullEnumerableException} will be thrown.
      *
      * And if the values expected ({@link _DEFAULT}, {@link _DEFAULT_NAME} or {@link _DEFAULT_ORDINAL})
-     * are not in the expected type, then an {@link InvalidEnumerableException} is thrown.
+     * are not in the expected type, then an {@link UnhandledValueException} is thrown.
      *
      * @see EnumConstants.DEFAULT_MAP
      * @throws {NullEnumerableException}
-     * @throws {InvalidEnumerableException}
+     * @throws {UnhandledValueException}
      */
     #initializeDefault(): void {
         if (this.#initializeDefaultByEnumerable())
@@ -264,7 +264,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      *
      * @returns {boolean} The default value has been initialized
      * @throws {NullEnumerableException}
-     * @throws {InvalidEnumerableException}
+     * @throws {UnhandledValueException}
      */
     #initializeDefaultByEnumerable(): boolean {
         let defaultValue: Nullable<ENUMERABLE>
@@ -293,7 +293,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      *
      * @returns {boolean} The default value has been initialized
      * @throws {NullEnumerableException}
-     * @throws {InvalidEnumerableException}
+     * @throws {UnhandledValueException}
      */
     #initializeDefaultByName(): boolean {
         let defaultName: Nullable<StringOrObject>
@@ -332,7 +332,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      *
      * @returns {boolean} The default value has been initialized
      * @throws {NullEnumerableException}
-     * @throws {InvalidEnumerableException}
+     * @throws {UnhandledValueException}
      */
     #initializeDefaultByOrdinal(): boolean {
         let defaultOrdinal: Nullable<NumericOrObject>

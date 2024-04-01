@@ -144,7 +144,6 @@ export namespace Helper {
      * @param instance The instance to retrieve its {@link CompanionEnum} instance
      * @param name The name to retrieve
      * @param type The type of {@link CompanionEnum} inheritor
-     * @param originalValue The original value received from {@link getValue} or {@link getNullableValue}
      * @throws {NullReferenceException}
      *
      * @private

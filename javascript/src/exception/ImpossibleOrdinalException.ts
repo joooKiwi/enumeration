@@ -36,7 +36,7 @@ export class ImpossibleOrdinalException<const out T extends StringOrNumericOrObj
     }
 
     /**
-     * The value that was negative,
+     * The value, which was negative,
      * over the {@link Number.MAX_VALUE maximum number}
      * or a floating {@link Number number}
      */
