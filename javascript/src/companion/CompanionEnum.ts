@@ -141,7 +141,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
 
 
     public get values(): CollectionHolder<ENUMERABLE> {
-        if (this.#values === undefined && !EnumConstants.VALUES_MAP.has(this))
+        if (this.#values === undefined && !EnumConstants.VALUES_MAP.has(this,))
             this.#initializeMaps()
 
         const values = this.#values
@@ -151,7 +151,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     }
 
     public get names(): CollectionHolder<NameOf<ENUMERABLE>> {
-        if (this.#names === undefined && !EnumConstants.NAMES_MAP.has(this))
+        if (this.#names === undefined && !EnumConstants.NAMES_MAP.has(this,))
             this.#initializeMaps()
 
         const names = this.#names
@@ -161,7 +161,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
     }
 
     public get ordinals(): CollectionHolder<OrdinalOf<ENUMERABLE>> {
-        if (this.#ordinals === undefined && !EnumConstants.ORDINALS_MAP.has(this))
+        if (this.#ordinals === undefined && !EnumConstants.ORDINALS_MAP.has(this,))
             this.#initializeMaps()
 
         const ordinals = this.#ordinals
@@ -212,7 +212,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
             const name = field[0]
             if (name === EnumConstants.PROTOTYPE_NAME)
                 continue
-            if(excludedNames.hasOne(name,))
+            if (excludedNames.hasOne(name,))
                 continue
             if (EnumConstants.DECIMAL_REGEX.test(name,))
                 continue
@@ -276,7 +276,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         if (defaultValue == null)
             return false
 
-        if (!isEnum(defaultValue) && !isEnumByStructure(defaultValue))
+        if (!isEnum(defaultValue,) && !isEnumByStructure(defaultValue,))
             throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT) was not an Enum or in the structure of an Enumerable.`, defaultValue,)
         try {
             EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByEnumerable(defaultValue,),)
@@ -482,7 +482,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         const ordinals = this.ordinals
         if (ordinals.hasOne(Number(ordinal,),))
             return
-        throw new ImpossibleOrdinalException(`The String value "${ordinal}" is not within a valid ordinal ${ordinals.join(", ", "(", ")",)}.`, originalValue,)
+        throw new ImpossibleOrdinalException(`The String value "${ordinal}" is not within a valid ordinal ${ordinals.join(", ", '(', ')',)}.`, originalValue,)
     }
 
     /**
@@ -497,7 +497,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         const ordinals = this.ordinals
         if (ordinals.hasOne(ordinal,))
             return ordinal
-        throw new ImpossibleOrdinalException(`The Number value "${ordinal}" is not within a valid ordinal ${ordinals.join(", ", "(", ")",)}.`, originalValue,)
+        throw new ImpossibleOrdinalException(`The Number value "${ordinal}" is not within a valid ordinal ${ordinals.join(", ", '(', ')',)}.`, originalValue,)
     }
 
     /**
@@ -513,7 +513,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         const ordinals = this.ordinals
         if (ordinals.hasOne(convertedOrdinal,))
             return convertedOrdinal
-        throw new ImpossibleOrdinalException(`The BigInt value "${ordinal}" is not within a valid ordinal ${ordinals.join(", ", "(", ")",)}.`, originalValue,)
+        throw new ImpossibleOrdinalException(`The BigInt value "${ordinal}" is not within a valid ordinal ${ordinals.join(", ", '(', ')',)}.`, originalValue,)
     }
 
     //#endregion -------------------- Validation (is in ordinal) methods --------------------
@@ -527,7 +527,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
      * @throws {ImpossibleOrdinalException}
      */
     protected _isPositiveByString(ordinal: NumberTemplate, originalValue: StringOrObject,) {
-        if (ordinal[0] === "-")
+        if (ordinal[0] === '-')
             throw new ImpossibleOrdinalException(`The String value "${ordinal}" cannot be under 0.`, originalValue,)
     }
 
@@ -610,7 +610,7 @@ export class CompanionEnum<const ENUMERABLE extends Enumerable,
         const size = ordinal.length
         let index = -1
         while (++index < size)
-            if (ordinal[index] == ".")
+            if (ordinal[index] == '.')
                 throw new ImpossibleOrdinalException(`The string value "${ordinal}" cannot be a floating value.`, originalValue,)
     }
 
