@@ -18,8 +18,8 @@ import {NullReferenceException} from "./exception/NullReferenceException"
 import {getCompanion}           from "./helper/getCompanion"
 import {getLastPrototype}       from "./helper/getLastPrototype"
 
-export abstract class Enum<const out ORDINAL extends number = number,
-    const out NAME extends string = string, >
+export abstract class Enum<const ORDINAL extends number = number,
+    const NAME extends string = string, >
     implements Enumerable<ORDINAL, NAME> {
 
     //#region -------------------- Fields --------------------

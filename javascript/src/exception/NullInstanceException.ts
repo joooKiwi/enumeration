@@ -16,7 +16,7 @@ import type {ExceptionWithNullableCause} from "./declaration/ExceptionWithNullab
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-null-pointer-exception Kotlin NullPointerException
  * @see https://learn.microsoft.com/dotnet/api/system.nullreferenceexception C# NullReferenceException
  */
-export class NullInstanceException<const out CAUSE extends Error = never, >
+export class NullInstanceException<const CAUSE extends Error = never, >
     extends TypeError
     implements ExceptionWithNullableCause<CAUSE> {
 

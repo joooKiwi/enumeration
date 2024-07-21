@@ -17,9 +17,9 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-no-such-element-exception/ Kotlin NoSuchElementException
  * @see https://learn.microsoft.com/dotnet/api/system.missingmemberexception C# MissingMemberException
  */
-export class NonExistantKeyException<const out K extends string,
-    const out T,
-    const out CAUSE extends Error = never, >
+export class NonExistantKeyException<const K extends string,
+    const T,
+    const CAUSE extends Error = never, >
     extends TypeError
     implements ExceptionWithValue<T>,
                ExceptionWithNullableCause<CAUSE> {

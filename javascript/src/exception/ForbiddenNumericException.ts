@@ -19,7 +19,8 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-illegal-argument-exception Kotlin IllegalArgumentException
  * @see https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception C# ArgumentOutOfRangeException
  */
-export class ForbiddenNumericException<const T extends StringOrNumericOrObject, const ERROR extends Error = never, >
+export class ForbiddenNumericException<const T extends StringOrNumericOrObject,
+    const ERROR extends Error = never, >
     extends ReferenceError
     implements ExceptionWithValue<T>,
                ExceptionWithNullableCause<ERROR> {

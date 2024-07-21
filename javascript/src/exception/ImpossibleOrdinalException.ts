@@ -19,8 +19,8 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-class-cast-exception Kotlin ClassCastException
  * @see https://learn.microsoft.com/dotnet/api/system.invalidcastexception C# InvalidCastException
  */
-export class ImpossibleOrdinalException<const out T extends StringOrNumericOrObject,
-    const out CAUSE extends Error = never, >
+export class ImpossibleOrdinalException<const T extends StringOrNumericOrObject,
+    const CAUSE extends Error = never, >
     extends TypeError
     implements ExceptionWithValue<T>,
                ExceptionWithNullableCause<CAUSE> {

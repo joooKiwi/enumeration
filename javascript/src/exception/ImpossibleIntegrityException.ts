@@ -16,8 +16,8 @@ import type {ExceptionWithNullableCause} from "./declaration/ExceptionWithNullab
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-class-cast-exception Kotlin ClassCastException
  * @see https://learn.microsoft.com/dotnet/api/system.invalidcastexception C# InvalidCastException
  */
-export class ImpossibleIntegrityException<const out INSTANCE,
-    const out CAUSE extends Error = never, >
+export class ImpossibleIntegrityException<const INSTANCE,
+    const CAUSE extends Error = never, >
     extends TypeError
     implements ExceptionWithNullableCause<CAUSE> {
 

@@ -24,11 +24,11 @@ import {NullInstanceException}      from "../exception/NullInstanceException"
 import {NonExistantKeyException}    from "../exception/NonExistantKeyException"
 import {NullReferenceException}     from "../exception/NullReferenceException"
 
-export class CompanionEnumWithGrandParent<const out ENUM extends EnumerableWithNullableGrandParent<PARENT_ENUM, GRAND_PARENT_ENUM>,
+export class CompanionEnumWithGrandParent<const ENUM extends EnumerableWithNullableGrandParent<PARENT_ENUM, GRAND_PARENT_ENUM>,
     const ENUM_CONSTRUCTOR extends EnumerableConstructor<ENUM, CompanionEnumWithGrandParentDeclaration<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR, GRAND_PARENT_ENUM, GRAND_PARENT_ENUM_CONSTRUCTOR>>,
-    const out PARENT_ENUM extends EnumerableWithNullableParent<GRAND_PARENT_ENUM>,
+    const PARENT_ENUM extends EnumerableWithNullableParent<GRAND_PARENT_ENUM>,
     const PARENT_ENUM_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUM, CompanionEnumWithParentDeclaration<PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR, GRAND_PARENT_ENUM, GRAND_PARENT_ENUM_CONSTRUCTOR>>,
-    const out GRAND_PARENT_ENUM extends Enumerable,
+    const GRAND_PARENT_ENUM extends Enumerable,
     const GRAND_PARENT_ENUM_CONSTRUCTOR extends EnumerableConstructor<GRAND_PARENT_ENUM, CompanionEnumDeclaration<GRAND_PARENT_ENUM, GRAND_PARENT_ENUM_CONSTRUCTOR>>, >
     extends CompanionEnumWithParent<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR>
     implements CompanionEnumWithGrandParentDeclaration<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR, GRAND_PARENT_ENUM, GRAND_PARENT_ENUM_CONSTRUCTOR> {

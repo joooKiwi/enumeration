@@ -20,9 +20,9 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-class-cast-exception Kotlin ClassCastException
  * @see https://learn.microsoft.com/dotnet/api/system.invalidcastexception C# InvalidCastException
  */
-export class InvalidEnumerableException<const out ENUMERABLE extends Enumerable,
-    const out EXPECTED_ENUMERABLE_CONSTRUCTORS extends readonly EnumerableConstructor<any, any>[],
-    const out CAUSE extends Error = never, >
+export class InvalidEnumerableException<const ENUMERABLE extends Enumerable,
+    const EXPECTED_ENUMERABLE_CONSTRUCTORS extends readonly EnumerableConstructor<any, any>[],
+    const CAUSE extends Error = never, >
     extends TypeError
     implements ExceptionWithValue<ENUMERABLE>,
                ExceptionWithNullableCause<CAUSE> {

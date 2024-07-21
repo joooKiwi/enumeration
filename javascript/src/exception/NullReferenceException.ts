@@ -17,8 +17,8 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-null-pointer-exception Kotlin NullPointerException
  * @see https://learn.microsoft.com/dotnet/api/system.nullreferenceexception C# NullReferenceException
  */
-export class NullReferenceException<const out T,
-    const out CAUSE extends Error = never, >
+export class NullReferenceException<const T,
+    const CAUSE extends Error = never, >
     extends TypeError
     implements ExceptionWithValue<T>,
                ExceptionWithNullableCause<CAUSE> {
