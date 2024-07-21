@@ -14,7 +14,7 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
  * The {@link value reference to retrieve} was not expected to be <b>null</b>
  *
  * @see https://docs.oracle.com/en/java/javase/22/docs/api/java.base/java/lang/NullPointerException.html Java NullPointerException
- * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-null-pointer-exception Kotlin NullPointerException
+ * @see https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-null-pointer-exception Kotlin NullPointerException
  * @see https://learn.microsoft.com/dotnet/api/system.nullreferenceexception C# NullReferenceException
  */
 export class NullReferenceException<const T,

@@ -14,7 +14,7 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
  * The property (or reference) by a {@link key} was not existant on the {@link value value received}
  *
  * @see https://docs.oracle.com/en/java/javase/22/docs/api/java.base/java/util/NoSuchElementException.html Java NoSuchElementException
- * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-no-such-element-exception/ Kotlin NoSuchElementException
+ * @see https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-no-such-element-exception/ Kotlin NoSuchElementException
  * @see https://learn.microsoft.com/dotnet/api/system.missingmemberexception C# MissingMemberException
  */
 export class NonExistantKeyException<const K extends string,
