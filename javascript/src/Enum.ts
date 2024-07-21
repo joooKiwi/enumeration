@@ -104,10 +104,11 @@ export abstract class Enum<const ORDINAL extends number = number,
      */
     get #nameOnCurrentInstance(): NAME {
         const companion = this.#__companion
-        const iterator = companion.iterator
-        while (iterator.hasNext)
-            if (iterator.nextValue === this)
-                return companion.names.get(iterator.index - 1,) as NAME
+        const values = companion.values
+        let index = values.size
+        while (index-- > 0)
+            if (values.get(index,) === this)
+                return companion.names.get(index,) as NAME
         throw new NullReferenceException(`Reference not found! No name to the "${companion.instance.name}" were found. Or it was called during its construction.`, this,)
     }
 
