@@ -212,7 +212,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
             const name = field[0]
             if (name === EnumConstants.PROTOTYPE_NAME)
                 continue
-            if (excludedNames.hasOne(name,))
+            if (excludedNames.has(name,))
                 continue
             if (EnumConstants.DECIMAL_REGEX.test(name,))
                 continue
@@ -448,7 +448,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @throws {ForbiddenInheritedEnumerableMemberException}
      */
     protected _isNotInInheritedEnumerableMembers(nameOrOrdinal: string, originalValue: StringOrObject,) {
-        if (EnumConstants.EVERY_ENUMERABLE_MEMBERS.hasOne(nameOrOrdinal,))
+        if (EnumConstants.EVERY_ENUMERABLE_MEMBERS.has(nameOrOrdinal,))
             throw new ForbiddenInheritedEnumerableMemberException(`Forbidden inherited enumerable member. The string value "${originalValue}" cannot be an inherited member of the inherited Enum static methods (\"name\", \"ordinal\", \"parent\", \"grandParent\", \"greatGrandParent\").`, originalValue,)
     }
 
@@ -464,7 +464,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      */
     protected _isNotInExcludedNames(nameOrOrdinal: string, originalValue: StringOrObject,) {
         const excludedNames = this._excludedNames
-        if (excludedNames.hasOne(nameOrOrdinal,))
+        if (excludedNames.has(nameOrOrdinal,))
             throw new ForbiddenNameException(`Forbidden name. The char value "${nameOrOrdinal}" is one of the excluded names ${excludedNames.join(", ", '(', ')', null, null, it => `"${it}"`,)}.`, originalValue,)
     }
 
@@ -480,7 +480,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      */
     protected _isInOrdinalsByString(ordinal: NumberTemplate, originalValue: StringOrObject,) {
         const ordinals = this.ordinals
-        if (ordinals.hasOne(Number(ordinal,),))
+        if (ordinals.has(Number(ordinal,),))
             return
         throw new ImpossibleOrdinalException(`The String value "${ordinal}" is not within a valid ordinal ${ordinals.join(", ", '(', ')',)}.`, originalValue,)
     }
@@ -495,7 +495,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      */
     protected _isInOrdinalsByNumber(ordinal: number, originalValue: NumberOrObject,): OrdinalOf<ENUM> {
         const ordinals = this.ordinals
-        if (ordinals.hasOne(ordinal,))
+        if (ordinals.has(ordinal,))
             return ordinal
         throw new ImpossibleOrdinalException(`The Number value "${ordinal}" is not within a valid ordinal ${ordinals.join(", ", '(', ')',)}.`, originalValue,)
     }
@@ -511,7 +511,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
     protected _isInOrdinalsByBigInt(ordinal: bigint, originalValue: BigIntOrObject,): OrdinalOf<ENUM> {
         const convertedOrdinal = Number(ordinal,)
         const ordinals = this.ordinals
-        if (ordinals.hasOne(convertedOrdinal,))
+        if (ordinals.has(convertedOrdinal,))
             return convertedOrdinal
         throw new ImpossibleOrdinalException(`The BigInt value "${ordinal}" is not within a valid ordinal ${ordinals.join(", ", '(', ')',)}.`, originalValue,)
     }
