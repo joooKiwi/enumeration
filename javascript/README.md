@@ -17,7 +17,6 @@
 * [Common mistakes](#common-mistakes)
   * [Reversing the inheritance](#reversing-the-inheritance)
   * [Forgetting the type declaration on the companion enum](#forgetting-the-type-declaration-on-the-companion-enum)
-  * [Calling a `companion enum` methods, but giving an error on valid instances](#calling-a-companion-enum-methods-but-giving-an-error-on-valid-instances)
   * [Having an `Enumerable` to not have a value from `getLastPrototype`](#having-an-enumerable-to-not-have-a-value-from-getlastprototype)
 * [Known error](#known-error)
 * [Contribution](#contribution)
@@ -1485,41 +1484,6 @@ class Example extends Enum {
 interface NestedExampleDeclaration<T> {
     readonly field: T
 }
-```
-
-### Calling a `companion enum` methods, but giving an error on valid instances
-
-In `Typescript`, there is the type variance for the generics.
-
-It can be summed to the
- - invariance (`T`) → _(the type directly)_
- - covariance (`out T`) → _(the type or a child)_
- - contravariance (`in T`) → _(the type or a parent)_
-
-The covariance should be used instead of the invariance
-when having a specific name & ordinal on the `enum`s.
-
-```typescript
-// Bad example
-class Example<const NAME extends Names = Names, const ORDINAL extends Ordinals = Ordinals,>
-    extends Enum<NAME, ORDINAL> {
-    // Whatever is needed inside
-}
-
-// This gives a typescript error
-//      TS2375: Type  Example_A  is not assignable to type  Example<Ordinals, Names>  with 'exactOptionalPropertyTypes: true'"
-Example.CompanionEnum.get.getValue(Example.A,)
-```
-
-```typescript
-// Correct example
-class Example<const out NAME extends Names = Names, const out ORDINAL extends Ordinals = Ordinals,>
-    extends Enum<NAME, ORDINAL> {
-    // Whatever is needed inside
-}
-
-// Is now correcty handled
-Example.CompanionEnum.get.getValue(Example.A,)
 ```
 
 ### Having an `Enumerable` to not have a value from `getLastPrototype`
