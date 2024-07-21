@@ -14,7 +14,7 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
  * An exception to tell that an {@link EnumConstants.EVERY_ENUMERABLE_MEMBERS enumerable member} was used
  *
  * @see EnumConstants.EVERY_ENUMERABLE_MEMBERS
- * @see https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html Java IllegalArgumentException
+ * @see https://docs.oracle.com/en/java/javase/22/docs/api/java.base/java/lang/IllegalArgumentException.html Java IllegalArgumentException
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-illegal-argument-exception Kotlin IllegalArgumentException
  * @see https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception C# ArgumentOutOfRangeException
  */

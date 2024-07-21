@@ -16,7 +16,7 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
  * and {@link CompanionEnumDeclaration.getOrdinal getOrdinal}
  * that the value received was not a {@link String}, {@link Number}, {@link BigInt} or {@link Enumerable}
  *
- * @see https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html Java ClassCastException
+ * @see https://docs.oracle.com/en/java/javase/22/docs/api/java.base/java/lang/ClassCastException.html Java ClassCastException
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-class-cast-exception Kotlin ClassCastException
  * @see https://learn.microsoft.com/dotnet/api/system.invalidcastexception C# InvalidCastException
  * @uniqueToJavascript

@@ -15,7 +15,7 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
  *  over the {@link EnumConstants.MAX_VALUE_AS_NUMBER maximum number}
  *  or a floating {@link Number number} value
  *
- * @see https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html Java ClassCastException
+ * @see https://docs.oracle.com/en/java/javase/22/docs/api/java.base/java/lang/ClassCastException.html Java ClassCastException
  * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-class-cast-exception Kotlin ClassCastException
  * @see https://learn.microsoft.com/dotnet/api/system.invalidcastexception C# InvalidCastException
  */
