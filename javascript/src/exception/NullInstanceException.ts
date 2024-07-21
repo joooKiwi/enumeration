@@ -25,7 +25,7 @@ export class NullInstanceException<const CAUSE extends Error = never, >
     readonly #cause
 
     public constructor(cause?: Nullable<CAUSE>,) {
-        super("The instance received cannot be null!",)
+        super("The instance received cannot be null.",)
         this.#cause = cause ?? null
     }
 
