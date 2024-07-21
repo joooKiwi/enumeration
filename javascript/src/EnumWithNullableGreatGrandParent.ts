@@ -30,7 +30,7 @@ import {KnownEnumConstructors}        from "./helper/KnownEnumConstructors"
  *  - An exception is thrown when attempting to retrieve the value by {@link CompanionEnumWithGreatGrandParentDeclaration.getValue getValue()}
  *
  * Also, it can throw a {@link ImpossibleIntegrityException} when receiving a <b>null</b>
- * on a value that was not expected to be null on the {@link EnumWithNullableGreatGrandParent.parent parent} &
+ * on a value not expected to be null on the {@link EnumWithNullableGreatGrandParent.parent parent} &
  * {@link EnumWithNullableGreatGrandParent.grandParent grandparent} methods.
  *
  * @see EnumWithGreatGrandParent
