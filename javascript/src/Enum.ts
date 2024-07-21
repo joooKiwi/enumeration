@@ -18,8 +18,8 @@ import {NullReferenceException} from "./exception/NullReferenceException"
 import {getCompanion}           from "./helper/getCompanion"
 import {getLastPrototype}       from "./helper/getLastPrototype"
 
-export abstract class Enum<const out ORDINAL extends number = number,
-    const out NAME extends string = string, >
+export abstract class Enum<const ORDINAL extends number = number,
+    const NAME extends string = string, >
     implements Enumerable<ORDINAL, NAME> {
 
     //#region -------------------- Fields --------------------
@@ -60,7 +60,7 @@ export abstract class Enum<const out ORDINAL extends number = number,
     public [Symbol.toPrimitive](hint: Nullable<StringOrObject>,): EnumerableToPrimitive<PossiblePrimitiveHint, this>
     public [Symbol.toPrimitive](hint: Nullable<StringOrObject>,): | ORDINAL | NAME {
         if (hint == null)
-            throw new NullHintException(`Invalid null hint: The "${this.#__companion.instance.name}" cannot be converted to a string or number primitive`,)
+            throw new NullHintException(`Invalid null hint: The "${this.#__companion.instance.name}" cannot be converted to a string or number primitive.`,)
         if (hint instanceof String)
             return this[Symbol.toPrimitive](hint.valueOf(),)
 
@@ -71,7 +71,7 @@ export abstract class Enum<const out ORDINAL extends number = number,
             return this.name
         if (lowerCaseHint === "default")
             return this.name
-        throw new InvalidHintException(`Invalid hint "${hint}": The "${this.#__companion.instance.name}" could only be converted to a string or number primitive`, hint,)
+        throw new InvalidHintException(`Invalid hint "${hint}": The "${this.#__companion.instance.name}" could only be converted to a string or number primitive.`, hint,)
     }
 
     public get [Symbol.toStringTag](): EnumerableName {
@@ -98,7 +98,7 @@ export abstract class Enum<const out ORDINAL extends number = number,
 
     /**
      * Get the {@link Enumerable enumerable} {@link Enumerable.name name}
-     * by utilizing the {@link CompanionEnumDeclaration.values companion values}
+     * by using the {@link CompanionEnumDeclaration.values companion values}
      *
      * @throws {NullReferenceException} The current instance was not found in the {@link CompanionEnumDeclaration.values companion values}
      */

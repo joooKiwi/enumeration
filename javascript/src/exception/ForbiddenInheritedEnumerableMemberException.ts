@@ -14,12 +14,12 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
  * An exception to tell that an {@link EnumConstants.EVERY_ENUMERABLE_MEMBERS enumerable member} was used
  *
  * @see EnumConstants.EVERY_ENUMERABLE_MEMBERS
- * @see https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html Java IllegalArgumentException
- * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-illegal-argument-exception Kotlin IllegalArgumentException
+ * @see https://docs.oracle.com/en/java/javase/22/docs/api/java.base/java/lang/IllegalArgumentException.html Java IllegalArgumentException
+ * @see https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-illegal-argument-exception Kotlin IllegalArgumentException
  * @see https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception C# ArgumentOutOfRangeException
  */
-export class ForbiddenInheritedEnumerableMemberException<const out T extends StringOrObject,
-    const out CAUSE extends Error = never, >
+export class ForbiddenInheritedEnumerableMemberException<const T extends StringOrObject,
+    const CAUSE extends Error = never, >
     extends ReferenceError
     implements ExceptionWithValue<T>,
                ExceptionWithNullableCause<CAUSE> {

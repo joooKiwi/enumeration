@@ -58,7 +58,6 @@ export namespace Helper {
      * @todo Move to be used publicly
      * @note This method may not work properly if used outside of the "@joookiwi/enumerable" project
      * @throwsOnNullSymbol
-     * @internal
      */
     export function getValue<const INSTANCE extends Enumerable, >(instance: Enumerable, value: PossibleEnumerableValueOrNameByValueOrCallback<INSTANCE>, type: PossibleCompanionTypeName,): INSTANCE {
         if (value == null)
@@ -99,7 +98,6 @@ export namespace Helper {
      *
      * @todo Move to be used publicly
      * @note This method may not work properly if used outside of the "@joookiwi/enumerable" project
-     * @internal
      */
     export function getNullableValue<const INSTANCE extends Enumerable, >(instance: Enumerable, value: PossibleEnumerableValueOrNameByValueOrCallback<INSTANCE>, type: PossibleCompanionTypeName,): NullOr<INSTANCE> {
         if (value == null)
@@ -131,7 +129,6 @@ export namespace Helper {
      *
      * @todo Move to be used publicly
      * @note This method may not work properly if used outside of the "@joookiwi/enumerable" project
-     * @internal
      */
     export function getValueFromInstanceName<const INSTANCE extends Enumerable, >(instance: Enumerable, type: PossibleCompanionTypeName,): INSTANCE {
         return getValueFromName(instance, instance.name, CompanionTypes.CompanionEnum.get.getValueByType(type,),)

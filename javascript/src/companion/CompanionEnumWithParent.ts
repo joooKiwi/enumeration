@@ -22,9 +22,9 @@ import {NonExistantKeyException}    from "../exception/NonExistantKeyException"
 import {NullInstanceException}      from "../exception/NullInstanceException"
 import {NullReferenceException}     from "../exception/NullReferenceException"
 
-export class CompanionEnumWithParent<const out ENUM extends EnumerableWithNullableParent<PARENT_ENUM>,
+export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullableParent<PARENT_ENUM>,
     const ENUM_CONSTRUCTOR extends EnumerableConstructor<ENUM, CompanionEnumWithParentDeclaration<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR>>,
-    const out PARENT_ENUM extends Enumerable,
+    const PARENT_ENUM extends Enumerable,
     const PARENT_ENUM_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUM, CompanionEnumDeclaration<PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR>>, >
     extends CompanionEnum<ENUM, ENUM_CONSTRUCTOR>
     implements CompanionEnumWithParentDeclaration<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR> {

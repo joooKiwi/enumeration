@@ -1,6 +1,6 @@
 {
   "name": "@joookiwi/enumerable",
-  "version": "3.5.0",
+  "version": "3.6.0",
   "description": "A Javascript implementation of an enum class",
 
   "scripts": {
@@ -153,18 +153,18 @@
   "author": "JóôòKiwi",
   "license": "MIT",
   "dependencies": {
-    "@joookiwi/collection": "^1.8.0",
-    "@joookiwi/lazy": "^1.4.0",
+    "@joookiwi/collection": "^1.9.0",
+    "@joookiwi/lazy": "^1.5.0",
     "@joookiwi/type": "^1.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.11.19",
+    "@types/node": "^20.14.11",
     "del-cli": "^5.1.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-extended": "^4.0.2",
-    "ts-jest": "^29.1.2",
+    "ts-jest": "^29.2.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.5.3"
   }
 }

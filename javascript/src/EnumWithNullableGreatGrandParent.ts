@@ -30,16 +30,16 @@ import {KnownEnumConstructors}        from "./helper/KnownEnumConstructors"
  *  - An exception is thrown when attempting to retrieve the value by {@link CompanionEnumWithGreatGrandParentDeclaration.getValue getValue()}
  *
  * Also, it can throw a {@link ImpossibleIntegrityException} when receiving a <b>null</b>
- * on a value that was not expected to be null on the {@link EnumWithNullableGreatGrandParent.parent parent} &
+ * on a value not expected to be null on the {@link EnumWithNullableGreatGrandParent.parent parent} &
  * {@link EnumWithNullableGreatGrandParent.grandParent grandparent} methods.
  *
  * @see EnumWithGreatGrandParent
  */
-export class EnumWithNullableGreatGrandParent<const out PARENT extends EnumerableWithNullableGrandParent<GRAND_PARENT, GREAT_GRAND_PARENT>,
-    const out GRAND_PARENT extends EnumerableWithNullableParent<GREAT_GRAND_PARENT>,
-    const out GREAT_GRAND_PARENT extends Enumerable,
-    const out ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,
-    const out NAME extends PossibleNameOf<string, PARENT> = PossibleNameOf<string, PARENT>, >
+export class EnumWithNullableGreatGrandParent<const PARENT extends EnumerableWithNullableGrandParent<GRAND_PARENT, GREAT_GRAND_PARENT>,
+    const GRAND_PARENT extends EnumerableWithNullableParent<GREAT_GRAND_PARENT>,
+    const GREAT_GRAND_PARENT extends Enumerable,
+    const ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,
+    const NAME extends PossibleNameOf<string, PARENT> = PossibleNameOf<string, PARENT>, >
     extends EnumWithNullableGrandParent<PARENT, GRAND_PARENT, ORDINAL, NAME>
     implements EnumerableWithNullableGreatGrandParent<PARENT, GRAND_PARENT, GREAT_GRAND_PARENT, ORDINAL, NAME> {
 

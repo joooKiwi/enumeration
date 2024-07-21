@@ -17,12 +17,12 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
  * in a {@link CompanionEnum}
  *
  * @see CompanionEnum._excludedNames
- * @see https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html Java IllegalArgumentException
- * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-illegal-argument-exception Kotlin IllegalArgumentException
+ * @see https://docs.oracle.com/en/java/javase/22/docs/api/java.base/java/lang/IllegalArgumentException.html Java IllegalArgumentException
+ * @see https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-illegal-argument-exception Kotlin IllegalArgumentException
  * @see https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception C# ArgumentOutOfRangeException
  */
-export class ForbiddenNameException<const out T extends StringOrObject,
-    const out CAUSE extends Error = never, >
+export class ForbiddenNameException<const T extends StringOrObject,
+    const CAUSE extends Error = never, >
     extends ReferenceError
     implements ExceptionWithValue<T>,
                ExceptionWithNullableCause<CAUSE> {

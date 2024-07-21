@@ -3,7 +3,8 @@ import {CompanionEnum, Enum}         from "@joookiwi/enumerable"
 
 import type {Names, Ordinals} from "../type"
 
-export class EnumWithSpecificNameAndOrdinal<out ORDINAL extends Ordinals = Ordinals, out NAME extends Names = Names, >
+export class EnumWithSpecificNameAndOrdinal<ORDINAL extends Ordinals = Ordinals,
+	NAME extends Names = Names, >
     extends Enum<ORDINAL, NAME> {
 
     public static readonly A = new EnumWithSpecificNameAndOrdinal<0, 'A'>()

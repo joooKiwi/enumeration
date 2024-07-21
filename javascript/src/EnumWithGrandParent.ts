@@ -32,10 +32,10 @@ import {KnownEnumConstructors} from "./helper/KnownEnumConstructors"
  *
  * @see EnumWithNullableGrandParent
  */
-export class EnumWithGrandParent<const out PARENT extends EnumerableWithParent<GRAND_PARENT>,
-    const out GRAND_PARENT extends Enumerable,
-    const out ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,
-    const out NAME extends PossibleNameOf<string, PARENT> = PossibleNameOf<string, PARENT>, >
+export class EnumWithGrandParent<const PARENT extends EnumerableWithParent<GRAND_PARENT>,
+    const GRAND_PARENT extends Enumerable,
+    const ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,
+    const NAME extends PossibleNameOf<string, PARENT> = PossibleNameOf<string, PARENT>, >
     extends EnumWithParent<PARENT, ORDINAL, NAME>
     implements EnumerableWithGrandParent<PARENT, GRAND_PARENT, ORDINAL, NAME> {
 

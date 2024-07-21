@@ -27,7 +27,7 @@ import type {PossibleCompanionEnumMembers}                 from "./companion/typ
 /** A class containing every field used by an {@link Enumerable} helper, instance or companion */
 export class EnumConstants {
     constructor() {
-        throw new EvalError("The class EnumConstants cannot be created",)
+        throw new EvalError("The class EnumConstants cannot be created.",)
     }
 }
 

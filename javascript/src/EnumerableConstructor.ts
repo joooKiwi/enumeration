@@ -10,8 +10,8 @@ import type {Singleton}                from "./Singleton"
 import type {CompanionEnumDeclaration} from "./companion/CompanionEnum.declaration"
 
 /** The <i>static</i> {@link Enumerable} definition containing the {@link CompanionEnumDeclaration companion enum} {@link Singleton singleton} field */
-export interface EnumerableConstructor<ENUMERABLE extends Enumerable,
-    COMPANION_ENUM extends CompanionEnumDeclaration<ENUMERABLE, EnumerableConstructor<ENUMERABLE, COMPANION_ENUM>>, >
+export interface EnumerableConstructor<out ENUMERABLE extends Enumerable,
+    out COMPANION_ENUM extends CompanionEnumDeclaration<ENUMERABLE, EnumerableConstructor<ENUMERABLE, COMPANION_ENUM>>, >
     extends Function {
 
     /**

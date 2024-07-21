@@ -16,13 +16,13 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
  * An exception to tell that the {@link value value received} was not one of
  * the {@link expectedEnumerableConstructors enumerable instances (constructors) expected}
  *
- * @see https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html Java ClassCastException
- * @see https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-class-cast-exception Kotlin ClassCastException
+ * @see https://docs.oracle.com/en/java/javase/22/docs/api/java.base/java/lang/ClassCastException.html Java ClassCastException
+ * @see https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-class-cast-exception Kotlin ClassCastException
  * @see https://learn.microsoft.com/dotnet/api/system.invalidcastexception C# InvalidCastException
  */
-export class InvalidEnumerableException<const out ENUMERABLE extends Enumerable,
-    const out EXPECTED_ENUMERABLE_CONSTRUCTORS extends readonly EnumerableConstructor<any, any>[],
-    const out CAUSE extends Error = never, >
+export class InvalidEnumerableException<const ENUMERABLE extends Enumerable,
+    const EXPECTED_ENUMERABLE_CONSTRUCTORS extends readonly EnumerableConstructor<any, any>[],
+    const CAUSE extends Error = never, >
     extends TypeError
     implements ExceptionWithValue<ENUMERABLE>,
                ExceptionWithNullableCause<CAUSE> {

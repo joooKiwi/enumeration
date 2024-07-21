@@ -28,9 +28,9 @@ import {KnownEnumConstructors} from "./helper/KnownEnumConstructors"
  *
  * @see EnumWithParent
  */
-export abstract class EnumWithNullableParent<const out PARENT extends Enumerable,
-    const out ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,
-    const out NAME extends PossibleNameOf<string, PARENT> = PossibleNameOf<string, PARENT>, >
+export abstract class EnumWithNullableParent<const PARENT extends Enumerable,
+    const ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,
+    const NAME extends PossibleNameOf<string, PARENT> = PossibleNameOf<string, PARENT>, >
     extends Enum<ORDINAL, NAME>
     implements EnumerableWithNullableParent<PARENT, ORDINAL, NAME> {
 
