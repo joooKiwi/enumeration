@@ -222,7 +222,8 @@ class CompanionEnum_GrandParentingEnumExample extends CompanionEnumWithGrandPare
 
 </details>
 
-It also utilizes utility classes like `EnumHelper` and `EnumConstants` in order to be accessible
+It also uses utility classes like the internal `Helper`
+and the public `EnumConstants` in order to be accessible
 outside the scope of the enums.
 
 ### Java implementation
@@ -249,7 +250,7 @@ class Example extends Enum<Example> {}
 <details>
 <summary>Parenting enum</summary>
 
-You can utilize the interface directly when implementing the `enum` directly
+You can use the interface directly when implementing the `enum` directly
 
 ```java
 import github.io.joookiwi.java.enumerable.Enumerable;
@@ -349,7 +350,7 @@ class Example: Enum()
 <details>
 <summary>Parenting enum</summary>
 
-You can utilize the interface directly when implementing the `enum` directly
+You can use the interface directly when implementing the `enum` directly
 
 ```kotlin
 import org.github.joookiwi.kotlin.enumerable.Enumerable
