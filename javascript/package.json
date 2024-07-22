@@ -153,7 +153,7 @@
   "author": "JóôòKiwi",
   "license": "MIT",
   "dependencies": {
-    "@joookiwi/collection": "^1.9.0",
+    "@joookiwi/collection": "^1.9.1",
     "@joookiwi/lazy": "^1.5.0",
     "@joookiwi/type": "^1.0.0"
   },
