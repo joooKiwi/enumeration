@@ -17,16 +17,20 @@ The usage of `COMPANION_ENUM` in the extension can be changed to
 `CompanionEnumWithGrandParent` or `CompanionEnumWithGreatGrandParent`.
 And in `C#`, it uses the type system to its advantage (like for the [ValueTuple](https://learn.microsoft.com/dotnet/api/system.valuetuple)).
 
-| Language                  |                                                                                                    Published                                                                                                     | class<br/>extension | native<br/>enum<br/>functionality | trait<br/>usage | annotation / attribute | utility                                       |
-|:--------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|---------------------|:----------------------------------|-----------------|------------------------|-----------------------------------------------|
-| Javascript<br/>Typescript | [Published to npm](https://www.npmjs.com/package/@joookiwi/enumerable)<br/>[![downloads](https://img.shields.io/npm/dt/@joookiwi/enumerable.svg)](https://npm-stat.com/charts.html?package=@joookiwi/enumerable) | yes                 |                                   |                 |                        | `EnumConstant`                                |
-| Java                      |                                                                                              Maven _(in progress)_                                                                                               | yes                 | yes                               |                 | yes                    | `EnumHelper`, `EnumConstant`, `EnumMethods`   |
-| Kotlin                    |                                                                                              Maven _(in progress)_                                                                                               | yes                 | yes                               |                 | yes                    | `EnumConstant`, `EnumExtension`               |
-| PHP                       |                                                                                                     Composer                                                                                                     | not necessary       | not necessary                     | yes             | yes                    | `EnumHelper`, `EnumConstant`  `EnumMethods`   |
-| C#                        |                                                                                                      Nuget                                                                                                       | yes                 | yes                               |                 | yes                    | `EnumHelper`, `EnumConstant`, `EnumExtension` |
+| Language                  |                                               Published                                               | class<br/>extension | native<br/>enum<br/>functionality | trait<br/>usage | annotation / attribute | utility                                       |
+|:--------------------------|:-----------------------------------------------------------------------------------------------------:|---------------------|:----------------------------------|-----------------|------------------------|-----------------------------------------------|
+| Javascript<br/>Typescript | [![version][npm-image-link]][npm-link]<br/>[![downloads][npm-download-image-link]][npm-download-link] | yes                 |                                   |                 |                        | `EnumConstant`                                |
+| Java                      |                                         Maven _(in progress)_                                         | yes                 | yes                               |                 | yes                    | `EnumHelper`, `EnumConstant`, `EnumMethods`   |
+| Kotlin                    |                                         Maven _(in progress)_                                         | yes                 | yes                               |                 | yes                    | `EnumConstant`, `EnumExtension`               |
+| PHP                       |                                               Composer                                                | not necessary       | not necessary                     | yes             | yes                    | `EnumHelper`, `EnumConstant`  `EnumMethods`   |
+| C#                        |                                                 Nuget                                                 | yes                 | yes                               |                 | yes                    | `EnumHelper`, `EnumConstant`, `EnumExtension` |
 
 _(This may change once the implementation is made)_
 
+[npm-image-link]:          https://img.shields.io/npm/v/@joookiwi/enumerable.svg?logo=npm&label=
+[npm-link]:                https://npmjs.org/package/@joookiwi/enumerable
+[npm-download-image-link]: https://img.shields.io/npm/dt/@joookiwi/enumerable.svg
+[npm-download-link]:       https://npm-stat.com/charts.html?package=@joookiwi/enmumerable
 
 ## Related projects
 
