@@ -34,7 +34,7 @@ export function getLastPrototype<const T extends Enumerable, >(instance: object,
     if (isEnum(instance,)) {
         const prototypeConstructorChain = getPrototypeConstructorChain(instance,)
         const knownEnumConstructors = KnownEnumConstructors.get.values
-        const indexFound = prototypeConstructorChain.indexOfFirst(prototypeConstructor => knownEnumConstructors.any(it => it == prototypeConstructor,),)
+        const indexFound = prototypeConstructorChain.indexOfFirstOrNull(prototypeConstructor => knownEnumConstructors.any(it => it == prototypeConstructor,),)
         if (indexFound == null)
             throw new NullReferenceException(`No known constructor ${knownEnumConstructors.join(", ", '(', ')', null, null, it => it.name,)} was found in the prototype chain ${prototypeConstructorChain.join(" → ", '"', '"',)}.`, instance,)
         return prototypeConstructorChain.get(indexFound - 1,) as EnumerableConstructor<T, any>

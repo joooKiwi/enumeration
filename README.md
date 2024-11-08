@@ -540,6 +540,7 @@ class GrandParentingEnumExample:
 
 | JS / TS version  | Date                 | Quick note                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 |------------------|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 3.8.0            | November 7th, 2024   | [collection][collection] (~~1.10.0~~ → [1.11.1][js-collection-v1.11])                                                                                                                                                                                                                                                                                                                                                                                             |
 | 3.7.0            | October 8th, 2024    | [collection][collection] (~~1.9.3~~ → [1.10.0][js-collection-v1.10])                                                                                                                                                                                                                                                                                                                                                                                              |
 | 3.6.3            | August 15th, 2024    | [collection][collection] (~~1.9.2~~ → 1.9.3)                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | 3.6.2            | July 23rd, 2024      | [collection][collection] (~~1.9.1~~ → 1.9.2)                                                                                                                                                                                                                                                                                                                                                                                                                      |
@@ -588,10 +589,11 @@ class GrandParentingEnumExample:
 [js-collection-v1.2]:  https://github.com/joooKiwi/collection/releases/tag/v1.2.0-js
 [js-collection-v1.4]:  https://github.com/joooKiwi/collection/releases/tag/v1.4.0-js
 [js-collection-v1.5]:  https://github.com/joooKiwi/collection/releases/tag/v1.5.0-js
-[js-collection-v1.6]:  https://github.com/joooKiwi/collection/releases/tag/v1.6.0-js
-[js-collection-v1.7]:  https://github.com/joooKiwi/collection/releases/tag/v1.7.0-js
-[js-collection-v1.9]:  https://github.com/joooKiwi/collection/releases/tag/v1.9.0-js
+[js-collection-v1.6]:  https://github.com/joooKiwi/collection/releases/tag/v1.6.1-js
+[js-collection-v1.7]:  https://github.com/joooKiwi/collection/releases/tag/v1.7.1-js
+[js-collection-v1.9]:  https://github.com/joooKiwi/collection/releases/tag/v1.9.3-js
 [js-collection-v1.10]: https://github.com/joooKiwi/collection/releases/tag/v1.10.0-js
+[js-collection-v1.11]: https://github.com/joooKiwi/collection/releases/tag/v1.11.1-js
 
 [type]: https://github.com/joooKiwi/type
 
