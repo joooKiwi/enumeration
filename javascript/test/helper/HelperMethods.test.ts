@@ -1,9 +1,14 @@
-/*******************************************************************************
- Copyright (c) 2023-2024. Jonathan Bédard ~ JóôòKiwi
-
- This project is free to use.
- All the right is reserved to the author of this project.
- ******************************************************************************/
+//··························································
+// Copyright (c) 2023-2025. Jonathan Bédard ~ JóôòKiwi
+//
+// This project is free to use.
+// All the right is reserved to the author of this project.
+// My projects:
+//  - https://github.com/joooKiwi/type
+//  - https://github.com/joooKiwi/lazy
+//  - https://github.com/joooKiwi/collection
+//  - https://github.com/joooKiwi/enumeration
+//··························································
 
 import {invalidInstances, nullValues}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  from "../enumerable/Enum.constants"
 import {Enum_Enum, Enum_Enumerable, Enum_Enum_GrandParentEnumerable, Enum_GrandParentEnumerable, Enum_Enum_GreatGrandParentEnumerable, Enum_GreatGrandParentEnumerable, Enum_Enum_ParentEnumerable, Enum_ParentEnumerable, Enum_ParentEnum, Enum_NullableParentEnum, Enum_GrandParentEnum, Enum_NullableGrandParentEnum, Enum_NullableGreatGrandParentEnum, Enum_GreatGrandParentEnum, Enum_ParentEnum_GrandParentEnumerable, Enum_NullableParentEnum_GrandParentEnumerable, Enum_NullableParentEnum_GreatGrandParentEnumerable, Enum_ParentEnum_GreatGrandParentEnumerable, Enum_GrandParentEnum_GreatGrandParentEnumerable, Enum_NullableGrandParentEnum_GreatGrandParentEnumerable} from "../BasicEnums"
