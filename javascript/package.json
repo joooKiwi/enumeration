@@ -1,6 +1,6 @@
 {
   "name": "@joookiwi/enumerable",
-  "version": "3.9.0",
+  "version": "3.10.0",
   "description": "A Javascript implementation of an enum class",
 
   "scripts": {
