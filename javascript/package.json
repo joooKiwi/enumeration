@@ -153,9 +153,9 @@
   "author": "JóôòKiwi",
   "license": "MIT",
   "dependencies": {
-    "@joookiwi/collection": "^1.12.0",
-    "@joookiwi/lazy":       "^1.7.0",
-    "@joookiwi/type":       "^1.2.0"
+    "@joookiwi/collection": "^1.13.0",
+    "@joookiwi/lazy":       "^1.7.1",
+    "@joookiwi/type":       "^1.2.1"
   },
   "devDependencies": {
     "@types/jest":            "^30.0.0",
