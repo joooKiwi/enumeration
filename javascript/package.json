@@ -153,17 +153,17 @@
   "author": "JóôòKiwi",
   "license": "MIT",
   "dependencies": {
-    "@joookiwi/collection": "^1.14.0",
-    "@joookiwi/lazy":       "^1.7.2",
+    "@joookiwi/collection": "^2.0.1",
+    "@joookiwi/lazy":       "^1.7.3",
     "@joookiwi/type":       "^1.2.2"
   },
   "devDependencies": {
     "@types/jest":            "^30.0.0",
-    "@types/node":            "^25.3.0",
+    "@types/node":            "^26.2.0",
     "del-cli":                "^7.0.0",
-    "jest-environment-jsdom": "^30.2.0",
+    "jest-environment-jsdom": "^30.4.1",
     "jest-extended":          "^7.0.0",
-    "ts-jest":                "^29.4.6",
+    "ts-jest":                "^29.4.12",
     "ts-node":                "^10.9.2",
     "typescript":             "^5.9.3"
   }
