@@ -1,5 +1,10 @@
 {
     "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "types": ["node", "jest",],
+    },
     "files": [
         "jestExtended.d.ts",
     ],

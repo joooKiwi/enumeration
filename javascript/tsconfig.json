@@ -6,6 +6,7 @@
       "DOM",
       "ESNext",
     ],
+    "types": ["node"],
     "noErrorTruncation": true,
     "pretty": true,
 
@@ -38,6 +39,7 @@
     "isolatedModules": true,
     "sourceMap": true,
     "declaration": false,
+    "rootDir": "src",
   },
   "include": [
     "src",
