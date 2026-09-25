@@ -10,7 +10,8 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {NullOr} from "@joookiwi/type"
+import type {NullOr}                        from "@joookiwi/type"
+import {beforeEach, describe, expect, test} from "vitest"
 
 import {invalidInstances, nullValues, validValues} from "./Enum.constants"
 

@@ -10,6 +10,8 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
+import {beforeEach, describe, expect, test} from "vitest"
+
 import {Enum}                  from "../../src/Enum"
 import {KnownEnumConstructors} from "../../src/helper/KnownEnumConstructors"
 

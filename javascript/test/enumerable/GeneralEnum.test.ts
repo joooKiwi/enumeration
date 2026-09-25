@@ -10,6 +10,8 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
+import {describe, expect, test, vi} from "vitest"
+
 import {AnotherChildEnum, Child1Enum, Child2Enum, EmptyEnum, EmptyEnumWithVariables, Enum1, Enum2, EnumWithInheritance, EnumWithDefault, EnumWithDifferentComportment, EnumWithExcludedFields, EnumWithLateDefault, ParentEnum, Child3Enum} from "../TemplateEnums"
 import {everyStringEnumerableMember, forbiddenNumbers, impossibleOrdinals, nullValues, simpleEnumVariables, unhandledValues, validValues}                                                                                                   from "./Enum.constants"
 
@@ -130,7 +132,7 @@ describe("GeneralEnumTest", () => {
         const defaultValue = Enum1.B
         test("set defaultValue", () => {
             if (it.name == 'B')
-                fail("The test could not be done since the value has 'B' as its name",)
+                expect.fail("The test could not be done since the value has 'B' as its name",)
             companion.defaultValue = defaultValue
             companion.defaultValue = it
             expect(companion.defaultValue,).toBe(equivalentValue,)
@@ -138,7 +140,7 @@ describe("GeneralEnumTest", () => {
         },)
         test("setDefaultValue", () => {
             if (it.name == 'B')
-                fail("The test could not be done since the value has 'B' as its name",)
+                expect.fail("The test could not be done since the value has 'B' as its name",)
             expect(companion.setDefaultValue(defaultValue,).setDefaultValue(it,).defaultValue,).toBe(equivalentValue,)
             companion.setDefaultValue(defaultValue,)
         },)
