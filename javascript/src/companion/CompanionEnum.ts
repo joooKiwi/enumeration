@@ -104,14 +104,14 @@ export class CompanionEnum<const ENUM extends Enumerable,
 
 
     protected get _excludedNames(): CollectionHolder<string> {
-        return this.#excludedNames ??= this.#__excludedNames
-    }
+        const value = this.#excludedNames
+        if (value != null)
+            return value
 
-    get #__excludedNames(): CollectionHolder<string> {
         const excludedNames = this._EXCLUDED_NAMES
         if (excludedNames == null)
-            return EmptyCollectionHolder.get
-        return new GenericCollectionHolder(excludedNames,).filterNotNull()
+            return this.#excludedNames = EmptyCollectionHolder.get
+        return this.#excludedNames = new GenericCollectionHolder(excludedNames,).filterNotNull()
     }
 
 
