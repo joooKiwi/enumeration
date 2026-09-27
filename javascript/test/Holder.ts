@@ -10,14 +10,17 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
+/** A class made to hold the necessary values for the tests */
 export class Holder<const T, const MESSAGE extends string, > {
 
-    readonly value
-    readonly toString
+    public constructor(
+        /** The value to send to any {@link Enumerable} or {@link CompanionEnumDeclaration} implementation */
+        public readonly value: T,
+        /** The message that will be sent to the {@link toString} method */
+        public readonly message: MESSAGE,) {}
 
-    public constructor(value: T, message: MESSAGE,) {
-        this.value = value
-        this.toString = () => message
+    public toString(): MESSAGE {
+        return this.message
     }
 
 }
