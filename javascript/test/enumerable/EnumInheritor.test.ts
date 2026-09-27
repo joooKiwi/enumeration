@@ -18,7 +18,6 @@ import {EnumConstants}                from "../../src/EnumConstants"
 import {ImpossibleIntegrityException} from "../../src/exception/ImpossibleIntegrityException"
 import {NullReferenceException}       from "../../src/exception/NullReferenceException"
 
-import {nullValues}                                                                                                                                                                                                                                          from "./Enum.constants"
 import {nameValues}                                                                                                                                                                                                                                          from "./Enum.testInstances"
 import {BasicEnum, BasicEnumWithGrandParent, BasicEnumWithParent}                                                                                                                                                                                            from "./Enum.testInstances"
 import {GrandParent_TestInstance_ByCallbackSymbol, GrandParent_TestInstance_BySymbol, GrandParent_TestInstance_Direct1, GrandParent_TestInstance_Direct2}                                                                                                    from "./Enum.testInstances"
@@ -27,6 +26,7 @@ import {NullableGrandParent_TestInstance_ByCallbackSymbol, NullableGrandParent_T
 import {NullableGreatGrandParent_TestInstance_ByCallbackSymbol, NullableGreatGrandParent_TestInstance_BySymbol, NullableGreatGrandParent_TestInstance_Direct1, NullableGreatGrandParent_TestInstance_Direct2, NullableGreatGrandParent_TestInstance_Direct3} from "./Enum.testInstances"
 import {NullableParent_TestInstance_ByCallbackSymbol, NullableParent_TestInstance_BySymbol, NullableParent_TestInstance_Direct}                                                                                                                              from "./Enum.testInstances"
 import {Parent_TestInstance_ByCallbackSymbol, Parent_TestInstance_BySymbol, Parent_TestInstance_Direct}                                                                                                                                                      from "./Enum.testInstances"
+import {nullValues}                                                                                                                                                                                                                                          from "../value/constants"
 
 describe("EnumInheritorTest", () => {
     //README: The tests are not made to be code efficient,

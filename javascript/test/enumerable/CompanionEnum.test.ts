@@ -12,7 +12,6 @@
 
 import {describe, expect, test} from "vitest"
 
-import {invalidInstances, nullValues, validValues}                                           from "./Enum.constants"
 import {BasicEnum as Child}                                                                  from "../instance/BasicEnum"
 import {BasicEnumWithGrandParent as GrandParent}                                             from "../instance/BasicEnumWithGrandParent"
 import {BasicEnumWithGreatGrandParent as GreatGrandParent}                                   from "../instance/BasicEnumWithGreatGrandParent"
@@ -21,6 +20,7 @@ import {CompanionEnum_TestClassHelper as InstanceHelper}                        
 import {CompanionEnumWithGrandParent_TestClassHelper as GrandParentInstanceHelper}           from "../instance/CompanionEnumWithGrandParent_TestClassHelper"
 import {CompanionEnumWithParent_TestClassHelper as ParentInstanceHelper}                     from "../instance/CompanionEnumWithParent_TestClassHelper"
 import {CompanionEnumWithGreatGrandParent_TestClassHelper as GreatGrandParentInstanceHelper} from "../instance/CompanionEnumWithGreatGrandParent_TestClassHelper"
+import {invalidInstances, nullValues, validValues}                                           from "../value/constants"
 
 import {CompanionEnumWithGrandParent}      from "../../src/companion/CompanionEnumWithGrandParent"
 import {CompanionEnumWithGreatGrandParent} from "../../src/companion/CompanionEnumWithGreatGrandParent"
