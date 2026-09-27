@@ -10,6 +10,8 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
+import {expect} from "vitest"
+
 import type {CompanionEnumSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumWithParentSingleton} from "../../src/Singleton.types"
 import type {PossibleEnumerableValueOrNameByValueOrCallback, PossibleEnumSymbol}                                                                          from "../../src/Enumerable.types"
 
@@ -41,7 +43,7 @@ const nameSymbol = EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL as PossibleEn
 /** The {@link EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL} encapsulated in a callback */
 const nameSymbolCallback = () => EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL as PossibleEnumSymbol
 /** A callback made to throw an error in any case that it is being called */
-const failCallback = () => fail("Unexpected callback to be called",)
+const failCallback = () => expect.fail("Unexpected callback to be called",)
 
 export class BasicEnum extends Enum<number, Name> {
     public static readonly A = new BasicEnum()
