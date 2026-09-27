@@ -126,7 +126,7 @@ companionEnum.getName(EnumWithGreatGrandParentTestInstance.A,)
 companionEnum.getName(EnumWithGreatGrandParentTestInstance['0'],)
 
 let a: number|Number = 1
-companionEnum.getValue(a)
+companionEnum.getValue(a,)
 
 // @ts-expect-error
 companionEnum.getName('C',).toString()

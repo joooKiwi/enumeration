@@ -77,7 +77,7 @@ export class CompanionEnumWithGreatGrandParent<const ENUM extends EnumerableWith
     }
 
     public override set defaultValue(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM | GRAND_PARENT_ENUM | GREAT_GRAND_PARENT_ENUM>) {
-        super.defaultValue = value == null ? null : this._getValue(value)
+        super.defaultValue = value == null ? null : this._getValue(value,)
     }
 
     public override setDefaultValue(value: NullOrUndefined,): this
@@ -143,7 +143,7 @@ export class CompanionEnumWithGreatGrandParent<const ENUM extends EnumerableWith
      * @throws {NullReferenceException}
      */
     protected _getValueFromValuesByGreatGrandParent(value: Enumerable,): ENUM {
-        const valueFound = this.values.find(it => it.greatGrandParent === value)
+        const valueFound = this.values.find(it => it.greatGrandParent === value,)
         if (valueFound == null)
             throw new NullReferenceException(`No great-grandparent "${value}" could be found on the "${this.instance.name}".`, value,)
         return valueFound

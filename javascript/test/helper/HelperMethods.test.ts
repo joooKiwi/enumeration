@@ -52,7 +52,7 @@ describe("HelperMethodsTest", () => {
 
         describe("with invalid companion reference", () => {
             test.each(nullValues,)("%s", it => expect(() => method(it,),).toThrow(NullInstanceException,),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => method(it,),).toThrow(InvalidInstanceException),)
+            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => method(it,),).toThrow(InvalidInstanceException,),)
         },)
         describe("companion reference", () => {
             // @ts-expect-error
@@ -150,7 +150,7 @@ describe("HelperMethodsTest", () => {
         const method = isEnum
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("Enum", () =>                                                         expect(method(new Enum_Enum(),),).toBeTrue(),)
         test("Enumerable", () =>                                                   expect(method(new Enum_Enumerable(),),).toBeFalse(),)
@@ -180,7 +180,7 @@ describe("HelperMethodsTest", () => {
         const method = isEnumByStructure
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse(),)
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("Enum", () =>                                                         expect(method(new Enum_Enum(),),).toBeTrue(),)
         test("Enumerable", () =>                                                   expect(method(new Enum_Enumerable(),),).toBeTrue(),)
@@ -210,7 +210,7 @@ describe("HelperMethodsTest", () => {
         const method = isEnumWithParent
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("Enum", () =>                                                         expect(method(new Enum_Enum(),),).toBeFalse(),)
         test("Enumerable", () =>                                                   expect(method(new Enum_Enumerable(),),).toBeFalse(),)
@@ -240,7 +240,7 @@ describe("HelperMethodsTest", () => {
         const method = isEnumWithNullableParent
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("Enum", () =>                                                         expect(method(new Enum_Enum(),),).toBeFalse(),)
         test("Enumerable", () =>                                                   expect(method(new Enum_Enumerable(),),).toBeFalse(),)
@@ -270,7 +270,7 @@ describe("HelperMethodsTest", () => {
         const method = isEnumWithParentByStructure
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("Enum", () =>                                                         expect(method(new Enum_Enum(),),).toBeFalse(),)
         test("Enumerable", () =>                                                   expect(method(new Enum_Enumerable(),),).toBeFalse(),)
@@ -300,7 +300,7 @@ describe("HelperMethodsTest", () => {
         const method = isEnumWithGrandParent
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("Enum", () =>                                                         expect(method(new Enum_Enum(),),).toBeFalse(),)
         test("Enumerable", () =>                                                   expect(method(new Enum_Enumerable(),),).toBeFalse(),)
@@ -330,7 +330,7 @@ describe("HelperMethodsTest", () => {
         const method = isEnumWithNullableGrandParent
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("Enum", () =>                                                         expect(method(new Enum_Enum(),),).toBeFalse(),)
         test("Enumerable", () =>                                                   expect(method(new Enum_Enumerable(),),).toBeFalse(),)
@@ -360,7 +360,7 @@ describe("HelperMethodsTest", () => {
         const method = isEnumWithGrandParentByStructure
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("Enum", () =>                                                         expect(method(new Enum_Enum(),),).toBeFalse(),)
         test("Enumerable", () =>                                                   expect(method(new Enum_Enumerable(),),).toBeFalse(),)
@@ -390,7 +390,7 @@ describe("HelperMethodsTest", () => {
         const method = isEnumWithGreatGrandParent
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("Enum", () =>                                                         expect(method(new Enum_Enum(),),).toBeFalse(),)
         test("Enumerable", () =>                                                   expect(method(new Enum_Enumerable(),),).toBeFalse(),)
@@ -420,7 +420,7 @@ describe("HelperMethodsTest", () => {
         const method = isEnumWithNullableGreatGrandParent
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("Enum", () =>                                                         expect(method(new Enum_Enum(),),).toBeFalse(),)
         test("Enumerable", () =>                                                   expect(method(new Enum_Enumerable(),),).toBeFalse(),)
@@ -450,7 +450,7 @@ describe("HelperMethodsTest", () => {
         const method = isEnumWithGreatGrandParentByStructure
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("Enum", () =>                                                         expect(method(new Enum_Enum(),),).toBeFalse(),)
         test("Enumerable", () =>                                                   expect(method(new Enum_Enumerable(),),).toBeFalse(),)
@@ -481,7 +481,7 @@ describe("HelperMethodsTest", () => {
         const method = isCompanionEnum
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("CompanionEnum",                                () => expect(method(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeTrue(),)
         test("CompanionEnumDeclaration",                     () => expect(method(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeFalse(),)
@@ -496,7 +496,7 @@ describe("HelperMethodsTest", () => {
         const method = isCompanionEnumByStructure
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("CompanionEnum",                                () => expect(method(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeTrue(),)
         test("CompanionEnumDeclaration",                     () => expect(method(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeTrue(),)
@@ -511,7 +511,7 @@ describe("HelperMethodsTest", () => {
         const method = isCompanionEnumWithParent
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("CompanionEnum",                                () => expect(method(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeFalse(),)
         test("CompanionEnumDeclaration",                     () => expect(method(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeFalse(),)
@@ -526,7 +526,7 @@ describe("HelperMethodsTest", () => {
         const method = isCompanionEnumWithParentByStructure
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("CompanionEnum",                                () => expect(method(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeFalse(),)
         test("CompanionEnumDeclaration",                     () => expect(method(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeFalse(),)
@@ -541,7 +541,7 @@ describe("HelperMethodsTest", () => {
         const method = isCompanionEnumWithGrandParent
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("CompanionEnum",                                () => expect(method(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeFalse(),)
         test("CompanionEnumDeclaration",                     () => expect(method(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeFalse(),)
@@ -556,7 +556,7 @@ describe("HelperMethodsTest", () => {
         const method = isCompanionEnumWithGrandParentByStructure
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("CompanionEnum",                                () => expect(method(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeFalse(),)
         test("CompanionEnumDeclaration",                     () => expect(method(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeFalse(),)
@@ -571,7 +571,7 @@ describe("HelperMethodsTest", () => {
         const method = isCompanionEnumWithGreatGrandParent
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("CompanionEnum",                                () => expect(method(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeFalse(),)
         test("CompanionEnumDeclaration",                     () => expect(method(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeFalse(),)
@@ -586,7 +586,7 @@ describe("HelperMethodsTest", () => {
         const method = isCompanionEnumWithGreatGrandParentByStructure
 
         test.each(nullValues,)("%s", it => expect(method(it,),).toBeFalse())
-        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it),).toBeFalse(),)
+        test.each(invalidInstances,)("%s", ({value: it,},) => expect(method(it,),).toBeFalse(),)
 
         test("CompanionEnum",                                () => expect(method(new BasicCompanionEnumByBasicCompanionEnum(),),).toBeFalse(),)
         test("CompanionEnumDeclaration",                     () => expect(method(new BasicCompanionEnumByBasicCompanionEnumDeclaration(),),).toBeFalse(),)

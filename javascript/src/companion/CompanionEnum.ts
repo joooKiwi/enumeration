@@ -129,7 +129,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
         if (value == null)
             EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = null,)
         else
-            EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValue(value),)
+            EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValue(value,),)
     }
 
     public setDefaultValue(value: NullOrUndefined,): this
@@ -676,7 +676,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
     protected _getValidValueByEnumerable(enumerable: Enumerable,): ENUM {
         const instance = this.instance
         if (!(enumerable instanceof instance))
-            throw new InvalidEnumerableException(`The enumerable "${getLastPrototype(enumerable).name}.${enumerable.name}" is not an instance of "${instance.name}".`, enumerable, [instance,],)
+            throw new InvalidEnumerableException(`The enumerable "${getLastPrototype(enumerable,).name}.${enumerable.name}" is not an instance of "${instance.name}".`, enumerable, [instance,],)
         return this._getValueFromValues(enumerable,)
     }
 
@@ -1055,7 +1055,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
             return this._getNameByNumber(value, value,)
         if (typeof value == "bigint")
             return this._getNameByBigInt(value, value,)
-        if (isEnum(value))
+        if (isEnum(value,))
             return this._getNameByEnumerable(value,)
         if (isEnumByStructure(value,))
             return this._getNameByEnumerable(value,)
@@ -1097,7 +1097,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @readonly
      */
     protected _getNameByString(nameOrOrdinal: string, originalValue: StringOrObject,): NameOf<ENUM> {
-        return this._getValueFromReflection(this._getValidName(nameOrOrdinal, originalValue), originalValue,).name
+        return this._getValueFromReflection(this._getValidName(nameOrOrdinal, originalValue,), originalValue,).name
     }
 
     /**

@@ -122,7 +122,7 @@ const aFromGetName11 = companionEnum.getName(EnumWithGreatGrandParentTestInstanc
 const aFromGetName12 = companionEnum.getName(EnumWithGreatGrandParentTestInstance['0'],) satisfies SpecificName
 
 let a: number|Number = 1
-companionEnum.getValue(a)
+companionEnum.getValue(a,)
 
 // @ts-expect-error
 companionEnum.getName('C',).toString()

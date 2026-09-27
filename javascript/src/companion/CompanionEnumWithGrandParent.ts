@@ -71,7 +71,7 @@ export class CompanionEnumWithGrandParent<const ENUM extends EnumerableWithNulla
     }
 
     public override set defaultValue(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM | GRAND_PARENT_ENUM>) {
-        super.defaultValue = value == null ? null : this._getValue(value)
+        super.defaultValue = value == null ? null : this._getValue(value,)
     }
 
     public override setDefaultValue(value: NullOrUndefined,): this

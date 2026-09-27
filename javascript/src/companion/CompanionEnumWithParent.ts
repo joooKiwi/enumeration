@@ -65,7 +65,7 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
     }
 
     public override set defaultValue(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM>) {
-        super.defaultValue = value == null ? null : this._getValue(value)
+        super.defaultValue = value == null ? null : this._getValue(value,)
     }
 
     public override setDefaultValue(value: NullOrUndefined,): this
@@ -98,7 +98,7 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
     protected override _getValidValueByEnumerable(enumerable: Enumerable,): ENUM {
         const instance = this.instance
         if (enumerable instanceof instance)
-            return this._getValueFromValues(enumerable)
+            return this._getValueFromValues(enumerable,)
 
         const parentInstance = this.parentInstance
         if (enumerable instanceof parentInstance)
@@ -119,7 +119,7 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
      * @throws {NullReferenceException}
      */
     protected _getValueFromValuesByParent(value: Enumerable,): ENUM {
-        const valueFound = this.values.find(it => it.parent === value)
+        const valueFound = this.values.find(it => it.parent === value,)
         if (valueFound == null)
             throw new NullReferenceException(`No parent "${value}" could be found on the "${this.instance.name}".`, value,)
         return valueFound

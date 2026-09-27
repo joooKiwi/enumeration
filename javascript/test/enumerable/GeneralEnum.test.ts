@@ -81,11 +81,11 @@ describe("GeneralEnumTest", () => {
             const companion = EmptyEnum.CompanionEnum.get
             const somethingInvalid = "somethingInvalid"
 
-            test("set defaultValue", () => expect(() => companion.defaultValue = somethingInvalid,).toThrow(NullReferenceException),)
-            test("setDefaultValue", () => expect(() => companion.setDefaultValue(somethingInvalid,),).toThrow(NullReferenceException),)
-            test("getValue", () => expect(() => companion.getValue(somethingInvalid,),).toThrow(NullReferenceException),)
-            test("getName", () => expect(() => companion.getName(somethingInvalid,),).toThrow(NullReferenceException),)
-            test("getOrdinal", () => expect(() => companion.getOrdinal(somethingInvalid,),).toThrow(NullReferenceException),)
+            test("set defaultValue", () => expect(() => companion.defaultValue = somethingInvalid,).toThrow(NullReferenceException,),)
+            test("setDefaultValue", () => expect(() => companion.setDefaultValue(somethingInvalid,),).toThrow(NullReferenceException,),)
+            test("getValue", () => expect(() => companion.getValue(somethingInvalid,),).toThrow(NullReferenceException,),)
+            test("getName", () => expect(() => companion.getName(somethingInvalid,),).toThrow(NullReferenceException,),)
+            test("getOrdinal", () => expect(() => companion.getOrdinal(somethingInvalid,),).toThrow(NullReferenceException,),)
         },)
 
         describe("ForbiddenNumericException", () => {
@@ -233,7 +233,7 @@ describe("GeneralEnumTest", () => {
                 },)
                 test("setDefaultValue", () => {
                     expect(companion.setDefaultValue(otherValue,).setDefaultValue(value,).defaultValue,).toBe(equivalentValue,)
-                    companion.setDefaultValue(otherValue)
+                    companion.setDefaultValue(otherValue,)
                 },)
                 test("getValue", () => expect(companion.getValue(value,),).toBe(equivalentValue,),)
                 test("getName", () => expect(companion.getName(value,),).toBe(equivalentValue.name,),)
@@ -293,7 +293,7 @@ describe("GeneralEnumTest", () => {
                 },)
                 test("setDefaultValue", () => {
                     expect(companion.setDefaultValue(otherValue,).setDefaultValue(value,).defaultValue,).toBe(equivalentValue,)
-                    companion.setDefaultValue(otherValue)
+                    companion.setDefaultValue(otherValue,)
                 },)
                 test("getValue", () => expect(companion.getValue(value,),).toBe(equivalentValue,),)
                 test("getName", () => expect(companion.getName(value,),).toBe(equivalentValue.name,),)
@@ -309,7 +309,7 @@ describe("GeneralEnumTest", () => {
                 },)
                 test("setDefaultValue", () => {
                     expect(companion.setDefaultValue(otherValue,).setDefaultValue(value,).defaultValue,).toBe(equivalentValue,)
-                    companion.setDefaultValue(otherValue)
+                    companion.setDefaultValue(otherValue,)
                 },)
                 test("getValue", () => expect(companion.getValue(value,),).toBe(equivalentValue,),)
                 test("getName", () => expect(companion.getName(value,),).toBe(equivalentValue.name,),)
@@ -372,7 +372,7 @@ describe("GeneralEnumTest", () => {
                 },)
                 test("setDefaultValue", () => {
                     expect(companion.setDefaultValue(otherValue,).setDefaultValue(value,).defaultValue,).toBe(equivalentValue,)
-                    companion.setDefaultValue(otherValue)
+                    companion.setDefaultValue(otherValue,)
                 },)
                 test("getValue", () => expect(companion.getValue(value,),).toBe(equivalentValue,),)
                 test("getName", () => expect(companion.getName(value,),).toBe(equivalentValue.name,),)
@@ -388,7 +388,7 @@ describe("GeneralEnumTest", () => {
                 },)
                 test("setDefaultValue", () => {
                     expect(companion.setDefaultValue(otherValue,).setDefaultValue(value,).defaultValue,).toBe(equivalentValue,)
-                    companion.setDefaultValue(otherValue)
+                    companion.setDefaultValue(otherValue,)
                 },)
                 test("getValue", () => expect(companion.getValue(value,),).toBe(equivalentValue,),)
                 test("getName", () => expect(companion.getName(value,),).toBe(equivalentValue.name,),)
@@ -422,7 +422,7 @@ describe("GeneralEnumTest", () => {
                 },)
                 test("setDefaultValue", () => {
                     expect(companion.setDefaultValue(otherValue,).setDefaultValue(value,).defaultValue,).toBe(equivalentValue,)
-                    companion.setDefaultValue(otherValue)
+                    companion.setDefaultValue(otherValue,)
                 },)
                 test("getValue", () => expect(companion.getValue(value,),).toBe(equivalentValue,),)
                 test("getName", () => expect(companion.getName(value,),).toBe(equivalentValue.name,),)

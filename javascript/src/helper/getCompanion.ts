@@ -66,7 +66,7 @@ export function getCompanion(instance: Nullable<PossibleEnumerableInstance>,): C
     if (instance == null)
         throw new NullInstanceException()
 
-    if (isCompanionEnum(instance))
+    if (isCompanionEnum(instance,))
         return instance
     if (isCompanionEnumByStructure(instance,))
         return instance
