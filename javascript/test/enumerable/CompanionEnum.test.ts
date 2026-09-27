@@ -290,7 +290,7 @@ describe("CompanionEnumTest", () => {
             },)
             describe("getValue", () => {
                 test.each(nullValues,)("%s",              it => expect(() => new GreatGrandParentInstanceHelper(GreatGrandParent, GrandParent, Parent, Child,).getValue(it,),)                .toThrow(NullEnumerableException,),)
-                test.each(validValuesm)("%s", ({value: it,},) => expect(     new GreatGrandParentInstanceHelper(GreatGrandParent, GrandParent, Parent, Child,).getValue(it,),)                .toEqual(GreatGrandParent.A,),)
+                test.each(validValues,)("%s", ({value: it,},) => expect(     new GreatGrandParentInstanceHelper(GreatGrandParent, GrandParent, Parent, Child,).getValue(it,),)                .toEqual(GreatGrandParent.A,),)
                 test("instance.A",                        () => expect(      new GreatGrandParentInstanceHelper(GreatGrandParent, GrandParent, Parent, Child,).getValue(Child.A,),)           .toEqual(GreatGrandParent.A,),)
                 test("instance with parent.A",            () => expect(      new GreatGrandParentInstanceHelper(GreatGrandParent, GrandParent, Parent, Child,).getValue(Parent.A,),)          .toEqual(GreatGrandParent.A,),)
                 test("instance with grandparent.A",       () => expect(      new GreatGrandParentInstanceHelper(GreatGrandParent, GrandParent, Parent, Child,).getValue(GrandParent.A,),)     .toEqual(GreatGrandParent.A,),)
