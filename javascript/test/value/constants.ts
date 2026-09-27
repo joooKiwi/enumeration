@@ -146,7 +146,7 @@ export const forbiddenNumbers = [
 ] as const
 export const everyStringEnumerableMember = EnumConstants.EVERY_ENUMERABLE_MEMBERS.filterNot((it,): it is (& PossibleEnumerableMembers & symbol) => typeof it == "symbol").map(it => [
     new Holder(it, `${it} as sting`),
-    new Holder(new String(it,), `${it}} as string object`,),
+    new Holder(new String(it,), `${it} as string object`,),
 ],).toArray().flat()
 export const simpleEnumVariables = ["VARIABLE_STRING", "VARIABLE_NUMBER", "VARIABLE_BIGINT",] as const satisfies readonly (keyof typeof EmptyEnumWithVariables)[]
 export const validValues = [

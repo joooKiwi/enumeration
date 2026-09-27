@@ -18,7 +18,6 @@ import {EnumConstants}                from "../../src/EnumConstants"
 import {ImpossibleIntegrityException} from "../../src/exception/ImpossibleIntegrityException"
 import {NullReferenceException}       from "../../src/exception/NullReferenceException"
 
-import {nameValues}                                                                                                                                                                                                                                          from "./Enum.testInstances"
 import {BasicEnum, BasicEnumWithGrandParent, BasicEnumWithParent}                                                                                                                                                                                            from "./Enum.testInstances"
 import {GrandParent_TestInstance_ByCallbackSymbol, GrandParent_TestInstance_BySymbol, GrandParent_TestInstance_Direct1, GrandParent_TestInstance_Direct2}                                                                                                    from "./Enum.testInstances"
 import {GreatGrandParent_TestInstance_ByCallbackSymbol, GreatGrandParent_TestInstance_BySymbol, GreatGrandParent_TestInstance_Direct1, GreatGrandParent_TestInstance_Direct2, GreatGrandParent_TestInstance_Direct3}                                         from "./Enum.testInstances"
@@ -27,6 +26,7 @@ import {NullableGreatGrandParent_TestInstance_ByCallbackSymbol, NullableGreatGra
 import {NullableParent_TestInstance_ByCallbackSymbol, NullableParent_TestInstance_BySymbol, NullableParent_TestInstance_Direct}                                                                                                                              from "./Enum.testInstances"
 import {Parent_TestInstance_ByCallbackSymbol, Parent_TestInstance_BySymbol, Parent_TestInstance_Direct}                                                                                                                                                      from "./Enum.testInstances"
 import {nullValues}                                                                                                                                                                                                                                          from "../value/constants"
+import {ABC}                                                                                                                                                                                                                                                 from "../value/names"
 
 describe("EnumInheritorTest", () => {
     //README: The tests are not made to be code efficient,
@@ -53,7 +53,7 @@ describe("EnumInheritorTest", () => {
                 test("value", () => expect(() => new DirectInstance(it,).parent,).toThrow(NullReferenceException,),)
                 test("callback", () => expect(() => new DirectInstance(() => it,).parent,).toThrow(NullReferenceException,),)
             },)
-            describe.each(nameValues,)('%s', name => {
+            describe.each(ABC,)('%s', name => {
                 const value = ReferencedEnum[name]
 
                 test("instance", () => expect(DirectInstance[name].parent,).toStrictEqual(value,),)
@@ -105,7 +105,7 @@ describe("EnumInheritorTest", () => {
                 test("value", () => expect(() => new DirectInstance(it,).parent,).toThrow(NullReferenceException,),)
                 test("callback", () => expect(() => new DirectInstance(() => it,).parent,).toThrow(NullReferenceException,),)
             },)
-            describe.each(nameValues,)('%s', name => {
+            describe.each(ABC,)('%s', name => {
                 const value = ReferencedEnum[name]
 
                 test("instance", () => expect(DirectInstance[name].parent,).toStrictEqual(value,),)
@@ -157,7 +157,7 @@ describe("EnumInheritorTest", () => {
                 test("value", () => expect(() => new DirectInstance(it,).parent,).toThrow(NullReferenceException,),)
                 test("callback", () => expect(() => new DirectInstance(() => it,).parent,).toThrow(NullReferenceException,),)
             },)
-            describe.each(nameValues,)('%s', name => {
+            describe.each(ABC,)('%s', name => {
                 const value = ReferencedEnum[name]
 
                 test("instance", () => expect(DirectInstance[name].parent,).toStrictEqual(value,),)
@@ -210,7 +210,7 @@ describe("EnumInheritorTest", () => {
                 test("value", () => expect(new DirectInstance(it,).parent,).toBeNull(),)
                 test("callback", () => expect(new DirectInstance(() => it,).parent,).toBeNull(),)
             },)
-            describe.each(nameValues,)('%s', name => {
+            describe.each(ABC,)('%s', name => {
                 const value = ReferencedEnum[name]
 
                 test("instance", () => expect(DirectInstance[name].parent,).toStrictEqual(value,),)
@@ -272,7 +272,7 @@ describe("EnumInheritorTest", () => {
                     test("callback", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityException,),)
                 },)
             },)
-            describe.each(nameValues,)('%s', name => {
+            describe.each(ABC,)('%s', name => {
                 const value = ReferencedEnum[name]
 
                 test("instance", () => expect(DirectInstance[name].parent,).toStrictEqual(value,),)
@@ -334,7 +334,7 @@ describe("EnumInheritorTest", () => {
                     test("callback", () => expect(() => newValidInstance(it,).parent,).toThrow(ImpossibleIntegrityException,),)
                 },)
             },)
-            describe.each(nameValues,)('%s', name => {
+            describe.each(ABC,)('%s', name => {
                 const value = ReferencedEnum[name]
 
                 test("instance", () => expect(DirectInstance[name].parent,).toStrictEqual(value,),)
@@ -388,7 +388,7 @@ describe("EnumInheritorTest", () => {
                 test("value", () => expect(() => new DirectInstance(it,).grandParent,).toThrow(NullReferenceException,),)
                 test("callback", () => expect(() => new DirectInstance(() => it,).grandParent,).toThrow(NullReferenceException,),)
             },)
-            describe.each(nameValues,)('%s', name => {
+            describe.each(ABC,)('%s', name => {
                 const value = ReferencedEnum[name]
 
                 test("instance", () => expect(DirectInstance[name].grandParent,).toStrictEqual(value,),)
@@ -440,7 +440,7 @@ describe("EnumInheritorTest", () => {
                 test("value", () => expect(() => new DirectInstance(it,).grandParent,).toThrow(NullReferenceException,),)
                 test("callback", () => expect(() => new DirectInstance(() => it,).grandParent,).toThrow(NullReferenceException,),)
             },)
-            describe.each(nameValues,)('%s', name => {
+            describe.each(ABC,)('%s', name => {
                 const value = ReferencedEnum[name]
 
                 test("instance", () => expect(DirectInstance[name].grandParent,).toStrictEqual(value,),)
@@ -493,7 +493,7 @@ describe("EnumInheritorTest", () => {
                 test("value", () => expect(new DirectInstance(it,).grandParent,).toBeNull(),)
                 test("callback", () => expect(new DirectInstance(() => it,).grandParent,).toBeNull(),)
             },)
-            describe.each(nameValues,)('%s', name => {
+            describe.each(ABC,)('%s', name => {
                 const value = ReferencedEnum[name]
 
                 test("instance", () => expect(DirectInstance[name].grandParent,).toStrictEqual(value,),)
@@ -555,7 +555,7 @@ describe("EnumInheritorTest", () => {
                     test("callback", () => expect(() => newValidInstance(it,).grandParent,).toThrow(ImpossibleIntegrityException,),)
                 },)
             },)
-            describe.each(nameValues,)('%s', name => {
+            describe.each(ABC,)('%s', name => {
                 const value = ReferencedEnum[name]
 
                 test("instance", () => expect(DirectInstance[name].grandParent,).toStrictEqual(value,),)
@@ -609,7 +609,7 @@ describe("EnumInheritorTest", () => {
                 test("value", () => expect(() => new DirectInstance(it,).greatGrandParent,).toThrow(NullReferenceException,),)
                 test("callback", () => expect(() => new DirectInstance(() => it,).greatGrandParent,).toThrow(NullReferenceException,),)
             },)
-            describe.each(nameValues,)('%s', name => {
+            describe.each(ABC,)('%s', name => {
                 const value = ReferencedEnum[name]
 
                 test("instance", () => expect(DirectInstance[name].greatGrandParent,).toStrictEqual(value,),)
@@ -661,7 +661,7 @@ describe("EnumInheritorTest", () => {
                 test("value", () => expect(new DirectInstance(it,).greatGrandParent,).toBeNull(),)
                 test("callback", () => expect(new DirectInstance(() => it,).greatGrandParent,).toBeNull(),)
             },)
-            describe.each(nameValues,)('%s', name => {
+            describe.each(ABC,)('%s', name => {
                 const value = ReferencedEnum[name]
 
                 test("instance", () => expect(DirectInstance[name].greatGrandParent,).toStrictEqual(value,),)
