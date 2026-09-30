@@ -15,7 +15,7 @@ import type {Nullable, NullOr} from "@joookiwi/type"
 import type {ExceptionWithNullableCause} from "./declaration/ExceptionWithNullableCause"
 
 /**
- * An instance was received as <b>null</b> value
+ * An instance was received as `null` value
  *
  * @see https://docs.oracle.com/en/java/javase/22/docs/api/java.base/java/lang/NullPointerException.html Java NullPointerException
  * @see https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-null-pointer-exception Kotlin NullPointerException

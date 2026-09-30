@@ -56,7 +56,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
     /**
      * The excluded names that are an instance of the current instance.
      *
-     * Note that giving an invalid name will result in an exception on the first time it is initialised.
+     * Note that giving an invalid name will result in an exception on the first time it is initialized.
      * From either {@link Enumerable.name get name},
      * {@link CompanionEnum.getValue getValue()}, {@link CompanionEnum.values get values},
      * {@link CompanionEnum.getOrdinal getOrdinal()}, {@link CompanionEnum.ordinals get ordinals}
@@ -248,7 +248,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * Initialize the default value by retrieving the {@link _DEFAULT} first,
      * then the {@link _DEFAULT_NAME} and finally the {@link _DEFAULT_ORDINAL}.
      *
-     * If all of them are <b>null</b>, then a {@link NullEnumerableException} will be thrown.
+     * If all of them are `null`, then a {@link NullEnumerableException} will be thrown.
      *
      * And if the values expected ({@link _DEFAULT}, {@link _DEFAULT_NAME} or {@link _DEFAULT_ORDINAL})
      * are not in the expected type, then an {@link UnhandledValueException} is thrown.
@@ -654,7 +654,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
     }
 
     /**
-     * Validate that the {@link value} is not <b>null</b>
+     * Validate that the {@link value} is not `null`
      *
      * @param value the value to validate
      * @param nameOrOrdinal the {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal}

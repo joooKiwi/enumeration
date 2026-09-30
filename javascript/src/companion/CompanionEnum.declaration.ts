@@ -51,7 +51,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
     /**
      * Remove the default value
      *
-     * @param value A <b>null</b> value
+     * @param value A `null` value
      * @typescriptDefinition
      */
     setDefaultValue(value: NullOrUndefined,): this

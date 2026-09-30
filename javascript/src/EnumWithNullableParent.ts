@@ -27,7 +27,7 @@ import {KnownEnumConstructors} from "./helper/KnownEnumConstructors"
 /**
  * An {@link Enum} class in conjuncture with the {@link EnumerableWithNullableParent}.
  *
- * Compared to its sibling {@link EnumWithParent}, it can receive <b>null</b>.
+ * Compared to its sibling {@link EnumWithParent}, it can receive `null`.
  *
  * But it can still throw a {@link NullReferenceException} in different scenarios:
  *  - An exception is thrown when attempting to retrieve its {@link CompanionEnumWithParent}

@@ -29,11 +29,11 @@ import {KnownEnumConstructors} from "./helper/KnownEnumConstructors"
 /**
  * An {@link Enum} class in conjuncture with the {@link EnumerableWithGreatGrandParent}.
  *
- * Compared to its sibling {@link EnumWithNullableGreatGrandParent}, it does not want <b>null</b>.
+ * Compared to its sibling {@link EnumWithNullableGreatGrandParent}, it does not want `null`.
  *
  * It can throw a {@link NullReferenceException} in different scenarios:
- *  - A <b>null</b> is received during the construction
- *  - A <b>null</b> is interpreted on the {@link EnumWithGreatGrandParent.parent parent},
+ *  - A `null` is received during the construction
+ *  - A `null` is interpreted on the {@link EnumWithGreatGrandParent.parent parent},
  * {@link EnumWithGreatGrandParent.grandParent grandparent} & {@link EnumWithGreatGrandParent.greatGrandParent great-grandparent}
  *  - An exception is thrown when attempting to retrieve its {@link CompanionEnumWithGreatGrandParent}
  *  - An exception is thrown when attempting to retrieve the value by {@link CompanionEnumWithGreatGrandParentDeclaration.getValue getValue()}

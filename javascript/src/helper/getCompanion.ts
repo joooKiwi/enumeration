@@ -28,9 +28,9 @@ import {isCompanionEnum}            from "./isCompanionEnum"
 import {isCompanionEnumByStructure} from "./isCompanionEnumByStructure"
 
 /**
- * Get nothing because of a <b>null</b> instance
+ * Get nothing because of a `null` instance
  *
- * @param instance The <b>null</b> instance
+ * @param instance The `null` instance
  * @throws {NullInstanceException}
  */
 export function getCompanion(instance: NullOrUndefined,): never
