@@ -12,8 +12,8 @@
 
 import {describe, expect, test} from "vitest"
 
-import {AnotherChildEnum, Child1Enum, Child2Enum, EmptyEnum, EmptyEnumWithVariables, Enum1, Enum2, EnumWithInheritance, EnumWithDefault, EnumWithDifferentComportment, EnumWithExcludedFields, EnumWithLateDefault, ParentEnum, Child3Enum} from "../TemplateEnums"
-import {everyStringEnumerableMember, forbiddenNumbers, impossibleOrdinals, nullValues, simpleEnumVariables, unhandledValues, validValues}                                                                                                   from "../value/constants"
+import {AnotherChildEnum, Child1Enum, Child2Enum, EmptyEnumWithVariables, Enum1, Enum2, EnumWithInheritance, EnumWithDefault, EnumWithDifferentComportment, EnumWithExcludedFields, EnumWithLateDefault, ParentEnum, Child3Enum} from "../TemplateEnums"
+import {everyStringEnumerableMember, forbiddenNumbers, impossibleOrdinals, nullValues, simpleEnumVariables, unhandledValues, validValues}                                                                                        from "../value/constants"
 
 import {ForbiddenInheritedEnumerableMemberException} from "../../src/exception/ForbiddenInheritedEnumerableMemberException"
 import {ForbiddenNumericException}                   from "../../src/exception/ForbiddenNumericException"
@@ -23,6 +23,7 @@ import {InvalidInstanceException}                    from "../../src/exception/I
 import {NullReferenceException}                      from "../../src/exception/NullReferenceException"
 import {NullEnumerableException}                     from "../../src/exception/NullEnumerableException"
 import {UnhandledValueException}                     from "../../src/exception/UnhandledValueException"
+import {EmptyEnum}                                   from "../instance/EmptyEnum"
 
 describe("GeneralEnumTest", () => {
 

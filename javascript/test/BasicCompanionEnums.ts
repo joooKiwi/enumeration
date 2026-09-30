@@ -10,8 +10,6 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import {Enum_Enum, Enum_Enumerable, Enum_GrandParentEnumerable, Enum_Enum_GrandParentEnumerable, Enum_ParentEnumerable, Enum_Enum_ParentEnumerable, Enum_GreatGrandParentEnumerable, Enum_Enum_GreatGrandParentEnumerable} from "./BasicEnums"
-
 import type {Enumerable}                                                                                                       from "../src/Enumerable"
 import type {CompanionEnumDeclaration}                                                                                         from "../src/companion/CompanionEnum.declaration"
 import type {CompanionEnumWithGrandParentDeclaration}                                                                          from "../src/companion/CompanionEnumWithGrandParent.declaration"
@@ -19,27 +17,35 @@ import type {CompanionEnumWithGreatGrandParentDeclaration}                      
 import type {CompanionEnumWithParentDeclaration}                                                                               from "../src/companion/CompanionEnumWithParent.declaration"
 import type {EnumerableWithGrandParentGeneralType, EnumerableWithGreatGrandParentGeneralType, EnumerableWithParentGeneralType} from "../src/type/general"
 
-import {CompanionEnum}                     from "../src/companion/CompanionEnum"
-import {CompanionEnumWithGrandParent}      from "../src/companion/CompanionEnumWithGrandParent"
-import {CompanionEnumWithGreatGrandParent} from "../src/companion/CompanionEnumWithGreatGrandParent"
-import {CompanionEnumWithParent}           from "../src/companion/CompanionEnumWithParent"
+import {CompanionEnum}                       from "../src/companion/CompanionEnum"
+import {CompanionEnumWithGrandParent}        from "../src/companion/CompanionEnumWithGrandParent"
+import {CompanionEnumWithGreatGrandParent}   from "../src/companion/CompanionEnumWithGreatGrandParent"
+import {CompanionEnumWithParent}             from "../src/companion/CompanionEnumWithParent"
+import {EmptyEnum}                           from "./instance/EmptyEnum"
+import {EmptyEnumerable}                     from "./instance/EmptyEnumerable"
+import {EmptyEnumerableWithGrandParent}      from "./instance/EmptyEnumerableWithGrandParent"
+import {EmptyEnumerableWithGreatGrandParent} from "./instance/EmptyEnumerableWithGreatGrandParent"
+import {EmptyEnumerableWithParent}           from "./instance/EmptyEnumerableWithParent"
+import {EmptyEnumWithGrandParent}            from "./instance/EmptyEnumWithGrandParent"
+import {EmptyEnumWithGreatGrandParent}       from "./instance/EmptyEnumWithGreatGrandParent"
+import {EmptyEnumWithParent}                 from "./instance/EmptyEnumWithParent"
 
 export class BasicCompanionEnumByBasicCompanionEnum extends CompanionEnum<Enumerable, any> {
-    constructor() { super(Enum_Enum,) }
+    constructor() { super(EmptyEnum,) }
 }
 export class BasicCompanionEnumByCompanionEnumWithParent extends CompanionEnumWithParent<EnumerableWithParentGeneralType, any, Enumerable, any> {
-    constructor() { super(Enum_Enum_ParentEnumerable, Enum_Enum,) }
+    constructor() { super(EmptyEnumWithParent, EmptyEnum,) }
 }
 export class BasicCompanionEnumByCompanionEnumWithGrandParent extends CompanionEnumWithGrandParent<EnumerableWithGrandParentGeneralType, any, EnumerableWithParentGeneralType, any, Enumerable, any> {
-    constructor() { super(Enum_Enum_GrandParentEnumerable, Enum_Enum_ParentEnumerable, Enum_Enum,) }
+    constructor() { super(EmptyEnumWithGrandParent, EmptyEnumWithParent, EmptyEnum,) }
 }
 export class BasicCompanionEnumByCompanionEnumWithGreatGrandParent extends CompanionEnumWithGreatGrandParent<EnumerableWithGreatGrandParentGeneralType, any, EnumerableWithGrandParentGeneralType, any, EnumerableWithParentGeneralType, any, Enumerable, any> {
-    constructor() { super(Enum_Enum_GreatGrandParentEnumerable, Enum_Enum_GrandParentEnumerable, Enum_Enum_ParentEnumerable, Enum_Enum,) }
+    constructor() { super(EmptyEnumWithGreatGrandParent, EmptyEnumWithGrandParent, EmptyEnumWithParent, EmptyEnum,) }
 }
 
-export class BasicCompanionEnumByBasicCompanionEnumDeclaration implements CompanionEnumDeclaration<Enumerable, any> {
+export class BasicCompanionEnumByBasicCompanionEnumDeclaration implements CompanionEnumDeclaration<EmptyEnumerable, any> {
 
-    get instance() { return Enum_Enumerable }
+    get instance() { return EmptyEnumerable }
 
     get defaultValue(): never { throw new Error() }
     set defaultValue(_value: unknown,) {}
@@ -58,33 +64,10 @@ export class BasicCompanionEnumByBasicCompanionEnumDeclaration implements Compan
     get [Symbol.toStringTag](): never { throw new Error() }
 
 }
-export class BasicCompanionEnumByCompanionEnumWithParentDeclaration implements CompanionEnumWithParentDeclaration<EnumerableWithParentGeneralType, any, Enumerable, any> {
+export class BasicCompanionEnumByCompanionEnumWithParentDeclaration implements CompanionEnumWithParentDeclaration<EmptyEnumerableWithParent, any, EmptyEnumerable, any> {
 
-    get parentInstance() { return Enum_ParentEnumerable }
-    get instance() { return Enum_Enumerable }
-
-    get defaultValue(): never { throw new Error() }
-    set defaultValue(_value: unknown,) {}
-    setDefaultValue(): never { throw new Error() }
-
-    get values(): never { throw new Error() }
-    get names(): never { throw new Error() }
-    get ordinals(): never { throw new Error() }
-    get iterator(): never { throw new Error() }
-
-    getValue(): never { throw new Error() }
-    getName(): never { throw new Error() }
-    getOrdinal(): never { throw new Error() }
-
-    [Symbol.iterator](): never { throw new Error() }
-    get [Symbol.toStringTag](): never { throw new Error() }
-
-}
-export class BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration implements CompanionEnumWithGrandParentDeclaration<EnumerableWithGrandParentGeneralType, any, EnumerableWithParentGeneralType, any, Enumerable, any> {
-
-    get grandParentInstance() { return Enum_GrandParentEnumerable }
-    get parentInstance() { return Enum_ParentEnumerable }
-    get instance() { return Enum_Enumerable }
+    get parentInstance() { return EmptyEnumerableWithParent }
+    get instance() { return EmptyEnumerable }
 
     get defaultValue(): never { throw new Error() }
     set defaultValue(_value: unknown,) {}
@@ -103,12 +86,35 @@ export class BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration impleme
     get [Symbol.toStringTag](): never { throw new Error() }
 
 }
-export class BasicCompanionEnumByCompanionEnumWithGreatGrandParentDeclaration implements CompanionEnumWithGreatGrandParentDeclaration<EnumerableWithGreatGrandParentGeneralType, any, EnumerableWithGrandParentGeneralType, any, EnumerableWithParentGeneralType, any, Enumerable, any> {
+export class BasicCompanionEnumByCompanionEnumWithGrandParentDeclaration implements CompanionEnumWithGrandParentDeclaration<EmptyEnumerableWithGrandParent, any, EmptyEnumerableWithParent, any, EmptyEnumerable, any> {
 
-    get greatGrandParentInstance() { return Enum_GreatGrandParentEnumerable }
-    get grandParentInstance() { return Enum_GrandParentEnumerable }
-    get parentInstance() { return Enum_ParentEnumerable }
-    get instance() { return Enum_Enumerable }
+    get grandParentInstance() { return EmptyEnumerableWithGrandParent }
+    get parentInstance() { return EmptyEnumerableWithParent }
+    get instance() { return EmptyEnumerable }
+
+    get defaultValue(): never { throw new Error() }
+    set defaultValue(_value: unknown,) {}
+    setDefaultValue(): never { throw new Error() }
+
+    get values(): never { throw new Error() }
+    get names(): never { throw new Error() }
+    get ordinals(): never { throw new Error() }
+    get iterator(): never { throw new Error() }
+
+    getValue(): never { throw new Error() }
+    getName(): never { throw new Error() }
+    getOrdinal(): never { throw new Error() }
+
+    [Symbol.iterator](): never { throw new Error() }
+    get [Symbol.toStringTag](): never { throw new Error() }
+
+}
+export class BasicCompanionEnumByCompanionEnumWithGreatGrandParentDeclaration implements CompanionEnumWithGreatGrandParentDeclaration<EmptyEnumerableWithGreatGrandParent, any, EmptyEnumerableWithGrandParent, any, EmptyEnumerableWithParent, any, EmptyEnumerable, any> {
+
+    get greatGrandParentInstance() { return EmptyEnumerableWithGreatGrandParent }
+    get grandParentInstance() { return EmptyEnumerableWithGrandParent }
+    get parentInstance() { return EmptyEnumerableWithParent }
+    get instance() { return EmptyEnumerable }
 
     get defaultValue(): never { throw new Error() }
     set defaultValue(_value: unknown,) {}

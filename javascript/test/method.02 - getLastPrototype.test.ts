@@ -12,8 +12,18 @@
 
 import {describe, expect, test} from "vitest"
 
-import {Enum_Enum, Enum_Enumerable, Enum_Enum_GrandParentEnumerable, Enum_GrandParentEnumerable, Enum_Enum_GreatGrandParentEnumerable, Enum_GreatGrandParentEnumerable, Enum_Enum_ParentEnumerable, Enum_ParentEnumerable, Enum_ParentEnum, Enum_NullableParentEnum, Enum_GrandParentEnum, Enum_NullableGrandParentEnum, Enum_NullableGreatGrandParentEnum, Enum_GreatGrandParentEnum, Enum_ParentEnum_GrandParentEnumerable, Enum_NullableParentEnum_GrandParentEnumerable, Enum_NullableParentEnum_GreatGrandParentEnumerable, Enum_ParentEnum_GreatGrandParentEnumerable, Enum_GrandParentEnum_GreatGrandParentEnumerable, Enum_NullableGrandParentEnum_GreatGrandParentEnumerable} from "./BasicEnums"
-import {invalidInstances, nullValues}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  from "./value/constants"
+import {invalidInstances, nullValues}          from "./value/constants"
+import {EmptyEnum}                             from "./instance/EmptyEnum"
+import {EmptyEnumerable}                       from "./instance/EmptyEnumerable"
+import {EmptyEnumerableWithGrandParent}        from "./instance/EmptyEnumerableWithGrandParent"
+import {EmptyEnumerableWithGreatGrandParent}   from "./instance/EmptyEnumerableWithGreatGrandParent"
+import {EmptyEnumerableWithParent}             from "./instance/EmptyEnumerableWithParent"
+import {EmptyEnumWithNullableParent}           from "./instance/EmptyEnumWithNullableParent"
+import {EmptyEnumWithNullableGrandParent}      from "./instance/EmptyEnumWithNullableGrandParent"
+import {EmptyEnumWithNullableGreatGrandParent} from "./instance/EmptyEnumWithNullableGreatGrandParent"
+import {EmptyEnumWithGrandParent}              from "./instance/EmptyEnumWithGrandParent"
+import {EmptyEnumWithGreatGrandParent}         from "./instance/EmptyEnumWithGreatGrandParent"
+import {EmptyEnumWithParent}                   from "./instance/EmptyEnumWithParent"
 
 import type {Enumerable} from "../src/Enumerable"
 
@@ -26,54 +36,36 @@ describe("methodTests (getLastPrototype)", () => {
     test.each(invalidInstances,)("%s", ({value: it,},) => expect(() => getLastPrototype(it,),).toThrow(NullReferenceException,),)
 
     describe("basic enums", () => {
-        test("Enum", () =>                                                         expect(getLastPrototype(new Enum_Enum(),),).toStrictEqual(Enum_Enum,),)
-        test("Enumerable", () =>                                                   expect(getLastPrototype(new Enum_Enumerable(),),).toStrictEqual(Enum_Enumerable,),)
+        test("Enum", () =>                                                         expect(getLastPrototype(new EmptyEnum(),),).toStrictEqual(EmptyEnum,),)
+        test("Enumerable", () =>                                                   expect(getLastPrototype(new EmptyEnumerable(),),).toStrictEqual(EmptyEnumerable,),)
 
-        test("Enum + EnumerableWithParent", () =>                                  expect(getLastPrototype(new Enum_Enum_ParentEnumerable(),),).toStrictEqual(Enum_Enum_ParentEnumerable,),)
-        test("EnumWithParent", () =>                                               expect(getLastPrototype(new Enum_ParentEnum(),),).toStrictEqual(Enum_ParentEnum,),)
-        test("EnumWithNullableParent", () =>                                       expect(getLastPrototype(new Enum_NullableParentEnum(),),).toStrictEqual(Enum_NullableParentEnum,),)
-        test("EnumerableWithParent", () =>                                         expect(getLastPrototype(new Enum_ParentEnumerable(),),).toStrictEqual(Enum_ParentEnumerable,),)
+        test("EnumWithParent", () =>                                               expect(getLastPrototype(new EmptyEnumWithParent(),),).toStrictEqual(EmptyEnumWithParent,),)
+        test("EnumWithNullableParent", () =>                                       expect(getLastPrototype(new EmptyEnumWithNullableParent(),),).toStrictEqual(EmptyEnumWithNullableParent,),)
+        test("EnumerableWithParent", () =>                                         expect(getLastPrototype(new EmptyEnumerableWithParent(),),).toStrictEqual(EmptyEnumerableWithParent,),)
 
-        test("Enum + EnumerableWithGrandParent", () =>                             expect(getLastPrototype(new Enum_Enum_GrandParentEnumerable(),),).toStrictEqual(Enum_Enum_GrandParentEnumerable,),)
-        test("EnumWithParent + EnumerableWithGrandParent", () =>                   expect(getLastPrototype(new Enum_ParentEnum_GrandParentEnumerable(),),).toStrictEqual(Enum_ParentEnum_GrandParentEnumerable,),)
-        test("EnumWithNullableParent + EnumerableWithGrandParent", () =>           expect(getLastPrototype(new Enum_NullableParentEnum_GrandParentEnumerable(),),).toStrictEqual(Enum_NullableParentEnum_GrandParentEnumerable,),)
-        test("EnumWithGrandParent", () =>                                          expect(getLastPrototype(new Enum_GrandParentEnum(),),).toStrictEqual(Enum_GrandParentEnum,),)
-        test("EnumWithNullableGrandParent", () =>                                  expect(getLastPrototype(new Enum_NullableGrandParentEnum(),),).toStrictEqual(Enum_NullableGrandParentEnum,),)
-        test("EnumerableWithGrandParent", () =>                                    expect(getLastPrototype(new Enum_GrandParentEnumerable(),),).toStrictEqual(Enum_GrandParentEnumerable,),)
+        test("EnumWithGrandParent", () =>                                          expect(getLastPrototype(new EmptyEnumWithGrandParent(),),).toStrictEqual(EmptyEnumWithGrandParent,),)
+        test("EnumWithNullableGrandParent", () =>                                  expect(getLastPrototype(new EmptyEnumWithNullableGrandParent(),),).toStrictEqual(EmptyEnumWithNullableGrandParent,),)
+        test("EnumerableWithGrandParent", () =>                                    expect(getLastPrototype(new EmptyEnumerableWithGrandParent(),),).toStrictEqual(EmptyEnumerableWithGrandParent,),)
 
-        test("Enum + EnumerableWithGreatGrandParent", () =>                        expect(getLastPrototype(new Enum_Enum_GreatGrandParentEnumerable(),),).toStrictEqual(Enum_Enum_GreatGrandParentEnumerable,),)
-        test("EnumWithParent + EnumerableWithGreatGrandParent", () =>              expect(getLastPrototype(new Enum_ParentEnum_GreatGrandParentEnumerable(),),).toStrictEqual(Enum_ParentEnum_GreatGrandParentEnumerable,),)
-        test("EnumWithNullableParent + EnumerableWithGreatGrandParent", () =>      expect(getLastPrototype(new Enum_NullableParentEnum_GreatGrandParentEnumerable(),),).toStrictEqual(Enum_NullableParentEnum_GreatGrandParentEnumerable,),)
-        test("EnumWithGrandParent + EnumerableWithGreatGrandParent", () =>         expect(getLastPrototype(new Enum_GrandParentEnum_GreatGrandParentEnumerable(),),).toStrictEqual(Enum_GrandParentEnum_GreatGrandParentEnumerable,),)
-        test("EnumWithNullableGrandParent + EnumerableWithGreatGrandParent", () => expect(getLastPrototype(new Enum_NullableGrandParentEnum_GreatGrandParentEnumerable(),),).toStrictEqual(Enum_NullableGrandParentEnum_GreatGrandParentEnumerable,),)
-        test("EnumWithGreatGrandParent", () =>                                     expect(getLastPrototype(new Enum_GreatGrandParentEnum(),),).toStrictEqual(Enum_GreatGrandParentEnum,),)
-        test("EnumWithNullableGreatGrandParent", () =>                             expect(getLastPrototype(new Enum_NullableGreatGrandParentEnum(),),).toStrictEqual(Enum_NullableGreatGrandParentEnum,),)
-        test("EnumerableWithGreatGrandParent", () =>                               expect(getLastPrototype(new Enum_GreatGrandParentEnumerable(),),).toStrictEqual(Enum_GreatGrandParentEnumerable,),)
+        test("EnumWithGreatGrandParent", () =>                                     expect(getLastPrototype(new EmptyEnumWithGreatGrandParent(),),).toStrictEqual(EmptyEnumWithGreatGrandParent,),)
+        test("EnumWithNullableGreatGrandParent", () =>                             expect(getLastPrototype(new EmptyEnumWithNullableGreatGrandParent(),),).toStrictEqual(EmptyEnumWithNullableGreatGrandParent,),)
+        test("EnumerableWithGreatGrandParent", () =>                               expect(getLastPrototype(new EmptyEnumerableWithGreatGrandParent(),),).toStrictEqual(EmptyEnumerableWithGreatGrandParent,),)
     },)
     describe("class extends basic enums", () => {
-        test("Enum", () =>                                                         expect(getLastPrototype(new class extends Enum_Enum{}(),),).toStrictEqual(Enum_Enum,),)
-        test("Enumerable", () =>                                                   expect(getLastPrototype(new class extends Enum_Enumerable{}(),),).toStrictEqual(Enum_Enumerable,),)
+        test("Enum", () =>                                                         expect(getLastPrototype(new class extends EmptyEnum{}(),),).toStrictEqual(EmptyEnum,),)
+        test("Enumerable", () =>                                                   expect(getLastPrototype(new class extends EmptyEnumerable{}(),),).toStrictEqual(EmptyEnumerable,),)
 
-        test("Enum + EnumerableWithParent", () =>                                  expect(getLastPrototype(new class extends Enum_Enum_ParentEnumerable{}(),),).toStrictEqual(Enum_Enum_ParentEnumerable,),)
-        test("EnumWithParent", () =>                                               expect(getLastPrototype(new class extends Enum_ParentEnum{}(),),).toStrictEqual(Enum_ParentEnum,),)
-        test("EnumWithNullableParent", () =>                                       expect(getLastPrototype(new class extends Enum_NullableParentEnum{}(),),).toStrictEqual(Enum_NullableParentEnum,),)
-        test("EnumerableWithParent", () =>                                         expect(getLastPrototype(new class extends Enum_ParentEnumerable{}(),),).toStrictEqual(Enum_ParentEnumerable,),)
+        test("EnumWithParent", () =>                                               expect(getLastPrototype(new class extends EmptyEnumWithParent{}(),),).toStrictEqual(EmptyEnumWithParent,),)
+        test("EnumWithNullableParent", () =>                                       expect(getLastPrototype(new class extends EmptyEnumWithNullableParent{}(),),).toStrictEqual(EmptyEnumWithNullableParent,),)
+        test("EnumerableWithParent", () =>                                         expect(getLastPrototype(new class extends EmptyEnumerableWithParent{}(),),).toStrictEqual(EmptyEnumerableWithParent,),)
 
-        test("Enum + EnumerableWithGrandParent", () =>                             expect(getLastPrototype(new class extends Enum_Enum_GrandParentEnumerable{}(),),).toStrictEqual(Enum_Enum_GrandParentEnumerable,),)
-        test("EnumWithParent + EnumerableWithGrandParent", () =>                   expect(getLastPrototype(new class extends Enum_ParentEnum_GrandParentEnumerable{}(),),).toStrictEqual(Enum_ParentEnum_GrandParentEnumerable,),)
-        test("EnumWithNullableParent + EnumerableWithGrandParent", () =>           expect(getLastPrototype(new class extends Enum_NullableParentEnum_GrandParentEnumerable{}(),),).toStrictEqual(Enum_NullableParentEnum_GrandParentEnumerable,),)
-        test("EnumWithGrandParent", () =>                                          expect(getLastPrototype(new class extends Enum_GrandParentEnum{}(),),).toStrictEqual(Enum_GrandParentEnum,),)
-        test("EnumWithNullableGrandParent", () =>                                  expect(getLastPrototype(new class extends Enum_NullableGrandParentEnum{}(),),).toStrictEqual(Enum_NullableGrandParentEnum,),)
-        test("EnumerableWithGrandParent", () =>                                    expect(getLastPrototype(new class extends Enum_GrandParentEnumerable{}(),),).toStrictEqual(Enum_GrandParentEnumerable,),)
+        test("EnumWithGrandParent", () =>                                          expect(getLastPrototype(new class extends EmptyEnumWithGrandParent{}(),),).toStrictEqual(EmptyEnumWithGrandParent,),)
+        test("EnumWithNullableGrandParent", () =>                                  expect(getLastPrototype(new class extends EmptyEnumWithNullableGrandParent{}(),),).toStrictEqual(EmptyEnumWithNullableGrandParent,),)
+        test("EnumerableWithGrandParent", () =>                                    expect(getLastPrototype(new class extends EmptyEnumerableWithGrandParent{}(),),).toStrictEqual(EmptyEnumerableWithGrandParent,),)
 
-        test("Enum + EnumerableWithGreatGrandParent", () =>                        expect(getLastPrototype(new class extends Enum_Enum_GreatGrandParentEnumerable{}(),),).toStrictEqual(Enum_Enum_GreatGrandParentEnumerable,),)
-        test("EnumWithParent + EnumerableWithGreatGrandParent", () =>              expect(getLastPrototype(new class extends Enum_ParentEnum_GreatGrandParentEnumerable{}(),),).toStrictEqual(Enum_ParentEnum_GreatGrandParentEnumerable,),)
-        test("EnumWithNullableParent + EnumerableWithGreatGrandParent", () =>      expect(getLastPrototype(new class extends Enum_NullableParentEnum_GreatGrandParentEnumerable{}(),),).toStrictEqual(Enum_NullableParentEnum_GreatGrandParentEnumerable,),)
-        test("EnumWithGrandParent + EnumerableWithGreatGrandParent", () =>         expect(getLastPrototype(new class extends Enum_GrandParentEnum_GreatGrandParentEnumerable{}(),),).toStrictEqual(Enum_GrandParentEnum_GreatGrandParentEnumerable,),)
-        test("EnumWithNullableGrandParent + EnumerableWithGreatGrandParent", () => expect(getLastPrototype(new class extends Enum_NullableGrandParentEnum_GreatGrandParentEnumerable{}(),),).toStrictEqual(Enum_NullableGrandParentEnum_GreatGrandParentEnumerable,),)
-        test("EnumWithGreatGrandParent", () =>                                     expect(getLastPrototype(new class extends Enum_GreatGrandParentEnum{}(),),).toStrictEqual(Enum_GreatGrandParentEnum,),)
-        test("EnumWithNullableGreatGrandParent", () =>                             expect(getLastPrototype(new class extends Enum_NullableGreatGrandParentEnum{}(),),).toStrictEqual(Enum_NullableGreatGrandParentEnum,),)
-        test("EnumerableWithGreatGrandParent", () =>                               expect(getLastPrototype(new class extends Enum_GreatGrandParentEnumerable{}(),),).toStrictEqual(Enum_GreatGrandParentEnumerable,),)
+        test("EnumWithGreatGrandParent", () =>                                     expect(getLastPrototype(new class extends EmptyEnumWithGreatGrandParent{}(),),).toStrictEqual(EmptyEnumWithGreatGrandParent,),)
+        test("EnumWithNullableGreatGrandParent", () =>                             expect(getLastPrototype(new class extends EmptyEnumWithNullableGreatGrandParent{}(),),).toStrictEqual(EmptyEnumWithNullableGreatGrandParent,),)
+        test("EnumerableWithGreatGrandParent", () =>                               expect(getLastPrototype(new class extends EmptyEnumerableWithGreatGrandParent{}(),),).toStrictEqual(EmptyEnumerableWithGreatGrandParent,),)
     },)
     describe("class3 extends ((class2 implements Enumerable) extends class1)", () => {
         test("class1", () => expect(() => getLastPrototype(new Class1(),),).toThrow(NullReferenceException,),)

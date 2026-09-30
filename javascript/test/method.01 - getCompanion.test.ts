@@ -12,7 +12,7 @@
 
 import {describe, expect, test} from "vitest"
 
-import {EmptyEnum}                    from "./TemplateEnums"
+import {EmptyEnum}                    from "./instance/EmptyEnum"
 import {invalidInstances, nullValues} from "./value/constants"
 
 import {InvalidInstanceException} from "../src/exception/InvalidInstanceException"

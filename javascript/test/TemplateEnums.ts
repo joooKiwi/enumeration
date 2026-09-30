@@ -58,28 +58,6 @@ type EnumType4 = {
 type Ordinals4 = EnumType4[Names4] & number
 type Names4 = keyof EnumType4
 
-export class EmptyEnum
-    extends Enum<never, never> {
-
-    public static readonly CompanionEnum: CompanionEnumSingleton<EmptyEnum, typeof EmptyEnum> = class CompanionEnum_EmptyEnum
-        extends CompanionEnum<EmptyEnum, typeof EmptyEnum> {
-
-        static #instance?: CompanionEnum_EmptyEnum
-
-        private constructor() {
-            super(EmptyEnum,)
-        }
-
-        static get get() {
-            return this.#instance ??= new this()
-        }
-
-    }
-
-    public methodFromEmptyEnum() {}
-
-}
-
 export class Enum1
     extends Enum<Ordinals, Names> {
 

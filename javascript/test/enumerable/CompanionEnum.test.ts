@@ -22,9 +22,6 @@ import {CompanionEnumWithParent_TestClassHelper as ParentInstanceHelper}        
 import {CompanionEnumWithGreatGrandParent_TestClassHelper as GreatGrandParentInstanceHelper} from "../instance/CompanionEnumWithGreatGrandParent_TestClassHelper"
 import {invalidInstances, nullValues, validValues}                                           from "../value/constants"
 
-import {CompanionEnumWithGrandParent}      from "../../src/companion/CompanionEnumWithGrandParent"
-import {CompanionEnumWithGreatGrandParent} from "../../src/companion/CompanionEnumWithGreatGrandParent"
-import {CompanionEnumWithParent}           from "../../src/companion/CompanionEnumWithParent"
 import {InvalidEnumerableException}        from "../../src/exception/InvalidEnumerableException"
 import {InvalidInstanceException}          from "../../src/exception/InvalidInstanceException"
 import {NonExistantKeyException}           from "../../src/exception/NonExistantKeyException"
