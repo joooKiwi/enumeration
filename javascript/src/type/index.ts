@@ -13,6 +13,7 @@
 export type * from "./companion"
 export type * from "./companionFrom"
 export type * from "./companionOf"
+export type * from "./deprecated"
 export type * from "./general"
 export type * from "./keyOf"
 export type * from "./name"
