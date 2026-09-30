@@ -54,15 +54,15 @@ export class CompanionEnumWithGreatGrandParent<const ENUM extends EnumerableWith
     protected constructor(instance: ENUM_CONSTRUCTOR, parentInstance: PARENT_ENUM_CONSTRUCTOR, grandParentInstance: GRAND_PARENT_ENUM_CONSTRUCTOR, greatGrandParentInstance: GREAT_GRAND_PARENT_ENUM_CONSTRUCTOR,) {
         super(instance, parentInstance, grandParentInstance,)
         if (!("greatGrandParent" in instance.prototype))
-            throw new NonExistantKeyException(`No attribute "greatGrandParent" exist in the "${instance.name}" instance. Either use a getter method or add it in the class.`, "greatGrandParent", instance.prototype,)
+            throw new NonExistantKeyException(`No attribute "greatGrandParent" exist in the “${instance.name}” instance. Either use a getter method or add it in the class.`, "greatGrandParent", instance.prototype,)
         if (!("grandParent" in parentInstance.prototype))
-            throw new NonExistantKeyException(`No attribute "grandParent" exist in the "${parentInstance.name}" instance. Either use a getter method or add it in the class.`, "grandParent", parentInstance.prototype,)
+            throw new NonExistantKeyException(`No attribute "grandParent" exist in the “${parentInstance.name}” instance. Either use a getter method or add it in the class.`, "grandParent", parentInstance.prototype,)
         if (!("parent" in grandParentInstance.prototype))
-            throw new NonExistantKeyException(`No attribute "parent" exist in the "${grandParentInstance.name}" instance. Either use a getter method or add it in the class.`, "parent", grandParentInstance.prototype,)
+            throw new NonExistantKeyException(`No attribute "parent" exist in the “${grandParentInstance.name}” instance. Either use a getter method or add it in the class.`, "parent", grandParentInstance.prototype,)
         if (greatGrandParentInstance == null)
             throw new NullInstanceException()
         if (!(greatGrandParentInstance instanceof Function))
-            throw new InvalidInstanceException(`The great-grandparent instance received in "${this.constructor.name}" is not a function type.`, greatGrandParentInstance,)
+            throw new InvalidInstanceException(`The great-grandparent instance received in “${this.constructor.name}” is not a function type.`, greatGrandParentInstance,)
         this.#greatGrandParentInstance = greatGrandParentInstance
     }
 
@@ -130,7 +130,7 @@ export class CompanionEnumWithGreatGrandParent<const ENUM extends EnumerableWith
         if (enumerable instanceof greatGrandParentInstance)
             return this._getValueFromValuesByGreatGrandParent(enumerable,)
 
-        throw new InvalidEnumerableException(`The enumerable "${instance.name}.${enumerable.name}" is not an instance of "${instance.name}", "${parentInstance.name}", "${grandParentInstance.name}" or "${greatGrandParentInstance.name}".`, enumerable, [instance, parentInstance, grandParentInstance, greatGrandParentInstance,],)
+        throw new InvalidEnumerableException(`The enumerable “${instance.name}.${enumerable.name}” is not an instance of “${instance.name}”, “${parentInstance.name}”, “${grandParentInstance.name}” or “${greatGrandParentInstance.name}”.`, enumerable, [instance, parentInstance, grandParentInstance, greatGrandParentInstance,],)
     }
 
     //#endregion -------------------- Get value (validated) methods --------------------
@@ -147,7 +147,7 @@ export class CompanionEnumWithGreatGrandParent<const ENUM extends EnumerableWith
     protected _getValueFromValuesByGreatGrandParent(value: Enumerable,): ENUM {
         const valueFound = this.values.find(it => it.greatGrandParent === value,)
         if (valueFound == null)
-            throw new NullReferenceException(`No great-grandparent "${value}" could be found on the "${this.instance.name}".`, value,)
+            throw new NullReferenceException(`No great-grandparent “${value}” could be found on the “${this.instance.name}”.`, value,)
         return valueFound
     }
 

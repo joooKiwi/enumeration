@@ -50,13 +50,13 @@ export class CompanionEnumWithGrandParent<const ENUM extends EnumerableWithNulla
     protected constructor(instance: ENUM_CONSTRUCTOR, parentInstance: PARENT_ENUM_CONSTRUCTOR, grandParentInstance: GRAND_PARENT_ENUM_CONSTRUCTOR,) {
         super(instance, parentInstance,)
         if (!("grandParent" in instance.prototype))
-            throw new NonExistantKeyException(`No attribute "grandParent" exist in the "${instance.name}" instance. Either use a getter method or add it in the class.`, "grandParent", instance.prototype,)
+            throw new NonExistantKeyException(`No attribute "grandParent" exist in the “${instance.name}” instance. Either use a getter method or add it in the class.`, "grandParent", instance.prototype,)
         if (!("parent" in parentInstance.prototype))
-            throw new NonExistantKeyException(`No attribute "parent" exist in the "${parentInstance.name}" instance. Either use a getter method or add it in the class.`, "parent", parentInstance.prototype,)
+            throw new NonExistantKeyException(`No attribute "parent" exist in the “${parentInstance.name}” instance. Either use a getter method or add it in the class.`, "parent", parentInstance.prototype,)
         if (grandParentInstance == null)
             throw new NullInstanceException()
         if (!(grandParentInstance instanceof Function))
-            throw new InvalidInstanceException(`The grandparent instance received in "${this.constructor.name}" is not a function type.`, grandParentInstance,)
+            throw new InvalidInstanceException(`The grandparent instance received in “${this.constructor.name}” is not a function type.`, grandParentInstance,)
         this.#grandParentInstance = grandParentInstance
     }
 
@@ -117,7 +117,7 @@ export class CompanionEnumWithGrandParent<const ENUM extends EnumerableWithNulla
         if (enumerable instanceof grandParentInstance)
             return this._getValueFromValuesByGrandParent(enumerable,)
 
-        throw new InvalidEnumerableException(`The enumerable "${instance.name}.${enumerable.name}" is not an instance of "${instance.name}", "${parentInstance.name}" or "${grandParentInstance.name}".`, enumerable, [instance, parentInstance, grandParentInstance,],)
+        throw new InvalidEnumerableException(`The enumerable “${instance.name}.${enumerable.name}” is not an instance of “${instance.name}”, “${parentInstance.name}” or “${grandParentInstance.name}”.`, enumerable, [instance, parentInstance, grandParentInstance,],)
     }
 
     //#endregion -------------------- Get value (validated) methods --------------------
@@ -134,7 +134,7 @@ export class CompanionEnumWithGrandParent<const ENUM extends EnumerableWithNulla
     protected _getValueFromValuesByGrandParent(value: Enumerable,): ENUM {
         const valueFound = this.values.find(it => it.grandParent === value)
         if (valueFound == null)
-            throw new NullReferenceException(`No grandparent "${value}" could be found on the "${this.instance.name}".`, value,)
+            throw new NullReferenceException(`No grandparent “${value}” could be found on the “${this.instance.name}”.`, value,)
         return valueFound
     }
 

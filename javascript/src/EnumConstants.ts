@@ -218,7 +218,7 @@ export namespace EnumConstants {
      *
      * @deprecated This will be removed in version 3.14 since it does not have a great use within the framework.
      */
-    export const EVERY_ENUMERABLE_MEMBERS_JOINED = "(\"name\", \"ordinal\", \"parent\", \"grandParent\", \"greatGrandParent\", \"[Symbol.toPrimitive]\", \"[Symbol.toStringTag]\")"
+    export const EVERY_ENUMERABLE_MEMBERS_JOINED = "(“name”, “ordinal”, “parent”, “grandParent”, “greatGrandParent”, “[Symbol.toPrimitive]”, “[Symbol.toStringTag]”)"
 
     /**
      * Every member of
@@ -236,7 +236,7 @@ export namespace EnumConstants {
      *
      * @deprecated This will be removed in version 3.14 since it does not have a great use within the framework.
      */
-    export const EVERY_COMPANION_ENUM_MEMBERS_JOINED = "(\"instance\", \"parentInstance\", \"grandParentInstance\", \"greatGrandParentInstance\", \"defaultValue\", \"setDefaultValue\", \"values\", \"names\", \"ordinals\", \"iterator\", \"getValue\", \"getName\", \"getOrdinal\", \"[Symbol.iterator]\", \"[Symbol.toStringTag]\")"
+    export const EVERY_COMPANION_ENUM_MEMBERS_JOINED = "(“instance”, “parentInstance”, “grandParentInstance”, “greatGrandParentInstance”, “defaultValue”, “setDefaultValue”, “values”, “names”, “ordinals”, “iterator”, “getValue”, “getName”, “getOrdinal”, “[Symbol.iterator]”, “[Symbol.toStringTag]”)"
 
     //#endregion -------------------- Enumerable members --------------------
     //#region -------------------- Symbols --------------------
@@ -249,7 +249,7 @@ export namespace EnumConstants {
     export const ENUM_REFERENCE_BY_ITS_NAME_SYMBOL = Symbol("Enum reference by its name",)
 
     /**
-     * Tell that the {@link Enumerable} reference will be <b>null</b>
+     * Tell that the {@link Enumerable} reference will be `null`
      *
      * @uniqueToJavascript
      */

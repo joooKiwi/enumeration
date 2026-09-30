@@ -46,11 +46,11 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
     protected constructor(instance: ENUM_CONSTRUCTOR, parentInstance: PARENT_ENUM_CONSTRUCTOR,) {
         super(instance,)
         if (!("parent" in instance.prototype))
-            throw new NonExistantKeyException(`No attribute "parent" exist in the "${instance.name}" instance. Either use a getter method or add it in the class.`, "parent", instance.prototype,)
+            throw new NonExistantKeyException(`No attribute "parent" exist in the “${instance.name}” instance. Either use a getter method or add it in the class.`, "parent", instance.prototype,)
         if (parentInstance == null)
             throw new NullInstanceException()
         if (!(parentInstance instanceof Function))
-            throw new InvalidInstanceException(`The parent instance received in "${this.constructor.name}" is not a function type.`, parentInstance,)
+            throw new InvalidInstanceException(`The parent instance received in “${this.constructor.name}” is not a function type.`, parentInstance,)
         this.#parentInstance = parentInstance
     }
 
@@ -106,7 +106,7 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
         if (enumerable instanceof parentInstance)
             return this._getValueFromValuesByParent(enumerable,)
 
-        throw new InvalidEnumerableException(`The enumerable "${instance.name}.${enumerable.name}" is not an instance of "${instance.name}" or "${parentInstance.name}".`, enumerable, [instance, parentInstance,],)
+        throw new InvalidEnumerableException(`The enumerable “${instance.name}.${enumerable.name}” is not an instance of “${instance.name}” or “${parentInstance.name}”.`, enumerable, [instance, parentInstance,],)
     }
 
     //#endregion -------------------- Get value (validated) methods --------------------
@@ -123,7 +123,7 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
     protected _getValueFromValuesByParent(value: Enumerable,): ENUM {
         const valueFound = this.values.find(it => it.parent === value,)
         if (valueFound == null)
-            throw new NullReferenceException(`No parent "${value}" could be found on the "${this.instance.name}".`, value,)
+            throw new NullReferenceException(`No parent “${value}” could be found on the “${this.instance.name}”.`, value,)
         return valueFound
     }
 
