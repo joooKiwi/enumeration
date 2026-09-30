@@ -330,6 +330,29 @@ describe("methodsTests (is)", () => {
         test("companion enum with great-grandparent",              () => expect(isCompanionEnumWithGreatGrandParent(value,),)           .toBeFalse(),)
         test("companion enum with great-grandparent by structure", () => expect(isCompanionEnumWithGreatGrandParentByStructure(value,),).toBeFalse(),)
     },)
+    describe("object", () => {
+        const value = {}
+
+        test("enum",                                               () => expect(isEnum(value,),)                                        .toBeFalse(),)
+        test("enum by structure",                                  () => expect(isEnumByStructure(value,),)                             .toBeFalse(),)
+        test("enum with parent",                                   () => expect(isEnumWithParent(value,),)                              .toBeFalse(),)
+        test("enum with nullable parent",                          () => expect(isEnumWithNullableParent(value,),)                      .toBeFalse(),)
+        test("enum with parent by structure",                      () => expect(isEnumWithParentByStructure(value,),)                   .toBeFalse(),)
+        test("enum with grandparent",                              () => expect(isEnumWithGrandParent(value,),)                         .toBeFalse(),)
+        test("enum with nullable grandparent",                     () => expect(isEnumWithNullableGrandParent(value,),)                 .toBeFalse(),)
+        test("enum with grandparent by structure",                 () => expect(isEnumWithGrandParentByStructure(value,),)              .toBeFalse(),)
+        test("enum with great-grandparent",                        () => expect(isEnumWithGreatGrandParent(value,),)                    .toBeFalse(),)
+        test("enum with nullable great-grandparent",               () => expect(isEnumWithNullableGreatGrandParent(value,),)            .toBeFalse(),)
+        test("enum with great-grandparent by structure",           () => expect(isEnumWithGreatGrandParentByStructure(value,),)         .toBeFalse(),)
+        test("companion enum",                                     () => expect(isCompanionEnum(value,),)                               .toBeFalse(),)
+        test("companion enum by structure",                        () => expect(isCompanionEnumByStructure(value,),)                    .toBeFalse(),)
+        test("companion enum with parent",                         () => expect(isCompanionEnumWithParent(value,),)                     .toBeFalse(),)
+        test("companion enum with parent by structure",            () => expect(isCompanionEnumWithParentByStructure(value,),)          .toBeFalse(),)
+        test("companion enum with grandparent",                    () => expect(isCompanionEnumWithGrandParent(value,),)                .toBeFalse(),)
+        test("companion enum with grandparent by structure",       () => expect(isCompanionEnumWithGrandParentByStructure(value,),)     .toBeFalse(),)
+        test("companion enum with great-grandparent",              () => expect(isCompanionEnumWithGreatGrandParent(value,),)           .toBeFalse(),)
+        test("companion enum with great-grandparent by structure", () => expect(isCompanionEnumWithGreatGrandParentByStructure(value,),).toBeFalse(),)
+    },)
     describe("function", () => {
         const value = () => {}
 
