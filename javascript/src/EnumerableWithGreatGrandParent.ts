@@ -26,12 +26,12 @@ export interface EnumerableWithGreatGrandParent<out PARENT extends EnumerableWit
             EnumerableWithNullableGreatGrandParent<PARENT, GRAND_PARENT, GREAT_GRAND_PARENT, ORDINAL, NAME> {
 
     /** The parent of the current instance */
-    get parent(): PARENT
+    readonly parent: PARENT
 
     /** The grandparent of the current instance */
-    get grandParent(): GRAND_PARENT
+    readonly grandParent: GRAND_PARENT
 
     /** The great-grandparent of the current instance */
-    get greatGrandParent(): GREAT_GRAND_PARENT
+    readonly greatGrandParent: GREAT_GRAND_PARENT
 
 }

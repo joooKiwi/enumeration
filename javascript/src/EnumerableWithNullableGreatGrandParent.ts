@@ -26,6 +26,6 @@ export interface EnumerableWithNullableGreatGrandParent<out PARENT extends Enume
     extends EnumerableWithNullableGrandParent<PARENT, GRAND_PARENT, ORDINAL, NAME> {
 
     /** The {@link NullOr nullable} great-grandparent of the current instance */
-    get greatGrandParent(): NullOr<GREAT_GRAND_PARENT>
+    readonly greatGrandParent: NullOr<GREAT_GRAND_PARENT>
 
 }

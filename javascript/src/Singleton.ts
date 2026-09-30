@@ -14,6 +14,6 @@
 export interface Singleton<out T, > {
 
     /** Get or create the instance */
-    get get(): T
+    readonly get: T
 
 }

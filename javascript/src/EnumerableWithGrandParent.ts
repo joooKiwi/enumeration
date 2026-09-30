@@ -24,9 +24,9 @@ export interface EnumerableWithGrandParent<out PARENT extends EnumerableWithPare
             EnumerableWithNullableGrandParent<PARENT, GRAND_PARENT, ORDINAL, NAME> {
 
     /** The parent of the current instance */
-    get parent(): PARENT
+    readonly parent: PARENT
 
     /** The grandparent of the current instance */
-    get grandParent(): GRAND_PARENT
+    readonly grandParent: GRAND_PARENT
 
 }

@@ -22,6 +22,6 @@ export interface EnumerableWithParent<out PARENT extends Enumerable,
             EnumerableWithNullableParent<PARENT, ORDINAL, NAME> {
 
     /** The parent of the current instance */
-    get parent(): PARENT
+    readonly parent: PARENT
 
 }

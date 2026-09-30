@@ -24,10 +24,10 @@ export interface Enumerable<out ORDINAL extends number = number,
      * @failWhenCalledDuringTheConstruction
      * @throws {NullReferenceException} The instance has been called during the construction or was not found in the {@link CompanionEnumDeclaration.values companion values}
      */
-    get name(): NAME
+    readonly name: NAME
 
     /** Get the ordinal on the current instance. */
-    get ordinal(): ORDINAL
+    readonly ordinal: ORDINAL
 
     /**
      * Convert the {@link Enumerable} to a {@link String} or {@link Number}.
