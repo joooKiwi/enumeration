@@ -24,8 +24,9 @@ import type {PossibleEnumerableValueOrNameByValueOrCallback} from "./type/possib
 
 import {EnumWithNullableGrandParent}  from "./EnumWithNullableGrandParent"
 import {ImpossibleIntegrityException} from "./exception/ImpossibleIntegrityException"
-import {Helper}                       from "./helper/Helper"
 import {KnownEnumConstructors}        from "./helper/KnownEnumConstructors"
+import {_getGreatGrandParentValueFromName} from "./method/_getGreatGrandParentValueFromName"
+import {_getNullableGreatGrandParentValue} from "./method/_getNullableGreatGrandParentValue"
 
 /**
  * An {@link Enum} class in conjuncture with the {@link EnumerableWithNullableGreatGrandParent}.
@@ -161,36 +162,35 @@ export class EnumWithNullableGreatGrandParent<const PARENT extends EnumerableWit
      * @param greatGrandParent The great-grandparent value (from any possibilities in Javascript)
      *
      * @typescriptDefinition
-     * @throws {NullReferenceException}
      */
     protected constructor(parent?: PossibleEnumerableValueOrNameByValueOrCallback<PARENT>, grandParent?: PossibleEnumerableValueOrNameByValueOrCallback<GRAND_PARENT>, greatGrandParent?: PossibleEnumerableValueOrNameByValueOrCallback<GREAT_GRAND_PARENT>,)
-    protected constructor(...args: readonly [PossibleEnumerableValueOrNameByValueOrCallback<PARENT>?, PossibleEnumerableValueOrNameByValueOrCallback<GRAND_PARENT>?, PossibleEnumerableValueOrNameByValueOrCallback<GREAT_GRAND_PARENT>?]) {
-        let argumentsToSuper: readonly [PossibleEnumerableValueOrNameByValueOrCallback<PARENT>?, PossibleEnumerableValueOrNameByValueOrCallback<GRAND_PARENT>?,]
-        if (args.length === 0)
-            argumentsToSuper = []
-        else if (args.length === 1)
-            argumentsToSuper = [args[0],]
-        else
-            argumentsToSuper = [args[0], args[1],]
-        super(...argumentsToSuper,)
-
-        if (args.length <= 1) {
+    protected constructor(parent?: PossibleEnumerableValueOrNameByValueOrCallback<PARENT>, grandParent?: PossibleEnumerableValueOrNameByValueOrCallback<GRAND_PARENT>, greatGrandParent?: PossibleEnumerableValueOrNameByValueOrCallback<GREAT_GRAND_PARENT>,) {
+        if (arguments.length === 0) {
+            super()
             this.#grandParent = lazy(() => super.grandParent,)
-            this.#greatGrandParent = lazy(() => Helper.getValueFromInstanceName<GREAT_GRAND_PARENT>(this, "great-grandparent",),)
+            this.#greatGrandParent = lazy(() => _getGreatGrandParentValueFromName(this, this.name,),)
             return
         }
+
+        if (arguments.length === 1)
+            super(parent,)
+        else
+            super(parent, grandParent,)
+
         this.#grandParent = lazy(() => {
             const grandParent = super.grandParent
             const greatGrandParent = this.greatGrandParent
 
-            if (grandParent == null && greatGrandParent != null)
-                throw new ImpossibleIntegrityException(`The grandparent reference in "${this.constructor.name}" was not expected to be null when its great-grandparent is not-null.`, this,)
+            if (grandParent == null)
+                if (greatGrandParent != null)
+                    throw new ImpossibleIntegrityException(`The grandparent reference in “${this.constructor.name}” was not expected to be null when its great-grandparent is not-null.`, this,)
             return grandParent
         },)
-        if (args.length <= 2)
-            this.#greatGrandParent = lazy(() => Helper.getValueFromInstanceName<GREAT_GRAND_PARENT>(this, "great-grandparent",),)
+
+        if (greatGrandParent instanceof Function)
+            this.#greatGrandParent = lazy(() => _getNullableGreatGrandParentValue(this, greatGrandParent(),),)
         else
-            this.#greatGrandParent = lazy(() => Helper.getNullableValue(this, args[2], "great-grandparent",),)
+            this.#greatGrandParent = lazy(() => _getNullableGreatGrandParentValue(this, greatGrandParent,),)
     }
 
     //#endregion -------------------- Constructor --------------------

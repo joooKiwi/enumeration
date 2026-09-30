@@ -12,12 +12,12 @@
 
 import type {CollectionHolder}   from "@joookiwi/collection"
 import type {NullOr}             from "@joookiwi/type"
-import {GenericCollectionHolder} from "@joookiwi/collection"
+import {ArrayAsCollectionHolder} from "@joookiwi/collection"
 
 import type {Enumerable}            from "../Enumerable"
 import type {EnumerableConstructor} from "../EnumerableConstructor"
 
-import {NullReferenceException} from "../exception"
+import {NullReferenceException} from "../exception/NullReferenceException"
 import {KnownEnumConstructors}  from "./KnownEnumConstructors"
 import {isEnumByStructure}      from "./isEnumByStructure"
 import {isEnum}                 from "./isEnum"
@@ -28,7 +28,10 @@ import {isEnum}                 from "./isEnum"
  * and the last proper {@link Enumerable}-like on a {@link Enumerable} instance
  *
  * @param instance The instance (by default as the current instance)
- * @throws {NullReferenceException}
+ * @throws NullReferenceException The instance was `null`
+ * @throws NullReferenceException No {@link Enum} constructor from the instance could be found (if it was a {@link Enum})
+ * @throws NullReferenceException No {@link Enumerable} constructor from the instance could be found (if it was a {@link Enumerable})
+ * @throws NullReferenceException No prototype could be found since it did not have the {@link Enumerable} structure
  * @see https://stackoverflow.com/a/68323749
  * @note No proper type inference can be made since it is possible to have a different prototype than the closest one (<i>instance.constructor</i>)
  */
@@ -37,7 +40,7 @@ export function getLastPrototype<const T extends Enumerable, >(instance: object,
         throw new NullReferenceException(`No prototype on a EnumerableConstructor could be found by a null value.`, instance,)
 
     if (isEnum(instance,)) {
-        const prototypeConstructorChain = getPrototypeConstructorChain(instance,)
+        const prototypeConstructorChain = __getPrototypeConstructorChain(instance,)
         const knownEnumConstructors = KnownEnumConstructors.get.values
         const indexFound = prototypeConstructorChain.indexOfFirstOrNull(prototypeConstructor => knownEnumConstructors.any(it => it == prototypeConstructor,),)
         if (indexFound == null)
@@ -46,7 +49,7 @@ export function getLastPrototype<const T extends Enumerable, >(instance: object,
     }
 
     if (isEnumByStructure(instance,)) {
-        const prototypeConstructorChain = getPrototypeConstructorChain(instance,)
+        const prototypeConstructorChain = __getPrototypeConstructorChain(instance,)
         const prototypeFound = prototypeConstructorChain.findLast(it => isEnumByStructure(it.prototype,),)
         if (prototypeFound == null)
             throw new NullReferenceException(`No Enumerable-like could be found from the prototype chain ${prototypeConstructorChain.join(", ", '“', '”',)}.`, instance,)
@@ -56,12 +59,12 @@ export function getLastPrototype<const T extends Enumerable, >(instance: object,
     throw new NullReferenceException(`No prototype on a EnumerableConstructor could be found by a non-Enumerable value.`, instance,)
 }
 
-function getPrototypeConstructorChain(instance: object,): CollectionHolder<Function> {
+function __getPrototypeConstructorChain(instance: object,): CollectionHolder<Function> {
     const prototypeChain = [] as Function[]
     let prototype: NullOr<object> = instance
     while (prototype != null) {
         prototypeChain.push(prototype.constructor,)
         prototype = Reflect.getPrototypeOf(prototype,)
     }
-    return new GenericCollectionHolder(prototypeChain,)
+    return new ArrayAsCollectionHolder<Function>(prototypeChain,)
 }

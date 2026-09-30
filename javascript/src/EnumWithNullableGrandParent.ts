@@ -23,8 +23,9 @@ import type {PossibleEnumerableValueOrNameByValueOrCallback} from "./type/possib
 
 import {EnumWithNullableParent}       from "./EnumWithNullableParent"
 import {ImpossibleIntegrityException} from "./exception/ImpossibleIntegrityException"
-import {Helper}                       from "./helper/Helper"
 import {KnownEnumConstructors}        from "./helper/KnownEnumConstructors"
+import {_getGrandParentValueFromName} from "./method/_getGrandParentValueFromName"
+import {_getNullableGrandParentValue} from "./method/_getNullableGrandParentValue"
 
 /**
  * An {@link Enum} class in conjuncture with the {@link EnumerableWithNullableGrandParent}.
@@ -92,34 +93,31 @@ export class EnumWithNullableGrandParent<const PARENT extends EnumerableWithNull
      * @param grandParent The grandparent value (from any possibilities in Javascript)
      *
      * @typescriptDefinition
-     * @throws {NullReferenceException}
      */
     protected constructor(parent?: PossibleEnumerableValueOrNameByValueOrCallback<PARENT>, grandParent?: PossibleEnumerableValueOrNameByValueOrCallback<GRAND_PARENT>,)
-    protected constructor(...args: readonly [PossibleEnumerableValueOrNameByValueOrCallback<PARENT>?, PossibleEnumerableValueOrNameByValueOrCallback<GRAND_PARENT>?]) {
-        let argumentsToSuper: readonly [PossibleEnumerableValueOrNameByValueOrCallback<PARENT>?,]
-        if (args.length === 0)
-            argumentsToSuper = []
-        else
-            argumentsToSuper = [args[0],]
-        super(...argumentsToSuper,)
-
-        if (args.length === 0) {
+    protected constructor(parent?: PossibleEnumerableValueOrNameByValueOrCallback<PARENT>, grandParent?: PossibleEnumerableValueOrNameByValueOrCallback<GRAND_PARENT>,) {
+        if (arguments.length === 0) {
+            super()
             this.#parent = lazy(() => super.parent,)
-            this.#grandParent = lazy(() => Helper.getValueFromInstanceName<GRAND_PARENT>(this, "grandparent",),)
+            this.#grandParent = lazy(() => _getGrandParentValueFromName(this, this.name,),)
             return
         }
+
+        super(parent,)
+
         this.#parent = lazy(() => {
             const parent = super.parent
             const grandParent = this.grandParent
 
-            if (parent == null && grandParent != null)
-                throw new ImpossibleIntegrityException(`The parent reference in "${this.constructor.name}" was not expected to be null when its grandparent is not-null.`, this,)
+            if (parent == null)
+                if (grandParent != null)
+                    throw new ImpossibleIntegrityException(`The parent reference in “${this.constructor.name}” was not expected to be null when its grandparent is not-null.`, this,)
             return parent
         },)
-        if (args.length <= 1)
-            this.#grandParent = lazy(() => Helper.getValueFromInstanceName<GRAND_PARENT>(this, "grandparent",),)
+        if (grandParent instanceof Function)
+            this.#grandParent = lazy(() => _getNullableGrandParentValue(this, grandParent(),),)
         else
-            this.#grandParent = lazy(() => Helper.getNullableValue(this, args[1], "grandparent",),)
+            this.#grandParent = lazy(() => _getNullableGrandParentValue(this, grandParent,),)
     }
 
     //#endregion -------------------- Constructor --------------------
@@ -129,8 +127,8 @@ export class EnumWithNullableGrandParent<const PARENT extends EnumerableWithNull
      * The {@link NullOr nullable} parent of the current instance
      *
      * @lazy
-     * @throws {ImpossibleIntegrityException}
-     * @throws {NullReferenceException}
+     * @throws ImpossibleIntegrityException The value was `null` when the {@link grandParent} was not `null`
+     * @throws NullReferenceException An error happened while attempting to retrieve the parent value
      */
     public override get parent(): NullOr<PARENT> {
         return this.#parent.value
@@ -140,7 +138,7 @@ export class EnumWithNullableGrandParent<const PARENT extends EnumerableWithNull
      * The {@link NullOr nullable} grandparent of the current instance
      *
      * @lazy
-     * @throws {NullReferenceException}
+     * @throws NullReferenceException An error happened while attempting to retrieve the grandparent value
      */
     public get grandParent(): NullOr<GRAND_PARENT> {
         return this.#grandParent.value

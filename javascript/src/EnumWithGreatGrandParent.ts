@@ -22,9 +22,10 @@ import type {NameOf, PossibleNameOf}                         from "./type/nameOf
 import type {PossibleOrdinalOf}                              from "./type/ordinalOf"
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "./type/possibleInstance"
 
-import {EnumWithGrandParent}   from "./EnumWithGrandParent"
-import {Helper}                from "./helper/Helper"
-import {KnownEnumConstructors} from "./helper/KnownEnumConstructors"
+import {EnumWithGrandParent}               from "./EnumWithGrandParent"
+import {KnownEnumConstructors}             from "./helper/KnownEnumConstructors"
+import {_getGreatGrandParentValueFromName} from "./method/_getGreatGrandParentValueFromName"
+import {_getGreatGrandParentValue}         from "./method/_getGreatGrandParentValue"
 
 /**
  * An {@link Enum} class in conjuncture with the {@link EnumerableWithGreatGrandParent}.
@@ -158,23 +159,24 @@ export class EnumWithGreatGrandParent<const PARENT extends EnumerableWithGrandPa
      * @param greatGrandParent The great-grandparent value (from any possibilities in Javascript)
      *
      * @typescriptDefinition
-     * @throws {NullReferenceException}
      */
     protected constructor(parent?: PossibleEnumerableValueOrNameByValueOrCallback<PARENT>, grandParent?: PossibleEnumerableValueOrNameByValueOrCallback<GRAND_PARENT>, greatGrandParent?: PossibleEnumerableValueOrNameByValueOrCallback<GREAT_GRAND_PARENT>,)
-    protected constructor(...args: readonly [PossibleEnumerableValueOrNameByValueOrCallback<PARENT>?, PossibleEnumerableValueOrNameByValueOrCallback<GRAND_PARENT>?, PossibleEnumerableValueOrNameByValueOrCallback<GREAT_GRAND_PARENT>?]) {
-        let argumentsToSuper: readonly [PossibleEnumerableValueOrNameByValueOrCallback<PARENT>?, PossibleEnumerableValueOrNameByValueOrCallback<GRAND_PARENT>?,]
-        if (args.length === 0)
-            argumentsToSuper = []
-        else if (args.length === 1)
-            argumentsToSuper = [args[0],]
-        else
-            argumentsToSuper = [args[0], args[1],]
-        super(...argumentsToSuper,)
+    protected constructor(parent?: PossibleEnumerableValueOrNameByValueOrCallback<PARENT>, grandParent?: PossibleEnumerableValueOrNameByValueOrCallback<GRAND_PARENT>, greatGrandParent?: PossibleEnumerableValueOrNameByValueOrCallback<GREAT_GRAND_PARENT>,) {
+        if (arguments.length === 0) { // We default to the name of the instance
+            super()
+            this.#greatGrandParent = lazy(() => _getGreatGrandParentValueFromName(this, this.name,),)
+            return
+        }
 
-        if (args.length <= 2)
-            this.#greatGrandParent = lazy(() => Helper.getValueFromInstanceName(this, "great-grandparent",),)
+        if (arguments.length === 1)
+            super(parent,)
         else
-            this.#greatGrandParent = lazy(() => Helper.getValue(this, args[2], "great-grandparent",),)
+            super(parent, grandParent,)
+
+        if (greatGrandParent instanceof Function)
+            this.#greatGrandParent = lazy(() => _getGreatGrandParentValue(this, greatGrandParent(),),)
+        else
+            this.#greatGrandParent = lazy(() => _getGreatGrandParentValue(this, greatGrandParent,),)
     }
 
     //#endregion -------------------- Constructor --------------------
@@ -184,7 +186,7 @@ export class EnumWithGreatGrandParent<const PARENT extends EnumerableWithGrandPa
      * The great-grandparent of the current instance
      *
      * @lazy
-     * @throws {NullReferenceException}
+     * @throws NullReferenceException An error happened while attempting to retrieve the great-grandparent value
      */
     public get greatGrandParent(): GREAT_GRAND_PARENT {
         return this.#greatGrandParent.value

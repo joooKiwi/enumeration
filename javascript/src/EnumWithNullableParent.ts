@@ -20,9 +20,10 @@ import type {NameOf, PossibleNameOf}                         from "./type/nameOf
 import type {PossibleOrdinalOf}                              from "./type/ordinalOf"
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "./type/possibleInstance"
 
-import {Enum}                  from "./Enum"
-import {Helper}                from "./helper/Helper"
-import {KnownEnumConstructors} from "./helper/KnownEnumConstructors"
+import {Enum}                    from "./Enum"
+import {KnownEnumConstructors}   from "./helper/KnownEnumConstructors"
+import {_getParentValueFromName} from "./method/_getParentValueFromName"
+import {_getNullableParentValue} from "./method/_getNullableParentValue"
 
 /**
  * An {@link Enum} class in conjuncture with the {@link EnumerableWithNullableParent}.
@@ -91,12 +92,17 @@ export abstract class EnumWithNullableParent<const PARENT extends Enumerable,
      * @typescriptDefinition
      */
     protected constructor(parent?: PossibleEnumerableValueOrNameByValueOrCallback<PARENT>,)
-    protected constructor(...args: readonly [PossibleEnumerableValueOrNameByValueOrCallback<PARENT>?]) {
+    protected constructor(parent?: PossibleEnumerableValueOrNameByValueOrCallback<PARENT>,) {
         super()
-        if (args.length === 0)
-            this.#parent = lazy(() => Helper.getValueFromInstanceName<PARENT>(this, "parent",),)
+        if (arguments.length === 0) {
+            this.#parent = lazy(() => _getParentValueFromName(this, this.name,),)
+            return
+        }
+
+        if (parent instanceof Function)
+            this.#parent = lazy(() => _getNullableParentValue(this, parent(),),)
         else
-            this.#parent = lazy(() => Helper.getNullableValue(this, args[0], "parent",),)
+            this.#parent = lazy(() => _getNullableParentValue(this, parent,),)
     }
 
     //#endregion -------------------- Constructor --------------------
@@ -106,7 +112,7 @@ export abstract class EnumWithNullableParent<const PARENT extends Enumerable,
      * The {@link NullOr nullable} parent of the current instance
      *
      * @lazy
-     * @throws {NullReferenceException}
+     * @throws NullReferenceException An error happened while attempting to retrieve the parent value
      */
     public get parent(): NullOr<PARENT> {
         return this.#parent.value

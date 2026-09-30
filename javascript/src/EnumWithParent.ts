@@ -20,9 +20,10 @@ import type {NameOf, PossibleNameOf}                         from "./type/nameOf
 import type {PossibleOrdinalOf}                              from "./type/ordinalOf"
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "./type/possibleInstance"
 
-import {Enum}                  from "./Enum"
-import {Helper}                from "./helper/Helper"
-import {KnownEnumConstructors} from "./helper/KnownEnumConstructors"
+import {Enum}                     from "./Enum"
+import {KnownEnumConstructors}    from "./helper/KnownEnumConstructors"
+import {_getParentValue}         from "./method/_getParentValue"
+import {_getParentValueFromName} from "./method/_getParentValueFromName"
 
 /**
  * An {@link Enum} class in conjuncture with the {@link EnumerableWithParent}.
@@ -63,15 +64,12 @@ export abstract class EnumWithParent<const PARENT extends Enumerable,
      * Create the instance with a {@link EnumerableWithParent.parent parent} reference.
      *
      * @param parent The parent reference
-     *
-     * @throws {NullReferenceException}
      */
     protected constructor(parent: Nullable<PARENT>,)
     /**
      * Create the instance with a {@link EnumerableWithParent.parent parent} {@link Enumerable.name name} reference
      *
      * @param parentName The parent reference retrieved from the {@link Enumerable.name name} value
-     * @throws {NullReferenceException}
      */
     protected constructor(parentName: Nullable<NameOf<PARENT>>,)
     /**
@@ -79,7 +77,6 @@ export abstract class EnumWithParent<const PARENT extends Enumerable,
      * via a callback
      *
      * @param lateParent The late parent reference
-     * @throws {NullReferenceException}
      */
     protected constructor(lateParent: Nullable<() => Nullable<PARENT>>,)
     /**
@@ -87,7 +84,6 @@ export abstract class EnumWithParent<const PARENT extends Enumerable,
      * via a callback
      *
      * @param lateParentName The late parent reference retrieved from its {@link Enumerable.name name} value
-     * @throws {NullReferenceException}
      */
     protected constructor(lateParentName: Nullable<() => Nullable<NameOf<PARENT>>>,)
     /**
@@ -96,15 +92,19 @@ export abstract class EnumWithParent<const PARENT extends Enumerable,
      * @param parent The parent value (from any possibilities in Javascript)
      *
      * @typescriptDefinition
-     * @throws {NullReferenceException}
      */
     protected constructor(parent?: PossibleEnumerableValueOrNameByValueOrCallback<PARENT>,)
-    protected constructor(...args: readonly [PossibleEnumerableValueOrNameByValueOrCallback<PARENT>?,]) {
+    protected constructor(parent?: PossibleEnumerableValueOrNameByValueOrCallback<PARENT>,) {
         super()
-        if (args.length === 0)
-            this.#parent = lazy(() => Helper.getValueFromInstanceName(this, "parent",),)
+        if (arguments.length === 0) { // We default to the name of the instance
+            this.#parent = lazy(() => _getParentValueFromName(this, this.name,),)
+            return
+        }
+
+        if (parent instanceof Function)
+            this.#parent = lazy(() => _getParentValue(this, parent(),),)
         else
-            this.#parent = lazy(() => Helper.getValue(this, args[0], "parent",),)
+            this.#parent = lazy(() => _getParentValue(this, parent,),)
     }
 
     //#endregion -------------------- Constructor --------------------
@@ -114,7 +114,7 @@ export abstract class EnumWithParent<const PARENT extends Enumerable,
      * The parent of the current instance
      *
      * @lazy
-     * @throws {NullReferenceException}
+     * @throws NullReferenceException An error happened while attempting to retrieve the parent value
      */
     public get parent(): PARENT {
         return this.#parent.value
