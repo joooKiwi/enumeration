@@ -28,7 +28,7 @@ export class EmptyEnum
             super(EmptyEnum,)
         }
 
-        static get get() {
+        public static get get() {
             return this.#instance ??= new CompanionEnum_EmptyEnum()
         }
 

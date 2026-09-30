@@ -35,7 +35,7 @@ export class EmptyEnumerableWithParent
             super(EmptyEnumerableWithParent, EmptyEnumerable,)
         }
 
-        static get get() {
+        public static get get() {
             return this.#instance ??= new CompanionEnum_EmptyEnumerableWithParent()
         }
 
@@ -43,11 +43,11 @@ export class EmptyEnumerableWithParent
 
     public constructor() {}
 
-    get name(): never { return expect.fail("The getter method “name” was not expected to be called.",) }
-    get ordinal(): never { return expect.fail("The getter method “ordinal” was not expected to be called.",) }
-    get parent(): never { return expect.fail("The getter method “parent” was not expected to be called.",) }
-    get [Symbol.toStringTag]() { return expect.fail("The getter method “Symbol.toStringTag” was not expected to be called.",) }
-    [Symbol.toPrimitive](): never { return expect.fail("The method “Symbol.toPrimitive” was not expected to be called.",) }
+    public get name(): never { return expect.fail("The getter method “name” was not expected to be called.",) }
+    public get ordinal(): never { return expect.fail("The getter method “ordinal” was not expected to be called.",) }
+    public get parent(): never { return expect.fail("The getter method “parent” was not expected to be called.",) }
+    public get [Symbol.toStringTag]() { return expect.fail("The getter method “Symbol.toStringTag” was not expected to be called.",) }
+    public [Symbol.toPrimitive](): never { return expect.fail("The method “Symbol.toPrimitive” was not expected to be called.",) }
 
     public methodFromEmptyEnumerableWithParent() {}
 

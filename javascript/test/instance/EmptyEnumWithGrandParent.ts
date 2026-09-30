@@ -30,7 +30,7 @@ export class EmptyEnumWithGrandParent
             super(EmptyEnumWithGrandParent, EmptyEnumWithParent, EmptyEnum,)
         }
 
-        static get get() {
+        public static get get() {
             return this.#instance ??= new CompanionEnum_EmptyEnumWithGrandParent()
         }
 
