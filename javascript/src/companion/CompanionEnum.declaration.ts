@@ -26,7 +26,7 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
     ENUM_CONSTRUCTOR extends EnumerableConstructor<ENUM, CompanionEnumDeclaration<ENUM, ENUM_CONSTRUCTOR>>, > {
 
     /** The {@link Enumerable} constructor (or type / class in other languages) */
-    get instance(): ENUM_CONSTRUCTOR
+    readonly instance: ENUM_CONSTRUCTOR
 
     //#region -------------------- Default getter & setter methods --------------------
 
@@ -35,7 +35,6 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
      *
      * @throws {NullEnumerableException}
      * @throws {UnhandledValueException}
-     * @lateInititialization
      */
     get defaultValue(): ENUM
 
@@ -112,29 +111,17 @@ export interface CompanionEnumDeclaration<ENUM extends Enumerable,
     //#endregion -------------------- Default getter & setter methods --------------------
     //#region -------------------- Values getter methods --------------------
 
-    /**
-     * Every {@link Enumerable instance} for the {@link instance}
-     *
-     * @lateInitialization
-     */
-    get values(): CollectionHolder<ENUM>
+    /** Every {@link Enumerable instance} for the {@link instance} */
+    readonly values: CollectionHolder<ENUM>
 
-    /**
-     * Every {@link Enumerable.name name} for the {@link instance}
-     *
-     * @lateInitialization
-     */
-    get names(): CollectionHolder<NameOf<ENUM>>
+    /** Every {@link Enumerable.name name} for the {@link instance} */
+    readonly names: CollectionHolder<NameOf<ENUM>>
 
-    /**
-     * Every {@link Enumerable.ordinal ordinal} for the {@link instance}
-     *
-     * @lateInitialization
-     */
-    get ordinals(): CollectionHolder<OrdinalOf<ENUM>>
+    /** Every {@link Enumerable.ordinal ordinal} for the {@link instance} */
+    readonly ordinals: CollectionHolder<OrdinalOf<ENUM>>
 
     /** An {@link IterableIterator iterator} for the {@link instance} */
-    get iterator(): CollectionIterator<ENUM>
+    readonly iterator: CollectionIterator<ENUM>
 
     //#endregion -------------------- Values getter methods --------------------
 

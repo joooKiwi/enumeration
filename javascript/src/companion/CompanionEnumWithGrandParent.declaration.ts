@@ -32,7 +32,7 @@ export interface CompanionEnumWithGrandParentDeclaration<out ENUM extends Enumer
     extends CompanionEnumWithParentDeclaration<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR> {
 
     /** The {@link EnumerableWithNullableGrandParent} constructor (or type / class in other languages) */
-    get grandParentInstance(): GRAND_PARENT_ENUM_CONSTRUCTOR
+    readonly grandParentInstance: GRAND_PARENT_ENUM_CONSTRUCTOR
 
     //#region -------------------- Default getter & setter methods --------------------
 

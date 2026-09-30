@@ -29,7 +29,7 @@ export interface CompanionEnumWithParentDeclaration<out ENUM extends EnumerableW
     extends CompanionEnumDeclaration<ENUM, ENUM_CONSTRUCTOR> {
 
     /** The {@link EnumerableWithNullableParent} constructor (or type / class in other languages) */
-    get parentInstance(): PARENT_ENUM_CONSTRUCTOR
+    readonly parentInstance: PARENT_ENUM_CONSTRUCTOR
 
     //#region -------------------- Default getter & setter methods --------------------
 
