@@ -16,7 +16,7 @@ import {CompanionEnumWithParent} from "../../src/companion/CompanionEnumWithPare
 import {EnumWithNullableParent}  from "../../src/EnumWithNullableParent"
 import {EmptyEnum}               from "./EmptyEnum"
 
-/** An {@link EnumWithParent} that has the purpose to be empty with nothing to specify */
+/** An {@link EnumWithNullableParent} that has the purpose to be empty with nothing to specify */
 export class EmptyEnumWithNullableParent
     extends EnumWithNullableParent<EmptyEnum, never, never> {
 
