@@ -13,8 +13,6 @@
 import type {Enumerable}      from "../Enumerable"
 import type {KeyOfEnumerable} from "../type/keyOf"
 
-import {EnumConstants} from "../EnumConstants"
-
 /**
  * Tell if the value received has the structure of a {@link Enumerable}
  * without verifying its typing on the fields directly
@@ -41,12 +39,10 @@ export function isEnumByStructure(value: unknown,) {
         return false
     if (typeof value != "object")
         return false
-
-    const members = EnumConstants.ENUMERABLE_MEMBERS
-    const size = members.length
-    let index = -1
-    while (++index < size)
-        if (!(members[index]! in value))
-            return false
-    return true
+    if ("name" in value)
+    if ("ordinal" in value)
+    if (Symbol.toPrimitive in value)
+    if (Symbol.toStringTag in value)
+        return true
+    return false
 }

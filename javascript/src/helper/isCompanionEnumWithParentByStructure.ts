@@ -16,8 +16,6 @@ import type {CompanionEnumWithParentDeclarationType} from "../type/companion"
 import type {KeyOfCompanionEnumWithParent}           from "../type/keyOf"
 import type {EnumWithNullableParentGeneralType}      from "../type/general"
 
-import {EnumConstants} from "../EnumConstants"
-
 /**
  * Tell if the value received has the structure of a {@link CompanionEnumWithParentDeclaration}
  *
@@ -42,12 +40,19 @@ export function isCompanionEnumWithParentByStructure(value: unknown,) {
         return false
     if (typeof value != "object")
         return false
-
-    const members = EnumConstants.COMPANION_ENUM_WITH_PARENT_MEMBERS
-    const size = members.length
-    let index = -1
-    while (++index < size)
-        if (!(members[index]! in value))
-            return false
-    return true
+    if ("instance" in value)
+    if ("parentInstance" in value)
+    if ("defaultValue" in value)
+    if ("setDefaultValue" in value)
+    if ("values" in value)
+    if ("names" in value)
+    if ("ordinals" in value)
+    if ("iterator" in value)
+    if ("getValue" in value)
+    if ("getName" in value)
+    if ("getOrdinal" in value)
+    if (Symbol.iterator in value)
+    if (Symbol.toStringTag in value)
+        return true
+    return false
 }
