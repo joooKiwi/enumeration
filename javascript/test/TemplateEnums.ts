@@ -76,8 +76,7 @@ export class EmptyEnum
 
     }
 
-    public methodFromEmptyEnum() {
-    }
+    public methodFromEmptyEnum() {}
 
 }
 
@@ -106,8 +105,7 @@ export class Enum1
 
     }
 
-    public methodFromEnum1() {
-    }
+    public methodFromEnum1() {}
 
 }
 
@@ -135,8 +133,7 @@ export class Enum2
 
     }
 
-    public methodFromEnum2() {
-    }
+    public methodFromEnum2() {}
 
 }
 
@@ -163,8 +160,7 @@ export class EmptyEnumWithVariables
     public static readonly VARIABLE_NUMBER = 0
     public static readonly VARIABLE_BIGINT = BigInt(0,)
 
-    public methodFromEmptyEnumWithVariable() {
-    }
+    public methodFromEmptyEnumWithVariable() {}
 
 }
 
@@ -186,8 +182,7 @@ export class EnumWithDifferentComportment<const out ORDINAL extends Ordinals2 = 
         }
 
     }()
-    public static readonly C = new class EnumWithDifferentComportment_C extends EnumWithDifferentComportment<2, 'C'> {
-    }()
+    public static readonly C = new class EnumWithDifferentComportment_C extends EnumWithDifferentComportment<2, 'C'> {}()
 
     public static readonly 0: typeof EnumWithDifferentComportment.A
     public static readonly 1: typeof EnumWithDifferentComportment.B
@@ -212,8 +207,7 @@ export class EnumWithDifferentComportment<const out ORDINAL extends Ordinals2 = 
         return "abc"
     }
 
-    public methodFromEnumWithDifferentComportment() {
-    }
+    public methodFromEnumWithDifferentComportment() {}
 
 }
 
@@ -249,8 +243,7 @@ export class EnumWithInheritance
         }
 
     }()
-    public static readonly C = new class EnumWithInheritance_C extends EnumWithInheritance.Inherited2 {
-    }()
+    public static readonly C = new class EnumWithInheritance_C extends EnumWithInheritance.Inherited2 {}()
     public static readonly D = new EnumWithInheritance()
     public static readonly E = new EnumWithInheritance.Inherited1()
     public static readonly F = new EnumWithInheritance.Inherited2()
@@ -285,8 +278,7 @@ export class EnumWithInheritance
         return "default"
     }
 
-    public methodFromEnumWithInheritance() {
-    }
+    public methodFromEnumWithInheritance() {}
 
 }
 
@@ -317,8 +309,7 @@ export class EnumWithExcludedFields
 
     public static readonly C = this.A
 
-    public methodFromEnumWithExcludedFields() {
-    }
+    public methodFromEnumWithExcludedFields() {}
 
 }
 
@@ -348,8 +339,7 @@ export class EnumWithDefault
 
     }
 
-    public methodFromEnumWithDefault() {
-    }
+    public methodFromEnumWithDefault() {}
 
 }
 
@@ -377,8 +367,7 @@ export class EnumWithLateDefault
 
     }
 
-    public methodFromEnumWithLateDefault() {
-    }
+    public methodFromEnumWithLateDefault() {}
 
 }
 
@@ -411,8 +400,7 @@ export class ParentEnum
         super()
     }
 
-    public methodFromParentEnum() {
-    }
+    public methodFromParentEnum() {}
 
 }
 
@@ -447,8 +435,7 @@ export class Child1Enum
         super(parent,)
     }
 
-    public methodFromChildEnum1() {
-    }
+    public methodFromChildEnum1() {}
 
 }
 
@@ -529,8 +516,7 @@ export class Child3Enum
         super(parent, grandParent, greatGrandParent,)
     }
 
-    public methodFromChildEnum3() {
-    }
+    public methodFromChildEnum3() {}
 
 }
 
@@ -565,7 +551,6 @@ export class AnotherChildEnum
         super(parent,)
     }
 
-    public methodFromAnotherChildEnum() {
-    }
+    public methodFromAnotherChildEnum() {}
 
 }

@@ -27,8 +27,7 @@ export class KnownEnumConstructors {
     static #instance?: KnownEnumConstructors
 
     /** @internal */
-    protected constructor() {
-    }
+    protected constructor() {}
 
     public static get get(): KnownEnumConstructors {
         return KnownEnumConstructors.#instance ??= new KnownEnumConstructors()
