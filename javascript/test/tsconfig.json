@@ -3,7 +3,7 @@
     "compilerOptions": {
         "module": "ESNext",
         "moduleResolution": "Bundler",
-        "types": ["node", "jest-extended", "vitest"],
+        "types": ["node", "jest-extended", "vitest",],
 
         "rootDir": "./",
     },

@@ -6,5 +6,6 @@
     "noUnusedParameters": false,
     "noUnusedLocals": false,
     "noEmit": true,
+    "rootDir": "../",
   }
 }
