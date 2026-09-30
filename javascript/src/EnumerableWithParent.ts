@@ -10,9 +10,10 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {Enumerable}                        from "./Enumerable"
-import type {PossibleNameOf, PossibleOrdinalOf} from "./Enumerable.types"
-import type {EnumerableWithNullableParent}      from "./EnumerableWithNullableParent"
+import type {Enumerable}                   from "./Enumerable"
+import type {EnumerableWithNullableParent} from "./EnumerableWithNullableParent"
+import type {PossibleNameOf}               from "./type/nameOf"
+import type {PossibleOrdinalOf}            from "./type/ordinalOf"
 
 export interface EnumerableWithParent<out PARENT extends Enumerable,
     out ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,

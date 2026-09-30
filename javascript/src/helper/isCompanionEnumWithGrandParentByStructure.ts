@@ -10,7 +10,11 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {CompanionEnumWithGrandParentDeclaration} from "../companion/CompanionEnumWithGrandParent.declaration"
+import type {Enumerable}                                                                            from "../Enumerable"
+import type {CompanionEnumWithGrandParentDeclaration}                                               from "../companion/CompanionEnumWithGrandParent.declaration"
+import type {CompanionEnumWithGrandParentDeclarationType}                                           from "../type/companion"
+import type {KeyOfCompanionEnumWithGrandParent}                                                     from "../type/keyOf"
+import type {EnumerableWithNullableGrandParentGeneralType, EnumerableWithNullableParentGeneralType} from "../type/general"
 
 import {EnumConstants} from "../EnumConstants"
 
@@ -19,9 +23,21 @@ import {EnumConstants} from "../EnumConstants"
  *
  * @param value The value to compare
  * @see isCompanionEnumWithGrandParent
+ * @see EnumConstants.COMPANION_ENUM_WITH_GRAND_PARENT_MEMBERS
  * @doesNotValidateTheTypes
  */
-export function isCompanionEnumWithGrandParentByStructure(value: unknown,): value is (& object & Record<keyof CompanionEnumWithGrandParentDeclaration<never, never, never, never, never, never>, unknown>) {
+export function isCompanionEnumWithGrandParentByStructure(value: unknown,): value is (& object & Record<KeyOfCompanionEnumWithGrandParent, unknown>)
+/**
+ * Tell if the value received has the structure of a {@link CompanionEnumWithGrandParentDeclaration}
+ *
+ * @param value The value to compare
+ * @see isCompanionEnumWithGrandParent
+ * @see EnumConstants.COMPANION_ENUM_WITH_GRAND_PARENT_MEMBERS
+ * @doesNotValidateTheTypes
+ * @note Giving a type to the method is only here to help the implementation, but it will not change the behaviour in JavaScript
+ */
+export function isCompanionEnumWithGrandParentByStructure<const INSTANCE extends CompanionEnumWithGrandParentDeclarationType<EnumerableWithNullableGrandParentGeneralType, EnumerableWithNullableParentGeneralType, Enumerable>, >(value: unknown,): value is INSTANCE
+export function isCompanionEnumWithGrandParentByStructure(value: unknown,) {
     if (value == null)
         return false
     if (typeof value != "object")

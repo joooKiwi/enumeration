@@ -10,7 +10,7 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {EnumWithParentGeneralType} from "../Enumerable.types"
+import type {EnumWithParentGeneralType} from "../type/general"
 
 import {EnumWithParent} from "../EnumWithParent"
 

@@ -12,7 +12,7 @@
 
 import type {NullOr} from "@joookiwi/type"
 
-import type {CompanionEnumSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumWithParentSingleton} from "../src/Singleton.types"
+import type {CompanionEnumSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumWithParentSingleton} from "../src/type/singleton"
 
 import {Enum}                              from "../src/Enum"
 import {EnumWithNullableGrandParent}       from "../src/EnumWithNullableGrandParent"

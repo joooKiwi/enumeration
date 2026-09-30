@@ -11,9 +11,10 @@
 //··························································
 
 import type {Enumerable}                        from "./Enumerable"
-import type {PossibleNameOf, PossibleOrdinalOf} from "./Enumerable.types"
 import type {EnumerableWithNullableGrandParent} from "./EnumerableWithNullableGrandParent"
 import type {EnumerableWithParent}              from "./EnumerableWithParent"
+import type {PossibleNameOf}                    from "./type/nameOf"
+import type {PossibleOrdinalOf}                 from "./type/ordinalOf"
 
 export interface EnumerableWithGrandParent<out PARENT extends EnumerableWithParent<GRAND_PARENT>,
     out GRAND_PARENT extends Enumerable,

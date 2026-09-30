@@ -10,7 +10,7 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {EnumWithNullableParentGeneralType} from "../Enumerable.types"
+import type {EnumWithNullableParentGeneralType} from "../type/general"
 
 import {EnumWithNullableParent} from "../EnumWithNullableParent"
 

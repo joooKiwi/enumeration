@@ -12,9 +12,10 @@
 
 import type {Nullable, PossiblePrimitiveHint, StringOrObject} from "@joookiwi/type"
 
-import type {Enumerable}                            from "./Enumerable"
-import type {EnumerableName, EnumerableToPrimitive} from "./Enumerable.types"
-import type {CompanionEnumDeclarationType}          from "./companion/types"
+import type {Enumerable}                   from "./Enumerable"
+import type {CompanionEnumDeclarationType} from "./type/companion"
+import type {EnumerableToPrimitive}        from "./type/toPrimitive"
+import type {EnumerableName}               from "./type/toStringTag"
 
 import {EnumConstants}          from "./EnumConstants"
 import {InvalidHintException}   from "./exception/InvalidHintException"

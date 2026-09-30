@@ -12,8 +12,9 @@
 
 import {NullOr} from "@joookiwi/type"
 
-import type {Enumerable}                        from "./Enumerable"
-import type {PossibleNameOf, PossibleOrdinalOf} from "./Enumerable.types"
+import type {Enumerable}        from "./Enumerable"
+import type {PossibleNameOf}    from "./type/nameOf"
+import type {PossibleOrdinalOf} from "./type/ordinalOf"
 
 export interface EnumerableWithNullableParent<out PARENT extends Enumerable,
     out ORDINAL extends PossibleOrdinalOf<number, PARENT> = PossibleOrdinalOf<number, PARENT>,

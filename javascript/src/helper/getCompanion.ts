@@ -12,11 +12,13 @@
 
 import type {Nullable, NullOrUndefined} from "@joookiwi/type"
 
-import type {Enumerable}                                                                                                      from "../Enumerable"
-import type {EnumerableConstructor}                                                                                           from "../EnumerableConstructor"
-import type {CompanionOf}                                                                                                     from "../Enumerable.types"
-import type {CompanionEnumDeclaration}                                                                                        from "../companion/CompanionEnum.declaration"
-import type {CompanionEnumDeclarationType, CompanionEnumFromEnumerableConstructorOrCompanionEnum, PossibleEnumerableInstance} from "../companion/types"
+import type {Enumerable}                                            from "../Enumerable"
+import type {EnumerableConstructor}                                 from "../EnumerableConstructor"
+import type {CompanionEnumDeclaration}                              from "../companion/CompanionEnum.declaration"
+import type {CompanionEnumDeclarationType}                          from "../type/companion"
+import type {CompanionEnumFromEnumerableConstructorOrCompanionEnum} from "../type/companionFrom"
+import type {CompanionOf}                                           from "../type/companionOf"
+import type {PossibleEnumerableInstance}                            from "../type/possibleInstance"
 
 import {InvalidInstanceException}   from "../exception/InvalidInstanceException"
 import {NullInstanceException}      from "../exception/NullInstanceException"

@@ -12,7 +12,8 @@
 
 import {describe, expect, test} from "vitest"
 
-import type {PossibleEnumerableValueOrNameByValueOrCallback, PossibleEnumSymbol} from "../../src/Enumerable.types"
+import type {PossibleEnumerableValueOrNameByValueOrCallback} from "../../src/type/possibleInstance"
+import type {PossibleEnumSymbol}                             from "../../src/type/symbol"
 
 import {EnumConstants}                from "../../src/EnumConstants"
 import {ImpossibleIntegrityException} from "../../src/exception/ImpossibleIntegrityException"

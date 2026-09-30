@@ -13,11 +13,11 @@
 import {Enum_Enum, Enum_Enumerable, Enum_GrandParentEnumerable, Enum_Enum_GrandParentEnumerable, Enum_ParentEnumerable, Enum_Enum_ParentEnumerable, Enum_GreatGrandParentEnumerable, Enum_Enum_GreatGrandParentEnumerable} from "./BasicEnums"
 
 import type {Enumerable}                                                                                                       from "../src/Enumerable"
-import type {EnumerableWithGrandParentGeneralType, EnumerableWithGreatGrandParentGeneralType, EnumerableWithParentGeneralType} from "../src/Enumerable.types"
 import type {CompanionEnumDeclaration}                                                                                         from "../src/companion/CompanionEnum.declaration"
 import type {CompanionEnumWithGrandParentDeclaration}                                                                          from "../src/companion/CompanionEnumWithGrandParent.declaration"
 import type {CompanionEnumWithGreatGrandParentDeclaration}                                                                     from "../src/companion/CompanionEnumWithGreatGrandParent.declaration"
 import type {CompanionEnumWithParentDeclaration}                                                                               from "../src/companion/CompanionEnumWithParent.declaration"
+import type {EnumerableWithGrandParentGeneralType, EnumerableWithGreatGrandParentGeneralType, EnumerableWithParentGeneralType} from "../src/type/general"
 
 import {CompanionEnum}                     from "../src/companion/CompanionEnum"
 import {CompanionEnumWithGrandParent}      from "../src/companion/CompanionEnumWithGrandParent"

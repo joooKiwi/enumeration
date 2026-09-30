@@ -18,4 +18,3 @@ export type {CompanionEnumWithGreatGrandParentDeclaration} from "./CompanionEnum
 export {CompanionEnumWithGreatGrandParent}                 from "./CompanionEnumWithGreatGrandParent"
 export type {CompanionEnumWithParentDeclaration}           from "./CompanionEnumWithParent.declaration"
 export {CompanionEnumWithParent}                           from "./CompanionEnumWithParent"
-export type *                                              from "./types"

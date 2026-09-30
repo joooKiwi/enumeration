@@ -12,13 +12,17 @@
 
 import type {CollectionHolder, CollectionIterator}                                                                                                                                                                                                       from "@joookiwi/collection"
 import type {BigIntOrObject, Nullable, NullableString, NullOr, NullOrUndefined, NumberOrObject, NumberTemplate, NumericOrObject, StringOrNumericOrObject, StringOrObject, TemplateOrBigIntOrObject, TemplateOrNumberOrObject, TemplateOrNumericOrObject} from "@joookiwi/type"
-import {EmptyCollectionHolder, GenericCollectionHolder}                                                                                                                                                                                                  from "@joookiwi/collection"
+import {ArrayAsCollectionHolder, EmptyCollectionHolder, GenericCollectionHolder}                                                                                                                                                                         from "@joookiwi/collection"
 
-import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                        from "../Enumerable"
-import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                             from "../EnumerableConstructor"
-import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, PossibleEnumerableValue, PossibleEnumerableValueBy, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "../Enumerable.types"
-import type {CompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                          from "./CompanionEnum.declaration"
-import type {CompanionEnumName, ImpossibleNames}                                                                                                                                                                                                                                                                                                                                from "./types"
+import type {Enumerable}                                                                from "../Enumerable"
+import type {EnumerableConstructor}                                                     from "../EnumerableConstructor"
+import type {CompanionEnumDeclaration}                                                  from "./CompanionEnum.declaration"
+import type {ImpossibleNames}                                                           from "../type/name"
+import type {NameOf, SpecificNameOf}                                                    from "../type/nameOf"
+import type {OrdinalOf, SpecificOrdinalOf}                                              from "../type/ordinalOf"
+import type {PossibleEnumerableValue, PossibleEnumerableValueBy}                        from "../type/possibleInstance"
+import type {NameByOrdinal, OrdinalByName, ValueBySpecificName, ValueBySpecificOrdinal} from "../type/valueBy"
+import type {CompanionEnumName}                                                         from "../type/toStringTag"
 
 import {EnumConstants}                               from "../EnumConstants"
 import {ForbiddenNameException}                      from "../exception/ForbiddenNameException"
@@ -234,9 +238,9 @@ export class CompanionEnum<const ENUM extends Enumerable,
             everyEnumerable.push(value as ENUM,)
         }
 
-        EnumConstants.ORDINALS_MAP.set(this, this.#ordinals = new GenericCollectionHolder(Object.freeze(everyOrdinals,),),)
-        EnumConstants.NAMES_MAP.set(this, this.#names = new GenericCollectionHolder(Object.freeze(everyNames,),),)
-        EnumConstants.VALUES_MAP.set(this, this.#values = new GenericCollectionHolder(Object.freeze(everyEnumerable,),),)
+        EnumConstants.ORDINALS_MAP.set(this, this.#ordinals = new ArrayAsCollectionHolder<OrdinalOf<ENUM>>(Object.freeze(everyOrdinals,),),)
+        EnumConstants.NAMES_MAP.set(this, this.#names = new ArrayAsCollectionHolder<NameOf<ENUM>>(Object.freeze(everyNames,),),)
+        EnumConstants.VALUES_MAP.set(this, this.#values = new ArrayAsCollectionHolder<ENUM>(Object.freeze(everyEnumerable,),),)
     }
 
 
@@ -895,15 +899,15 @@ export class CompanionEnum<const ENUM extends Enumerable,
     //#region -------------------- "Get value" methods --------------------
 
     public getValue                                                                                        (value: Nullable<ImpossibleNames>,):                                                      never
-    public getValue<const ORDINAL extends number, >                                                        (ordinal: Nullable<ORDINAL>,):                                                            ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL>
-    public getValue<const ORDINAL extends number, >                                                        (ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,):                                  ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL>
+    public getValue<const ORDINAL extends number, >                                                        (ordinal: Nullable<ORDINAL>,):                                                            ValueBySpecificOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL>
+    public getValue<const ORDINAL extends number, >                                                        (ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,):                                  ValueBySpecificOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL>
     public getValue                                                                                        (ordinal: Nullable<TemplateOrNumberOrObject>,):                                           ENUM
     public getValue                                                                                        (ordinal: Nullable<TemplateOrBigIntOrObject>,):                                           ENUM
     public getValue                                                                                        (ordinal: Nullable<TemplateOrNumericOrObject>,):                                          ENUM
-    public getValue<const NAME extends string, >                                                           (name: Nullable<StringOrObject<NAME>>,):                                                  ValueByEnumerableConstructorAndEnumerableNameAndName<ENUMERABLE_CONSTRUCTOR, ENUM, NAME>
+    public getValue<const NAME extends string, >                                                           (name: Nullable<StringOrObject<NAME>>,):                                                  ValueBySpecificName<ENUMERABLE_CONSTRUCTOR, ENUM, NAME>
     public getValue                                                                                        (nameOrOrdinal: Nullable<StringOrObject>,):                                               ENUM
     public getValue<const INSTANCE extends ENUM, >                                                         (instance: Nullable<INSTANCE>,):                                                          INSTANCE
-    public getValue<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM, >(value: Nullable<TemplateOrNumericOrObject<ORDINAL> | StringOrObject<NAME> | INSTANCE>,): | ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL> | ValueByEnumerableConstructorAndEnumerableNameAndName<ENUMERABLE_CONSTRUCTOR, ENUM, NAME> | INSTANCE | ENUM
+    public getValue<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM, >(value: Nullable<TemplateOrNumericOrObject<ORDINAL> | StringOrObject<NAME> | INSTANCE>,): | ValueBySpecificOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL> | ValueBySpecificName<ENUMERABLE_CONSTRUCTOR, ENUM, NAME> | INSTANCE | ENUM
     public getValue(value: Nullable<| StringOrNumericOrObject | ENUM>,): ENUM {
         return this._getValue(value,)
     }
@@ -1013,15 +1017,15 @@ export class CompanionEnum<const ENUM extends Enumerable,
     //#region -------------------- "Get name" methods --------------------
 
     public getName                                                                                               (value: Nullable<ImpossibleNames>,):                                                      never
-    public getName<const ORDINAL extends number, >                                                               (ordinal: Nullable<ORDINAL>,):                                                            EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL>
-    public getName<const ORDINAL extends number, >                                                               (ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,):                                  EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL>
+    public getName<const ORDINAL extends number, >                                                               (ordinal: Nullable<ORDINAL>,):                                                            NameByOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL>
+    public getName<const ORDINAL extends number, >                                                               (ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,):                                  NameByOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL>
     public getName                                                                                               (ordinal: Nullable<TemplateOrNumberOrObject>,):                                           NameOf<ENUM>
     public getName                                                                                               (ordinal: Nullable<TemplateOrBigIntOrObject>,):                                           NameOf<ENUM>
     public getName                                                                                               (ordinal: Nullable<TemplateOrNumericOrObject>,):                                          NameOf<ENUM>
     public getName<const NAME extends string, >                                                                  (name: Nullable<StringOrObject<NAME>>,):                                                  SpecificNameOf<NAME, ENUM>
     public getName                                                                                               (nameOrOrdinal: Nullable<StringOrObject>,):                                               NameOf<ENUM>
     public getName<const INSTANCE extends ENUM, >                                                                (instance: Nullable<INSTANCE>,):                                                          NameOf<INSTANCE>
-    public getName<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<TemplateOrNumericOrObject<ORDINAL> | StringOrObject<NAME> | INSTANCE>,): | EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL> | SpecificNameOf<NAME, ENUM> | NameOf<| INSTANCE | ENUM>
+    public getName<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<TemplateOrNumericOrObject<ORDINAL> | StringOrObject<NAME> | INSTANCE>,): | NameByOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL> | SpecificNameOf<NAME, ENUM> | NameOf<INSTANCE> | NameOf<ENUM>
     public getName(value: Nullable<| StringOrNumericOrObject | ENUM>,): NameOf<ENUM> {
         return this._getName(value,)
     }
@@ -1138,10 +1142,10 @@ export class CompanionEnum<const ENUM extends Enumerable,
     public getOrdinal                                                                                               (ordinal: Nullable<TemplateOrNumberOrObject>,):                                           OrdinalOf<ENUM>
     public getOrdinal                                                                                               (ordinal: Nullable<TemplateOrBigIntOrObject>,):                                           OrdinalOf<ENUM>
     public getOrdinal                                                                                               (ordinal: Nullable<TemplateOrNumericOrObject>,):                                          OrdinalOf<ENUM>
-    public getOrdinal<const NAME extends string, >                                                                  (name: Nullable<StringOrObject<NAME>>,):                                                  EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUMERABLE_CONSTRUCTOR, ENUM, NAME>
+    public getOrdinal<const NAME extends string, >                                                                  (name: Nullable<StringOrObject<NAME>>,):                                                  OrdinalByName<ENUMERABLE_CONSTRUCTOR, ENUM, NAME>
     public getOrdinal                                                                                               (nameOrOrdinal: Nullable<StringOrObject>,):                                               OrdinalOf<ENUM>
     public getOrdinal<const INSTANCE extends ENUM, >                                                                (instance: Nullable<INSTANCE>,):                                                          OrdinalOf<INSTANCE>
-    public getOrdinal<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<TemplateOrNumericOrObject<ORDINAL> | StringOrObject<NAME> | INSTANCE>,): | SpecificOrdinalOf<ORDINAL, ENUM> | EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUMERABLE_CONSTRUCTOR, ENUM, NAME> | OrdinalOf<| INSTANCE | ENUM>
+    public getOrdinal<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<TemplateOrNumericOrObject<ORDINAL> | StringOrObject<NAME> | INSTANCE>,): | SpecificOrdinalOf<ORDINAL, ENUM> | OrdinalByName<ENUMERABLE_CONSTRUCTOR, ENUM, NAME> | OrdinalOf<INSTANCE> | OrdinalOf<ENUM>
     public getOrdinal(value: Nullable<| StringOrNumericOrObject | ENUM>,): OrdinalOf<ENUM> {
         return this._getOrdinal(value,)
     }

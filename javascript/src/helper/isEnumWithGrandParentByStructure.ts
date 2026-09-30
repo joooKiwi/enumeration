@@ -10,7 +10,8 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {EnumerableWithGrandParent} from "../EnumerableWithGrandParent"
+import type {KeyOfEnumerableWithGrandParent}       from "../type/keyOf"
+import type {EnumerableWithGrandParentGeneralType} from "../type/general"
 
 import {EnumConstants} from "../EnumConstants"
 
@@ -20,9 +21,22 @@ import {EnumConstants} from "../EnumConstants"
  *
  * @param value The value to compare
  * @see isEnumWithGrandParent
+ * @see EnumConstants.ENUMERABLE_WITH_GRAND_PARENT_MEMBERS
  * @doesNotValidateTheTypes
  */
-export function isEnumWithGrandParentByStructure(value: unknown,): value is (& object & Record<keyof EnumerableWithGrandParent<never, never>, unknown>) {
+export function isEnumWithGrandParentByStructure(value: unknown,): value is (& object & Record<KeyOfEnumerableWithGrandParent, unknown>)
+/**
+ * Tell if the value received has the structure of a {@link EnumerableWithGrandParent}
+ * without verifying its typing on the fields directly
+ *
+ * @param value The value to compare
+ * @see isEnumWithGrandParent
+ * @see EnumConstants.ENUMERABLE_WITH_GRAND_PARENT_MEMBERS
+ * @doesNotValidateTheTypes
+ * @note Giving a type to the method is only here to help the implementation, but it will not change the behaviour in JavaScript
+ */
+export function isEnumWithGrandParentByStructure<const INSTANCE extends EnumerableWithGrandParentGeneralType, >(value: unknown,): value is INSTANCE
+export function isEnumWithGrandParentByStructure(value: unknown,) {
     if (value == null)
         return false
     if (typeof value != "object")

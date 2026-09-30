@@ -11,7 +11,7 @@
 //··························································
 
 import type {Enumerable}        from "../Enumerable"
-import type {CompanionEnumType} from "../companion/types"
+import type {CompanionEnumType} from "../type/companion"
 
 import {CompanionEnum} from "../companion/CompanionEnum"
 

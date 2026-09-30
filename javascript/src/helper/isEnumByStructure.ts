@@ -10,7 +10,8 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {Enumerable} from "../Enumerable"
+import type {Enumerable}      from "../Enumerable"
+import type {KeyOfEnumerable} from "../type/keyOf"
 
 import {EnumConstants} from "../EnumConstants"
 
@@ -20,9 +21,22 @@ import {EnumConstants} from "../EnumConstants"
  *
  * @param value The value to compare
  * @see isEnum
+ * @see EnumConstants.ENUMERABLE_MEMBERS
  * @doesNotValidateTheTypes
  */
-export function isEnumByStructure(value: unknown,): value is (& object & Record<keyof Enumerable, unknown>) {
+export function isEnumByStructure(value: unknown,): value is (& object & Record<KeyOfEnumerable, unknown>)
+/**
+ * Tell if the value received has the structure of a {@link Enumerable}
+ * without verifying its typing on the fields directly
+ *
+ * @param value The value to compare
+ * @see isEnum
+ * @see EnumConstants.ENUMERABLE_MEMBERS
+ * @doesNotValidateTheTypes
+ * @note Giving a type to the method is only here to help the implementation, but it will not change the behaviour in JavaScript
+ */
+export function isEnumByStructure<const INSTANCE extends Enumerable, >(value: unknown,): value is INSTANCE
+export function isEnumByStructure(value: unknown,) {
     if (value == null)
         return false
     if (typeof value != "object")

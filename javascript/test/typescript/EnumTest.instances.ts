@@ -10,7 +10,7 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {CompanionEnumDeclarationSingleton, CompanionEnumSingleton, CompanionEnumWithGrandParentDeclarationSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumWithGreatGrandParentDeclarationSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumWithParentDeclarationSingleton, CompanionEnumWithParentSingleton} from "../../src/Singleton.types"
+import type {CompanionEnumDeclarationSingleton, CompanionEnumSingleton, CompanionEnumWithGrandParentDeclarationSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumWithGreatGrandParentDeclarationSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumWithParentDeclarationSingleton, CompanionEnumWithParentSingleton} from "../../src/type/singleton"
 
 import {Enum}                              from "../../src/Enum"
 import {EnumWithGrandParent}               from "../../src/EnumWithGrandParent"

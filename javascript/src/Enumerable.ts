@@ -12,7 +12,8 @@
 
 import type {Nullable, PossiblePrimitiveHint, StringOrObject} from "@joookiwi/type"
 
-import type {EnumerableName, EnumerableToPrimitive} from "./Enumerable.types"
+import type {EnumerableToPrimitive} from "./type/toPrimitive"
+import type {EnumerableName}        from "./type/toStringTag"
 
 export interface Enumerable<out ORDINAL extends number = number,
     out NAME extends string = string, > {

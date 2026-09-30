@@ -15,7 +15,7 @@ import type {EnumerableConstructor}                                             
 import type {CompanionEnumDeclaration}                                                              from "../../src/companion/CompanionEnum.declaration"
 import type {CompanionEnumWithGrandParentDeclaration}                                               from "../../src/companion/CompanionEnumWithGrandParent.declaration"
 import type {CompanionEnumWithParentDeclaration}                                                    from "../../src/companion/CompanionEnumWithParent.declaration"
-import type {EnumerableWithNullableGrandParentGeneralType, EnumerableWithNullableParentGeneralType} from "../../src/Enumerable.types"
+import type {EnumerableWithNullableGrandParentGeneralType, EnumerableWithNullableParentGeneralType} from "../../src/type/general"
 
 import {CompanionEnumWithGrandParent} from "../../src/companion/CompanionEnumWithGrandParent"
 

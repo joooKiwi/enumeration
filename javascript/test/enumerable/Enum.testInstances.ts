@@ -10,8 +10,9 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {CompanionEnumSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumWithParentSingleton} from "../../src/Singleton.types"
-import type {PossibleEnumerableValueOrNameByValueOrCallback, PossibleEnumSymbol}                                                                          from "../../src/Enumerable.types"
+import type {PossibleEnumerableValueOrNameByValueOrCallback}                                                                                              from "../../src/type/possibleInstance"
+import type {CompanionEnumSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumWithParentSingleton} from "../../src/type/singleton"
+import type {PossibleEnumSymbol}                                                                                                                          from "../../src/type/symbol"
 
 import {Enum}                              from "../../src/Enum"
 import {EnumConstants}                     from "../../src/EnumConstants"

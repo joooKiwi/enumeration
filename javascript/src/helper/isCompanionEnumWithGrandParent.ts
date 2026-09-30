@@ -11,8 +11,8 @@
 //··························································
 
 import type {Enumerable}                                                                            from "../Enumerable"
-import type {EnumerableWithNullableGrandParentGeneralType, EnumerableWithNullableParentGeneralType} from "../Enumerable.types"
-import type {CompanionEnumWithGrandParentType}                                                      from "../companion/types"
+import type {CompanionEnumWithGrandParentType}                                                      from "../type/companion"
+import type {EnumerableWithNullableGrandParentGeneralType, EnumerableWithNullableParentGeneralType} from "../type/general"
 
 import {CompanionEnumWithGrandParent} from "../companion/CompanionEnumWithGrandParent"
 
