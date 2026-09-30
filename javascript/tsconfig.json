@@ -41,6 +41,13 @@
     "declaration": false,
     "rootDir": "src",
   },
+  "references": [
+    { "path": "./tsconfig.cjs.json", },
+    { "path": "./tsconfig.esm.json", },
+    { "path": "./tsconfig.types.json", },
+    { "path": "./test/tsconfig.json", },
+    { "path": "./test/typescript/tsconfig.json", },
+  ],
   "include": [
     "src",
     "test",
