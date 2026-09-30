@@ -10,7 +10,8 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import {expect} from "vitest"
+import type {Array} from "@joookiwi/type"
+import {expect}     from "vitest"
 
 import type {EnumerableWithNullableGreatGrandParent}     from "../../src/EnumerableWithNullableGreatGrandParent"
 import type {CompanionEnumWithGreatGrandParentSingleton} from "../../src/type/singleton"
@@ -50,8 +51,9 @@ export class EmptyEnumerableWithGreatGrandParent
     public get parent(): never { return expect.fail("The getter method “parent” was not expected to be called.",) }
     public get grandParent(): never { return expect.fail("The getter method “grandParent” was not expected to be called.",) }
     public get greatGrandParent(): never { return expect.fail("The getter method “greatGrandParent” was not expected to be called.",) }
-    public get [Symbol.toStringTag]() { return expect.fail("The getter method “Symbol.toStringTag” was not expected to be called.",) }
-    public [Symbol.toPrimitive](): never { return expect.fail("The method “Symbol.toPrimitive” was not expected to be called.",) }
+    public get [Symbol.toStringTag](): never { return expect.fail("The getter method “Symbol.toStringTag” was not expected to be called.",) }
+    public [Symbol.toPrimitive](..._: Array<unknown>): never
+    public [Symbol.toPrimitive]() { expect.fail("The method “Symbol.toPrimitive” was not expected to be called.",) }
 
     public methodFromEmptyEnumerableWithGreatGrandParent() {}
 

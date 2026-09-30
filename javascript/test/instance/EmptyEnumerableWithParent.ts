@@ -10,7 +10,8 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import {expect} from "vitest"
+import type {Array} from "@joookiwi/type"
+import {expect}     from "vitest"
 
 import type {EnumerableWithNullableParent}     from "../../src/EnumerableWithNullableParent"
 import type {CompanionEnumWithParentSingleton} from "../../src/type/singleton"
@@ -46,8 +47,9 @@ export class EmptyEnumerableWithParent
     public get name(): never { return expect.fail("The getter method “name” was not expected to be called.",) }
     public get ordinal(): never { return expect.fail("The getter method “ordinal” was not expected to be called.",) }
     public get parent(): never { return expect.fail("The getter method “parent” was not expected to be called.",) }
-    public get [Symbol.toStringTag]() { return expect.fail("The getter method “Symbol.toStringTag” was not expected to be called.",) }
-    public [Symbol.toPrimitive](): never { return expect.fail("The method “Symbol.toPrimitive” was not expected to be called.",) }
+    public get [Symbol.toStringTag](): never { return expect.fail("The getter method “Symbol.toStringTag” was not expected to be called.",) }
+    public [Symbol.toPrimitive](..._: Array<unknown>): never
+    public [Symbol.toPrimitive]() { expect.fail("The method “Symbol.toPrimitive” was not expected to be called.",) }
 
     public methodFromEmptyEnumerableWithParent() {}
 
