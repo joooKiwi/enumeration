@@ -12,10 +12,10 @@
 
 import type {Nullable, PossiblePrimitiveHint, StringOrObject} from "@joookiwi/type"
 
-import type {Enumerable}                   from "./Enumerable"
-import type {CompanionEnumDeclarationType} from "./type/companion"
-import type {EnumerableToPrimitive}        from "./type/toPrimitive"
-import type {EnumerableName}               from "./type/toStringTag"
+import type {Enumerable}              from "./Enumerable"
+import type {CompanionEnumerableType} from "./type/companion"
+import type {EnumerableToPrimitive}   from "./type/toPrimitive"
+import type {EnumerableName}          from "./type/toStringTag"
 
 import {EnumConstants}          from "./EnumConstants"
 import {InvalidHintException}   from "./exception/InvalidHintException"
@@ -33,7 +33,7 @@ export abstract class Enum<const ORDINAL extends number = number,
     #name?: NAME
     readonly #ordinal: ORDINAL
     readonly #prototypeConstructor
-    #companion?: CompanionEnumDeclarationType<Enum>
+    #companion?: CompanionEnumerableType<Enum>
 
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------

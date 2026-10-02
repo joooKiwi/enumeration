@@ -10,7 +10,7 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {CompanionEnumDeclarationSingleton, CompanionEnumSingleton, CompanionEnumWithGrandParentDeclarationSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumWithGreatGrandParentDeclarationSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumWithParentDeclarationSingleton, CompanionEnumWithParentSingleton} from "../../src/type/singleton"
+import type {CompanionEnumerableSingleton, CompanionEnumSingleton, CompanionEnumerableWithGrandParentSingleton, CompanionEnumWithGrandParentSingleton, CompanionEnumerableWithGreatGrandParentSingleton, CompanionEnumWithGreatGrandParentSingleton, CompanionEnumerableWithParentSingleton, CompanionEnumWithParentSingleton} from "../../src/type/singleton"
 
 import {Enum}                              from "../../src/Enum"
 import {EnumWithGrandParent}               from "../../src/EnumWithGrandParent"
@@ -47,7 +47,7 @@ export class EnumDeclarationTestInstance<out ORDINAL extends Ordinals = Ordinals
     public static B = new class EnumTestInstance_B extends this<1, 'B'> {}()
     public static 0: typeof this.A
     public static 1: typeof this.B
-    public static CompanionEnum: CompanionEnumDeclarationSingleton<EnumDeclarationTestInstance, typeof this> = class CompanionEnum_EnumDeclarationTestInstance
+    public static CompanionEnum: CompanionEnumerableSingleton<EnumDeclarationTestInstance, typeof this> = class CompanionEnum_EnumDeclarationTestInstance
         extends CompanionEnum<EnumDeclarationTestInstance, typeof this> {
         public static get get(): CompanionEnum_EnumDeclarationTestInstance {
             return new CompanionEnum_EnumDeclarationTestInstance(EnumDeclarationTestInstance,)
@@ -79,7 +79,7 @@ export class EnumWithParentDeclarationTestInstance<out ORDINAL extends Ordinals 
     public static B = new class EnumWithParentDeclarationTestInstance_B extends this<1, 'B'> {}()
     public static 0: typeof this.A
     public static 1: typeof this.B
-    public static CompanionEnum: CompanionEnumWithParentDeclarationSingleton<EnumWithParentDeclarationTestInstance, typeof this, EnumDeclarationTestInstance, typeof EnumDeclarationTestInstance> = class CompanionEnum_EnumWithParentDeclarationTestInstance
+    public static CompanionEnum: CompanionEnumerableWithParentSingleton<EnumWithParentDeclarationTestInstance, typeof this, EnumDeclarationTestInstance, typeof EnumDeclarationTestInstance> = class CompanionEnum_EnumWithParentDeclarationTestInstance
         extends CompanionEnumWithParent<EnumWithParentDeclarationTestInstance, typeof this, EnumDeclarationTestInstance, typeof EnumDeclarationTestInstance> {
         public static get get(): CompanionEnum_EnumWithParentDeclarationTestInstance {
             return new CompanionEnum_EnumWithParentDeclarationTestInstance(EnumWithParentDeclarationTestInstance, EnumDeclarationTestInstance,)
@@ -111,7 +111,7 @@ export class EnumWithGrandParentDeclarationTestInstance<out ORDINAL extends Ordi
     public static B = new class EnumWithGrandParentDeclarationTestInstance_B extends this<1, 'B'> {}()
     public static 0: typeof this.A
     public static 1: typeof this.B
-    public static CompanionEnum: CompanionEnumWithGrandParentDeclarationSingleton<EnumWithGrandParentDeclarationTestInstance, typeof this, EnumWithParentDeclarationTestInstance, typeof EnumWithParentDeclarationTestInstance, EnumDeclarationTestInstance, typeof EnumDeclarationTestInstance> = class CompanionEnum_EnumWithGrandParentDeclarationTestInstance
+    public static CompanionEnum: CompanionEnumerableWithGrandParentSingleton<EnumWithGrandParentDeclarationTestInstance, typeof this, EnumWithParentDeclarationTestInstance, typeof EnumWithParentDeclarationTestInstance, EnumDeclarationTestInstance, typeof EnumDeclarationTestInstance> = class CompanionEnum_EnumWithGrandParentDeclarationTestInstance
         extends CompanionEnumWithGrandParent<EnumWithGrandParentDeclarationTestInstance, typeof this, EnumWithParentDeclarationTestInstance, typeof EnumWithParentDeclarationTestInstance, EnumDeclarationTestInstance, typeof EnumDeclarationTestInstance> {
         public static get get(): CompanionEnum_EnumWithGrandParentDeclarationTestInstance {
             return new CompanionEnum_EnumWithGrandParentDeclarationTestInstance(EnumWithGrandParentDeclarationTestInstance, EnumWithParentDeclarationTestInstance, EnumDeclarationTestInstance,)
@@ -143,7 +143,7 @@ export class EnumWithGreatGrandParentDeclarationTestInstance<out ORDINAL extends
     public static B = new class EnumWithGreatGrandParentDeclarationTestInstance_B extends this<1, 'B'> {}()
     public static 0: typeof this.A
     public static 1: typeof this.B
-    public static CompanionEnum: CompanionEnumWithGreatGrandParentDeclarationSingleton<EnumWithGreatGrandParentDeclarationTestInstance, typeof this, EnumWithGrandParentDeclarationTestInstance, typeof EnumWithGrandParentDeclarationTestInstance, EnumWithParentDeclarationTestInstance, typeof EnumWithParentDeclarationTestInstance, EnumDeclarationTestInstance, typeof EnumDeclarationTestInstance> = class CompanionEnum_EnumWithGrandParentTestInstance
+    public static CompanionEnum: CompanionEnumerableWithGreatGrandParentSingleton<EnumWithGreatGrandParentDeclarationTestInstance, typeof this, EnumWithGrandParentDeclarationTestInstance, typeof EnumWithGrandParentDeclarationTestInstance, EnumWithParentDeclarationTestInstance, typeof EnumWithParentDeclarationTestInstance, EnumDeclarationTestInstance, typeof EnumDeclarationTestInstance> = class CompanionEnum_EnumWithGrandParentTestInstance
         extends CompanionEnumWithGreatGrandParent<EnumWithGreatGrandParentDeclarationTestInstance, typeof this, EnumWithGrandParentDeclarationTestInstance, typeof EnumWithGrandParentDeclarationTestInstance, EnumWithParentDeclarationTestInstance, typeof EnumWithParentDeclarationTestInstance, EnumDeclarationTestInstance, typeof EnumDeclarationTestInstance> {
         public static get get(): CompanionEnum_EnumWithGrandParentTestInstance {
             return new CompanionEnum_EnumWithGrandParentTestInstance(EnumWithGreatGrandParentDeclarationTestInstance, EnumWithGrandParentDeclarationTestInstance, EnumWithParentDeclarationTestInstance, EnumDeclarationTestInstance,)

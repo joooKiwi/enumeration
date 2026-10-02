@@ -16,7 +16,7 @@ import {ArrayAsCollectionHolder}                  from "@joookiwi/collection"
 
 import type {Enumerable}                                                                                                                                                                                                                                   from "./Enumerable"
 import type {EnumerableConstructor}                                                                                                                                                                                                                        from "./EnumerableConstructor"
-import type {CompanionEnumDeclaration}                                                                                                                                                                                                                     from "./companion/CompanionEnum.declaration"
+import type {CompanionEnumerable}                                                                                                                                                                                                                          from "./companion/CompanionEnumerable"
 import type {KeyOfCompanionEnum, KeyOfCompanionEnumWithGrandParent, KeyOfCompanionEnumWithGreatGrandParent, KeyOfCompanionEnumWithParent, KeyOfEnumerable, KeyOfEnumerableWithGrandParent, KeyOfEnumerableWithGreatGrandParent, KeyOfEnumerableWithParent} from "./type/keyOf"
 
 /** A class containing every field used by an {@link Enumerable} helper, instance or companion */
@@ -31,17 +31,17 @@ export namespace EnumConstants {
     //#region -------------------- Maps --------------------
 
     /**
-     * A map of every {@link CompanionEnumDeclaration.default default} stored from a {@link CompanionEnumDeclaration}
+     * A map of every {@link CompanionEnumerable.default default} stored from a {@link CompanionEnumerable}
      *
-     * @see CompanionEnumDeclaration.defaultValue
+     * @see CompanionEnumerable.defaultValue
      */
-    export const DEFAULT_MAP = new Map<CompanionEnumDeclaration<any, any>, NullOr<Enumerable>>()
+    export const DEFAULT_MAP = new Map<CompanionEnumerable<any, any>, NullOr<Enumerable>>()
     /**
-     * A map of every {@link Enumerable} {@link CompanionEnumDeclaration.values values} stored from a {@link CompanionEnumDeclaration}
+     * A map of every {@link Enumerable} {@link CompanionEnumerable.values values} stored from a {@link CompanionEnumerable}
      *
-     * @see CompanionEnumDeclaration.values
+     * @see CompanionEnumerable.values
      */
-    export const VALUES_MAP = new Map<CompanionEnumDeclaration<any, any>, CollectionHolder<Enumerable>>()
+    export const VALUES_MAP = new Map<CompanionEnumerable<any, any>, CollectionHolder<Enumerable>>()
     /**
      * A map of an individual {@link Enumerable.name name} associated to a {@link Enumerable}
      *
@@ -49,11 +49,11 @@ export namespace EnumConstants {
      */
     export const NAME_MAP = new Map<Enumerable, string>()
     /**
-     * A map of every {@link Enumerable} {@link CompanionEnumDeclaration.names names} stored from a {@link CompanionEnumDeclaration}
+     * A map of every {@link Enumerable} {@link CompanionEnumerable.names names} stored from a {@link CompanionEnumerable}
      *
-     * @see CompanionEnumDeclaration.names
+     * @see CompanionEnumerable.names
      */
-    export const NAMES_MAP = new Map<CompanionEnumDeclaration<any, any>, CollectionHolder<string>>()
+    export const NAMES_MAP = new Map<CompanionEnumerable<any, any>, CollectionHolder<string>>()
     /**
      * A map of the last ordinal of {@link Enum} instance
      *
@@ -67,11 +67,11 @@ export namespace EnumConstants {
      */
     export const ORDINAL_MAP = new Map<Enumerable, number>()
     /**
-     * A map of every {@link Enumerable} {@link CompanionEnumDeclaration.ordinals ordinals} stored from a {@link CompanionEnumDeclaration}
+     * A map of every {@link Enumerable} {@link CompanionEnumerable.ordinals ordinals} stored from a {@link CompanionEnumerable}
      *
-     * @see CompanionEnumDeclaration.ordinals
+     * @see CompanionEnumerable.ordinals
      */
-    export const ORDINALS_MAP = new Map<CompanionEnumDeclaration<any, any>, CollectionHolder<number>>()
+    export const ORDINALS_MAP = new Map<CompanionEnumerable<any, any>, CollectionHolder<number>>()
 
     //#endregion -------------------- Maps --------------------
     //#region -------------------- Initialization validation fields --------------------
@@ -174,25 +174,25 @@ export namespace EnumConstants {
         = new ArrayAsCollectionHolder<KeyOfEnumerableWithGreatGrandParent>(["name", "ordinal", "parent", "grandParent", "greatGrandParent", Symbol.toPrimitive, Symbol.toStringTag,] as const,)
 
 
-    /** Every member of an {@link CompanionEnumDeclaration} */
+    /** Every member of an {@link CompanionEnumerable} */
     export const COMPANION_ENUM_MEMBERS: CollectionHolder<KeyOfCompanionEnum>
         = new ArrayAsCollectionHolder<KeyOfCompanionEnum>(["instance", "defaultValue", "setDefaultValue",
         "values", "names", "ordinals", "iterator",
         "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const,)
 
-    /** Every member of an {@link CompanionEnumWithParentDeclaration} */
+    /** Every member of an {@link CompanionEnumerableWithParent} */
     export const COMPANION_ENUM_WITH_PARENT_MEMBERS: CollectionHolder<KeyOfCompanionEnumWithParent>
         = new ArrayAsCollectionHolder<KeyOfCompanionEnumWithParent>(["instance", "parentInstance", "defaultValue", "setDefaultValue",
         "values", "names", "ordinals", "iterator",
         "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const,)
 
-    /** Every member of an {@link CompanionEnumWithGrandParentDeclaration} */
+    /** Every member of an {@link CompanionEnumerableWithGrandParent} */
     export const COMPANION_ENUM_WITH_GRAND_PARENT_MEMBERS: CollectionHolder<KeyOfCompanionEnumWithGrandParent>
         = new ArrayAsCollectionHolder<KeyOfCompanionEnumWithGrandParent>(["instance", "parentInstance", "grandParentInstance", "defaultValue", "setDefaultValue",
         "values", "names", "ordinals", "iterator",
         "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const,)
 
-    /** Every member of an {@link CompanionEnumWithGreatGrandParentDeclaration} */
+    /** Every member of an {@link CompanionEnumerableWithGreatGrandParent} */
     export const COMPANION_ENUM_WITH_GREAT_GRAND_PARENT_MEMBERS: CollectionHolder<KeyOfCompanionEnumWithGreatGrandParent>
         = new ArrayAsCollectionHolder<KeyOfCompanionEnumWithGreatGrandParent>(["instance", "parentInstance", "grandParentInstance", "greatGrandParentInstance", "defaultValue", "setDefaultValue",
         "values", "names", "ordinals", "iterator",
@@ -222,10 +222,10 @@ export namespace EnumConstants {
 
     /**
      * Every member of
-     *  - {@link CompanionEnumDeclaration},
-     *  - {@link CompanionEnumWithParentDeclaration},
-     *  - {@link CompanionEnumWithGrandParentDeclaration},
-     *  - {@link CompanionEnumWithGreatGrandParentDeclaration}
+     *  - {@link CompanionEnumerable},
+     *  - {@link CompanionEnumerableWithParent},
+     *  - {@link CompanionEnumerableWithGrandParent},
+     *  - {@link CompanionEnumerableWithGreatGrandParent}
      *
      * @deprecated Replace with {@link EnumConstants.COMPANION_ENUM_WITH_GREAT_GRAND_PARENT_MEMBERS} instead. This will be removed in version 3.14.
      */
@@ -266,7 +266,7 @@ export namespace EnumConstants {
     export const ENUM_TO_STRING_TAG = "Enum"
     /**
      * The {@link Symbol.toStringTag} of a companion enum
-     * ({@link CompanionEnumDeclaration}, {@link CompanionEnumWithParentDeclaration}, {@link CompanionEnumWithGrandParentDeclaration}, {@link CompanionEnumWithGreatGrandParentDeclaration})
+     * ({@link CompanionEnumerable}, {@link CompanionEnumerableWithParent}, {@link CompanionEnumerableWithGrandParent}, {@link CompanionEnumerableWithGreatGrandParent})
      *
      * @uniqueToJavascript
      */

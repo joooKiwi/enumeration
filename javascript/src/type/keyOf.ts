@@ -10,14 +10,14 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {Enumerable}                                   from "../Enumerable"
-import type {EnumerableWithNullableGrandParent}            from "../EnumerableWithNullableGrandParent"
-import type {EnumerableWithNullableGreatGrandParent}       from "../EnumerableWithNullableGreatGrandParent"
-import type {EnumerableWithNullableParent}                 from "../EnumerableWithNullableParent"
-import type {CompanionEnumDeclaration}                     from "../companion/CompanionEnum.declaration"
-import type {CompanionEnumWithGrandParentDeclaration}      from "../companion/CompanionEnumWithGrandParent.declaration"
-import type {CompanionEnumWithGreatGrandParentDeclaration} from "../companion/CompanionEnumWithGreatGrandParent.declaration"
-import type {CompanionEnumWithParentDeclaration}           from "../companion/CompanionEnumWithParent.declaration"
+import type {Enumerable}                              from "../Enumerable"
+import type {EnumerableWithNullableGrandParent}       from "../EnumerableWithNullableGrandParent"
+import type {EnumerableWithNullableGreatGrandParent}  from "../EnumerableWithNullableGreatGrandParent"
+import type {EnumerableWithNullableParent}            from "../EnumerableWithNullableParent"
+import type {CompanionEnumerable}                     from "../companion/CompanionEnumerable"
+import type {CompanionEnumerableWithGrandParent}      from "../companion/CompanionEnumerableWithGrandParent"
+import type {CompanionEnumerableWithGreatGrandParent} from "../companion/CompanionEnumerableWithGreatGrandParent"
+import type {CompanionEnumerableWithParent}           from "../companion/CompanionEnumerableWithParent"
 
 /** The keys applicable to an {@link Enumerable} */
 export type KeyOfEnumerable = keyof Enumerable<never, never>
@@ -32,14 +32,14 @@ export type KeyOfEnumerableWithGrandParent = keyof EnumerableWithNullableGrandPa
 export type KeyOfEnumerableWithGreatGrandParent = keyof EnumerableWithNullableGreatGrandParent<never, never, never, never, never>
 
 
-/** The keys applicable to an {@link CompanionEnumDeclaration} */
-export type KeyOfCompanionEnum = keyof CompanionEnumDeclaration<never, never>
+/** The keys applicable to an {@link CompanionEnumerable} */
+export type KeyOfCompanionEnum = keyof CompanionEnumerable<never, never>
 
-/** The keys applicable to an {@link CompanionEnumWithParentDeclaration} */
-export type KeyOfCompanionEnumWithParent = keyof CompanionEnumWithParentDeclaration<never, never, never, never>
+/** The keys applicable to an {@link CompanionEnumerableWithParent} */
+export type KeyOfCompanionEnumWithParent = keyof CompanionEnumerableWithParent<never, never, never, never>
 
-/** The keys applicable to an {@link CompanionEnumWithGrandParentDeclaration} */
-export type KeyOfCompanionEnumWithGrandParent = keyof CompanionEnumWithGrandParentDeclaration<never, never, never, never, never, never>
+/** The keys applicable to an {@link CompanionEnumerableWithGrandParent} */
+export type KeyOfCompanionEnumWithGrandParent = keyof CompanionEnumerableWithGrandParent<never, never, never, never, never, never>
 
-/** The keys applicable to an {@link CompanionEnumWithGreatGrandParentDeclaration} */
-export type KeyOfCompanionEnumWithGreatGrandParent = keyof CompanionEnumWithGreatGrandParentDeclaration<never, never, never, never, never, never, never, never>
+/** The keys applicable to an {@link CompanionEnumerableWithGreatGrandParent} */
+export type KeyOfCompanionEnumWithGreatGrandParent = keyof CompanionEnumerableWithGreatGrandParent<never, never, never, never, never, never, never, never>

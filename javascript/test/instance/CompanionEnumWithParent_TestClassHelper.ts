@@ -12,18 +12,18 @@
 
 import type {Enumerable}                              from "../../src/Enumerable"
 import type {EnumerableConstructor}                   from "../../src/EnumerableConstructor"
-import type {CompanionEnumDeclaration}                from "../../src/companion/CompanionEnum.declaration"
-import type {CompanionEnumWithParentDeclaration}      from "../../src/companion/CompanionEnumWithParent.declaration"
+import type {CompanionEnumerable}                     from "../../src/companion/CompanionEnumerable"
+import type {CompanionEnumerableWithParent}           from "../../src/companion/CompanionEnumerableWithParent"
 import type {EnumerableWithNullableParentGeneralType} from "../../src/type/general"
 
-import {CompanionEnumWithParent}                      from "../../src/companion/CompanionEnumWithParent"
+import {CompanionEnumWithParent} from "../../src/companion/CompanionEnumWithParent"
 
 export class CompanionEnumWithParent_TestClassHelper
-    extends CompanionEnumWithParent<EnumerableWithNullableParentGeneralType, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-        Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
+    extends CompanionEnumWithParent<EnumerableWithNullableParentGeneralType, EnumerableConstructor<any, CompanionEnumerableWithParent<any, any, any, any>>,
+        Enumerable, EnumerableConstructor<any, CompanionEnumerable<any, any>>> {
 
-    public constructor(instance: EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-                       parentInstance: EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>) {
+    public constructor(instance: EnumerableConstructor<any, CompanionEnumerableWithParent<any, any, any, any>>,
+                       parentInstance: EnumerableConstructor<any, CompanionEnumerable<any, any>>) {
         super(instance, parentInstance,)
     }
 

@@ -50,7 +50,7 @@ export type ImpossibleNames = | PossibleEdgeCaseNumericName
  * or by an inheritor (in the project)
  *
  * @see EnumConstants.EVERY_COMPANION_ENUM_MEMBERS
- * @deprecated Replace with the same type in @joookiwi/enumerable/type/keyOf.KeyOfCompanionEnumWithGreatGrandParent" instead. This will be removed in version 3.14.
+ * @deprecated Replace with {@link KeyOfCompanionEnumWithGreatGrandParent} instead. This will be removed in version 3.14.
  */
 export type PossibleCompanionEnumMembers = | keyof CompanionEnumDeclaration<never, never>
                                            | keyof CompanionEnumWithParentDeclaration<never, never, never, never>
@@ -86,7 +86,7 @@ export type CompanionEnumType<ENUM extends Enumerable, >
 /**
  * A type for the {@link CompanionEnumDeclaration} with its {@link EnumerableConstructor} referencing itself
  *
- * @deprecated Replace with the same type in @joookiwi/enumerable/type/companion" instead. This will be removed in version 3.14.
+ * @deprecated Replace with {@link CompanionEnumerableType} instead. This will be removed in version 3.14.
  */
 export type CompanionEnumDeclarationType<ENUM extends Enumerable, >
     = CompanionEnumDeclaration<ENUM, EnumerableConstructor<ENUM, CompanionEnumDeclarationType<ENUM>>>
@@ -103,7 +103,7 @@ export type CompanionEnumWithParentType<ENUM extends EnumerableWithNullableParen
 /**
  * A type for the {@link CompanionEnumWithParentDeclaration} with its {@link EnumerableConstructor} referencing itself
  *
- * @deprecated Replace with the same type in @joookiwi/enumerable/type/companion" instead. This will be removed in version 3.14.
+ * @deprecated Replace with {@link CompanionEnumerableWithParentType} instead. This will be removed in version 3.14.
  */
 export type CompanionEnumWithParentDeclarationType<ENUM extends EnumerableWithNullableParent<PARENT_ENUM>, PARENT_ENUM extends Enumerable, >
     = CompanionEnumWithParentDeclaration<ENUM, EnumerableConstructor<ENUM, CompanionEnumWithParentDeclarationType<ENUM, PARENT_ENUM>>,
@@ -123,7 +123,7 @@ export type CompanionEnumWithGrandParentType<ENUM extends EnumerableWithNullable
 /**
  * A type for the {@link CompanionEnumWithGrandParentDeclaration} with its {@link EnumerableConstructor} referencing itself
  *
- * @deprecated Replace with the same type in @joookiwi/enumerable/type/companion" instead. This will be removed in version 3.14.
+ * @deprecated Replace with {@link CompanionEnumerableWithGrandParentType} instead. This will be removed in version 3.14.
  */
 export type CompanionEnumWithGrandParentDeclarationType<ENUM extends EnumerableWithNullableGrandParent<PARENT_ENUM, GRAND_PARENT_ENUM>,
     PARENT_ENUM extends EnumerableWithNullableParent<GRAND_PARENT_ENUM>,
@@ -148,7 +148,7 @@ export type CompanionEnumWithGreatGrandParentType<ENUM extends EnumerableWithNul
 /**
  * A type for the {@link CompanionEnumWithGreatGrandParentDeclaration} with its {@link EnumerableConstructor} referencing itself
  *
- * @deprecated Replace with the same type in @joookiwi/enumerable/type/companion" instead. This will be removed in version 3.14.
+ * @deprecated Replace with {@link CompanionEnumerableWithGreatGrandParentType} instead. This will be removed in version 3.14.
  */
 export type CompanionEnumWithGreatGrandParentDeclarationType<ENUM extends EnumerableWithNullableGreatGrandParent<PARENT_ENUM, GRAND_PARENT_ENUM, GREAT_GRAND_PARENT_ENUM>,
     PARENT_ENUM extends EnumerableWithNullableGrandParent<GRAND_PARENT_ENUM, GREAT_GRAND_PARENT_ENUM>,

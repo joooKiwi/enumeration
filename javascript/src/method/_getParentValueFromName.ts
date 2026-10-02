@@ -10,13 +10,12 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {CompanionEnumDeclaration}                from "../companion/CompanionEnum.declaration"
-import type {Enumerable}                              from "../Enumerable"
-import type {EnumerableConstructor}                   from "../EnumerableConstructor"
-import type {EnumerableWithNullableParent}            from "../EnumerableWithNullableParent"
-import type {CompanionEnumWithParentDeclarationType} from "../type/companion"
+import type {Enumerable}                        from "../Enumerable"
+import type {EnumerableConstructor}             from "../EnumerableConstructor"
+import type {EnumerableWithNullableParent}      from "../EnumerableWithNullableParent"
+import type {CompanionEnumerableWithParent}     from "../companion/CompanionEnumerableWithParent"
+import type {CompanionEnumerableWithParentType} from "../type/companion"
 
-import {CompanionEnum}                        from "../companion/CompanionEnum"
 import {InvalidInstanceException}             from "../exception/InvalidInstanceException"
 import {NonExistantKeyException}              from "../exception/NonExistantKeyException"
 import {NullReferenceException}               from "../exception/NullReferenceException"
@@ -24,13 +23,12 @@ import {getLastPrototype}                     from "../helper/getLastPrototype"
 import {getCompanion}                         from "../helper/getCompanion"
 import {isCompanionEnumWithParent}            from "../helper/isCompanionEnumWithParent"
 import {isCompanionEnumWithParentByStructure} from "../helper/isCompanionEnumWithParentByStructure"
-import {CompanionEnumWithParentDeclaration}   from "../companion"
 
 /**
- * Get the value via {@link CompanionEnumDeclaration.getValue} from a {@link name} received.
+ * Get the value via {@link CompanionEnumerableWithParent.getValue} from a {@link name} received.
  * In during the process, every {@link Error} are captured in a {@link NullReferenceException} if they are thrown.
  *
- * @param instance The instance to retrieve its {@link CompanionEnum} instance
+ * @param instance The instance to retrieve its {@link CompanionEnumerableWithParent} instance
  * @param name The name to retrieve
  * @throws {NullReferenceException}
  *
@@ -51,14 +49,14 @@ export function _getParentValueFromName<const INSTANCE extends Enumerable, >(ins
 }
 
 /**
- * Get the {@link CompanionEnum} from the instance received.
+ * Get the {@link CompanionEnumerableWithParent} from the instance received.
  * In during the process, every {@link Error} are captured in a {@link NullReferenceException} if they are thrown.
  *
- * @param instance The instance to retrieve its {@link CompanionEnum}
+ * @param instance The instance to retrieve its {@link CompanionEnumerableWithParent}
  * @throws {NullReferenceException}
  */
-function __getInstance<const INSTANCE extends Enumerable, >(instance: EnumerableWithNullableParent<INSTANCE>,): CompanionEnumWithParentDeclarationType<EnumerableWithNullableParent<INSTANCE>, INSTANCE> {
-    let companionEnum: CompanionEnumWithParentDeclaration<EnumerableWithNullableParent<INSTANCE>, any, any, any>
+function __getInstance<const INSTANCE extends Enumerable, >(instance: EnumerableWithNullableParent<INSTANCE>,): CompanionEnumerableWithParentType<EnumerableWithNullableParent<INSTANCE>, INSTANCE> {
+    let companionEnum: CompanionEnumerableWithParent<EnumerableWithNullableParent<INSTANCE>, any, any, any>
     try {
         companionEnum = getCompanion(getLastPrototype(instance,),)
     } catch (exception) {
@@ -74,6 +72,6 @@ function __getInstance<const INSTANCE extends Enumerable, >(instance: Enumerable
         return companionEnum.parentInstance.CompanionEnum.get
     if (isCompanionEnumWithParentByStructure(companionEnum,))
         //TODO validate the typing of the parent instance
-        return (companionEnum.parentInstance as EnumerableConstructor<any, CompanionEnumWithParentDeclaration<EnumerableWithNullableParent<INSTANCE>, any, any, any>>).CompanionEnum.get
+        return (companionEnum.parentInstance as EnumerableConstructor<any, CompanionEnumerableWithParent<EnumerableWithNullableParent<INSTANCE>, any, any, any>>).CompanionEnum.get
     throw new InvalidInstanceException("The companion enum received is not an instance of CompanionEnumWithParent or doesn't have its structure.", companionEnum,)
 }

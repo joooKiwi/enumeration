@@ -11,23 +11,25 @@
 //··························································
 
 import type {Array} from "@joookiwi/type"
-import {expect}     from "vitest"
+import {expect} from "vitest"
 
-import type {CompanionEnumWithGrandParentDeclaration} from "../../src/companion/CompanionEnumWithGrandParent.declaration"
+import type {CompanionEnumerableWithGreatGrandParent} from "../../src/companion/CompanionEnumerableWithGreatGrandParent"
 
-import {EmptyEnum}                from "./EmptyEnum"
-import {EmptyEnumWithGrandParent} from "./EmptyEnumWithGrandParent"
-import {EmptyEnumWithParent}      from "./EmptyEnumWithParent"
+import {EmptyEnum}                     from "./EmptyEnum"
+import {EmptyEnumWithGrandParent}      from "./EmptyEnumWithGrandParent"
+import {EmptyEnumWithGreatGrandParent} from "./EmptyEnumWithGreatGrandParent"
+import {EmptyEnumWithParent}           from "./EmptyEnumWithParent"
 
-/** An {@link CompanionEnumWithGrandParentDeclaration} that has the purpose to be empty with nothing to specify */
-export class EmptyCompanionEnumWithGrandParentDeclaration
-    implements CompanionEnumWithGrandParentDeclaration<EmptyEnumWithGrandParent, typeof EmptyEnumWithGrandParent, EmptyEnumWithParent, typeof EmptyEnumWithParent, EmptyEnum, typeof EmptyEnum> {
+/** An {@link CompanionEnumerableWithGreatGrandParent} that has the purpose to be empty with nothing to specify */
+export class EmptyCompanionEnumerableWithGreatGrandParent
+    implements CompanionEnumerableWithGreatGrandParent<EmptyEnumWithGreatGrandParent, typeof EmptyEnumWithGreatGrandParent, EmptyEnumWithGrandParent, typeof EmptyEnumWithGrandParent, EmptyEnumWithParent, typeof EmptyEnumWithParent, EmptyEnum, typeof EmptyEnum> {
 
     public constructor() {}
 
-    public readonly grandParentInstance = EmptyEnum
-    public readonly parentInstance = EmptyEnumWithParent
-    public readonly instance = EmptyEnumWithGrandParent
+    public readonly greatGrandParentInstance = EmptyEnum
+    public readonly grandParentInstance = EmptyEnumWithParent
+    public readonly parentInstance = EmptyEnumWithGrandParent
+    public readonly instance = EmptyEnumWithGreatGrandParent
 
     public get defaultValue(): never { return expect.fail("The getter method “defaultValue” was not expected to be called.",) }
     public set defaultValue(_: unknown,) { expect.fail("The setter method “defaultValue” was not expected to be called.",) }

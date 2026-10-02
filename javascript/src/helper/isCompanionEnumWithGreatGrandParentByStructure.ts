@@ -11,13 +11,12 @@
 //··························································
 
 import type {Enumerable}                                                                                                                               from "../Enumerable"
-import type {CompanionEnumWithGreatGrandParentDeclaration}                                                                                             from "../companion/CompanionEnumWithGreatGrandParent.declaration"
-import type {CompanionEnumWithGreatGrandParentDeclarationType}                                                                                         from "../type/companion"
+import type {CompanionEnumerableWithGreatGrandParentType}                                                                                              from "../type/companion"
 import type {KeyOfCompanionEnumWithGreatGrandParent}                                                                                                   from "../type/keyOf"
 import type {EnumerableWithNullableGrandParentGeneralType, EnumerableWithNullableGreatGrandParentGeneralType, EnumerableWithNullableParentGeneralType} from "../type/general"
 
 /**
- * Tell if the value received has the structure of a {@link CompanionEnumWithGreatGrandParentDeclaration}
+ * Tell if the value received has the structure of a {@link CompanionEnumerableWithGreatGrandParent}
  *
  * @param value The value to compare
  * @see isCompanionEnumWithGreatGrandParent
@@ -26,7 +25,7 @@ import type {EnumerableWithNullableGrandParentGeneralType, EnumerableWithNullabl
  */
 export function isCompanionEnumWithGreatGrandParentByStructure(value: unknown,): value is (& object & Record<KeyOfCompanionEnumWithGreatGrandParent, unknown>)
 /**
- * Tell if the value received has the structure of a {@link CompanionEnumWithGreatGrandParentDeclaration}
+ * Tell if the value received has the structure of a {@link CompanionEnumerableWithGreatGrandParent}
  *
  * @param value The value to compare
  * @see isCompanionEnumWithGreatGrandParent
@@ -34,7 +33,7 @@ export function isCompanionEnumWithGreatGrandParentByStructure(value: unknown,):
  * @doesNotValidateTheTypes
  * @note Giving a type to the method is only here to help the implementation, but it will not change the behaviour in JavaScript
  */
-export function isCompanionEnumWithGreatGrandParentByStructure<const INSTANCE extends CompanionEnumWithGreatGrandParentDeclarationType<EnumerableWithNullableGreatGrandParentGeneralType, EnumerableWithNullableGrandParentGeneralType, EnumerableWithNullableParentGeneralType, Enumerable>, >(value: unknown,): value is INSTANCE
+export function isCompanionEnumWithGreatGrandParentByStructure<const INSTANCE extends CompanionEnumerableWithGreatGrandParentType<EnumerableWithNullableGreatGrandParentGeneralType, EnumerableWithNullableGrandParentGeneralType, EnumerableWithNullableParentGeneralType, Enumerable>, >(value: unknown,): value is INSTANCE
 export function isCompanionEnumWithGreatGrandParentByStructure(value: unknown,) {
     if (value == null)
         return false

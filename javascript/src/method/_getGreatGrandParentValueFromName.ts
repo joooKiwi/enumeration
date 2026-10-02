@@ -10,16 +10,15 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {CompanionEnumDeclaration}                          from "../companion/CompanionEnum.declaration"
 import type {Enumerable}                                        from "../Enumerable"
 import type {EnumerableConstructor}                             from "../EnumerableConstructor"
 import type {EnumerableWithNullableGrandParent}                 from "../EnumerableWithNullableGrandParent"
 import type {EnumerableWithNullableGreatGrandParent}            from "../EnumerableWithNullableGreatGrandParent"
 import type {EnumerableWithNullableParent}                      from "../EnumerableWithNullableParent"
-import type {CompanionEnumWithGreatGrandParentDeclarationType} from "../type/companion"
+import type {CompanionEnumerableWithGreatGrandParent}           from "../companion/CompanionEnumerableWithGreatGrandParent"
+import type {CompanionEnumerableWithGreatGrandParentType}       from "../type/companion"
 import type {EnumerableWithNullableGreatGrandParentGeneralType} from "../type/general"
 
-import {CompanionEnum}                                  from "../companion/CompanionEnum"
 import {InvalidInstanceException}                       from "../exception/InvalidInstanceException"
 import {NonExistantKeyException}                        from "../exception/NonExistantKeyException"
 import {NullReferenceException}                         from "../exception/NullReferenceException"
@@ -27,13 +26,12 @@ import {getLastPrototype}                               from "../helper/getLastP
 import {getCompanion}                                   from "../helper/getCompanion"
 import {isCompanionEnumWithGreatGrandParent}            from "../helper/isCompanionEnumWithGreatGrandParent"
 import {isCompanionEnumWithGreatGrandParentByStructure} from "../helper/isCompanionEnumWithGreatGrandParentByStructure"
-import {CompanionEnumWithGreatGrandParentDeclaration}   from "../companion"
 
 /**
- * Get the value via {@link CompanionEnumDeclaration.getValue} from a {@link name} received.
+ * Get the value via {@link CompanionEnumerableWithGreatGrandParent.getValue} from a {@link name} received.
  * In during the process, every {@link Error} are captured in a {@link NullReferenceException} if they are thrown.
  *
- * @param instance The instance to retrieve its {@link CompanionEnum} instance
+ * @param instance The instance to retrieve its {@link CompanionEnumerableWithGreatGrandParent} instance
  * @param name The name to retrieve
  * @throws {NullReferenceException}
  *
@@ -54,14 +52,14 @@ export function _getGreatGrandParentValueFromName<const INSTANCE extends Enumera
 }
 
 /**
- * Get the {@link CompanionEnum} from the instance received.
+ * Get the {@link CompanionEnumerableWithGreatGrandParent} from the instance received.
  * In during the process, every {@link Error} are captured in a {@link NullReferenceException} if they are thrown.
  *
- * @param instance The instance to retrieve its {@link CompanionEnum}
+ * @param instance The instance to retrieve its {@link CompanionEnumerableWithGreatGrandParent}
  * @throws {NullReferenceException}
  */
-function __getInstance<const INSTANCE extends Enumerable, >(instance: EnumerableWithNullableGreatGrandParentGeneralType,): CompanionEnumWithGreatGrandParentDeclarationType<EnumerableWithNullableGreatGrandParent<EnumerableWithNullableGrandParent<EnumerableWithNullableParent<INSTANCE>, INSTANCE>, EnumerableWithNullableParent<INSTANCE>, INSTANCE>, EnumerableWithNullableGrandParent<EnumerableWithNullableParent<INSTANCE>, INSTANCE>, EnumerableWithNullableParent<INSTANCE>, INSTANCE> {
-    let companionEnum: CompanionEnumWithGreatGrandParentDeclaration<EnumerableWithNullableGreatGrandParent<EnumerableWithNullableGrandParent<EnumerableWithNullableParent<INSTANCE>, any>, any, any>, any, any, any, any, any, any, any>
+function __getInstance<const INSTANCE extends Enumerable, >(instance: EnumerableWithNullableGreatGrandParentGeneralType,): CompanionEnumerableWithGreatGrandParentType<EnumerableWithNullableGreatGrandParent<EnumerableWithNullableGrandParent<EnumerableWithNullableParent<INSTANCE>, INSTANCE>, EnumerableWithNullableParent<INSTANCE>, INSTANCE>, EnumerableWithNullableGrandParent<EnumerableWithNullableParent<INSTANCE>, INSTANCE>, EnumerableWithNullableParent<INSTANCE>, INSTANCE> {
+    let companionEnum: CompanionEnumerableWithGreatGrandParent<EnumerableWithNullableGreatGrandParent<EnumerableWithNullableGrandParent<EnumerableWithNullableParent<INSTANCE>, any>, any, any>, any, any, any, any, any, any, any>
     try {
         companionEnum = getCompanion(getLastPrototype(instance,),)
     } catch (exception) {
@@ -77,6 +75,6 @@ function __getInstance<const INSTANCE extends Enumerable, >(instance: Enumerable
         return companionEnum.greatGrandParentInstance.CompanionEnum.get
     if (isCompanionEnumWithGreatGrandParentByStructure(companionEnum,))
         //TODO validate the typing of the parent instance
-        return (companionEnum.greatGrandParentInstance as EnumerableConstructor<any, CompanionEnumWithGreatGrandParentDeclaration<EnumerableWithNullableGreatGrandParent<EnumerableWithNullableGrandParent<EnumerableWithNullableParent<INSTANCE>, any>, any, any>, any, any, any, any, any, any, any>>).CompanionEnum.get
+        return (companionEnum.greatGrandParentInstance as EnumerableConstructor<any, CompanionEnumerableWithGreatGrandParent<EnumerableWithNullableGreatGrandParent<EnumerableWithNullableGrandParent<EnumerableWithNullableParent<INSTANCE>, any>, any, any>, any, any, any, any, any, any, any>>).CompanionEnum.get
     throw new InvalidInstanceException("The companion enum received is not an instance of CompanionEnumWithGreatGrandParent or doesn't have its structure.", companionEnum,)
 }

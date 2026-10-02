@@ -16,9 +16,9 @@ import type {Enumerable}                                                        
 import type {EnumerableConstructor}                                                                  from "../EnumerableConstructor"
 import type {EnumerableWithNullableGrandParent}                                                      from "../EnumerableWithNullableGrandParent"
 import type {EnumerableWithNullableParent}                                                           from "../EnumerableWithNullableParent"
-import type {CompanionEnumDeclaration}                                                               from "./CompanionEnum.declaration"
-import type {CompanionEnumWithGrandParentDeclaration}                                                from "./CompanionEnumWithGrandParent.declaration"
-import type {CompanionEnumWithParentDeclaration}                                                     from "./CompanionEnumWithParent.declaration"
+import type {CompanionEnumerable}                                                                    from "./CompanionEnumerable"
+import type {CompanionEnumerableWithGrandParent}                                                     from "./CompanionEnumerableWithGrandParent"
+import type {CompanionEnumerableWithParent}                                                          from "./CompanionEnumerableWithParent"
 import type {ImpossibleNames}                                                                        from "../type/name"
 import type {NameOf, SpecificNameOf}                                                                 from "../type/nameOf"
 import type {OrdinalOf, SpecificOrdinalOf}                                                           from "../type/ordinalOf"
@@ -32,13 +32,13 @@ import {NonExistantKeyException}    from "../exception/NonExistantKeyException"
 import {NullReferenceException}     from "../exception/NullReferenceException"
 
 export class CompanionEnumWithGrandParent<const ENUM extends EnumerableWithNullableGrandParent<PARENT_ENUM, GRAND_PARENT_ENUM>,
-    const ENUM_CONSTRUCTOR extends EnumerableConstructor<ENUM, CompanionEnumWithGrandParentDeclaration<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR, GRAND_PARENT_ENUM, GRAND_PARENT_ENUM_CONSTRUCTOR>>,
+    const ENUM_CONSTRUCTOR extends EnumerableConstructor<ENUM, CompanionEnumerableWithGrandParent<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR, GRAND_PARENT_ENUM, GRAND_PARENT_ENUM_CONSTRUCTOR>>,
     const PARENT_ENUM extends EnumerableWithNullableParent<GRAND_PARENT_ENUM>,
-    const PARENT_ENUM_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUM, CompanionEnumWithParentDeclaration<PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR, GRAND_PARENT_ENUM, GRAND_PARENT_ENUM_CONSTRUCTOR>>,
+    const PARENT_ENUM_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUM, CompanionEnumerableWithParent<PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR, GRAND_PARENT_ENUM, GRAND_PARENT_ENUM_CONSTRUCTOR>>,
     const GRAND_PARENT_ENUM extends Enumerable,
-    const GRAND_PARENT_ENUM_CONSTRUCTOR extends EnumerableConstructor<GRAND_PARENT_ENUM, CompanionEnumDeclaration<GRAND_PARENT_ENUM, GRAND_PARENT_ENUM_CONSTRUCTOR>>, >
+    const GRAND_PARENT_ENUM_CONSTRUCTOR extends EnumerableConstructor<GRAND_PARENT_ENUM, CompanionEnumerable<GRAND_PARENT_ENUM, GRAND_PARENT_ENUM_CONSTRUCTOR>>, >
     extends CompanionEnumWithParent<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR>
-    implements CompanionEnumWithGrandParentDeclaration<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR, GRAND_PARENT_ENUM, GRAND_PARENT_ENUM_CONSTRUCTOR> {
+    implements CompanionEnumerableWithGrandParent<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR, GRAND_PARENT_ENUM, GRAND_PARENT_ENUM_CONSTRUCTOR> {
 
     //#region -------------------- Fields --------------------
 

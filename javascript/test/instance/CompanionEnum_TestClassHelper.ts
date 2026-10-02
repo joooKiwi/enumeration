@@ -10,16 +10,16 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {Enumerable}               from "../../src/Enumerable"
-import type {EnumerableConstructor}    from "../../src/EnumerableConstructor"
-import type {CompanionEnumDeclaration} from "../../src/companion/CompanionEnum.declaration"
+import type {Enumerable}            from "../../src/Enumerable"
+import type {EnumerableConstructor} from "../../src/EnumerableConstructor"
+import type {CompanionEnumerable}   from "../../src/companion/CompanionEnumerable"
 
 import {CompanionEnum} from "../../src/companion/CompanionEnum"
 
 export class CompanionEnum_TestClassHelper
-    extends CompanionEnum<Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
+    extends CompanionEnum<Enumerable, EnumerableConstructor<any, CompanionEnumerable<any, any>>> {
 
-    public constructor(instance: EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>,) {
+    public constructor(instance: EnumerableConstructor<any, CompanionEnumerable<any, any>>,) {
         super(instance,)
     }
 

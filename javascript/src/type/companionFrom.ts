@@ -11,10 +11,10 @@
 //··························································
 
 import type {EnumerableConstructor}      from "../EnumerableConstructor"
-import type {CompanionEnumDeclaration}   from "../companion/CompanionEnum.declaration"
+import type {CompanionEnumerable}        from "../companion/CompanionEnumerable"
 import type {PossibleEnumerableInstance} from "./possibleInstance"
 import type {CompanionOf}                from "./companionOf"
 
 export type CompanionEnumFromEnumerableConstructorOrCompanionEnum<T extends PossibleEnumerableInstance<any>, >
     = T extends EnumerableConstructor<any, any> ? CompanionOf<T>
-    : T extends CompanionEnumDeclaration<any, any> ? T : never
+    : T extends CompanionEnumerable<any, any> ? T : never

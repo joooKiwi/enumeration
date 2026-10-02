@@ -302,7 +302,7 @@ but in practice, `enum class` are `final` and cannot be extended.
 
 But it can be done indirectly via `EnumWithParent`, `EnumWithNullableParent`,
 `EnumerableWithNullableParent` and `EnumerableWithParent`
-in juncture with `CompanionEnumWithParent` or `CompanionEnumWithParentDeclaration`.
+in juncture with `CompanionEnumWithParent` or `CompanionEnumerableWithParent`.
 
 There are some possibilities on how it can be implemented,
 but the result is always the same.
@@ -984,7 +984,7 @@ class CustomCompanionEnum extends CompanionEnum {
 <summary>CompanionEnumDeclaration (hardest, but fully customizable)</summary>
 
 ```javascript
-/** @implements CompanionEnumDeclaration */
+/** @implements CompanionEnumerable */
 class CustomCompanionEnum {
 
     /** @readonly */ #instance
@@ -1023,10 +1023,10 @@ class CustomCompanionEnum extends CompanionEnumWithParent {
 
 </details>
 <details>
-<summary>CompanionEnumWithParentDeclaration (hardest, but fully customizable)</summary>
+<summary>CompanionEnumerableWithParent (hardest, but fully customizable)</summary>
 
 ```javascript
-/** @implements CompanionEnumWithParentDeclaration */
+/** @implements CompanionEnumerableWithParent */
 class CustomCompanionEnum {
 
     /** @readonly */ #instance
@@ -1070,10 +1070,10 @@ class CustomCompanionEnum extends CompanionEnumWithGrandParent {
 
 </details>
 <details>
-<summary>CompanionEnumWithGrandParentDeclaration (hardest, but fully customizable)</summary>
+<summary>CompanionEnumerableWithGrandParent (hardest, but fully customizable)</summary>
 
 ```javascript
-/** @implements CompanionEnumWithGrandParentDeclaration */
+/** @implements CompanionEnumerableWithGrandParent */
 class CustomCompanionEnum {
 
     /** @readonly */ #instance
@@ -1120,10 +1120,10 @@ class CustomCompanionEnum extends CompanionEnumWithGreatGrandParent {
 
 </details>
 <details>
-<summary>CompanionEnumWithGreatGrandParentDeclaration (hardest, but fully customizable)</summary>
+<summary>CompanionEnumerableWithGreatGrandParent (hardest, but fully customizable)</summary>
 
 ```javascript
-/** @implements CompanionEnumWithGreatGrandParentDeclaration */
+/** @implements CompanionEnumerableWithGreatGrandParent */
 class CustomCompanionEnum {
 
     /** @readonly */ #instance
@@ -1179,15 +1179,15 @@ class CustomCompanionEnum
 
 </details>
 <details>
-<summary>CompanionEnumDeclaration (hardest, but fully customizable)</summary>
+<summary>CompanionEnumerable (hardest, but fully customizable)</summary>
 
 ```typescript
 import type {CollectionHolder, CollectionIterator} from "@joookiwi/collection"
-import type {CompanionEnumDeclaration, CompanionEnumName,
+import type {CompanionEnumerable, CompanionEnumName,
   NameOf, Nullable, OrdinalOf, PossibleEnumerableValue} from "@joookiwi/enumerable"
 
 class CustomCompanionEnum
-        implements CompanionEnumDeclaration<Enum1, typeof Enum1> {
+        implements CompanionEnumerable<Enum1, typeof Enum1> {
 
   readonly #instance
   protected constructor() { this.#instance = Enum1 }
@@ -1231,15 +1231,15 @@ class CustomCompanionEnum
 
 </details>
 <details>
-<summary>CompanionEnumWithParentDeclaration (hardest, but fully customizable)</summary>
+<summary>CompanionEnumerableWithParent (hardest, but fully customizable)</summary>
 
 ```typescript
 import type {CollectionHolder, CollectionIterator} from "@joookiwi/collection"
-import type {CompanionEnumWithParentDeclaration, CompanionEnumName,
+import type {CompanionEnumerableWithParent, CompanionEnumName,
   NameOf, Nullable, OrdinalOf, PossibleEnumerableValue} from "@joookiwi/enumerable"
 
 class CustomCompanionEnum
-        implements CompanionEnumWithParentDeclaration<
+        implements CompanionEnumerableWithParent<
                      Enum1, typeof Enum1,   // enum
                      Enum2, typeof Enum2> { // parent
 
@@ -1288,15 +1288,15 @@ class CustomCompanionEnum
 
 </details>
 <details>
-<summary>CompanionEnumWithGrandParentDeclaration (hardest, but fully customizable)</summary>
+<summary>CompanionEnumerableWithGrandParent (hardest, but fully customizable)</summary>
 
 ```typescript
 import type {CollectionHolder, CollectionIterator} from "@joookiwi/collection"
-import type {CompanionEnumWithGrandParentDeclaration, CompanionEnumName,
+import type {CompanionEnumerableWithGrandParent, CompanionEnumName,
   NameOf, Nullable, OrdinalOf, PossibleEnumerableValue} from "@joookiwi/enumerable"
 
 class CustomCompanionEnum
-        implements CompanionEnumWithGrandParentDeclaration<
+        implements CompanionEnumerableWithGrandParent<
                      Enum1, typeof Enum1,   // enum
                      Enum2, typeof Enum2,   // parent
                      Enum3, typeof Enum3> { // grand-parent
@@ -1350,11 +1350,12 @@ class CustomCompanionEnum
 
 </details>
 <details>
-<summary>CompanionEnumWithGreatGrandParentDeclaration (hardest, but fully customizable)</summary>
+<summary>CompanionEnumerableWithGreatGrandParent (hardest, but fully customizable)</summary>
 
 ```typescript
 import type {CollectionHolder, CollectionIterator} from "@joookiwi/collection"
-import type {CompanionEnumWithGreatGrandParentDeclaration, CompanionEnumName, NameOf, Nullable, OrdinalOf, PossibleEnumerableValue} from "@joookiwi/enumerable"
+import type {CompanionEnumerableWithGreatGrandParent, CompanionEnumName,
+  NameOf, Nullable, OrdinalOf, PossibleEnumerableValue} from "@joookiwi/enumerable"
 
 class CustomCompanionEnum
         implements CompanionEnumWithGreatGrandParent<

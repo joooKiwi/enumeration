@@ -12,25 +12,25 @@
 
 import {describe, expect, test} from "vitest"
 
-import {EmptyCompanionEnum}                                from "./instance/EmptyCompanionEnum"
-import {EmptyCompanionEnumDeclaration}                     from "./instance/EmptyCompanionEnumDeclaration"
-import {EmptyCompanionEnumWithGrandParent}                 from "./instance/EmptyCompanionEnumWithGrandParent"
-import {EmptyCompanionEnumWithGrandParentDeclaration}      from "./instance/EmptyCompanionEnumWithGrandParentDeclaration"
-import {EmptyCompanionEnumWithGreatGrandParent}            from "./instance/EmptyCompanionEnumWithGreatGrandParent"
-import {EmptyCompanionEnumWithGreatGrandParentDeclaration} from "./instance/EmptyCompanionEnumWithGreatGrandParentDeclaration"
-import {EmptyCompanionEnumWithParent}                      from "./instance/EmptyCompanionEnumWithParent"
-import {EmptyCompanionEnumWithParentDeclaration}           from "./instance/EmptyCompanionEnumWithParentDeclaration"
-import {EmptyEnum}                                         from "./instance/EmptyEnum"
-import {EmptyEnumerable}                                   from "./instance/EmptyEnumerable"
-import {EmptyEnumerableWithGrandParent}                    from "./instance/EmptyEnumerableWithGrandParent"
-import {EmptyEnumerableWithGreatGrandParent}               from "./instance/EmptyEnumerableWithGreatGrandParent"
-import {EmptyEnumerableWithParent}                         from "./instance/EmptyEnumerableWithParent"
-import {EmptyEnumWithNullableParent}                       from "./instance/EmptyEnumWithNullableParent"
-import {EmptyEnumWithNullableGrandParent}                  from "./instance/EmptyEnumWithNullableGrandParent"
-import {EmptyEnumWithNullableGreatGrandParent}             from "./instance/EmptyEnumWithNullableGreatGrandParent"
-import {EmptyEnumWithGrandParent}                          from "./instance/EmptyEnumWithGrandParent"
-import {EmptyEnumWithGreatGrandParent}                     from "./instance/EmptyEnumWithGreatGrandParent"
-import {EmptyEnumWithParent}                               from "./instance/EmptyEnumWithParent"
+import {EmptyCompanionEnum}                           from "./instance/EmptyCompanionEnum"
+import {EmptyCompanionEnumerable}                     from "./instance/EmptyCompanionEnumerable"
+import {EmptyCompanionEnumerableWithGrandParent}      from "./instance/EmptyCompanionEnumerableWithGrandParent"
+import {EmptyCompanionEnumerableWithGreatGrandParent} from "./instance/EmptyCompanionEnumerableWithGreatGrandParent"
+import {EmptyCompanionEnumerableWithParent}           from "./instance/EmptyCompanionEnumerableWithParent"
+import {EmptyCompanionEnumWithGrandParent}            from "./instance/EmptyCompanionEnumWithGrandParent"
+import {EmptyCompanionEnumWithGreatGrandParent}       from "./instance/EmptyCompanionEnumWithGreatGrandParent"
+import {EmptyCompanionEnumWithParent}                 from "./instance/EmptyCompanionEnumWithParent"
+import {EmptyEnum}                                    from "./instance/EmptyEnum"
+import {EmptyEnumerable}                              from "./instance/EmptyEnumerable"
+import {EmptyEnumerableWithGrandParent}               from "./instance/EmptyEnumerableWithGrandParent"
+import {EmptyEnumerableWithGreatGrandParent}          from "./instance/EmptyEnumerableWithGreatGrandParent"
+import {EmptyEnumerableWithParent}                    from "./instance/EmptyEnumerableWithParent"
+import {EmptyEnumWithNullableParent}                  from "./instance/EmptyEnumWithNullableParent"
+import {EmptyEnumWithNullableGrandParent}             from "./instance/EmptyEnumWithNullableGrandParent"
+import {EmptyEnumWithNullableGreatGrandParent}        from "./instance/EmptyEnumWithNullableGreatGrandParent"
+import {EmptyEnumWithGrandParent}                     from "./instance/EmptyEnumWithGrandParent"
+import {EmptyEnumWithGreatGrandParent}                from "./instance/EmptyEnumWithGreatGrandParent"
+import {EmptyEnumWithParent}                          from "./instance/EmptyEnumWithParent"
 
 import {isCompanionEnum}                                from "../src/helper/isCompanionEnum"
 import {isCompanionEnumByStructure}                     from "../src/helper/isCompanionEnumByStructure"
@@ -1053,7 +1053,7 @@ describe("methodsTests (is)", () => {
         test("companion enum with great-grandparent by structure", () => expect(isCompanionEnumWithGreatGrandParentByStructure(value,),).toBeFalse(),)
     },)
     describe("companion enumerable", () => {
-        const value = new EmptyCompanionEnumDeclaration()
+        const value = new EmptyCompanionEnumerable()
 
         test("enum",                                               () => expect(isEnum(value,),)                                        .toBeFalse(),)
         test("enum by structure",                                  () => expect(isEnumByStructure(value,),)                             .toBeFalse(),)
@@ -1099,7 +1099,7 @@ describe("methodsTests (is)", () => {
         test("companion enum with great-grandparent by structure", () => expect(isCompanionEnumWithGreatGrandParentByStructure(value,),).toBeFalse(),)
     },)
     describe("companion enumerable with parent", () => {
-        const value = new EmptyCompanionEnumWithParentDeclaration()
+        const value = new EmptyCompanionEnumerableWithParent()
 
         test("enum",                                               () => expect(isEnum(value,),)                                        .toBeFalse(),)
         test("enum by structure",                                  () => expect(isEnumByStructure(value,),)                             .toBeFalse(),)
@@ -1145,7 +1145,7 @@ describe("methodsTests (is)", () => {
         test("companion enum with great-grandparent by structure", () => expect(isCompanionEnumWithGreatGrandParentByStructure(value,),).toBeFalse(),)
     },)
     describe("companion enumerable with grandparent", () => {
-        const value = new EmptyCompanionEnumWithGrandParentDeclaration()
+        const value = new EmptyCompanionEnumerableWithGrandParent()
 
         test("enum",                                               () => expect(isEnum(value,),)                                        .toBeFalse(),)
         test("enum by structure",                                  () => expect(isEnumByStructure(value,),)                             .toBeFalse(),)
@@ -1191,7 +1191,7 @@ describe("methodsTests (is)", () => {
         test("companion enum with great-grandparent by structure", () => expect(isCompanionEnumWithGreatGrandParentByStructure(value,),).toBeTrue(),)
     },)
     describe("companion enumerable with great-grandparent", () => {
-        const value = new EmptyCompanionEnumWithGreatGrandParentDeclaration()
+        const value = new EmptyCompanionEnumerableWithGreatGrandParent()
 
         test("enum",                                               () => expect(isEnum(value,),)                                        .toBeFalse(),)
         test("enum by structure",                                  () => expect(isEnumByStructure(value,),)                             .toBeFalse(),)

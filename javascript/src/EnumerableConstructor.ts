@@ -10,13 +10,13 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {Enumerable}               from "./Enumerable"
-import type {Singleton}                from "./Singleton"
-import type {CompanionEnumDeclaration} from "./companion/CompanionEnum.declaration"
+import type {Enumerable}          from "./Enumerable"
+import type {Singleton}           from "./Singleton"
+import type {CompanionEnumerable} from "./companion/CompanionEnumerable"
 
 /** The <i>static</i> {@link Enumerable} definition containing the {@link CompanionEnumDeclaration companion enum} {@link Singleton singleton} field */
 export interface EnumerableConstructor<out ENUMERABLE extends Enumerable,
-    out COMPANION_ENUM extends CompanionEnumDeclaration<ENUMERABLE, EnumerableConstructor<ENUMERABLE, COMPANION_ENUM>>, >
+    out COMPANION_ENUM extends CompanionEnumerable<ENUMERABLE, EnumerableConstructor<ENUMERABLE, COMPANION_ENUM>>, >
     extends Function {
 
     /**

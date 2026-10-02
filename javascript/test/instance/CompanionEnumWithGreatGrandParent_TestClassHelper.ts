@@ -12,24 +12,24 @@
 
 import type {Enumerable}                                                                                                                               from "../../src/Enumerable"
 import type {EnumerableConstructor}                                                                                                                    from "../../src/EnumerableConstructor"
-import type {CompanionEnumDeclaration}                                                                                                                 from "../../src/companion/CompanionEnum.declaration"
-import type {CompanionEnumWithGrandParentDeclaration}                                                                                                  from "../../src/companion/CompanionEnumWithGrandParent.declaration"
-import type {CompanionEnumWithGreatGrandParentDeclaration}                                                                                             from "../../src/companion/CompanionEnumWithGreatGrandParent.declaration"
-import type {CompanionEnumWithParentDeclaration}                                                                                                       from "../../src/companion/CompanionEnumWithParent.declaration"
+import type {CompanionEnumerable}                                                                                                                      from "../../src/companion/CompanionEnumerable"
+import type {CompanionEnumerableWithGrandParent}                                                                                                       from "../../src/companion/CompanionEnumerableWithGrandParent"
+import type {CompanionEnumerableWithGreatGrandParent}                                                                                                  from "../../src/companion/CompanionEnumerableWithGreatGrandParent"
+import type {CompanionEnumerableWithParent}                                                                                                            from "../../src/companion/CompanionEnumerableWithParent"
 import type {EnumerableWithNullableGrandParentGeneralType, EnumerableWithNullableGreatGrandParentGeneralType, EnumerableWithNullableParentGeneralType} from "../../src/type/general"
 
 import {CompanionEnumWithGreatGrandParent} from "../../src/companion/CompanionEnumWithGreatGrandParent"
 
 export class CompanionEnumWithGreatGrandParent_TestClassHelper
-    extends CompanionEnumWithGreatGrandParent<EnumerableWithNullableGreatGrandParentGeneralType, EnumerableConstructor<any, CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, any, any>>,
-        EnumerableWithNullableGrandParentGeneralType, EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
-        EnumerableWithNullableParentGeneralType, EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-        Enumerable, EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>> {
+    extends CompanionEnumWithGreatGrandParent<EnumerableWithNullableGreatGrandParentGeneralType, EnumerableConstructor<any, CompanionEnumerableWithGreatGrandParent<any, any, any, any, any, any, any, any>>,
+        EnumerableWithNullableGrandParentGeneralType, EnumerableConstructor<any, CompanionEnumerableWithGrandParent<any, any, any, any, any, any>>,
+        EnumerableWithNullableParentGeneralType, EnumerableConstructor<any, CompanionEnumerableWithParent<any, any, any, any>>,
+        Enumerable, EnumerableConstructor<any, CompanionEnumerable<any, any>>> {
 
-    public constructor(instance: EnumerableConstructor<any, CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, any, any>>,
-                       parentInstance: EnumerableConstructor<any, CompanionEnumWithGrandParentDeclaration<any, any, any, any, any, any>>,
-                       grandParentInstance: EnumerableConstructor<any, CompanionEnumWithParentDeclaration<any, any, any, any>>,
-                       greatGrandParentInstance: EnumerableConstructor<any, CompanionEnumDeclaration<any, any>>,) {
+    public constructor(instance: EnumerableConstructor<any, CompanionEnumerableWithGreatGrandParent<any, any, any, any, any, any, any, any>>,
+                       parentInstance: EnumerableConstructor<any, CompanionEnumerableWithGrandParent<any, any, any, any, any, any>>,
+                       grandParentInstance: EnumerableConstructor<any, CompanionEnumerableWithParent<any, any, any, any>>,
+                       greatGrandParentInstance: EnumerableConstructor<any, CompanionEnumerable<any, any>>,) {
         super(instance, parentInstance, grandParentInstance, greatGrandParentInstance,)
     }
 

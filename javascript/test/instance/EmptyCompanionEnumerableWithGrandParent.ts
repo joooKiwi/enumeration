@@ -13,17 +13,21 @@
 import type {Array} from "@joookiwi/type"
 import {expect}     from "vitest"
 
-import type {CompanionEnumDeclaration} from "../../src/companion/CompanionEnum.declaration"
+import type {CompanionEnumerableWithGrandParent} from "../../src/companion/CompanionEnumerableWithGrandParent"
 
-import {EmptyEnum} from "./EmptyEnum"
+import {EmptyEnum}                from "./EmptyEnum"
+import {EmptyEnumWithGrandParent} from "./EmptyEnumWithGrandParent"
+import {EmptyEnumWithParent}      from "./EmptyEnumWithParent"
 
-/** An {@link CompanionEnumDeclaration} that has the purpose to be empty with nothing to specify */
-export class EmptyCompanionEnumDeclaration
-    implements CompanionEnumDeclaration<EmptyEnum, typeof EmptyEnum> {
+/** An {@link CompanionEnumerableWithGrandParent} that has the purpose to be empty with nothing to specify */
+export class EmptyCompanionEnumerableWithGrandParent
+    implements CompanionEnumerableWithGrandParent<EmptyEnumWithGrandParent, typeof EmptyEnumWithGrandParent, EmptyEnumWithParent, typeof EmptyEnumWithParent, EmptyEnum, typeof EmptyEnum> {
 
     public constructor() {}
 
-    public readonly instance = EmptyEnum
+    public readonly grandParentInstance = EmptyEnum
+    public readonly parentInstance = EmptyEnumWithParent
+    public readonly instance = EmptyEnumWithGrandParent
 
     public get defaultValue(): never { return expect.fail("The getter method “defaultValue” was not expected to be called.",) }
     public set defaultValue(_: unknown,) { expect.fail("The setter method “defaultValue” was not expected to be called.",) }

@@ -10,13 +10,12 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {Enumerable}                   from "../Enumerable"
-import type {CompanionEnumDeclaration}     from "../companion/CompanionEnum.declaration"
-import type {KeyOfCompanionEnum}           from "../type/keyOf"
-import type {CompanionEnumDeclarationType} from "../type/companion"
+import type {Enumerable}              from "../Enumerable"
+import type {KeyOfCompanionEnum}      from "../type/keyOf"
+import type {CompanionEnumerableType} from "../type/companion"
 
 /**
- * Tell if the value received has the structure of a {@link CompanionEnumDeclaration}
+ * Tell if the value received has the structure of a {@link CompanionEnumerable}
  *
  * @param value The value to compare
  * @see isCompanionEnum
@@ -25,7 +24,7 @@ import type {CompanionEnumDeclarationType} from "../type/companion"
  */
 export function isCompanionEnumByStructure(value: unknown,): value is (& object & Record<KeyOfCompanionEnum, unknown>)
 /**
- * Tell if the value received has the structure of a {@link CompanionEnumDeclaration}
+ * Tell if the value received has the structure of a {@link CompanionEnumerable}
  *
  * @param value The value to compare
  * @see isCompanionEnum
@@ -33,7 +32,7 @@ export function isCompanionEnumByStructure(value: unknown,): value is (& object 
  * @doesNotValidateTheTypes
  * @note Giving a type to the method is only here to help the implementation, but it will not change the behaviour in JavaScript
  */
-export function isCompanionEnumByStructure<const INSTANCE extends CompanionEnumDeclarationType<Enumerable>, >(value: unknown,): value is INSTANCE
+export function isCompanionEnumByStructure<const INSTANCE extends CompanionEnumerableType<Enumerable>, >(value: unknown,): value is INSTANCE
 export function isCompanionEnumByStructure(value: unknown,) {
     if (value == null)
         return false

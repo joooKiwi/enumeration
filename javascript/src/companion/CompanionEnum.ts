@@ -10,13 +10,13 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {CollectionHolder, CollectionIterator}                                                                                                                                                                                                       from "@joookiwi/collection"
-import type {BigIntOrObject, Nullable, NullableString, NullOr, NullOrUndefined, NumberOrObject, NumberTemplate, NumericOrObject, StringOrNumericOrObject, StringOrObject, TemplateOrBigIntOrObject, TemplateOrNumberOrObject, TemplateOrNumericOrObject} from "@joookiwi/type"
-import {ArrayAsCollectionHolder, EmptyCollectionHolder, GenericCollectionHolder}                                                                                                                                                                         from "@joookiwi/collection"
+import type {CollectionHolder, CollectionIterator}                                                                                                                                                                             from "@joookiwi/collection"
+import type {BigIntOrObject, Nullable, NullableString, NullOr, NullOrUndefined, NumberOrObject, NumberTemplate, NumericOrObject, StringOrNumericOrObject, StringOrObject, TemplateOrNumberOrObject, TemplateOrNumericOrObject} from "@joookiwi/type"
+import {ArrayAsCollectionHolder, EmptyCollectionHolder, GenericCollectionHolder}                                                                                                                                               from "@joookiwi/collection"
 
 import type {Enumerable}                                                                from "../Enumerable"
 import type {EnumerableConstructor}                                                     from "../EnumerableConstructor"
-import type {CompanionEnumDeclaration}                                                  from "./CompanionEnum.declaration"
+import type {CompanionEnumerable}                                                       from "./CompanionEnumerable"
 import type {ImpossibleNames}                                                           from "../type/name"
 import type {NameOf, SpecificNameOf}                                                    from "../type/nameOf"
 import type {OrdinalOf, SpecificOrdinalOf}                                              from "../type/ordinalOf"
@@ -40,8 +40,8 @@ import {isEnum}                                      from "../helper/isEnum"
 import {isEnumByStructure}                           from "../helper/isEnumByStructure"
 
 export class CompanionEnum<const ENUM extends Enumerable,
-    const ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<ENUM, CompanionEnumDeclaration<ENUM, ENUMERABLE_CONSTRUCTOR>>, >
-    implements CompanionEnumDeclaration<ENUM, ENUMERABLE_CONSTRUCTOR> {
+    const ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<ENUM, CompanionEnumerable<ENUM, ENUMERABLE_CONSTRUCTOR>>, >
+    implements CompanionEnumerable<ENUM, ENUMERABLE_CONSTRUCTOR> {
 
     //#region -------------------- Fields --------------------
 
@@ -219,7 +219,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
                 continue
 
             const name = field[0]
-            if (name === EnumConstants.PROTOTYPE_NAME)
+            if (name === "prototype")
                 continue
             if (excludedNames.has(name,))
                 continue
@@ -317,7 +317,10 @@ export class CompanionEnum<const ENUM extends Enumerable,
         if (typeof defaultName != "string" && !(defaultName instanceof String))
             throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT_NAME) was not an string (primitive or object).`, defaultName,)
         try {
-            EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this.#getValueFromGenericName(defaultName,),)
+            if (typeof defaultName == "string")
+                EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByString(defaultName, defaultName,),)
+            else
+                EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByString(defaultName.valueOf(), defaultName,),)
             return true
         } catch (exception) {
             if (exception instanceof ForbiddenInheritedEnumerableMemberException)
@@ -356,7 +359,14 @@ export class CompanionEnum<const ENUM extends Enumerable,
         if (typeof defaultOrdinal != "number" && typeof defaultOrdinal != "bigint" && !(defaultOrdinal instanceof Number) && !(defaultOrdinal instanceof BigInt))
             throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL) was not an number or bigint (primitive or object).`, defaultOrdinal,)
         try {
-            EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this.#getValueFromGenericOrdinal(defaultOrdinal,),)
+            if (typeof defaultOrdinal == "number")
+                EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByNumber(defaultOrdinal, defaultOrdinal,),)
+            else if (typeof defaultOrdinal == "bigint")
+                EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByBigInt(defaultOrdinal, defaultOrdinal,),)
+            else if (defaultOrdinal instanceof Number)
+                EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByNumber(defaultOrdinal.valueOf(), defaultOrdinal,),)
+            else
+                EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByBigInt(defaultOrdinal.valueOf(), defaultOrdinal,),)
             return true
         } catch (exception) {
             if (exception instanceof ForbiddenNumericException)
@@ -367,44 +377,6 @@ export class CompanionEnum<const ENUM extends Enumerable,
                 throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". The value “${this.instance.name}.${defaultOrdinal}” does not exist.`, exception,)
             throw exception
         }
-    }
-
-
-    /**
-     * Get the {@link Enumerable} from a name,
-     * but not directly related to the {@link _getValue} method
-     *
-     * @param name The {@link Enumerable.name name} to search
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullReferenceException}
-     */
-    #getValueFromGenericName(name: StringOrObject,): ENUM {
-        if (typeof name == "string")
-            return this._getValueByString(name, name,)
-        return this._getValueByString(name.valueOf(), name,)
-    }
-
-    /**
-     * Get the {@link Enumerable} from an ordinal,
-     * but not directly related to the {@link _getValue} method
-     *
-     * @param ordinal The {@link Enumerable.ordinal ordinal} to search
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullReferenceException}
-     */
-    #getValueFromGenericOrdinal(ordinal: NumericOrObject,): ENUM {
-        if (typeof ordinal == "number")
-            return this._getValueByNumber(ordinal, ordinal,)
-        if (typeof ordinal == "bigint")
-            return this._getValueByBigInt(ordinal, ordinal,)
-        if (ordinal instanceof Number)
-            return this._getValueByNumber(ordinal.valueOf(), ordinal,)
-        return this._getValueByBigInt(ordinal.valueOf(), ordinal,)
     }
 
     //#endregion -------------------- Initialization methods --------------------
@@ -420,7 +392,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param originalValue The original {@link nameOrOrdinal}
      * @throws {ForbiddenNumericException}
      */
-    protected _isNotInEdgeCaseNumericByString(nameOrOrdinal: string, originalValue: StringOrObject,) {
+    protected _isNotInEdgeCaseNumericByString(nameOrOrdinal: string, originalValue: StringOrObject,): void {
         if (nameOrOrdinal === "NaN")
             throw new ForbiddenNumericException("Forbidden numeric. The String value cannot be NaN.", originalValue,)
         if (nameOrOrdinal === "-Infinity")
@@ -437,7 +409,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param originalValue The original {@link ordinal}
      * @throws {ForbiddenNumericException}
      */
-    protected _isNotInEdgeCaseNumericByNumber(ordinal: number, originalValue: NumberOrObject,) {
+    protected _isNotInEdgeCaseNumericByNumber(ordinal: number, originalValue: NumberOrObject,): void {
         if (Number.isNaN(ordinal,))
             throw new ForbiddenNumericException("Forbidden numeric. The Number value cannot be NaN.", originalValue,)
         if (ordinal == -Infinity)
@@ -456,7 +428,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param originalValue The original {@link nameOrOrdinal}
      * @throws {ForbiddenInheritedEnumerableMemberException}
      */
-    protected _isNotInInheritedEnumerableMembers(nameOrOrdinal: string, originalValue: StringOrObject,) {
+    protected _isNotInInheritedEnumerableMembers(nameOrOrdinal: string, originalValue: StringOrObject,): void {
         if ((EnumConstants.EVERY_ENUMERABLE_MEMBERS as CollectionHolder<string>).has(nameOrOrdinal,))
             throw new ForbiddenInheritedEnumerableMemberException(`Forbidden inherited enumerable member. The string value “${originalValue}” cannot be an inherited member of the inherited Enum static methods (\"name\", \"ordinal\", \"parent\", \"grandParent\", \"greatGrandParent\").`, originalValue,)
     }
@@ -471,7 +443,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param originalValue The original {@link nameOrOrdinal}
      * @throws {ForbiddenNameException}
      */
-    protected _isNotInExcludedNames(nameOrOrdinal: string, originalValue: StringOrObject,) {
+    protected _isNotInExcludedNames(nameOrOrdinal: string, originalValue: StringOrObject,): void {
         const excludedNames = this._excludedNames
         if (excludedNames.has(nameOrOrdinal,))
             throw new ForbiddenNameException(`Forbidden name. The char value “${nameOrOrdinal}” is one of the excluded names ${excludedNames.join(", ", '(', ')', null, null, it => `“${it}”`,)}.`, originalValue,)
@@ -487,7 +459,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param originalValue The original {@link ordinal}
      * @throws {ImpossibleOrdinalException}
      */
-    protected _isInOrdinalsByString(ordinal: NumberTemplate, originalValue: StringOrObject,) {
+    protected _isInOrdinalsByString(ordinal: NumberTemplate, originalValue: StringOrObject,): void {
         const ordinals = this.ordinals
         if (ordinals.has(Number(ordinal,),))
             return
@@ -535,7 +507,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param originalValue The original {@link ordinal}
      * @throws {ImpossibleOrdinalException}
      */
-    protected _isPositiveByString(ordinal: NumberTemplate, originalValue: StringOrObject,) {
+    protected _isPositiveByString(ordinal: NumberTemplate, originalValue: StringOrObject,): void {
         if (ordinal[0] === '-')
             throw new ImpossibleOrdinalException(`The String value “${ordinal}” cannot be under 0.`, originalValue,)
     }
@@ -547,7 +519,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param originalValue The original {@link ordinal}
      * @throws {ImpossibleOrdinalException}
      */
-    protected _isPositiveByNumber(ordinal: number, originalValue: NumberOrObject,) {
+    protected _isPositiveByNumber(ordinal: number, originalValue: NumberOrObject,): void {
         if (ordinal < 0)
             throw new ImpossibleOrdinalException(`The Number value “${ordinal}” cannot be under 0.`, originalValue,)
     }
@@ -559,7 +531,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param originalValue The original {@link ordinal}
      * @throws {ImpossibleOrdinalException}
      */
-    protected _isPositiveByBigInt(ordinal: bigint, originalValue: BigIntOrObject,) {
+    protected _isPositiveByBigInt(ordinal: bigint, originalValue: BigIntOrObject,): void {
         if (ordinal < 0n)
             throw new ImpossibleOrdinalException(`The BigInt value “${ordinal}” cannot be under 0.`, originalValue,)
     }
@@ -574,7 +546,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param originalValue The original {@link ordinal}
      * @throws {ImpossibleOrdinalException}
      */
-    protected _isNotOverMaxValueByString(ordinal: NumberTemplate, originalValue: StringOrObject,) {
+    protected _isNotOverMaxValueByString(ordinal: NumberTemplate, originalValue: StringOrObject,): void {
         if (ordinal.length > 10)
             throw new ImpossibleOrdinalException(`The String value “${ordinal}” cannot be over the maximum value (2 147 483 647) of an int.`, originalValue,)
         if (Number(ordinal,) > 0b111_1111_1111_1111_1111_1111_1111_1111)
@@ -588,7 +560,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param originalValue The original {@link ordinal}
      * @throws {ImpossibleOrdinalException}
      */
-    protected _isNotOverMaxValueByNumber(ordinal: number, originalValue: NumberOrObject,) {
+    protected _isNotOverMaxValueByNumber(ordinal: number, originalValue: NumberOrObject,): void {
         if (ordinal > 0b111_1111_1111_1111_1111_1111_1111_1111)
             throw new ImpossibleOrdinalException(`The Number value “${ordinal}” cannot be over the maximum value (2 147 483 647) of an int.`, originalValue,)
     }
@@ -600,7 +572,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param originalValue The original {@link ordinal}
      * @throws {ImpossibleOrdinalException}
      */
-    protected _isNotOverMaxValueByBigInt(ordinal: bigint, originalValue: BigIntOrObject,) {
+    protected _isNotOverMaxValueByBigInt(ordinal: bigint, originalValue: BigIntOrObject,): void {
         if (ordinal > 0b111_1111_1111_1111_1111_1111_1111_1111n)
             throw new ImpossibleOrdinalException(`The BigInt value “${ordinal}” cannot be over the maximum value (2 147 483 647) of an int.`, originalValue,)
     }
@@ -615,7 +587,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param originalValue The original {@link ordinal}
      * @throws {ImpossibleOrdinalException}
      */
-    protected _isNotAFloatingNumberByString(ordinal: NumberTemplate, originalValue: StringOrObject,) {
+    protected _isNotAFloatingNumberByString(ordinal: NumberTemplate, originalValue: StringOrObject,): void {
         const size = ordinal.length
         let index = -1
         while (++index < size)
@@ -630,7 +602,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param originalValue The original {@link ordinal}
      * @throws {ImpossibleOrdinalException}
      */
-    protected _isNotAFloatingNumberByNumber(ordinal: number, originalValue: NumberOrObject,) {
+    protected _isNotAFloatingNumberByNumber(ordinal: number, originalValue: NumberOrObject,): void {
         if (ordinal % 1 != 0)
             throw new ImpossibleOrdinalException(`The number value “${ordinal}” cannot be a floating value.`, originalValue,)
     }
@@ -638,36 +610,6 @@ export class CompanionEnum<const ENUM extends Enumerable,
     //#endregion -------------------- Validation (is not a floating value) methods --------------------
 
     //#region -------------------- Get value (validated) methods --------------------
-
-    /**
-     * Get the field from the {@link instance} with a validation that it exist
-     *
-     * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} that can exist
-     * @param originalValue The original {@link nameOrOrdinal} received
-     * @param instance The instance to tell if the value exists
-     * @throws {NullReferenceException}
-     */
-    #getField(nameOrOrdinal: string, originalValue: StringOrObject, instance: ENUMERABLE_CONSTRUCTOR,): unknown {
-        if (!Reflect.has(instance, nameOrOrdinal,))
-            throw new NullReferenceException(`No value exist in “${instance.name}.${nameOrOrdinal}”.`, originalValue,)
-        return Reflect.get(instance, nameOrOrdinal,)
-    }
-
-    /**
-     * Validate that the {@link value} is not `null`
-     *
-     * @param value the value to validate
-     * @param nameOrOrdinal the {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal}
-     * @param originalValue The original {@link nameOrOrdinal} received
-     * @param instance The instance (to avoid recalling the {@link CompanionEnumDeclaration.instance getter})
-     * @throws {NullReferenceException}
-     */
-    #getValue<const T = unknown, >(value: T, nameOrOrdinal: string, originalValue: StringOrObject, instance: ENUMERABLE_CONSTRUCTOR,): NonNullable<T> {
-        if (value == null)
-            throw new NullReferenceException(`The value “${instance.name}.CompanionEnum.get.${nameOrOrdinal}” cannot be a null reference.`, originalValue,)
-        return value
-    }
-
 
     /**
      * Get the valid value that is a valid {@link Enumerable}
@@ -710,11 +652,15 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @throws {InvalidInstanceException}
      * @throws {NullReferenceException}
      */
-    protected _getValueFromReflection(nameOrOrdinal: string, originalValue: StringOrObject,) {
+    protected _getValueFromReflection(nameOrOrdinal: string, originalValue: StringOrObject,): ENUM {
         const instance = this.instance
-        const field = this.#getField(nameOrOrdinal, originalValue, instance,)
-        const value = this.#getValue(field, nameOrOrdinal, originalValue, instance,)
-        return this._getValidValueByString(value, nameOrOrdinal, originalValue, instance,)
+        if (!Reflect.has(instance, nameOrOrdinal,))
+            throw new NullReferenceException(`No value exist in “${instance.name}.${nameOrOrdinal}”.`, originalValue,)
+
+        const field: unknown = Reflect.get(instance, nameOrOrdinal,)
+        if (field == null)
+            throw new NullReferenceException(`The value “${instance.name}.CompanionEnum.get.${nameOrOrdinal}” cannot be a null reference.`, originalValue,)
+        return this._getValidValueByString(field, nameOrOrdinal, originalValue, instance,)
     }
 
     /**
@@ -791,7 +737,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @throws {ForbiddenNumericException}
      * @throws {ImpossibleOrdinalException}
      */
-    protected _getValidOrdinalByNumber(ordinal: number, originalValue: NumberOrObject,) {
+    protected _getValidOrdinalByNumber(ordinal: number, originalValue: NumberOrObject,): OrdinalOf<ENUM> {
         this._isNotInEdgeCaseNumericByNumber(ordinal, originalValue,)
         this._isPositiveByNumber(ordinal, originalValue,)
         this._isNotAFloatingNumberByNumber(ordinal, originalValue,)
@@ -806,7 +752,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param originalValue The original {@link ordinal}
      * @throws {ImpossibleOrdinalException}
      */
-    protected _getValidOrdinalByBigInt(ordinal: bigint, originalValue: BigIntOrObject,) {
+    protected _getValidOrdinalByBigInt(ordinal: bigint, originalValue: BigIntOrObject,): OrdinalOf<ENUM> {
         this._isPositiveByBigInt(ordinal, originalValue,)
         this._isNotOverMaxValueByBigInt(ordinal, originalValue,)
         return this._isInOrdinalsByBigInt(ordinal, originalValue,)
@@ -899,10 +845,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
     //#region -------------------- "Get value" methods --------------------
 
     public getValue                                                                                        (value: Nullable<ImpossibleNames>,):                                                      never
-    public getValue<const ORDINAL extends number, >                                                        (ordinal: Nullable<ORDINAL>,):                                                            ValueBySpecificOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL>
     public getValue<const ORDINAL extends number, >                                                        (ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,):                                  ValueBySpecificOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL>
-    public getValue                                                                                        (ordinal: Nullable<TemplateOrNumberOrObject>,):                                           ENUM
-    public getValue                                                                                        (ordinal: Nullable<TemplateOrBigIntOrObject>,):                                           ENUM
     public getValue                                                                                        (ordinal: Nullable<TemplateOrNumericOrObject>,):                                          ENUM
     public getValue<const NAME extends string, >                                                           (name: Nullable<StringOrObject<NAME>>,):                                                  ValueBySpecificName<ENUMERABLE_CONSTRUCTOR, ENUM, NAME>
     public getValue                                                                                        (nameOrOrdinal: Nullable<StringOrObject>,):                                               ENUM
@@ -963,7 +906,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @throws {InvalidEnumerableException}
      * @throws {NullReferenceException}
      */
-    protected _getValueByEnumerable(enumerable: Enumerable,) {
+    protected _getValueByEnumerable(enumerable: Enumerable,): ENUM {
         return this._getValidValueByEnumerable(enumerable,)
     }
 
@@ -980,7 +923,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @throws {NullReferenceException}
      * @readonly
      */
-    protected _getValueByString(name: string, originalValue: StringOrObject,) {
+    protected _getValueByString(name: string, originalValue: StringOrObject,): ENUM {
         return this._getValueFromReflection(this._getValidName(name, originalValue,), originalValue,)
     }
 
@@ -994,7 +937,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @throws {NullReferenceException}
      * @readonly
      */
-    protected _getValueByNumber(ordinal: number, originalValue: NumberOrObject,) {
+    protected _getValueByNumber(ordinal: number, originalValue: NumberOrObject,): ENUM {
         return this._getValueFromOrdinals(this._getValidOrdinalByNumber(ordinal, originalValue,), originalValue,)
     }
 
@@ -1007,7 +950,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @throws {NullReferenceException}
      * @readonly
      */
-    protected _getValueByBigInt(ordinal: bigint, originalValue: BigIntOrObject,) {
+    protected _getValueByBigInt(ordinal: bigint, originalValue: BigIntOrObject,): ENUM {
         return this._getValueFromOrdinals(this._getValidOrdinalByBigInt(ordinal, originalValue,), originalValue,)
     }
 
@@ -1017,10 +960,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
     //#region -------------------- "Get name" methods --------------------
 
     public getName                                                                                               (value: Nullable<ImpossibleNames>,):                                                      never
-    public getName<const ORDINAL extends number, >                                                               (ordinal: Nullable<ORDINAL>,):                                                            NameByOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL>
     public getName<const ORDINAL extends number, >                                                               (ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,):                                  NameByOrdinal<ENUMERABLE_CONSTRUCTOR, ENUM, ORDINAL>
-    public getName                                                                                               (ordinal: Nullable<TemplateOrNumberOrObject>,):                                           NameOf<ENUM>
-    public getName                                                                                               (ordinal: Nullable<TemplateOrBigIntOrObject>,):                                           NameOf<ENUM>
     public getName                                                                                               (ordinal: Nullable<TemplateOrNumericOrObject>,):                                          NameOf<ENUM>
     public getName<const NAME extends string, >                                                                  (name: Nullable<StringOrObject<NAME>>,):                                                  SpecificNameOf<NAME, ENUM>
     public getName                                                                                               (nameOrOrdinal: Nullable<StringOrObject>,):                                               NameOf<ENUM>
@@ -1137,10 +1077,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
     //#region -------------------- "Get ordinal" methods --------------------
 
     public getOrdinal                                                                                               (value: Nullable<ImpossibleNames>,):                                                      never
-    public getOrdinal<const ORDINAL extends number, >                                                               (ordinal: Nullable<ORDINAL>,):                                                            SpecificOrdinalOf<ORDINAL, ENUM>
     public getOrdinal<const ORDINAL extends number, >                                                               (ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,):                                  SpecificOrdinalOf<ORDINAL, ENUM>
-    public getOrdinal                                                                                               (ordinal: Nullable<TemplateOrNumberOrObject>,):                                           OrdinalOf<ENUM>
-    public getOrdinal                                                                                               (ordinal: Nullable<TemplateOrBigIntOrObject>,):                                           OrdinalOf<ENUM>
     public getOrdinal                                                                                               (ordinal: Nullable<TemplateOrNumericOrObject>,):                                          OrdinalOf<ENUM>
     public getOrdinal<const NAME extends string, >                                                                  (name: Nullable<StringOrObject<NAME>>,):                                                  OrdinalByName<ENUMERABLE_CONSTRUCTOR, ENUM, NAME>
     public getOrdinal                                                                                               (nameOrOrdinal: Nullable<StringOrObject>,):                                               OrdinalOf<ENUM>

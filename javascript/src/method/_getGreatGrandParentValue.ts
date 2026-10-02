@@ -14,11 +14,9 @@ import type {Enumerable}                           from "../Enumerable"
 import type {EnumerableWithGreatGrandParent}       from "../EnumerableWithGreatGrandParent"
 import type {EnumerableWithGrandParent}            from "../EnumerableWithGrandParent"
 import type {EnumerableWithParent}                 from "../EnumerableWithParent"
-import type {CompanionEnumDeclaration}             from "../companion/CompanionEnum.declaration"
 import type {PossibleEnumerableValueOrNameByValue} from "../type/possibleInstance"
 
 import {EnumConstants}                     from "../EnumConstants"
-import {CompanionEnum}                     from "../companion/CompanionEnum"
 import {NullReferenceException}            from "../exception/NullReferenceException"
 import {_getGreatGrandParentValueFromName} from "./_getGreatGrandParentValueFromName"
 
@@ -29,12 +27,12 @@ import {_getGreatGrandParentValueFromName} from "./_getGreatGrandParentValueFrom
  * a {@link NullReferenceException} is thrown.
  *
  * If the {@link value value received} is a {@link String} (primitive or object),
- * it retrieves the value via {@link CompanionEnumDeclaration.getValue} method.
+ * it retrieves the value via {@link CompanionEnumerableWithGreatGrandParent.getValue} method.
  *
  * If the {@link value value received} is a {@link Enumerable},
  * it assumes that the value is correct.
  *
- * @param instance The instance to retrieve its {@link CompanionEnum} and use its {@link CompanionEnumDeclaration.getValue} method
+ * @param instance The instance to retrieve its {@link CompanionEnumerableWithGreatGrandParent} and use its {@link CompanionEnumerableWithGreatGrandParent.getValue} method
  * @param value    The value to retrieve
  * @throws NullReferenceException   The value is `null`|`undefined`
  * @throws NullReferenceException   The value refer to a {@link EnumConstants.NULL_ENUM_REFERENCE_SYMBOL}

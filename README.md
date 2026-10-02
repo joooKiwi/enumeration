@@ -88,7 +88,7 @@ The `companion enum` implementation is a static field on the `enum class` named 
 due to the fact there is no `Annotation`/`Attribute` usable in the language natively.
 
 And in the case a custom implementation is needed, the classes are extensible.
-Also, there is interfaces like `CompanionEnumDeclaration` should be declared.
+Also, there is interfaces like `CompanionEnumerable` should be declared.
 
 ```javascript
 // Javascript

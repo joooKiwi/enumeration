@@ -11,25 +11,21 @@
 //··························································
 
 import type {Array} from "@joookiwi/type"
-import {expect} from "vitest"
+import {expect}     from "vitest"
 
-import type {CompanionEnumWithGreatGrandParentDeclaration} from "../../src/companion/CompanionEnumWithGreatGrandParent.declaration"
+import type {CompanionEnumerableWithParent} from "../../src/companion/CompanionEnumerableWithParent"
 
-import {EmptyEnum}                     from "./EmptyEnum"
-import {EmptyEnumWithGrandParent}      from "./EmptyEnumWithGrandParent"
-import {EmptyEnumWithGreatGrandParent} from "./EmptyEnumWithGreatGrandParent"
-import {EmptyEnumWithParent}           from "./EmptyEnumWithParent"
+import {EmptyEnum}           from "./EmptyEnum"
+import {EmptyEnumWithParent} from "./EmptyEnumWithParent"
 
-/** An {@link CompanionEnumWithGreatGrandParentDeclaration} that has the purpose to be empty with nothing to specify */
-export class EmptyCompanionEnumWithGreatGrandParentDeclaration
-    implements CompanionEnumWithGreatGrandParentDeclaration<EmptyEnumWithGreatGrandParent, typeof EmptyEnumWithGreatGrandParent, EmptyEnumWithGrandParent, typeof EmptyEnumWithGrandParent, EmptyEnumWithParent, typeof EmptyEnumWithParent, EmptyEnum, typeof EmptyEnum> {
+/** An {@link CompanionEnumerableWithParent} that has the purpose to be empty with nothing to specify */
+export class EmptyCompanionEnumerableWithParent
+    implements CompanionEnumerableWithParent<EmptyEnumWithParent, typeof EmptyEnumWithParent, EmptyEnum, typeof EmptyEnum> {
 
     public constructor() {}
 
-    public readonly greatGrandParentInstance = EmptyEnum
-    public readonly grandParentInstance = EmptyEnumWithParent
-    public readonly parentInstance = EmptyEnumWithGrandParent
-    public readonly instance = EmptyEnumWithGreatGrandParent
+    public readonly parentInstance = EmptyEnum
+    public readonly instance = EmptyEnumWithParent
 
     public get defaultValue(): never { return expect.fail("The getter method “defaultValue” was not expected to be called.",) }
     public set defaultValue(_: unknown,) { expect.fail("The setter method “defaultValue” was not expected to be called.",) }

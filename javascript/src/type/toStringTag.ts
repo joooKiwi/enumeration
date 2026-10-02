@@ -15,5 +15,5 @@ import type {EnumConstants} from "../EnumConstants"
 /** The {@link Enumerable} name in a {@link Object.toString toString()} method */
 export type EnumerableName = typeof EnumConstants["ENUM_TO_STRING_TAG"]
 
-/** The {@link CompanionEnumDeclaration} name in a {@link Object.toString toString()} method */
+/** The {@link CompanionEnumerable} name in a {@link Object.toString toString()} method */
 export type CompanionEnumName = typeof EnumConstants["COMPANION_ENUM_TO_STRING_TAG"]

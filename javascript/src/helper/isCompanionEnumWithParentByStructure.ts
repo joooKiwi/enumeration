@@ -10,14 +10,13 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {Enumerable}                             from "../Enumerable"
-import type {CompanionEnumWithParentDeclaration}     from "../companion/CompanionEnumWithParent.declaration"
-import type {CompanionEnumWithParentDeclarationType} from "../type/companion"
-import type {KeyOfCompanionEnumWithParent}           from "../type/keyOf"
-import type {EnumWithNullableParentGeneralType}      from "../type/general"
+import type {Enumerable}                        from "../Enumerable"
+import type {CompanionEnumerableWithParentType} from "../type/companion"
+import type {KeyOfCompanionEnumWithParent}      from "../type/keyOf"
+import type {EnumWithNullableParentGeneralType} from "../type/general"
 
 /**
- * Tell if the value received has the structure of a {@link CompanionEnumWithParentDeclaration}
+ * Tell if the value received has the structure of a {@link CompanionEnumerableWithParent}
  *
  * @param value The value to compare
  * @see isCompanionEnumWithParent
@@ -26,7 +25,7 @@ import type {EnumWithNullableParentGeneralType}      from "../type/general"
  */
 export function isCompanionEnumWithParentByStructure(value: unknown,): value is (& object & Record<KeyOfCompanionEnumWithParent, unknown>)
 /**
- * Tell if the value received has the structure of a {@link CompanionEnumWithParentDeclaration}
+ * Tell if the value received has the structure of a {@link CompanionEnumerableWithParent}
  *
  * @param value The value to compare
  * @see isCompanionEnumWithParent
@@ -34,7 +33,7 @@ export function isCompanionEnumWithParentByStructure(value: unknown,): value is 
  * @doesNotValidateTheTypes
  * @note Giving a type to the method is only here to help the implementation, but it will not change the behaviour in JavaScript
  */
-export function isCompanionEnumWithParentByStructure<const INSTANCE extends CompanionEnumWithParentDeclarationType<EnumWithNullableParentGeneralType, Enumerable>, >(value: unknown,): value is INSTANCE
+export function isCompanionEnumWithParentByStructure<const INSTANCE extends CompanionEnumerableWithParentType<EnumWithNullableParentGeneralType, Enumerable>, >(value: unknown,): value is INSTANCE
 export function isCompanionEnumWithParentByStructure(value: unknown,) {
     if (value == null)
         return false

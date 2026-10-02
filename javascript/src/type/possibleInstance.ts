@@ -12,21 +12,21 @@
 
 import type {BigIntOrObject, Nullable, NumberOrObject, StringOrObject} from "@joookiwi/type"
 
-import type {Enumerable}                                   from "../Enumerable"
-import type {EnumerableConstructor}                        from "../EnumerableConstructor"
-import type {EnumerableWithNullableGrandParent}            from "../EnumerableWithNullableGrandParent"
-import type {EnumerableWithNullableGreatGrandParent}       from "../EnumerableWithNullableGreatGrandParent"
-import type {EnumerableWithNullableParent}                 from "../EnumerableWithNullableParent"
-import type {EnumerableWithGrandParent}                    from "../EnumerableWithGrandParent"
-import type {EnumerableWithGreatGrandParent}               from "../EnumerableWithGreatGrandParent"
-import type {EnumerableWithParent}                         from "../EnumerableWithParent"
-import type {CompanionEnumWithGrandParentDeclaration}      from "../companion/CompanionEnumWithGrandParent.declaration"
-import type {CompanionEnumWithGreatGrandParentDeclaration} from "../companion/CompanionEnumWithGreatGrandParent.declaration"
-import type {CompanionEnumWithParentDeclaration}           from "../companion/CompanionEnumWithParent.declaration"
-import type {CompanionEnumDeclarationType}                 from "./companion"
-import type {NameOf}                                       from "./nameOf"
-import type {OrdinalOf}                                    from "./ordinalOf"
-import type {PossibleEnumSymbol}                           from "./symbol"
+import type {Enumerable}                              from "../Enumerable"
+import type {EnumerableConstructor}                   from "../EnumerableConstructor"
+import type {EnumerableWithNullableGrandParent}       from "../EnumerableWithNullableGrandParent"
+import type {EnumerableWithNullableGreatGrandParent}  from "../EnumerableWithNullableGreatGrandParent"
+import type {EnumerableWithNullableParent}            from "../EnumerableWithNullableParent"
+import type {EnumerableWithGrandParent}               from "../EnumerableWithGrandParent"
+import type {EnumerableWithGreatGrandParent}          from "../EnumerableWithGreatGrandParent"
+import type {EnumerableWithParent}                    from "../EnumerableWithParent"
+import type {CompanionEnumerableWithGrandParent}      from "../companion/CompanionEnumerableWithGrandParent"
+import type {CompanionEnumerableWithGreatGrandParent} from "../companion/CompanionEnumerableWithGreatGrandParent"
+import type {CompanionEnumerableWithParent}           from "../companion/CompanionEnumerableWithParent"
+import type {CompanionEnumerableType}                 from "./companion"
+import type {NameOf}                                  from "./nameOf"
+import type {OrdinalOf}                               from "./ordinalOf"
+import type {PossibleEnumSymbol}                      from "./symbol"
 
 /**
  * The possible {@link Enumerable} members by itself
@@ -42,13 +42,13 @@ export type PossibleEnumerableMembers = | keyof Enumerable
                                         | keyof EnumerableWithNullableGreatGrandParent<never, never, never>
                                         | keyof EnumerableWithGreatGrandParent<never, never, never>
 
-/** The possible {@link Enumerable} instances. Either a {@link EnumerableConstructor} or a {@link CompanionEnumDeclaration} */
+/** The possible {@link Enumerable} instances. Either a {@link EnumerableConstructor} or a {@link CompanionEnumerable} */
 export type PossibleEnumerableInstance<ENUMERABLE extends Enumerable = Enumerable, > =
-    | CompanionEnumDeclarationType<ENUMERABLE>
-    | CompanionEnumWithParentDeclaration<any, any, ENUMERABLE, any>
-    | CompanionEnumWithGrandParentDeclaration<any, any, any, any, ENUMERABLE, any>
-    | CompanionEnumWithGreatGrandParentDeclaration<any, any, any, any, any, any, ENUMERABLE, any>
-    | EnumerableConstructor<ENUMERABLE, CompanionEnumDeclarationType<ENUMERABLE>>
+    | CompanionEnumerableType<ENUMERABLE>
+    | CompanionEnumerableWithParent<any, any, ENUMERABLE, any>
+    | CompanionEnumerableWithGrandParent<any, any, any, any, ENUMERABLE, any>
+    | CompanionEnumerableWithGreatGrandParent<any, any, any, any, any, any, ENUMERABLE, any>
+    | EnumerableConstructor<ENUMERABLE, CompanionEnumerableType<ENUMERABLE>>
 
 /** A general {@link Enumerable} type possibility */
 export type PossibleEnumerableValue<ENUM extends Enumerable = Enumerable, ORDINAL extends number = number, NAME extends string = string, > =
