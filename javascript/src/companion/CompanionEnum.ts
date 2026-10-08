@@ -422,14 +422,14 @@ export class CompanionEnum<const ENUM extends Enumerable,
     //#region -------------------- Validation (is not in "inherited enumerable members") methods --------------------
 
     /**
-     * Validate that the {@link nameOrOrdinal} is not a {@link EnumConstants.EVERY_ENUMERABLE_MEMBERS enumerable member}
+     * Validate that the {@link nameOrOrdinal} is not a {@link EnumConstants.ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS enumerable member}
      *
      * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link nameOrOrdinal}
      * @throws {ForbiddenInheritedEnumerableMemberException}
      */
     protected _isNotInInheritedEnumerableMembers(nameOrOrdinal: string, originalValue: StringOrObject,): void {
-        if ((EnumConstants.EVERY_ENUMERABLE_MEMBERS as CollectionHolder<string>).has(nameOrOrdinal,))
+        if ((EnumConstants.ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS as CollectionHolder<string>).has(nameOrOrdinal,))
             throw new ForbiddenInheritedEnumerableMemberException(`Forbidden inherited enumerable member. The string value “${originalValue}” cannot be an inherited member of the inherited Enum static methods (\"name\", \"ordinal\", \"parent\", \"grandParent\", \"greatGrandParent\").`, originalValue,)
     }
 

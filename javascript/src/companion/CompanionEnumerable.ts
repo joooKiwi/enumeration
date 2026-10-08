@@ -57,7 +57,7 @@ export interface CompanionEnumerable<out ENUM extends Enumerable,
 
     /**
      * Set nothing because of an {@link EnumConstants.EDGE_CASE_NUMERIC_NAMES edge-case name}
-     * or an {@link EnumConstants.EVERY_ENUMERABLE_MEMBERS enumerable member name}
+     * or an {@link EnumConstants.ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS enumerable member name}
      *
      * @param value The edge-case value
      * @throws {ForbiddenNumericException}

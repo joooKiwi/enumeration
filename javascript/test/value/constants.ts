@@ -144,7 +144,7 @@ export const forbiddenNumbers = [
     new Holder("-Infinity",              `"-Infinity" as string`,),
     new Holder(new String("-Infinity",), `"-Infinity" as string object`,),
 ] as const
-export const everyStringEnumerableMember = EnumConstants.EVERY_ENUMERABLE_MEMBERS.filterNot((it,): it is (& PossibleEnumerableMembers & symbol) => typeof it == "symbol").map(it => [
+export const everyStringEnumerableMember = EnumConstants.ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS.filterNot((it,): it is (& PossibleEnumerableMembers & symbol) => typeof it == "symbol").map(it => [
     new Holder(it, `${it} as sting`),
     new Holder(new String(it,), `${it} as string object`,),
 ],).toArray().flat()

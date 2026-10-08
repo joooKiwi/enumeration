@@ -32,7 +32,7 @@ import type {PossibleEnumSymbol}                      from "./symbol"
  * The possible {@link Enumerable} members by itself
  * or by an inheritors (in the project)
  *
- * @see EnumConstants.EVERY_ENUMERABLE_MEMBERS
+ * @see EnumConstants.ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS
  */
 export type PossibleEnumerableMembers = | keyof Enumerable
                                         | keyof EnumerableWithNullableParent<never>
