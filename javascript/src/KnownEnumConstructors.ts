@@ -75,7 +75,7 @@ export class KnownEnumConstructors {
             throw new InvalidInstanceException("Invalid instance exception. The value was not of type “Function”", value,)
 
         /** The prototype chain associated to the value received in parameter up to {@link Object} */
-        let prototypeChain: MutableArray<object> = []
+        const prototypeChain: MutableArray<object> = []
         let prototype: NullOr<object> = value
         while (prototype != null) {
             prototypeChain.push(prototype,)
