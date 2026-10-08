@@ -145,43 +145,43 @@ describe("methodTests (getCompanion)", () => {
         test("weak map",               () => expect(() => getCompanion(class InvalidEnumWithGetWeakMapOnCompanionEnum {      static readonly CompanionEnum = class InvalidCompanionEnumWithWeakMapGet {      static readonly get = new WeakMap() } },),)    .toThrow(InvalidInstanceException,),)
     },)
     describe("valid", () => {
-        test("Enum",       () => expect(getCompanion(EmptyEnum,),).toBe(EmptyEnum.CompanionEnum.get,),)
-        test("EnumWithParent",       () => expect(getCompanion(EmptyEnumWithParent,),).toBe(EmptyEnumWithParent.CompanionEnum.get,),)
-        test("EnumWithNullableParent",       () => expect(getCompanion(EmptyEnumWithNullableParent,),).toBe(EmptyEnumWithNullableParent.CompanionEnum.get,),)
-        test("EnumWithGrandParent",       () => expect(getCompanion(EmptyEnumWithGrandParent,),).toBe(EmptyEnumWithGrandParent.CompanionEnum.get,),)
-        test("EnumWithNullableGrandParent",       () => expect(getCompanion(EmptyEnumWithNullableGrandParent,),).toBe(EmptyEnumWithNullableGrandParent.CompanionEnum.get,),)
-        test("EnumWithGreatGrandParent",       () => expect(getCompanion(EmptyEnumWithGreatGrandParent,),).toBe(EmptyEnumWithGreatGrandParent.CompanionEnum.get,),)
-        test("EnumWithNullableGreatGrandParent",       () => expect(getCompanion(EmptyEnumWithNullableGreatGrandParent,),).toBe(EmptyEnumWithNullableGreatGrandParent.CompanionEnum.get,),)
-        test("Enumerable", () => expect(getCompanion(EmptyEnumerable,),).toBe(EmptyEnumerable.CompanionEnum.get,),)
-        test("EnumerableWithParent", () => expect(getCompanion(EmptyEnumerableWithParent,),).toBe(EmptyEnumerableWithParent.CompanionEnum.get,),)
-        test("EnumerableWithGrandParent", () => expect(getCompanion(EmptyEnumerableWithGrandParent,),).toBe(EmptyEnumerableWithGrandParent.CompanionEnum.get,),)
-        test("EnumerableWithGreatGrandParent", () => expect(getCompanion(EmptyEnumerableWithGreatGrandParent,),).toBe(EmptyEnumerableWithGreatGrandParent.CompanionEnum.get,),)
+        test("Enum",                             () => expect(getCompanion(EmptyEnum,),)                            .toBe(EmptyEnum.CompanionEnum.get,),)
+        test("EnumWithParent",                   () => expect(getCompanion(EmptyEnumWithParent,),)                  .toBe(EmptyEnumWithParent.CompanionEnum.get,),)
+        test("EnumWithNullableParent",           () => expect(getCompanion(EmptyEnumWithNullableParent,),)          .toBe(EmptyEnumWithNullableParent.CompanionEnum.get,),)
+        test("EnumWithGrandParent",              () => expect(getCompanion(EmptyEnumWithGrandParent,),)             .toBe(EmptyEnumWithGrandParent.CompanionEnum.get,),)
+        test("EnumWithNullableGrandParent",      () => expect(getCompanion(EmptyEnumWithNullableGrandParent,),)     .toBe(EmptyEnumWithNullableGrandParent.CompanionEnum.get,),)
+        test("EnumWithGreatGrandParent",         () => expect(getCompanion(EmptyEnumWithGreatGrandParent,),)        .toBe(EmptyEnumWithGreatGrandParent.CompanionEnum.get,),)
+        test("EnumWithNullableGreatGrandParent", () => expect(getCompanion(EmptyEnumWithNullableGreatGrandParent,),).toBe(EmptyEnumWithNullableGreatGrandParent.CompanionEnum.get,),)
+        test("Enumerable",                       () => expect(getCompanion(EmptyEnumerable,),)                      .toBe(EmptyEnumerable.CompanionEnum.get,),)
+        test("EnumerableWithParent",             () => expect(getCompanion(EmptyEnumerableWithParent,),)            .toBe(EmptyEnumerableWithParent.CompanionEnum.get,),)
+        test("EnumerableWithGrandParent",        () => expect(getCompanion(EmptyEnumerableWithGrandParent,),)       .toBe(EmptyEnumerableWithGrandParent.CompanionEnum.get,),)
+        test("EnumerableWithGreatGrandParent",   () => expect(getCompanion(EmptyEnumerableWithGreatGrandParent,),)  .toBe(EmptyEnumerableWithGreatGrandParent.CompanionEnum.get,),)
 
-        test("CompanionEnum", () => {
+        test("CompanionEnum",                           () => {
             const instance = new EmptyCompanionEnum()
             expect(getCompanion(instance,),).toBe(instance,)
         },)
-        test("CompanionEnumWithParent", () => {
+        test("CompanionEnumWithParent",                 () => {
             const instance = new EmptyCompanionEnumWithParent()
             expect(getCompanion(instance,),).toBe(instance,)
         },)
-        test("CompanionEnumWithGrandParent", () => {
+        test("CompanionEnumWithGrandParent",            () => {
             const instance = new EmptyCompanionEnumWithGrandParent()
             expect(getCompanion(instance,),).toBe(instance,)
         },)
-        test("CompanionEnumWithGreatGrandParent", () => {
+        test("CompanionEnumWithGreatGrandParent",       () => {
             const instance = new EmptyCompanionEnumWithGreatGrandParent()
             expect(getCompanion(instance,),).toBe(instance,)
         },)
-        test("CompanionEnumerable", () => {
+        test("CompanionEnumerable",                     () => {
             const instance = new EmptyCompanionEnumerable()
             expect(getCompanion(instance,),).toBe(instance,)
         },)
-        test("CompanionEnumerableWithParent", () => {
+        test("CompanionEnumerableWithParent",           () => {
             const instance = new EmptyCompanionEnumerableWithParent()
             expect(getCompanion(instance,),).toBe(instance,)
         },)
-        test("CompanionEnumerableWithGrandParent", () => {
+        test("CompanionEnumerableWithGrandParent",      () => {
             const instance = new EmptyCompanionEnumerableWithGrandParent()
             expect(getCompanion(instance,),).toBe(instance,)
         },)
