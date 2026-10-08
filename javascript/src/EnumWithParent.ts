@@ -21,7 +21,7 @@ import type {PossibleOrdinalOf}                              from "./type/ordina
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "./type/possibleInstance"
 
 import {Enum}                     from "./Enum"
-import {KnownEnumConstructors}    from "./helper/KnownEnumConstructors"
+import {KnownEnumConstructors}    from "./KnownEnumConstructors"
 import {_getParentValue}         from "./method/_getParentValue"
 import {_getParentValueFromName} from "./method/_getParentValueFromName"
 
@@ -49,7 +49,7 @@ export abstract class EnumWithParent<const PARENT extends Enumerable,
     readonly #parent: Lazy<PARENT>
 
     static {
-        KnownEnumConstructors.get.add(EnumWithParent,)
+        KnownEnumConstructors.add(EnumWithParent,)
     }
 
     //#endregion -------------------- Fields --------------------

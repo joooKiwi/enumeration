@@ -22,9 +22,9 @@ import type {NameOf, PossibleNameOf}                         from "./type/nameOf
 import type {PossibleOrdinalOf}                              from "./type/ordinalOf"
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "./type/possibleInstance"
 
-import {EnumWithNullableGrandParent}  from "./EnumWithNullableGrandParent"
-import {ImpossibleIntegrityException} from "./exception/ImpossibleIntegrityException"
-import {KnownEnumConstructors}        from "./helper/KnownEnumConstructors"
+import {EnumWithNullableGrandParent}       from "./EnumWithNullableGrandParent"
+import {KnownEnumConstructors}             from "./KnownEnumConstructors"
+import {ImpossibleIntegrityException}      from "./exception/ImpossibleIntegrityException"
 import {_getGreatGrandParentValueFromName} from "./method/_getGreatGrandParentValueFromName"
 import {_getNullableGreatGrandParentValue} from "./method/_getNullableGreatGrandParentValue"
 
@@ -57,7 +57,7 @@ export class EnumWithNullableGreatGrandParent<const PARENT extends EnumerableWit
     readonly #greatGrandParent: Lazy<NullOr<GREAT_GRAND_PARENT>>
 
     static {
-        KnownEnumConstructors.get.add(EnumWithNullableGreatGrandParent,)
+        KnownEnumConstructors.add(EnumWithNullableGreatGrandParent,)
     }
 
     //#endregion -------------------- Fields --------------------

@@ -22,8 +22,8 @@ import type {PossibleOrdinalOf}                              from "./type/ordina
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "./type/possibleInstance"
 
 import {EnumWithNullableParent}       from "./EnumWithNullableParent"
+import {KnownEnumConstructors}        from "./KnownEnumConstructors"
 import {ImpossibleIntegrityException} from "./exception/ImpossibleIntegrityException"
-import {KnownEnumConstructors}        from "./helper/KnownEnumConstructors"
 import {_getGrandParentValueFromName} from "./method/_getGrandParentValueFromName"
 import {_getNullableGrandParentValue} from "./method/_getNullableGrandParentValue"
 
@@ -54,7 +54,7 @@ export class EnumWithNullableGrandParent<const PARENT extends EnumerableWithNull
     readonly #grandParent: Lazy<NullOr<GRAND_PARENT>>
 
     static {
-        KnownEnumConstructors.get.add(EnumWithNullableGrandParent,)
+        KnownEnumConstructors.add(EnumWithNullableGrandParent,)
     }
 
     //#endregion -------------------- Fields --------------------

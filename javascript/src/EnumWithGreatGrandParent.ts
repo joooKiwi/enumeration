@@ -23,7 +23,7 @@ import type {PossibleOrdinalOf}                              from "./type/ordina
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "./type/possibleInstance"
 
 import {EnumWithGrandParent}               from "./EnumWithGrandParent"
-import {KnownEnumConstructors}             from "./helper/KnownEnumConstructors"
+import {KnownEnumConstructors}             from "./KnownEnumConstructors"
 import {_getGreatGrandParentValueFromName} from "./method/_getGreatGrandParentValueFromName"
 import {_getGreatGrandParentValue}         from "./method/_getGreatGrandParentValue"
 
@@ -54,7 +54,7 @@ export class EnumWithGreatGrandParent<const PARENT extends EnumerableWithGrandPa
     readonly #greatGrandParent: Lazy<GREAT_GRAND_PARENT>
 
     static {
-        KnownEnumConstructors.get.add(EnumWithGreatGrandParent,)
+        KnownEnumConstructors.add(EnumWithGreatGrandParent,)
     }
 
     //#endregion -------------------- Fields --------------------
