@@ -20,7 +20,7 @@ import {NullReferenceException}        from "./exception/NullReferenceException"
 import {_getSimplifiedPrototypeChains} from "./method/_getSimplifiedPrototypeChains"
 
 /**
- * The known {@link Enum}-like or close relative to it
+ * The known {@link Enum} (and close relative) to it
  * that will be used when using {@link getLastPrototype}
  *
  * Note, that no type specificity can be used, but some errors will be thrown if an invalid type is being sent.
@@ -180,11 +180,11 @@ export class KnownEnumConstructors {
     }
 
 
-    /** All the known {@link Enum}-like (or close relative) to be used in {@link getLastPrototype} */
+    /** All the known {@link Enum} (and close relative) to be used in {@link getLastPrototype} */
     public static get values(): CollectionHolder<Function> { return KnownEnumConstructors.get._encapsulatedValues }
 
     /**
-     * Verify the existence of the {@link Enum}-like (or close relative) in the {@link values}
+     * Verify the existence of the {@link Enum} (and close relative) in the {@link values}
      *
      * @param value The value to verify its existence
      * @return {boolean} The valus is present
@@ -196,7 +196,7 @@ export class KnownEnumConstructors {
     public static has(value: Function,): boolean { return KnownEnumConstructors.get._has(value,) }
 
     /**
-     * Add the known {@link Enum}-like (or close relative) to the {@link values}
+     * Add the known {@link Enum} (and close relative) to the {@link values}
      *
      * @param value The value to add
      * @return {boolean} The value was added
@@ -208,7 +208,7 @@ export class KnownEnumConstructors {
     public static add(value: Function,): boolean { return KnownEnumConstructors.get._add(value,) }
 
     /**
-     * Remove the known {@link Enum}-like (or close relative) to the {@link values}
+     * Remove the known {@link Enum} (and close relative) to the {@link values}
      *
      * @param value The value to remove
      * @return {boolean} The value was removed
