@@ -10,7 +10,6 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {PossibleEnumerableMembers} from "../../src/Enumerable.types"
 import {EnumConstants}                  from "../../src/EnumConstants"
 import MAX_VALUE_AS_NUMBER =  EnumConstants.MAX_VALUE_AS_NUMBER
 import MAX_VALUE_AS_BIG_INT = EnumConstants.MAX_VALUE_AS_BIG_INT
@@ -144,10 +143,18 @@ export const forbiddenNumbers = [
     new Holder("-Infinity",              `"-Infinity" as string`,),
     new Holder(new String("-Infinity",), `"-Infinity" as string object`,),
 ] as const
-export const everyStringEnumerableMember = EnumConstants.ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS.filterNot((it,): it is (& PossibleEnumerableMembers & symbol) => typeof it == "symbol").map(it => [
-    new Holder(it, `${it} as sting`),
-    new Holder(new String(it,), `${it} as string object`,),
-],).toArray().flat()
+export const everyStringEnumerableMember = [
+    new Holder("name",                          "name as string",),
+    new Holder(new String("name",),             "name as string object",),
+    new Holder("ordinal",                       "ordinal as string",),
+    new Holder(new String("ordinal",),          "ordinal as string object",),
+    new Holder("parent",                        "parent as string",),
+    new Holder(new String("parent",),           "parent as string object",),
+    new Holder("grandParent",                   "grandParent as string",),
+    new Holder(new String("grandParent",),      "grandParent as string object",),
+    new Holder("greatGrandParent",              "greatGrandParent as string",),
+    new Holder(new String("greatGrandParent",), "greatGrandParent as string object",),
+] as const
 export const simpleEnumVariables = ["VARIABLE_STRING", "VARIABLE_NUMBER", "VARIABLE_BIGINT",] as const satisfies readonly (keyof typeof EmptyEnumWithVariables)[]
 export const validValues = [
     new Holder(0,                   `0 as a number`,),
