@@ -17,7 +17,7 @@ import {CompanionEnumWithParent} from "../../src/companion/CompanionEnumWithPare
 import {BasicEnum}               from "./BasicEnum"
 
 export class BasicEnumWithParent
-    extends EnumWithNullableParent<BasicEnum> {
+    extends EnumWithNullableParent<BasicEnum, | 0 | 1, | 'A' | 'B'> {
 
     public static readonly A = new BasicEnumWithParent(BasicEnum.A,)
     public static readonly B = new BasicEnumWithParent()

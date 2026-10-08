@@ -14,7 +14,7 @@ import {Enum}          from "../../src/Enum"
 import {CompanionEnum} from "../../src/companion/CompanionEnum"
 
 export class BasicEnum
-    extends Enum {
+    extends Enum<0, 'A'> {
 
     public static readonly A = new BasicEnum()
 

@@ -19,7 +19,7 @@ import {BasicEnumWithGrandParent}          from "./BasicEnumWithGrandParent"
 import {BasicEnumWithParent}               from "./BasicEnumWithParent"
 
 export class BasicEnumWithGreatGrandParent
-    extends EnumWithNullableGreatGrandParent<BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum> {
+    extends EnumWithNullableGreatGrandParent<BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum, | 0 | 1 | 2 | 3, | 'A' | 'B' | 'C' | 'D'> {
 
     public static readonly A = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.A, BasicEnumWithParent.A, BasicEnum.A,)
     public static readonly B = new BasicEnumWithGreatGrandParent(BasicEnumWithGrandParent.B, BasicEnumWithParent.B,)
