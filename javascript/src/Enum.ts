@@ -63,8 +63,8 @@ export abstract class Enum<const ORDINAL extends number = number,
     }
 
     public [Symbol.toPrimitive]<const HINT extends string, >(hint: Nullable<HINT>,): EnumerableToPrimitive<HINT, this>
-    public [Symbol.toPrimitive](hint: Nullable<StringOrObject>,): EnumerableToPrimitive<PossiblePrimitiveHint, this>
-    public [Symbol.toPrimitive](hint: Nullable<StringOrObject>,): | ORDINAL | NAME {
+    public [Symbol.toPrimitive](hint: Nullable<StringOrObject>,): | ORDINAL | NAME
+    public [Symbol.toPrimitive](hint: Nullable<StringOrObject>,) {
         if (hint == null)
             throw new NullHintException(`Invalid null hint: The “${this.#__companion.instance.name}” cannot be converted to a string or number primitive.`,)
         if (hint instanceof String)

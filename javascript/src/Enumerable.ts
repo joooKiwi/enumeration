@@ -51,7 +51,7 @@ export interface Enumerable<out ORDINAL extends number = number,
      * @throws {InvalidHintException} The hint was not a {@link PossiblePrimitiveHint} (in any casing)
      * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toPrimitive
      */
-    [Symbol.toPrimitive](value: Nullable<StringOrObject>,): EnumerableToPrimitive<PossiblePrimitiveHint, this>
+    [Symbol.toPrimitive](value: Nullable<StringOrObject>,): | ORDINAL | NAME
 
     /**
      * Gives an output for the call from {@link Object.prototype.toString.call} [object Enum] instead of [object Object]
