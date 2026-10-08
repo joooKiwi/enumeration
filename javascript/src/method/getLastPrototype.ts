@@ -44,7 +44,7 @@ export function getLastPrototype<const T extends Enumerable, >(instance: object,
         const knownEnumConstructors = KnownEnumConstructors.get.values
         const indexFound = prototypeConstructorChain.indexOfFirstOrNull(prototypeConstructor => knownEnumConstructors.any(it => it == prototypeConstructor,),)
         if (indexFound == null)
-            throw new NullReferenceException(`No known constructor ${knownEnumConstructors.join(", ", '(', ')', null, null, it => it.name,)} was found in the prototype chain ${prototypeConstructorChain.join(" → ", '“', '”',)}.`, instance,)
+            throw new NullReferenceException(`No known constructor ${KnownEnumConstructors.values.joinToString(", ", '(', ')', null, null, it => it.name,)} was found in the prototype chain ${prototypeConstructorChain.joinToString(" → ", '“', '”',)}.`, instance,)
         return prototypeConstructorChain.get(indexFound - 1,) as EnumerableConstructor<T, any>
     }
 
@@ -52,7 +52,7 @@ export function getLastPrototype<const T extends Enumerable, >(instance: object,
         const prototypeConstructorChain = __getPrototypeConstructorChain(instance,)
         const prototypeFound = prototypeConstructorChain.findLast(it => isEnumByStructure(it.prototype,),)
         if (prototypeFound == null)
-            throw new NullReferenceException(`No Enumerable-like could be found from the prototype chain ${prototypeConstructorChain.join(", ", '“', '”',)}.`, instance,)
+            throw new NullReferenceException(`No Enumerable-like could be found from the prototype chain ${prototypeConstructorChain.joinToString(", ", '“', '”',)}.`, instance,)
         return prototypeFound as EnumerableConstructor<T, any>
     }
 

@@ -326,7 +326,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
             if (exception instanceof ForbiddenInheritedEnumerableMemberException)
                 throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value “${defaultName}” is one possible value of the inherited field name (\"name\", \"ordinal\", \"parent\", \"grandParent\", \"greatGrandParent\", \"[Symbol.toPrimitive]\", \"[Symbol.toStringTag]\").`, exception,)
             if (exception instanceof ForbiddenNameException)
-                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value “${defaultName}” is an excluded name ${this._excludedNames.join(", ", '(', ')', null, null, it => `“${it}”`,)}.`, exception,)
+                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value “${defaultName}” is an excluded name ${this._excludedNames.joinToString(", ", '(', ')', null, null, it => `“${it}”`,)}.`, exception,)
             if (exception instanceof ForbiddenNumericException)
                 throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value “${defaultName}” is equivalent to ±∞ or NaN.`, exception,)
             if (exception instanceof ImpossibleOrdinalException)
@@ -446,7 +446,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
     protected _isNotInExcludedNames(nameOrOrdinal: string, originalValue: StringOrObject,): void {
         const excludedNames = this._excludedNames
         if (excludedNames.has(nameOrOrdinal,))
-            throw new ForbiddenNameException(`Forbidden name. The char value “${nameOrOrdinal}” is one of the excluded names ${excludedNames.join(", ", '(', ')', null, null, it => `“${it}”`,)}.`, originalValue,)
+            throw new ForbiddenNameException(`Forbidden name. The char value “${nameOrOrdinal}” is one of the excluded names ${excludedNames.joinToString(", ", '(', ')', null, null, it => `“${it}”`,)}.`, originalValue,)
     }
 
     //#endregion -------------------- Validation (is not in "excluded names") methods --------------------
@@ -463,7 +463,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
         const ordinals = this.ordinals
         if (ordinals.has(Number(ordinal,),))
             return
-        throw new ImpossibleOrdinalException(`The String value “${ordinal}” is not within a valid ordinal ${ordinals.join(", ", '(', ')',)}.`, originalValue,)
+        throw new ImpossibleOrdinalException(`The String value “${ordinal}” is not within a valid ordinal ${ordinals.joinToString(", ", '(', ')',)}.`, originalValue,)
     }
 
     /**
@@ -478,7 +478,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
         const ordinals = this.ordinals
         if (ordinals.has(ordinal,))
             return ordinal
-        throw new ImpossibleOrdinalException(`The Number value “${ordinal}” is not within a valid ordinal ${ordinals.join(", ", '(', ')',)}.`, originalValue,)
+        throw new ImpossibleOrdinalException(`The Number value “${ordinal}” is not within a valid ordinal ${ordinals.joinToString(", ", '(', ')',)}.`, originalValue,)
     }
 
     /**
@@ -494,7 +494,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
         const ordinals = this.ordinals
         if (ordinals.has(convertedOrdinal,))
             return convertedOrdinal
-        throw new ImpossibleOrdinalException(`The BigInt value “${ordinal}” is not within a valid ordinal ${ordinals.join(", ", '(', ')',)}.`, originalValue,)
+        throw new ImpossibleOrdinalException(`The BigInt value “${ordinal}” is not within a valid ordinal ${ordinals.joinToString(", ", '(', ')',)}.`, originalValue,)
     }
 
     //#endregion -------------------- Validation (is in ordinal) methods --------------------
