@@ -188,10 +188,10 @@ export class KnownEnumConstructors {
      *
      * @param value The value to verify its existence
      * @return {boolean} The valus is present
-     * @throws Error                    The number of arguments received was not exactly 1
+     * @throws Error                    The number of arguments received is not exactly 1
      * @throws NullReferenceException   The {@link value} is `null`|`undefined`
-     * @throws InvalidInstanceException The {@link value} was not of type {@link Function}
-     * @throws InvalidInstanceException The inheritor of the {@link value} was not {@link Enum} (by instance) or {@link Enumerable} (by structure)
+     * @throws InvalidInstanceException The {@link value} is not of type {@link Function}
+     * @throws InvalidInstanceException The inheritor of the {@link value} is not {@link Enum} (by instance) or {@link Enumerable} (by structure)
      */
     public static has(value: Function,): boolean { return KnownEnumConstructors.get._has(value,) }
 
@@ -200,10 +200,10 @@ export class KnownEnumConstructors {
      *
      * @param value The value to add
      * @return {boolean} The value was added
-     * @throws Error                    The number of arguments received was not exactly 1
+     * @throws Error                    The number of arguments received is not exactly 1
      * @throws NullReferenceException   The {@link value} is `null`|`undefined`
-     * @throws InvalidInstanceException The {@link value} was not of type {@link Function}
-     * @throws InvalidInstanceException The inheritor of the {@link value} was not {@link Enum} (by instance) or {@link Enumerable} (by structure)
+     * @throws InvalidInstanceException The {@link value} is not of type {@link Function}
+     * @throws InvalidInstanceException The inheritor of the {@link value} is not {@link Enum} (by instance) or {@link Enumerable} (by structure)
      */
     public static add(value: Function,): boolean { return KnownEnumConstructors.get._add(value,) }
 
@@ -212,10 +212,10 @@ export class KnownEnumConstructors {
      *
      * @param value The value to remove
      * @return {boolean} The value was removed
-     * @throws Error                    The number of arguments received was not exactly 1
+     * @throws Error                    The number of arguments received is not exactly 1
      * @throws NullReferenceException   The {@link value} is `null`|`undefined`
-     * @throws InvalidInstanceException The {@link value} was not of type {@link Function}
-     * @throws InvalidInstanceException The inheritor of the {@link value} was not {@link Enum} (by instance) or {@link Enumerable} (by structure)
+     * @throws InvalidInstanceException The {@link value} is not of type {@link Function}
+     * @throws InvalidInstanceException The inheritor of the {@link value} is not {@link Enum} (by instance) or {@link Enumerable} (by structure)
      */
     public static remove(value: Function,): boolean { return KnownEnumConstructors.get._remove(value,) }
 
