@@ -10,17 +10,18 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {CollectionHolder}   from "@joookiwi/collection"
-import type {NullOr}             from "@joookiwi/type"
-import {ArrayAsCollectionHolder} from "@joookiwi/collection"
+import type {MutableArray, Nullable, NullOr, NullOrUndefined} from "@joookiwi/type"
+import {joinToStringByArray}                                  from "@joookiwi/collection"
 
 import type {Enumerable}            from "../Enumerable"
 import type {EnumerableConstructor} from "../EnumerableConstructor"
 
-import {NullReferenceException} from "../exception/NullReferenceException"
-import {KnownEnumConstructors}  from "../KnownEnumConstructors"
-import {isEnumByStructure}      from "./isEnumByStructure"
-import {isEnum}                 from "./isEnum"
+import {InvalidInstanceException}      from "../exception/InvalidInstanceException"
+import {NullReferenceException}        from "../exception/NullReferenceException"
+import {KnownEnumConstructors}         from "../KnownEnumConstructors"
+import {_getSimplifiedPrototypeChains} from "./_getSimplifiedPrototypeChains"
+import {isEnumByStructure}             from "./isEnumByStructure"
+import {isEnum}                        from "./isEnum"
 
 /**
  * Get the last {@link ObjectConstructor.prototype prototype}
@@ -28,43 +29,58 @@ import {isEnum}                 from "./isEnum"
  * and the last proper {@link Enumerable}-like on a {@link Enumerable} instance
  *
  * @param instance The instance (by default as the current instance)
- * @throws NullReferenceException The instance was `null`
- * @throws NullReferenceException No {@link Enum} constructor from the instance could be found (if it was a {@link Enum})
- * @throws NullReferenceException No {@link Enumerable} constructor from the instance could be found (if it was a {@link Enumerable})
- * @throws NullReferenceException No prototype could be found since it did not have the {@link Enumerable} structure
+ * @throws NullReferenceException   The instance was `null` or `undefined`
+ * @throws NullReferenceException   No {@link Enum} constructor from the instance could be found (if it was a {@link Enum})
+ * @throws NullReferenceException   No {@link Enumerable} constructor from the instance could be found (if it was a {@link Enumerable})
+ * @throws InvalidInstanceException No prototype could be found since it did not have the {@link Enumerable} structure
  * @see https://stackoverflow.com/a/68323749
- * @note No proper type inference can be made since it is possible to have a different prototype than the closest one (<i>instance.constructor</i>)
+ * @note No proper type inference can be made since it is possible to have a different prototype than the closest one (`instance.constructor`)
  */
 export function getLastPrototype<const T extends Enumerable, >(instance: object,): EnumerableConstructor<T, any> {
     if (instance == null)
         throw new NullReferenceException(`No prototype on a EnumerableConstructor could be found by a null value.`, instance,)
 
     if (isEnum(instance,)) {
-        const prototypeConstructorChain = __getPrototypeConstructorChain(instance,)
-        const knownEnumConstructors = KnownEnumConstructors.get.values
-        const indexFound = prototypeConstructorChain.indexOfFirstOrNull(prototypeConstructor => knownEnumConstructors.any(it => it == prototypeConstructor,),)
-        if (indexFound == null)
-            throw new NullReferenceException(`No known constructor ${KnownEnumConstructors.values.joinToString(", ", '(', ')', null, null, it => it.name,)} was found in the prototype chain ${prototypeConstructorChain.joinToString(" → ", '“', '”',)}.`, instance,)
-        return prototypeConstructorChain.get(indexFound - 1,) as EnumerableConstructor<T, any>
+        // We verify the instance if any KnownEnumConstructors are present and give the closest relative when found
+        const knownEnumConstructors = KnownEnumConstructors.values
+        const prototypeConstructorChain: MutableArray<Function> = []
+        let prototype: NullOr<object> = instance
+        while (prototype != null) {
+            const prototypeConstructor = prototype.constructor
+            if (knownEnumConstructors.has(prototypeConstructor,))
+                return prototypeConstructorChain[prototypeConstructorChain.length - 1] // We have the prototype that we wanted since it was registered
+            prototypeConstructorChain.push(prototypeConstructor,)
+            prototype = Reflect.getPrototypeOf(prototype,)
+        }
+
+        throw new NullReferenceException(`No known constructor ${KnownEnumConstructors.values.joinToString(", ", '(', ')', null, null, it => it.name,)} was found in the prototype chain ${_getSimplifiedPrototypeChains(prototypeConstructorChain,)}.`, instance,)
     }
 
     if (isEnumByStructure(instance,)) {
-        const prototypeConstructorChain = __getPrototypeConstructorChain(instance,)
-        const prototypeFound = prototypeConstructorChain.findLast(it => isEnumByStructure(it.prototype,),)
-        if (prototypeFound == null)
-            throw new NullReferenceException(`No Enumerable-like could be found from the prototype chain ${prototypeConstructorChain.joinToString(", ", '“', '”',)}.`, instance,)
-        return prototypeFound as EnumerableConstructor<T, any>
+        // We verify that the instance has at least 1 close relative that is Enumerable (by its structure) to return
+        const prototypeConstructorChain: MutableArray<Function> = []
+        let prototype: NullOr<object> = instance
+        while (prototype != null) {
+            prototypeConstructorChain.push(prototype.constructor,)
+            prototype = Reflect.getPrototypeOf(prototype,)
+        }
+
+        let index = prototypeConstructorChain.length - 1
+        if (prototypeConstructorChain[index] === Object.prototype)
+            if (prototypeConstructorChain[index - 1] === Function.prototype)
+                index-- // We ignore the last items since most of the time a class has Object then Function at their last inheritors
+        while (index-- > 0) {
+            const constructorChain = prototypeConstructorChain[index] as Function
+            const chainPrototype = constructorChain.prototype as Function
+            if ("name" in chainPrototype)
+            if ("ordinal" in chainPrototype)
+            if (Symbol.toPrimitive in chainPrototype)
+            if (Symbol.toStringTag in chainPrototype)
+                return constructorChain // We have the prototype that we wanted since it had the structure of an Enumerable
+        }
+
+        throw new NullReferenceException(`No Enumerable-like could be found from the prototype chain ${joinToStringByArray(prototypeConstructorChain, ", ", '“', '”', null, null, it => it.name,)}.`, instance,)
     }
 
-    throw new NullReferenceException(`No prototype on a EnumerableConstructor could be found by a non-Enumerable value.`, instance,)
-}
-
-function __getPrototypeConstructorChain(instance: object,): CollectionHolder<Function> {
-    const prototypeChain = [] as Function[]
-    let prototype: NullOr<object> = instance
-    while (prototype != null) {
-        prototypeChain.push(prototype.constructor,)
-        prototype = Reflect.getPrototypeOf(prototype,)
-    }
-    return new ArrayAsCollectionHolder<Function>(prototypeChain,)
+    throw new InvalidInstanceException(`No prototype on a EnumerableConstructor could be found by a non-Enumerable value.`, instance,)
 }
