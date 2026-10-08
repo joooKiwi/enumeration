@@ -12,29 +12,70 @@
 
 import {describe, expect, test} from "vitest"
 
-import {Enum}                  from "../../src/Enum"
-import {KnownEnumConstructors} from "../../src/helper/KnownEnumConstructors"
+import {Enum}                                from "../../src/Enum"
+import {InvalidInstanceException}            from "../../src/exception/InvalidInstanceException"
+import {NullReferenceException}              from "../../src/exception/NullReferenceException"
+import {EmptyEnum}                           from "../instance/EmptyEnum"
+import {EmptyEnumerable}                     from "../instance/EmptyEnumerable"
+import {EmptyEnumerableWithGrandParent}      from "../instance/EmptyEnumerableWithGrandParent"
+import {EmptyEnumerableWithGreatGrandParent} from "../instance/EmptyEnumerableWithGreatGrandParent"
+import {EmptyEnumerableWithParent}           from "../instance/EmptyEnumerableWithParent"
+import {EmptyEnumWithGrandParent}            from "../instance/EmptyEnumWithGrandParent"
+import {EmptyEnumWithGreatGrandParent}       from "../instance/EmptyEnumWithGreatGrandParent"
+import {EmptyEnumWithParent}                 from "../instance/EmptyEnumWithParent"
+import {KnownEnumConstructors}               from "../instance/KnownEnumConstructors"
 
 describe("KnownEnumConstructorsTest", () => {
-    /**The value to add and remove with the tests */
-    const value: Function = () => {}
-    function newInstance(): KnownEnumConstructors { return new class extends KnownEnumConstructors { constructor() { super() } }() }
 
-    test("values", () => expect(newInstance().values.toArray(),).toStrictEqual([Enum,],),)
+    describe("values", () => {
+        //README: We cannot use import since it auto-trigger the static calls
+        test("initial",   () => expect(new KnownEnumConstructors().values.toArray(),).toStrictEqual([Enum,],),)
+        test("after add", () => expect(new KnownEnumConstructors().addAnd(EmptyEnum,).values.toArray(),).toStrictEqual([Enum, EmptyEnum,],),)
+    },)
+    describe("has", () => {
+        //@ts-expect-error
+        test("0 arguments",         () => expect(() => new KnownEnumConstructors().has(),).toThrow(),)
+        //@ts-expect-error
+        test("null",                () => expect(() => new KnownEnumConstructors().has(null,),).toThrow(NullReferenceException,),)
+        //@ts-expect-error
+        test("undefined",           () => expect(() => new KnownEnumConstructors().has(undefined,),).toThrow(NullReferenceException,),)
+        test("invalid",             () => expect(() => new KnownEnumConstructors().has(String,),).toThrow(InvalidInstanceException,),)
+        test("valid",               () => expect(      new KnownEnumConstructors().has(EmptyEnum,),).toBeFalse(),)
+        test("after add",           () => expect(      new KnownEnumConstructors().addAnd(EmptyEnum,).has(EmptyEnum,),).toBeTrue(),)
+        //@ts-expect-error
+        test("2 arguments",         () => expect(() => new KnownEnumConstructors().has(EmptyEnum, EmptyEnum,),).toThrow(),)
+    },)
     describe("add", () => {
-        test('0', () => expect(newInstance().add().values.toArray(),).toStrictEqual([Enum,],),)
-        test('1', () => expect(newInstance().add(value,).values.toArray(),).toStrictEqual([Enum, value,],),)
-        test('2', () => expect(newInstance().add(value, value,).values.toArray(),).toStrictEqual([Enum, value,],),)
+        //@ts-expect-error
+        test("0 arguments",               () => expect(() => new KnownEnumConstructors().add(),).toThrow(),)
+        //@ts-expect-error
+        test("null",                      () => expect(() => new KnownEnumConstructors().add(null,),).toThrow(NullReferenceException,),)
+        //@ts-expect-error
+        test("undefined",                 () => expect(() => new KnownEnumConstructors().add(undefined,),).toThrow(NullReferenceException,),)
+        test("invalid",                   () => expect(() => new KnownEnumConstructors().add(String,),).toThrow(InvalidInstanceException,),)
+        test("Enum",                      () => expect(      new KnownEnumConstructors().add(EmptyEnum,),).toBeTrue(),)
+        test("EnumWithParent",            () => expect(      new KnownEnumConstructors().add(EmptyEnumWithParent,),).toBeTrue(),)
+        test("EnumWithGrandParent",       () => expect(      new KnownEnumConstructors().add(EmptyEnumWithGrandParent,),).toBeTrue(),)
+        test("EnumWithGreatGrandParent",  () => expect(      new KnownEnumConstructors().add(EmptyEnumWithGreatGrandParent,),).toBeTrue(),)
+        test("Enumerable",                () => expect(      new KnownEnumConstructors().add(EmptyEnumerable,),).toBeTrue(),)
+        test("EnumerableWithParent",      () => expect(      new KnownEnumConstructors().add(EmptyEnumerableWithParent,),).toBeTrue(),)
+        test("EnumerableWithGrandParent", () => expect(      new KnownEnumConstructors().add(EmptyEnumerableWithGrandParent,),).toBeTrue(),)
+        test("EnumerableWithGrandParent", () => expect(      new KnownEnumConstructors().add(EmptyEnumerableWithGreatGrandParent,),).toBeTrue(),)
+        //@ts-expect-error
+        test("2 arguments",               () => expect(() => new KnownEnumConstructors().add(EmptyEnum, EmptyEnum,),).toThrow(),)
     },)
     describe("remove", () => {
-        test('0', () => expect(newInstance().remove().values.toArray(),).toStrictEqual([Enum,],),)
-        test('1', () => expect(newInstance().remove(value,).values.toArray(),).toStrictEqual([Enum,],),)
-        test('2', () => expect(newInstance().remove(value, value,).values.toArray(),).toStrictEqual([Enum,],),)
-        describe("after add", () => {
-            test('0', () => expect(newInstance().add(value,).remove().values.toArray(),).toStrictEqual([Enum, value,],),)
-            test('1', () => expect(newInstance().add(value,).remove(value,).values.toArray(),).toStrictEqual([Enum,],),)
-            test('2', () => expect(newInstance().add(value,).remove(value, value,).values.toArray(),).toStrictEqual([Enum,],),)
-        },)
+        //@ts-expect-error
+        test("0 arguments", () => expect(() => new KnownEnumConstructors().remove(),).toThrow(),)
+        //@ts-expect-error
+        test("null",        () => expect(() => new KnownEnumConstructors().remove(null,),).toThrow(NullReferenceException,),)
+        //@ts-expect-error
+        test("undefined",   () => expect(() => new KnownEnumConstructors().remove(undefined,),).toThrow(NullReferenceException,),)
+        test("invalid",     () => expect(() => new KnownEnumConstructors().remove(String,),).toThrow(InvalidInstanceException,),)
+        test("valid",       () => expect(      new KnownEnumConstructors().remove(EmptyEnum,),).toBeFalse(),)
+        test("after add",   () => expect(      new KnownEnumConstructors().addAnd(EmptyEnum,).remove(EmptyEnum,),).toBeTrue(),)
+        //@ts-expect-error
+        test("2 arguments", () => expect(() => new KnownEnumConstructors().remove(EmptyEnum, EmptyEnum,),).toThrow(),)
     },)
 
 },)
