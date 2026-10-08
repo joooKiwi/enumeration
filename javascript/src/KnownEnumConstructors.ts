@@ -10,13 +10,14 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {CollectionHolder}                        from "@joookiwi/collection"
-import type {NullOr, MutableArray}                    from "@joookiwi/type"
-import {ArrayAsCollectionHolder, joinToStringByArray} from "@joookiwi/collection"
+import type {CollectionHolder}     from "@joookiwi/collection"
+import type {NullOr, MutableArray} from "@joookiwi/type"
+import {ArrayAsCollectionHolder}   from "@joookiwi/collection"
 
-import {Enum}                     from "./Enum"
-import {InvalidInstanceException} from "./exception/InvalidInstanceException"
-import {NullReferenceException}   from "./exception/NullReferenceException"
+import {Enum}                          from "./Enum"
+import {InvalidInstanceException}      from "./exception/InvalidInstanceException"
+import {NullReferenceException}        from "./exception/NullReferenceException"
+import {_getSimplifiedPrototypeChains} from "./method/_getSimplifiedPrototypeChains"
 
 /**
  * The known {@link Enum}-like or close relative to it
@@ -105,19 +106,7 @@ export class KnownEnumConstructors {
         }
 
         // We will give a simplified architecture for the prototype chain name
-        throw new InvalidInstanceException(`Invalid instance exception. The ${joinToStringByArray(prototypeChain, " → ", '“', '”', null, null, it => {
-            if (!("name" in it))
-                return it.constructor.name
-            const name = it.name
-            if (name == null)
-                return it.constructor.name
-            if (typeof name == "string")
-                if (name.length === 0)
-                    return it.constructor.name
-                else
-                    return name
-            return it.constructor.name
-        },)} was not of type “Enum” or did not have the structure of an “Enumerable”.`, value,)
+        throw new InvalidInstanceException(`Invalid instance exception. The ${_getSimplifiedPrototypeChains(prototypeChain,)} was not of type “Enum” or did not have the structure of an “Enumerable”.`, value,)
     }
 
     /** @internal */
