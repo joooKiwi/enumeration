@@ -12,18 +12,18 @@
 
 import {describe, expect, test} from "vitest"
 
-import {Enum}                                from "../../src/Enum"
-import {InvalidInstanceException}            from "../../src/exception/InvalidInstanceException"
-import {NullReferenceException}              from "../../src/exception/NullReferenceException"
-import {EmptyEnum}                           from "../instance/EmptyEnum"
-import {EmptyEnumerable}                     from "../instance/EmptyEnumerable"
-import {EmptyEnumerableWithGrandParent}      from "../instance/EmptyEnumerableWithGrandParent"
-import {EmptyEnumerableWithGreatGrandParent} from "../instance/EmptyEnumerableWithGreatGrandParent"
-import {EmptyEnumerableWithParent}           from "../instance/EmptyEnumerableWithParent"
-import {EmptyEnumWithGrandParent}            from "../instance/EmptyEnumWithGrandParent"
-import {EmptyEnumWithGreatGrandParent}       from "../instance/EmptyEnumWithGreatGrandParent"
-import {EmptyEnumWithParent}                 from "../instance/EmptyEnumWithParent"
-import {KnownEnumConstructors}               from "../instance/KnownEnumConstructors"
+import {Enum}                                from "../src/Enum"
+import {InvalidInstanceException}            from "../src/exception/InvalidInstanceException"
+import {NullReferenceException}              from "../src/exception/NullReferenceException"
+import {EmptyEnum}                           from "./instance/EmptyEnum"
+import {EmptyEnumerable}                     from "./instance/EmptyEnumerable"
+import {EmptyEnumerableWithGrandParent}      from "./instance/EmptyEnumerableWithGrandParent"
+import {EmptyEnumerableWithGreatGrandParent} from "./instance/EmptyEnumerableWithGreatGrandParent"
+import {EmptyEnumerableWithParent}           from "./instance/EmptyEnumerableWithParent"
+import {EmptyEnumWithGrandParent}            from "./instance/EmptyEnumWithGrandParent"
+import {EmptyEnumWithGreatGrandParent}       from "./instance/EmptyEnumWithGreatGrandParent"
+import {EmptyEnumWithParent}                 from "./instance/EmptyEnumWithParent"
+import {KnownEnumConstructors}               from "./instance/KnownEnumConstructors"
 
 describe("KnownEnumConstructorsTest", () => {
 
