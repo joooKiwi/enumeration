@@ -19,10 +19,10 @@ import type {CompanionEnumerableWithParentType} from "../type/companion"
 import {InvalidInstanceException}             from "../exception/InvalidInstanceException"
 import {NonExistantKeyException}              from "../exception/NonExistantKeyException"
 import {NullReferenceException}               from "../exception/NullReferenceException"
-import {getLastPrototype}                     from "../helper/getLastPrototype"
-import {getCompanion}                         from "../helper/getCompanion"
-import {isCompanionEnumWithParent}            from "../helper/isCompanionEnumWithParent"
-import {isCompanionEnumWithParentByStructure} from "../helper/isCompanionEnumWithParentByStructure"
+import {getLastPrototype}                     from "../method/getLastPrototype"
+import {getCompanion}                         from "../method/getCompanion"
+import {isCompanionEnumWithParent}            from "../method/isCompanionEnumWithParent"
+import {isCompanionEnumWithParentByStructure} from "../method/isCompanionEnumWithParentByStructure"
 
 /**
  * Get the value via {@link CompanionEnumerableWithParent.getValue} from a {@link name} received.

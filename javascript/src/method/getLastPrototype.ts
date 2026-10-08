@@ -18,7 +18,7 @@ import type {Enumerable}            from "../Enumerable"
 import type {EnumerableConstructor} from "../EnumerableConstructor"
 
 import {NullReferenceException} from "../exception/NullReferenceException"
-import {KnownEnumConstructors}  from "./KnownEnumConstructors"
+import {KnownEnumConstructors}  from "../KnownEnumConstructors"
 import {isEnumByStructure}      from "./isEnumByStructure"
 import {isEnum}                 from "./isEnum"
 

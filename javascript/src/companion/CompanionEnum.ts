@@ -35,9 +35,9 @@ import {NullReferenceException}                      from "../exception/NullRefe
 import {NullEnumerableException}                     from "../exception/NullEnumerableException"
 import {NullInstanceException}                       from "../exception/NullInstanceException"
 import {UnhandledValueException}                     from "../exception/UnhandledValueException"
-import {getLastPrototype}                            from "../helper/getLastPrototype"
-import {isEnum}                                      from "../helper/isEnum"
-import {isEnumByStructure}                           from "../helper/isEnumByStructure"
+import {getLastPrototype}                            from "../method/getLastPrototype"
+import {isEnum}                                      from "../method/isEnum"
+import {isEnumByStructure}                           from "../method/isEnumByStructure"
 
 export class CompanionEnum<const ENUM extends Enumerable,
     const ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<ENUM, CompanionEnumerable<ENUM, ENUMERABLE_CONSTRUCTOR>>, >

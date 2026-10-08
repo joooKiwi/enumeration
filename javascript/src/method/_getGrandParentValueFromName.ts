@@ -20,10 +20,10 @@ import type {CompanionEnumerableWithGrandParentType} from "../type/companion"
 import {InvalidInstanceException}                  from "../exception/InvalidInstanceException"
 import {NonExistantKeyException}                   from "../exception/NonExistantKeyException"
 import {NullReferenceException}                    from "../exception/NullReferenceException"
-import {getLastPrototype}                          from "../helper/getLastPrototype"
-import {getCompanion}                              from "../helper/getCompanion"
-import {isCompanionEnumWithGrandParent}            from "../helper/isCompanionEnumWithGrandParent"
-import {isCompanionEnumWithGrandParentByStructure} from "../helper/isCompanionEnumWithGrandParentByStructure"
+import {getLastPrototype}                          from "../method/getLastPrototype"
+import {getCompanion}                              from "../method/getCompanion"
+import {isCompanionEnumWithGrandParent}            from "../method/isCompanionEnumWithGrandParent"
+import {isCompanionEnumWithGrandParentByStructure} from "../method/isCompanionEnumWithGrandParentByStructure"
 
 /**
  * Get the value via {@link CompanionEnumerableWithGrandParent.getValue} from a {@link name} received.

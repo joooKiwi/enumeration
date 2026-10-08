@@ -22,10 +22,10 @@ import type {EnumerableWithNullableGreatGrandParentGeneralType} from "../type/ge
 import {InvalidInstanceException}                       from "../exception/InvalidInstanceException"
 import {NonExistantKeyException}                        from "../exception/NonExistantKeyException"
 import {NullReferenceException}                         from "../exception/NullReferenceException"
-import {getLastPrototype}                               from "../helper/getLastPrototype"
-import {getCompanion}                                   from "../helper/getCompanion"
-import {isCompanionEnumWithGreatGrandParent}            from "../helper/isCompanionEnumWithGreatGrandParent"
-import {isCompanionEnumWithGreatGrandParentByStructure} from "../helper/isCompanionEnumWithGreatGrandParentByStructure"
+import {getLastPrototype}                               from "../method/getLastPrototype"
+import {getCompanion}                                   from "../method/getCompanion"
+import {isCompanionEnumWithGreatGrandParent}            from "../method/isCompanionEnumWithGreatGrandParent"
+import {isCompanionEnumWithGreatGrandParentByStructure} from "../method/isCompanionEnumWithGreatGrandParentByStructure"
 
 /**
  * Get the value via {@link CompanionEnumerableWithGreatGrandParent.getValue} from a {@link name} received.
