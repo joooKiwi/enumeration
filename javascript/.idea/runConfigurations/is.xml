@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="is" type="JavaScriptTestRunnerVitest" folderName="Methods">
+  <configuration default="false" name="is" type="JavaScriptTestRunnerVitest" folderName="methods">
     <node-interpreter value="project" />
     <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
     <working-dir value="$PROJECT_DIR$" />
