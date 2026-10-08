@@ -31,40 +31,39 @@ import {isCompanionEnumByStructure} from "./isCompanionEnumByStructure"
  * Get nothing because of a `null` instance
  *
  * @param instance The `null` instance
- * @throws {NullInstanceException}
+ * @throws NullInstanceException The {@link instance} is `null` or `undefined`
  */
 export function getCompanion(instance: NullOrUndefined,): never
 /**
- * Get the {@link CompanionEnumerable companion} instance directly
+ * Get the {@link CompanionEnumerable} instance directly
  *
- * @param companion The {@link CompanionEnumerable companion} instance
- * @throws {NullInstanceException}
+ * @param companion The {@link CompanionEnumerable} instance
+ * @throws NullInstanceException The {@link instance} is `null` or `undefined`
  */
-export function getCompanion<const ENUM extends Enumerable, const COMPANION_ENUM extends CompanionEnumerable<any, any> = CompanionEnumerableType<ENUM>, >(companion: Nullable<COMPANION_ENUM>,): COMPANION_ENUM
+export function getCompanion<const ENUM extends Enumerable, const COMPANION_ENUM extends CompanionEnumerableType<Enumerable> = CompanionEnumerableType<ENUM>, >(companion: Nullable<COMPANION_ENUM>,): COMPANION_ENUM
 /**
- * Get a {@link CompanionEnumerable companion} instance from an {@link Enumerable} class.
- * And if in the {@link CompanionEnumerable companion} values or class type, there is no valid value, then exception can be thrown.
+ * Get a {@link CompanionEnumerable} instance from an {@link Enumerable} class.
+ * And if in the {@link CompanionEnumerable} values or class type, there is no valid value, then exception can be thrown.
  *
- * @param constructorClass The {@link Enumerable} class to retrieve the {@link CompanionEnumerable companion}
- * @throws {NullInstanceException}
- * @throws {InvalidInstanceException}
- * @throws {NonExistantKeyException}
- * @throws {NullReferenceException}
+ * @param constructorClass The {@link EnumerableConstructor} class to retrieve the {@link CompanionEnumerable} via `constructorClass.CompanionEnum.get`
+ * @throws NullInstanceException    The {@link instance} is `null` or `undefined`
+ * @throws InvalidInstanceException The {@link instance} or the `instance.CompanionEnum` if not a {@link Function} type
+ * @throws NonExistantKeyException  The {@link instance} has not the `CompanionEnum` key or the `instance.CompanionEnum` does not have the `get` key
+ * @throws NullReferenceException   The {@link instance}`.CompanionEnum` or {@link instance}.`CompanionEnum.get` has `null`|`undefined` being retrieved
  */
-export function getCompanion<const ENUM extends Enumerable, const ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any> = EnumerableConstructor<ENUM, CompanionEnumerableType<ENUM>>, >(constructorClass: Nullable<ENUM_CONSTRUCTOR>,): CompanionOf<ENUM_CONSTRUCTOR>
+export function getCompanion<const ENUM extends Enumerable, const ENUM_CONSTRUCTOR extends EnumerableConstructor<Enumerable, CompanionEnumerableType<Enumerable>> = EnumerableConstructor<ENUM, CompanionEnumerableType<ENUM>>, >(constructorClass: Nullable<ENUM_CONSTRUCTOR>,): CompanionOf<ENUM_CONSTRUCTOR>
 /**
- * Get the {@link CompanionEnumerable companion} from any values ({@link EnumerableConstructor} or {@link CompanionEnumerable companion})
+ * Get the {@link CompanionEnumerable} from any values ({@link EnumerableConstructor} or {@link CompanionEnumerable})
  *
- * @param instance The {@link EnumerableConstructor} or {@link CompanionEnumerable} instance
- *
- * @generalTypescriptDefinition
- * @throws {NullInstanceException}
- * @throws {InvalidInstanceException}
- * @throws {NonExistantKeyException}
- * @throws {NullReferenceException}
+ * @param instance The {@link EnumerableConstructor} to retrieve via `instance.CompanionEnum.get` or {@link CompanionEnumerable} directly
+ * @throws NullInstanceException    The {@link instance} is `null` or `undefined`
+ * @throws InvalidInstanceException The {@link instance} or the `instance.CompanionEnum` if not a {@link Function} type
+ * @throws NonExistantKeyException  The {@link instance} has not the `CompanionEnum` key or the `instance.CompanionEnum` does not have the `get` key
+ * @throws NullReferenceException   The {@link instance}`.CompanionEnum` or {@link instance}.`CompanionEnum.get` has `null`|`undefined` being retrieved
+ * @typescriptDefinition
  */
-export function getCompanion<const ENUM extends Enumerable, const INSTANCE extends PossibleEnumerableInstance<any> = PossibleEnumerableInstance<ENUM>, >(instance: Nullable<INSTANCE>,): CompanionEnumFromEnumerableConstructorOrCompanionEnum<INSTANCE>
-export function getCompanion(instance: Nullable<PossibleEnumerableInstance>,): CompanionEnumerable<any, any> {
+export function getCompanion<const ENUM extends Enumerable, const INSTANCE extends PossibleEnumerableInstance = PossibleEnumerableInstance<ENUM>, >(instance: Nullable<INSTANCE>,): CompanionEnumFromEnumerableConstructorOrCompanionEnum<INSTANCE>
+export function getCompanion(instance: Nullable<PossibleEnumerableInstance>,) {
     if (instance == null)
         throw new NullInstanceException()
 
@@ -92,6 +91,6 @@ export function getCompanion(instance: Nullable<PossibleEnumerableInstance>,): C
     if (isCompanionEnum(companionInstance,))
         return companionInstance
     if (isCompanionEnumByStructure(companionInstance,))
-        return companionInstance as CompanionEnumerable<any, any>
+        return companionInstance
     throw new InvalidInstanceException(`The reference “${instance.name}.CompanionEnum.get” is not a CompanionEnum instance or has its structure.`, instance,)
 }
