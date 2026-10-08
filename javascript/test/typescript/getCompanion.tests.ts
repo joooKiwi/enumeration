@@ -10,7 +10,7 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import {getCompanion}                 from "../../src/helper/getCompanion"
+import {getCompanion}                 from "../../src/method/getCompanion"
 import {EnumWithDifferentComportment} from "../TemplateEnums"
 
 throw new EvalError("This file was not made to be read by Javascript. It should only be compilable by Typescript.")

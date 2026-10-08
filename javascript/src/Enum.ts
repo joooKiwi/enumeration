@@ -21,8 +21,8 @@ import {EnumConstants}          from "./EnumConstants"
 import {InvalidHintException}   from "./exception/InvalidHintException"
 import {NullHintException}      from "./exception/NullHintException"
 import {NullReferenceException} from "./exception/NullReferenceException"
-import {getCompanion}           from "./helper/getCompanion"
-import {getLastPrototype}       from "./helper/getLastPrototype"
+import {getCompanion}           from "./method/getCompanion"
+import {getLastPrototype}       from "./method/getLastPrototype"
 
 export abstract class Enum<const ORDINAL extends number = number,
     const NAME extends string = string, >

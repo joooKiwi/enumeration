@@ -19,7 +19,7 @@ import {InvalidInstanceException} from "../src/exception/InvalidInstanceExceptio
 import {NonExistantKeyException}  from "../src/exception/NonExistantKeyException"
 import {NullInstanceException}    from "../src/exception/NullInstanceException"
 import {NullReferenceException}   from "../src/exception/NullReferenceException"
-import {getCompanion}             from "../src/helper/getCompanion"
+import {getCompanion}             from "../src/method/getCompanion"
 
 describe("methodTests (getCompanion)", () => {
 

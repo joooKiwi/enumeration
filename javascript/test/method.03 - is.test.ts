@@ -32,25 +32,25 @@ import {EmptyEnumWithGrandParent}                     from "./instance/EmptyEnum
 import {EmptyEnumWithGreatGrandParent}                from "./instance/EmptyEnumWithGreatGrandParent"
 import {EmptyEnumWithParent}                          from "./instance/EmptyEnumWithParent"
 
-import {isCompanionEnum}                                from "../src/helper/isCompanionEnum"
-import {isCompanionEnumByStructure}                     from "../src/helper/isCompanionEnumByStructure"
-import {isCompanionEnumWithParent}                      from "../src/helper/isCompanionEnumWithParent"
-import {isCompanionEnumWithParentByStructure}           from "../src/helper/isCompanionEnumWithParentByStructure"
-import {isCompanionEnumWithGrandParent}                 from "../src/helper/isCompanionEnumWithGrandParent"
-import {isCompanionEnumWithGrandParentByStructure}      from "../src/helper/isCompanionEnumWithGrandParentByStructure"
-import {isCompanionEnumWithGreatGrandParent}            from "../src/helper/isCompanionEnumWithGreatGrandParent"
-import {isCompanionEnumWithGreatGrandParentByStructure} from "../src/helper/isCompanionEnumWithGreatGrandParentByStructure"
-import {isEnum}                                         from "../src/helper/isEnum"
-import {isEnumByStructure}                              from "../src/helper/isEnumByStructure"
-import {isEnumWithNullableGrandParent}                  from "../src/helper/isEnumWithNullableGrandParent"
-import {isEnumWithNullableGreatGrandParent}             from "../src/helper/isEnumWithNullableGreatGrandParent"
-import {isEnumWithNullableParent}                       from "../src/helper/isEnumWithNullableParent"
-import {isEnumWithGrandParent}                          from "../src/helper/isEnumWithGrandParent"
-import {isEnumWithGrandParentByStructure}               from "../src/helper/isEnumWithGrandParentByStructure"
-import {isEnumWithGreatGrandParent}                     from "../src/helper/isEnumWithGreatGrandParent"
-import {isEnumWithGreatGrandParentByStructure}          from "../src/helper/isEnumWithGreatGrandParentByStructure"
-import {isEnumWithParent}                               from "../src/helper/isEnumWithParent"
-import {isEnumWithParentByStructure}                    from "../src/helper/isEnumWithParentByStructure"
+import {isCompanionEnum}                                from "../src/method/isCompanionEnum"
+import {isCompanionEnumByStructure}                     from "../src/method/isCompanionEnumByStructure"
+import {isCompanionEnumWithParent}                      from "../src/method/isCompanionEnumWithParent"
+import {isCompanionEnumWithParentByStructure}           from "../src/method/isCompanionEnumWithParentByStructure"
+import {isCompanionEnumWithGrandParent}                 from "../src/method/isCompanionEnumWithGrandParent"
+import {isCompanionEnumWithGrandParentByStructure}      from "../src/method/isCompanionEnumWithGrandParentByStructure"
+import {isCompanionEnumWithGreatGrandParent}            from "../src/method/isCompanionEnumWithGreatGrandParent"
+import {isCompanionEnumWithGreatGrandParentByStructure} from "../src/method/isCompanionEnumWithGreatGrandParentByStructure"
+import {isEnum}                                         from "../src/method/isEnum"
+import {isEnumByStructure}                              from "../src/method/isEnumByStructure"
+import {isEnumWithNullableGrandParent}                  from "../src/method/isEnumWithNullableGrandParent"
+import {isEnumWithNullableGreatGrandParent}             from "../src/method/isEnumWithNullableGreatGrandParent"
+import {isEnumWithNullableParent}                       from "../src/method/isEnumWithNullableParent"
+import {isEnumWithGrandParent}                          from "../src/method/isEnumWithGrandParent"
+import {isEnumWithGrandParentByStructure}               from "../src/method/isEnumWithGrandParentByStructure"
+import {isEnumWithGreatGrandParent}                     from "../src/method/isEnumWithGreatGrandParent"
+import {isEnumWithGreatGrandParentByStructure}          from "../src/method/isEnumWithGreatGrandParentByStructure"
+import {isEnumWithParent}                               from "../src/method/isEnumWithParent"
+import {isEnumWithParentByStructure}                    from "../src/method/isEnumWithParentByStructure"
 
 describe("methodsTests (is)", () => {
 
@@ -101,7 +101,7 @@ describe("methodsTests (is)", () => {
         test("companion enum with great-grandparent by structure", () => expect(isCompanionEnumWithGreatGrandParentByStructure(value,),).toBeFalse(),)
     },)
     describe("string", () => {
-        const value = ''
+        const value = ""
 
         test("enum",                                               () => expect(isEnum(value,),)                                        .toBeFalse(),)
         test("enum by structure",                                  () => expect(isEnumByStructure(value,),)                             .toBeFalse(),)

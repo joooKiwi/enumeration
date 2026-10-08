@@ -28,7 +28,7 @@ import {EmptyEnumWithParent}                   from "./instance/EmptyEnumWithPar
 import type {Enumerable} from "../src/Enumerable"
 
 import {NullReferenceException} from "../src/exception/NullReferenceException"
-import {getLastPrototype}       from "../src/helper/getLastPrototype"
+import {getLastPrototype}       from "../src/method/getLastPrototype"
 
 describe("methodTests (getLastPrototype)", () => {
     // @ts-expect-error
