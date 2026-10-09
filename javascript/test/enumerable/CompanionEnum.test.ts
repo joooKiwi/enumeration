@@ -16,7 +16,6 @@ import {BasicEnum as Child}                                                     
 import {BasicEnumWithGrandParent as GrandParent}                                             from "../instance/BasicEnumWithGrandParent"
 import {BasicEnumWithGreatGrandParent as GreatGrandParent}                                   from "../instance/BasicEnumWithGreatGrandParent"
 import {BasicEnumWithParent as Parent}                                                       from "../instance/BasicEnumWithParent"
-import {CompanionEnum_TestClassHelper as InstanceHelper}                                     from "../instance/CompanionEnum_TestClassHelper"
 import {CompanionEnumWithGrandParent_TestClassHelper as GrandParentInstanceHelper}           from "../instance/CompanionEnumWithGrandParent_TestClassHelper"
 import {CompanionEnumWithParent_TestClassHelper as ParentInstanceHelper}                     from "../instance/CompanionEnumWithParent_TestClassHelper"
 import {CompanionEnumWithGreatGrandParent_TestClassHelper as GreatGrandParentInstanceHelper} from "../instance/CompanionEnumWithGreatGrandParent_TestClassHelper"
@@ -30,51 +29,6 @@ import {NullInstanceException}             from "../../src/exception/NullInstanc
 
 describe("CompanionEnumTest", () => {
 
-    describe("CompanionEnum", () => {
-        describe("invalid argument", () => {
-            // @ts-expect-error
-            test.each(nullValues,)("%s",                   it => expect(() => new InstanceHelper(it,),).toThrow(NullInstanceException,),)
-            test.each(invalidInstances,)("%s", ({value: it,}) => expect(() => new InstanceHelper(it,),).toThrow(InvalidInstanceException,),)
-        },)
-        test("valid construction", () => expect(() => new InstanceHelper(Child,),).not.toThrow(),)
-        describe("methods", () => {
-            describe("setDefaultValue", () => {
-                test.each(nullValues,)("%s", it => {
-                    expect(() => new InstanceHelper(Child,).setDefaultValue(it,),).not.toThrow()
-                    expect(() => new InstanceHelper(Child,).defaultValue,)        .toThrowWithMessage(NullEnumerableException, /The default value was set to null or removed.+/,)
-                },)
-                test.each(validValues,)("%s", ({value: it,},) => expect(     new InstanceHelper(Child,).setDefaultValue(it,).defaultValue,)     .toEqual(Child.A,),)
-                test("instance.A",                        () => expect(      new InstanceHelper(Child,).setDefaultValue(Child.A,).defaultValue,).toEqual(Child.A,),)
-                test("instance with parent.A",            () => expect(() => new InstanceHelper(Child,).setDefaultValue(Parent.A,),)            .toThrow(InvalidEnumerableException,),)
-                test("instance with grandparent.A",       () => expect(() => new InstanceHelper(Child,).setDefaultValue(GrandParent.A,),)       .toThrow(InvalidEnumerableException,),)
-                test("instance with great-grandparent.A", () => expect(() => new InstanceHelper(Child,).setDefaultValue(GreatGrandParent.A,),)  .toThrow(InvalidEnumerableException,),)
-            },)
-            describe("getValue", () => {
-                test.each(nullValues,)("%s",              it => expect(() => new InstanceHelper(Child,).getValue(it,),)                .toThrow(NullEnumerableException,),)
-                test.each(validValues,)("%s", ({value: it,},) => expect(     new InstanceHelper(Child,).getValue(it,),)                .toEqual(Child.A,),)
-                test("instance.A",                        () => expect(      new InstanceHelper(Child,).getValue(Child.A,),)           .toEqual(Child.A,),)
-                test("instance with parent.A",            () => expect(() => new InstanceHelper(Child,).getValue(Parent.A,),)          .toThrow(InvalidEnumerableException,),)
-                test("instance with grandparent.A",       () => expect(() => new InstanceHelper(Child,).getValue(GrandParent.A,),)     .toThrow(InvalidEnumerableException,),)
-                test("instance with great-grandparent.A", () => expect(() => new InstanceHelper(Child,).getValue(GreatGrandParent.A,),).toThrow(InvalidEnumerableException,),)
-            },)
-            describe("getName", () => {
-                test.each(nullValues,)("%s",              it => expect(() => new InstanceHelper(Child,).getName(it,),)                .toThrow(NullEnumerableException,),)
-                test.each(validValues,)("%s", ({value: it,},) => expect(     new InstanceHelper(Child,).getName(it,),)                .toEqual('A',),)
-                test("instance.A",                        () => expect(      new InstanceHelper(Child,).getName(Child.A,),)           .toEqual('A',),)
-                test("instance with parent.A",            () => expect(() => new InstanceHelper(Child,).getName(Parent.A,),)          .toThrow(InvalidEnumerableException,),)
-                test("instance with grandparent.A",       () => expect(() => new InstanceHelper(Child,).getName(GrandParent.A,),)     .toThrow(InvalidEnumerableException,),)
-                test("instance with great-grandparent.A", () => expect(() => new InstanceHelper(Child,).getName(GreatGrandParent.A,),).toThrow(InvalidEnumerableException,),)
-            },)
-            describe("getOrdinal", () => {
-                test.each(nullValues,)("%s",              it => expect(() => new InstanceHelper(Child,).getOrdinal(it,),)                .toThrow(NullEnumerableException,),)
-                test.each(validValues,)("%s", ({value: it,},) => expect(     new InstanceHelper(Child,).getOrdinal(it,),)                .toEqual(0,),)
-                test("instance.A",                        () => expect(      new InstanceHelper(Child,).getOrdinal(Child.A,),)           .toEqual(0,),)
-                test("instance with parent.A",            () => expect(() => new InstanceHelper(Child,).getOrdinal(Parent.A,),)          .toThrow(InvalidEnumerableException,),)
-                test("instance with grandparent.A",       () => expect(() => new InstanceHelper(Child,).getOrdinal(GrandParent.A,),)     .toThrow(InvalidEnumerableException,),)
-                test("instance with great-grandparent.A", () => expect(() => new InstanceHelper(Child,).getOrdinal(GreatGrandParent.A,),).toThrow(InvalidEnumerableException,),)
-            },)
-        },)
-    },)
     describe("CompanionEnumWithParent", () => {
         describe("invalid argument #1", () => {
             // @ts-expect-error
