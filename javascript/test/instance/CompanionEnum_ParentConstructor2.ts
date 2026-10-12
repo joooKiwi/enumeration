@@ -19,8 +19,8 @@ import {BasicEnumWithParent}     from "./BasicEnumWithParent"
 export class CompanionEnum_ParentConstructor2
     extends CompanionEnumWithParent<BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum> {
 
-    public constructor(instance: typeof BasicEnum,) {
-        super(BasicEnumWithParent, instance,)
+    public constructor(parentInstance: typeof BasicEnum,) {
+        super(BasicEnumWithParent, parentInstance,)
     }
 
 }
