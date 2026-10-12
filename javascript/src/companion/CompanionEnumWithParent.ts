@@ -121,7 +121,7 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
      * @throws {NullReferenceException}
      */
     protected _getValueFromValuesByParent(value: Enumerable,): ENUM {
-        const valueFound = this.values.find(it => it.parent === value,)
+        const valueFound = this.values.findFirstOrNull(it => it.parent === value,)
         if (valueFound == null)
             throw new NullReferenceException(`No parent “${value}” could be found on the “${this.instance.name}”.`, value,)
         return valueFound

@@ -145,7 +145,7 @@ export class CompanionEnumWithGreatGrandParent<const ENUM extends EnumerableWith
      * @throws {NullReferenceException}
      */
     protected _getValueFromValuesByGreatGrandParent(value: Enumerable,): ENUM {
-        const valueFound = this.values.find(it => it.greatGrandParent === value,)
+        const valueFound = this.values.findFirstOrNull(it => it.greatGrandParent === value,)
         if (valueFound == null)
             throw new NullReferenceException(`No great-grandparent “${value}” could be found on the “${this.instance.name}”.`, value,)
         return valueFound
