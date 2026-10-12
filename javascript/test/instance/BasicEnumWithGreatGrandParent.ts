@@ -10,6 +10,8 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
+import type {CompanionEnumWithGreatGrandParentSingleton} from "../../src/type/singleton"
+
 import {EnumWithGreatGrandParent}          from "../../src/EnumWithGreatGrandParent"
 import {CompanionEnumWithGreatGrandParent} from "../../src/companion/CompanionEnumWithGreatGrandParent"
 import {BasicEnum}                         from "./BasicEnum"
@@ -37,8 +39,8 @@ export class BasicEnumWithGreatGrandParent<const ORDINAL extends | 0 | 1 | 2 | 3
             super(parent, grandParent, greatGrandParent,)
     }
 
-    public static CompanionEnum = class CompanionEnum_BasicEnumWithGreatGrandParent
-        extends CompanionEnumWithGreatGrandParent<BasicEnumWithGreatGrandParent, any, BasicEnumWithGrandParent, typeof BasicEnumWithGrandParent, BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum> {
+    public static CompanionEnum: CompanionEnumWithGreatGrandParentSingleton<BasicEnumWithGreatGrandParent, typeof BasicEnumWithGreatGrandParent, BasicEnumWithGrandParent, typeof BasicEnumWithGrandParent, BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum> = class CompanionEnum_BasicEnumWithGreatGrandParent
+        extends CompanionEnumWithGreatGrandParent<BasicEnumWithGreatGrandParent, typeof BasicEnumWithGreatGrandParent, BasicEnumWithGrandParent, typeof BasicEnumWithGrandParent, BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum> {
 
         static #instance?: CompanionEnum_BasicEnumWithGreatGrandParent
         private constructor() { super(BasicEnumWithGreatGrandParent, BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum,) }

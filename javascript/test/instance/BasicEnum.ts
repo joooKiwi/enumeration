@@ -10,6 +10,8 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
+import type {CompanionEnumSingleton} from "../../src/type/singleton"
+
 import {Enum}          from "../../src/Enum"
 import {CompanionEnum} from "../../src/companion/CompanionEnum"
 
@@ -24,8 +26,8 @@ export class BasicEnum<const ORDINAL extends | 0 | 1 | 2 | 3 = | 0 | 1 | 2 | 3,
 
     private constructor() { super() }
 
-    public static CompanionEnum = class CompanionEnum_BasicEnum
-        extends CompanionEnum<BasicEnum, any> {
+    public static CompanionEnum: CompanionEnumSingleton<BasicEnum, typeof BasicEnum> = class CompanionEnum_BasicEnum
+        extends CompanionEnum<BasicEnum, typeof BasicEnum> {
 
         static #instance?: CompanionEnum_BasicEnum
         private constructor() { super(BasicEnum,) }
