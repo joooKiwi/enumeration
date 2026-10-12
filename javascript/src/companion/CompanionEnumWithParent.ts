@@ -17,17 +17,23 @@ import type {EnumerableConstructor}                                             
 import type {EnumerableWithNullableParent}                                                           from "../EnumerableWithNullableParent"
 import type {CompanionEnumerable}                                                                    from "./CompanionEnumerable"
 import type {CompanionEnumerableWithParent}                                                          from "./CompanionEnumerableWithParent"
+import type {CompanionEnumerableType}                                                                from "../type/companion"
 import type {ImpossibleNames}                                                                        from "../type/name"
 import type {NameOf, SpecificNameOf}                                                                 from "../type/nameOf"
 import type {OrdinalOf, SpecificOrdinalOf}                                                           from "../type/ordinalOf"
 import type {NameByOrdinal, OrdinalByName, ValueByName, ValueBySpecificName, ValueBySpecificOrdinal} from "../type/valueBy"
+import type {EnumerableWithNullableParentGeneralType}                                                from "../type/general"
 
-import {CompanionEnum}              from "./CompanionEnum"
-import {InvalidEnumerableException} from "../exception/InvalidEnumerableException"
-import {InvalidInstanceException}   from "../exception/InvalidInstanceException"
-import {NonExistantKeyException}    from "../exception/NonExistantKeyException"
-import {NullInstanceException}      from "../exception/NullInstanceException"
-import {NullReferenceException}     from "../exception/NullReferenceException"
+import {CompanionEnum}                 from "./CompanionEnum"
+import {Enum}                          from "../Enum"
+import {EnumWithNullableParent}        from "../EnumWithNullableParent"
+import {EnumWithParent}                from "../EnumWithParent"
+import {InvalidEnumerableException}    from "../exception/InvalidEnumerableException"
+import {InvalidInstanceException}      from "../exception/InvalidInstanceException"
+import {NullInstanceException}         from "../exception/NullInstanceException"
+import {NullReferenceException}        from "../exception/NullReferenceException"
+import {_getSimplifiedPrototypeChains} from "../method/_getSimplifiedPrototypeChains"
+import {_hasPrototypeOf}               from "../method/_hasPrototypeOf"
 
 export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullableParent<PARENT_ENUM>,
     const ENUM_CONSTRUCTOR extends EnumerableConstructor<ENUM, CompanionEnumerableWithParent<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR>>,
@@ -45,13 +51,13 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
 
     protected constructor(instance: ENUM_CONSTRUCTOR, parentInstance: PARENT_ENUM_CONSTRUCTOR,) {
         super(instance,)
-        if (!("parent" in instance.prototype))
-            throw new NonExistantKeyException(`No attribute "parent" exist in the “${instance.name}” instance. Either use a getter method or add it in the class.`, "parent", instance.prototype,)
+        __validateInstance(instance,)
+
         if (parentInstance == null)
             throw new NullInstanceException()
         if (!(parentInstance instanceof Function))
-            throw new InvalidInstanceException(`The parent instance received in “${this.constructor.name}” is not a function type.`, parentInstance,)
-        this.#parentInstance = parentInstance
+            throw new InvalidInstanceException(`Invalid instance exception. The parent instance received in “${this.constructor.name}” is not a function type.`, parentInstance,)
+        this.#parentInstance = __validateParentInstance(parentInstance,)
     }
 
     //#endregion -------------------- Constructor --------------------
@@ -171,4 +177,66 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
 
     //#endregion -------------------- Methods --------------------
 
+}
+
+/**
+ * Validate that the {@link parentInstance} is a relative to {@link Enum} or has the structure of an {@link Enumerable}
+ *
+ * @param parentInstance The {@link CompanionEnumerable} constructor to validate
+ * @throws InvalidInstanceException It is not a relative to {@link Enum} or does not have the structure of an {@link Enumerable}
+ */
+function __validateParentInstance<const PARENT_ENUM_CONSTRUCTOR extends EnumerableConstructor<Enumerable, CompanionEnumerable<Enumerable, PARENT_ENUM_CONSTRUCTOR>>, >(
+    parentInstance: PARENT_ENUM_CONSTRUCTOR,): PARENT_ENUM_CONSTRUCTOR {
+    if (_hasPrototypeOf(parentInstance, Enum,))
+        // Is relative to the Enum class
+        return parentInstance
+
+    const parentInstancePrototype = parentInstance.prototype as NullOr<object>
+    if (parentInstancePrototype != null)
+    if ("name" in parentInstancePrototype)
+    if ("ordinal" in parentInstancePrototype)
+    if (Symbol.toStringTag in parentInstancePrototype)
+    if (Symbol.toPrimitive in parentInstancePrototype)
+        // Is Enumerable by structure
+        return parentInstance
+
+    // We now know that it is invalid.
+    // We will get its chain to display in a simplified manner toward the inheritance
+    let prototype: NullOr<object> = parentInstance
+    const prototypeChain: MutableArray<object> = []
+    while (prototype != null) {
+        prototypeChain.push(prototype,)
+        prototype = Reflect.getPrototypeOf(prototype,)
+    }
+    throw new InvalidInstanceException(`Invalid instance exception. The parent instance received in ${_getSimplifiedPrototypeChains(prototypeChain,)} does not have an inheritor of “Enum” or the structure of an “Enumerable”.`, parentInstance,)
+}
+
+/**
+ * Validate that the {@link instance} is a relative to {@link EnumWithNullableParent}, {@link EnumWithParent} or has the structure of an {@link EnumerableWithParent}
+ *
+ * @param instance The {@link CompanionEnumerableWithParent} constructor to validate
+ * @throws InvalidInstanceException It is not a relative to {@link EnumWithNullableParent}|{@link EnumWithParent} or does not have the structure of an {@link EnumerableWithParent}
+ */
+function __validateInstance<const ENUM_CONSTRUCTOR extends EnumerableConstructor<EnumerableWithNullableParentGeneralType, CompanionEnumerableWithParent<EnumerableWithNullableParentGeneralType, ENUM_CONSTRUCTOR, Enumerable, EnumerableConstructor<Enumerable, CompanionEnumerableType<Enumerable>>>>, >(
+    instance: ENUM_CONSTRUCTOR,): void {
+    if (_hasPrototypeOf(instance, EnumWithNullableParent,))
+        // Is relative to the EnumWithNullableParent class
+        return
+    if (_hasPrototypeOf(instance, EnumWithParent,))
+        // Is relative to the EnumWithParent class
+        return
+
+    if ("parent" in (instance.prototype as object))
+        // Is EnumerableWithParent by structure
+        return
+
+    // We now know that it is invalid.
+    // We will get its chain to display in a simplified manner toward the inheritance
+    let prototype: NullOr<object> = instance
+    const prototypeChain: MutableArray<object> = []
+    while (prototype != null) {
+        prototypeChain.push(prototype,)
+        prototype = Reflect.getPrototypeOf(prototype,)
+    }
+    throw new InvalidInstanceException(`Invalid instance exception. The instance received in ${_getSimplifiedPrototypeChains(prototypeChain,)} does not have an inheritor of “EnumWithNullableParent”, “EnumWithParent” or the structure of an “EnumerableWithParent”.`, instance,)
 }

@@ -19,17 +19,25 @@ import type {EnumerableWithNullableParent}                                      
 import type {CompanionEnumerable}                                                                    from "./CompanionEnumerable"
 import type {CompanionEnumerableWithGrandParent}                                                     from "./CompanionEnumerableWithGrandParent"
 import type {CompanionEnumerableWithParent}                                                          from "./CompanionEnumerableWithParent"
+import type {CompanionEnumerableType, CompanionEnumerableWithParentType}                             from "../type/companion"
 import type {ImpossibleNames}                                                                        from "../type/name"
 import type {NameOf, SpecificNameOf}                                                                 from "../type/nameOf"
 import type {OrdinalOf, SpecificOrdinalOf}                                                           from "../type/ordinalOf"
 import type {NameByOrdinal, OrdinalByName, ValueByName, ValueBySpecificName, ValueBySpecificOrdinal} from "../type/valueBy"
+import type {EnumerableWithNullableGrandParentGeneralType, EnumerableWithNullableParentGeneralType}  from "../type/general"
 
-import {CompanionEnumWithParent}    from "./CompanionEnumWithParent"
-import {InvalidEnumerableException} from "../exception/InvalidEnumerableException"
-import {InvalidInstanceException}   from "../exception/InvalidInstanceException"
-import {NullInstanceException}      from "../exception/NullInstanceException"
-import {NonExistantKeyException}    from "../exception/NonExistantKeyException"
-import {NullReferenceException}     from "../exception/NullReferenceException"
+import {Enum}                          from "../Enum"
+import {EnumWithNullableGrandParent}   from "../EnumWithNullableGrandParent"
+import {EnumWithNullableParent}        from "../EnumWithNullableParent"
+import {EnumWithGrandParent}           from "../EnumWithGrandParent"
+import {EnumWithParent}                from "../EnumWithParent"
+import {CompanionEnumWithParent}       from "./CompanionEnumWithParent"
+import {InvalidEnumerableException}    from "../exception/InvalidEnumerableException"
+import {InvalidInstanceException}      from "../exception/InvalidInstanceException"
+import {NullInstanceException}         from "../exception/NullInstanceException"
+import {NullReferenceException}        from "../exception/NullReferenceException"
+import {_hasPrototypeOf}               from "../method/_hasPrototypeOf"
+import {_getSimplifiedPrototypeChains} from "../method/_getSimplifiedPrototypeChains"
 
 export class CompanionEnumWithGrandParent<const ENUM extends EnumerableWithNullableGrandParent<PARENT_ENUM, GRAND_PARENT_ENUM>,
     const ENUM_CONSTRUCTOR extends EnumerableConstructor<ENUM, CompanionEnumerableWithGrandParent<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR, GRAND_PARENT_ENUM, GRAND_PARENT_ENUM_CONSTRUCTOR>>,
@@ -49,15 +57,13 @@ export class CompanionEnumWithGrandParent<const ENUM extends EnumerableWithNulla
 
     protected constructor(instance: ENUM_CONSTRUCTOR, parentInstance: PARENT_ENUM_CONSTRUCTOR, grandParentInstance: GRAND_PARENT_ENUM_CONSTRUCTOR,) {
         super(instance, parentInstance,)
-        if (!("grandParent" in instance.prototype))
-            throw new NonExistantKeyException(`No attribute "grandParent" exist in the “${instance.name}” instance. Either use a getter method or add it in the class.`, "grandParent", instance.prototype,)
-        if (!("parent" in parentInstance.prototype))
-            throw new NonExistantKeyException(`No attribute "parent" exist in the “${parentInstance.name}” instance. Either use a getter method or add it in the class.`, "parent", parentInstance.prototype,)
+        __validateInstance(instance,)
+        __validateParentInstance(parentInstance,)
         if (grandParentInstance == null)
             throw new NullInstanceException()
         if (!(grandParentInstance instanceof Function))
-            throw new InvalidInstanceException(`The grandparent instance received in “${this.constructor.name}” is not a function type.`, grandParentInstance,)
-        this.#grandParentInstance = grandParentInstance
+            throw new InvalidInstanceException(`Invalid instance exception. The grandparent instance received in “${this.constructor.name}” is not a function type.`, grandParentInstance,)
+        this.#grandParentInstance = __validateGrandParentInstance(grandParentInstance,)
     }
 
     //#endregion -------------------- Constructor --------------------
@@ -183,4 +189,97 @@ export class CompanionEnumWithGrandParent<const ENUM extends EnumerableWithNulla
 
     //#endregion -------------------- Methods --------------------
 
+}
+
+
+/**
+ * Validate that the {@link grandParentInstance} is a relative to {@link Enum} or has the structure of an {@link Enumerable}
+ *
+ * @param grandParentInstance The {@link CompanionEnumerable} constructor to validate
+ * @throws InvalidInstanceException It is not a relative to {@link Enum} or does not have the structure of an {@link Enumerable}
+ */
+function __validateGrandParentInstance<const GRAND_PARENT_ENUM_CONSTRUCTOR extends EnumerableConstructor<Enumerable, CompanionEnumerable<Enumerable, GRAND_PARENT_ENUM_CONSTRUCTOR>>, >(
+    grandParentInstance: GRAND_PARENT_ENUM_CONSTRUCTOR,): GRAND_PARENT_ENUM_CONSTRUCTOR {
+    if (_hasPrototypeOf(grandParentInstance, Enum,))
+        // Is relative to the Enum class
+        return grandParentInstance
+
+    const parentInstancePrototype = grandParentInstance.prototype as NullOr<object>
+    if (parentInstancePrototype != null)
+    if ("name" in parentInstancePrototype)
+    if ("ordinal" in parentInstancePrototype)
+    if (Symbol.toStringTag in parentInstancePrototype)
+    if (Symbol.toPrimitive in parentInstancePrototype)
+        // Is Enumerable by structure
+        return grandParentInstance
+
+    // We now know that it is invalid.
+    // We will get its chain to display in a simplified manner toward the inheritance
+    let prototype: NullOr<object> = grandParentInstance
+    const prototypeChain: MutableArray<object> = []
+    while (prototype != null) {
+        prototypeChain.push(prototype,)
+        prototype = Reflect.getPrototypeOf(prototype,)
+    }
+    throw new InvalidInstanceException(`Invalid instance exception. The grandparent instance received in ${_getSimplifiedPrototypeChains(prototypeChain,)} does not have an inheritor of “Enum” or the structure of an “Enumerable”.`, grandParentInstance,)
+}
+
+/**
+ * Validate that the {@link parentInstance} is a relative to {@link EnumWithNullableParent}, {@link EnumWithParent} or has the structure of an {@link EnumerableWithParent}
+ *
+ * @param parentInstance The {@link CompanionEnumerableWithParent} constructor to validate
+ * @throws InvalidInstanceException It is not a relative to {@link EnumWithNullableParent}|{@link EnumWithParent} or does not have the structure of an {@link EnumerableWithParent}
+ */
+function __validateParentInstance<const PARENT_ENUM_CONSTRUCTOR extends EnumerableConstructor<EnumerableWithNullableParentGeneralType, CompanionEnumerableWithParent<EnumerableWithNullableParentGeneralType, PARENT_ENUM_CONSTRUCTOR, Enumerable, EnumerableConstructor<Enumerable, CompanionEnumerableType<Enumerable>>>>, >(
+    parentInstance: PARENT_ENUM_CONSTRUCTOR,): void {
+    if (_hasPrototypeOf(parentInstance, EnumWithNullableParent,))
+        // Is relative to the EnumWithNullableParent class
+        return
+    if (_hasPrototypeOf(parentInstance, EnumWithParent,))
+        // Is relative to the EnumWithParent class
+        return
+
+    if ("parent" in (parentInstance.prototype as object))
+        // Is EnumerableWithParent by structure
+        return
+
+    // We now know that it is invalid.
+    // We will get its chain to display in a simplified manner toward the inheritance
+    let prototype: NullOr<object> = parentInstance
+    const prototypeChain: MutableArray<object> = []
+    while (prototype != null) {
+        prototypeChain.push(prototype,)
+        prototype = Reflect.getPrototypeOf(prototype,)
+    }
+    throw new InvalidInstanceException(`Invalid instance exception. The parent instance received in ${_getSimplifiedPrototypeChains(prototypeChain,)} does not have an inheritor of “EnumWithNullableParent”, “EnumWithParent” or the structure of an “EnumerableWithParent”.`, parentInstance,)
+}
+
+/**
+ * Validate that the {@link instance} is a relative to {@link EnumWithNullableGrandParent}, {@link EnumWithGrandParent} or has the structure of an {@link EnumerableWithGrandParent}
+ *
+ * @param instance The {@link CompanionEnumerableWithGrandParent} constructor to validate
+ * @throws InvalidInstanceException It is not a relative to {@link EnumWithNullableGrandParent}|{@link EnumWithGrandParent} or does not have the structure of an {@link EnumerableWithGrandParent}
+ */
+function __validateInstance<const ENUM_CONSTRUCTOR extends EnumerableConstructor<EnumerableWithNullableGrandParentGeneralType, CompanionEnumerableWithGrandParent<EnumerableWithNullableGrandParentGeneralType, ENUM_CONSTRUCTOR, EnumerableWithNullableParentGeneralType, EnumerableConstructor<EnumerableWithNullableParentGeneralType, CompanionEnumerableWithParentType<EnumerableWithNullableParentGeneralType, Enumerable>>, Enumerable, EnumerableConstructor<Enumerable, CompanionEnumerableType<Enumerable>>>>, >(
+    instance: ENUM_CONSTRUCTOR,): void {
+    if (_hasPrototypeOf(instance, EnumWithNullableGrandParent,))
+        // Is relative to the EnumWithNullableGrandParent class
+        return
+    if (_hasPrototypeOf(instance, EnumWithGrandParent,))
+        // Is relative to the EnumWithGrandParent class
+        return
+
+    if ("grandParent" in (instance.prototype as object))
+        // Is EnumerableWithGrandParent by structure
+        return
+
+    // We now know that it is invalid.
+    // We will get its chain to display in a simplified manner toward the inheritance
+    let prototype: NullOr<object> = instance
+    const prototypeChain: MutableArray<object> = []
+    while (prototype != null) {
+        prototypeChain.push(prototype,)
+        prototype = Reflect.getPrototypeOf(prototype,)
+    }
+    throw new InvalidInstanceException(`Invalid instance exception. The instance received in ${_getSimplifiedPrototypeChains(prototypeChain,)} does not have an inheritor of “EnumWithNullableGrandParent”, “EnumWithGrandParent” or the structure of an “EnumerableWithGrandParent”.`, instance,)
 }

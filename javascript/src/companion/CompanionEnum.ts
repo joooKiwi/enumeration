@@ -24,6 +24,7 @@ import type {PossibleEnumerableValue, PossibleEnumerableValueBy}                
 import type {NameByOrdinal, OrdinalByName, ValueBySpecificName, ValueBySpecificOrdinal} from "../type/valueBy"
 import type {CompanionEnumName}                                                         from "../type/toStringTag"
 
+import {Enum}                                        from "../Enum"
 import {EnumConstants}                               from "../EnumConstants"
 import {ForbiddenNameException}                      from "../exception/ForbiddenNameException"
 import {ForbiddenNumericException}                   from "../exception/ForbiddenNumericException"
@@ -35,9 +36,11 @@ import {NullReferenceException}                      from "../exception/NullRefe
 import {NullEnumerableException}                     from "../exception/NullEnumerableException"
 import {NullInstanceException}                       from "../exception/NullInstanceException"
 import {UnhandledValueException}                     from "../exception/UnhandledValueException"
+import {_getSimplifiedPrototypeChains}               from "../method/_getSimplifiedPrototypeChains"
 import {getLastPrototype}                            from "../method/getLastPrototype"
 import {isEnum}                                      from "../method/isEnum"
 import {isEnumByStructure}                           from "../method/isEnumByStructure"
+import {_hasPrototypeOf}                             from "../method/_hasPrototypeOf"
 
 export class CompanionEnum<const ENUM extends Enumerable,
     const ENUM_CONSTRUCTOR extends EnumerableConstructor<ENUM, CompanionEnumerable<ENUM, ENUM_CONSTRUCTOR>>, >
@@ -95,8 +98,8 @@ export class CompanionEnum<const ENUM extends Enumerable,
         if (instance == null)
             throw new NullInstanceException()
         if (!(instance instanceof Function))
-            throw new InvalidInstanceException(`The instance received in “${this.constructor.name}” is not a function type.`, instance,)
-        this.#instance = instance
+            throw new InvalidInstanceException(`Invalid instance exception. The instance received in “${this.constructor.name}” is not a function type.`, instance,)
+        this.#instance = __validateInstance(instance,)
     }
 
     //#endregion -------------------- Constructor --------------------
@@ -1201,6 +1204,39 @@ export class CompanionEnum<const ENUM extends Enumerable,
 
     //#endregion -------------------- Methods --------------------
 
+}
+
+/**
+ * Validate that the {@link instance} is a relative to {@link Enum} or has the structure of an {@link Enumerable}
+ *
+ * @param instance The {@link CompanionEnumerable} constructor to validate
+ * @throws InvalidInstanceException It is not a relative to {@link Enum} or does not have the structure of an {@link Enumerable}
+ */
+function __validateInstance<const ENUMERABLE_CONSTRUCTOR extends EnumerableConstructor<Enumerable, CompanionEnumerable<Enumerable, ENUMERABLE_CONSTRUCTOR>>, >(
+    instance: ENUMERABLE_CONSTRUCTOR,): ENUMERABLE_CONSTRUCTOR {
+    if (_hasPrototypeOf(instance, Enum,))
+        // Is relative to the Enum class
+        return instance
+
+    // We will find if the prototype has the structure of an Enumerable
+    const instancePrototype = instance.prototype as NullOr<object>
+    if (instancePrototype != null)
+    if ("name" in instancePrototype)
+    if ("ordinal" in instancePrototype)
+    if (Symbol.toStringTag in instancePrototype)
+    if (Symbol.toPrimitive in instancePrototype)
+        // Is Enumerable by structure
+        return instance
+
+    // We now know that it is invalid.
+    // We will get its chain to display in a simplified manner toward the inheritance
+    let prototype: NullOr<object> = instance
+    const prototypeChain: MutableArray<object> = []
+    while (prototype != null) {
+        prototypeChain.push(prototype,)
+        prototype = Reflect.getPrototypeOf(prototype,)
+    }
+    throw new InvalidInstanceException(`Invalid instance exception. The instance received in ${_getSimplifiedPrototypeChains(prototypeChain,)} does not have an inheritor of “Enum” or the structure of an “Enumerable”.`, instance,)
 }
 
 type MethodCalledName = "getValue" | "getName" | "getOrdinal"
