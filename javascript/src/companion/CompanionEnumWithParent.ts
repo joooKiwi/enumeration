@@ -44,7 +44,7 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
 
     //#region -------------------- Fields --------------------
 
-    readonly #parentInstance
+    readonly #parentInstance: PARENT_ENUM_CONSTRUCTOR
 
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------

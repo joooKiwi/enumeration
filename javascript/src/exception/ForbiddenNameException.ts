@@ -33,8 +33,8 @@ export class ForbiddenNameException<const T extends StringOrObject,
                ExceptionWithNullableCause<CAUSE> {
 
     public override readonly name = this.constructor.name
-    readonly #value
-    readonly #cause
+    readonly #value: T
+    readonly #cause: NullOr<CAUSE>
 
     public constructor(message: string, value: T, cause?: Nullable<CAUSE>,) {
         super(message,)

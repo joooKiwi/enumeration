@@ -30,9 +30,9 @@ export class NonExistantKeyException<const K extends string,
                ExceptionWithNullableCause<CAUSE> {
 
     public override readonly name = this.constructor.name
-    readonly #key
-    readonly #value
-    readonly #cause
+    readonly #key: K
+    readonly #value: T
+    readonly #cause: NullOr<CAUSE>
 
     public constructor(message: string, key: K, value: T, cause?: Nullable<CAUSE>,) {
         super(message,)

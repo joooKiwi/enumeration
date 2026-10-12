@@ -10,9 +10,10 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {Nullable, PossiblePrimitiveHint, StringOrObject} from "@joookiwi/type"
+import type {Nullable, StringOrObject} from "@joookiwi/type"
 
 import type {Enumerable}              from "./Enumerable"
+import type {EnumerableConstructor}   from "./EnumerableConstructor"
 import type {CompanionEnumerableType} from "./type/companion"
 import type {EnumerableToPrimitive}   from "./type/toPrimitive"
 import type {EnumerableName}          from "./type/toStringTag"
@@ -32,8 +33,8 @@ export abstract class Enum<const ORDINAL extends number = number,
 
     #name?: NAME
     readonly #ordinal: ORDINAL
-    readonly #prototypeConstructor
-    #companion?: CompanionEnumerableType<Enum>
+    readonly #prototypeConstructor: EnumerableConstructor<Enum<ORDINAL, NAME>, CompanionEnumerableType<Enum<ORDINAL, NAME>>>
+    #companion?: CompanionEnumerableType<Enum<ORDINAL, NAME>>
 
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------

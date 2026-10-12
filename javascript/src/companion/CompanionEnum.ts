@@ -48,7 +48,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
 
     //#region -------------------- Fields --------------------
 
-    readonly #instance
+    readonly #instance: ENUM_CONSTRUCTOR
     #values?: CollectionHolder<ENUM>
     #names?: CollectionHolder<NameOf<ENUM>>
     #ordinals?: CollectionHolder<OrdinalOf<ENUM>>

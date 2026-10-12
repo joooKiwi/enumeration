@@ -56,7 +56,7 @@ export class CompanionEnumWithGreatGrandParent<const ENUM extends EnumerableWith
 
     //#region -------------------- Fields --------------------
 
-    readonly #greatGrandParentInstance
+    readonly #greatGrandParentInstance: GREAT_GRAND_PARENT_ENUM_CONSTRUCTOR
 
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------

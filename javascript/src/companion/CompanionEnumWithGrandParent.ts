@@ -50,7 +50,7 @@ export class CompanionEnumWithGrandParent<const ENUM extends EnumerableWithNulla
 
     //#region -------------------- Fields --------------------
 
-    readonly #grandParentInstance
+    readonly #grandParentInstance: GRAND_PARENT_ENUM_CONSTRUCTOR
 
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------

@@ -33,9 +33,9 @@ export class InvalidEnumerableException<const ENUMERABLE extends Enumerable,
                ExceptionWithNullableCause<CAUSE> {
 
     public override readonly name = this.constructor.name
-    readonly #value
-    readonly #expectedEnumerableConstructors
-    readonly #cause
+    readonly #value: ENUMERABLE
+    readonly #expectedEnumerableConstructors: EXPECTED_ENUMERABLE_CONSTRUCTORS
+    readonly #cause: NullOr<CAUSE>
 
     public constructor(message: string, value: ENUMERABLE, expectedEnumerableConstructors: EXPECTED_ENUMERABLE_CONSTRUCTORS, cause?: Nullable<CAUSE>,) {
         super(message,)

@@ -27,7 +27,7 @@ export class NullHintException<const CAUSE extends Error = never, >
 
 
     public override readonly name = this.constructor.name
-    readonly #cause
+    readonly #cause: NullOr<CAUSE>
 
     public constructor(message: string, cause?: Nullable<CAUSE>,) {
         super(message,)
