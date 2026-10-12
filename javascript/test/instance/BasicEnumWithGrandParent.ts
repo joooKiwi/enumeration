@@ -45,4 +45,6 @@ export class BasicEnumWithGrandParent<const ORDINAL extends | 0 | 1 | 2 | 3 = | 
 
     }
 
+    public methodFromBasicEnumWithGrandParent() {}
+
 }

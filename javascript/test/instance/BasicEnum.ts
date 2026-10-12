@@ -35,4 +35,6 @@ export class BasicEnum<const ORDINAL extends | 0 | 1 | 2 | 3 = | 0 | 1 | 2 | 3,
 
     }
 
+    public methodFromBasicEnum() {}
+
 }
