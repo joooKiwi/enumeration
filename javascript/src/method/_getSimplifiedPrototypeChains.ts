@@ -53,14 +53,14 @@ export function _getSimplifiedPrototypeChains(prototypeChain: Array<object>,): s
 
     const lastValue = prototypeChain[index] as object
     if (!("name" in lastValue))
-        return `“${string} → ${lastValue.constructor.name}”`
+        return `“${string}${lastValue.constructor.name}”`
     const name = lastValue.name
     if (name == null)
-        return `“${string} → ${lastValue.constructor.name}”`
+        return `“${string}${lastValue.constructor.name}”`
     if (typeof name == "string")
         if (name.length === 0)
-            return `“${string} → ${lastValue.constructor.name}”`
+            return `“${string}${lastValue.constructor.name}”`
         else
-            return `“${string} → ${name}”`
-    return `“${string} → ${lastValue.constructor.name}”`
+            return `“${string}${name}”`
+    return `“${string}${lastValue.constructor.name}”`
 }
