@@ -13,10 +13,14 @@
 import {Enum}          from "../../src/Enum"
 import {CompanionEnum} from "../../src/companion/CompanionEnum"
 
-export class BasicEnum
-    extends Enum<0, 'A'> {
+export class BasicEnum<const ORDINAL extends | 0 | 1 | 2 | 3 = | 0 | 1 | 2 | 3,
+    const NAME extends | 'A' | 'B' | 'C' | 'D' = | 'A' | 'B' | 'C' | 'D'>
+    extends Enum<ORDINAL, NAME> {
 
-    public static readonly A = new BasicEnum()
+    public static readonly A = new BasicEnum<0, 'A'>()
+    public static readonly B = new BasicEnum<1, 'B'>()
+    public static readonly C = new BasicEnum<2, 'C'>()
+    public static readonly D = new BasicEnum<3, 'D'>()
 
     private constructor() { super() }
 

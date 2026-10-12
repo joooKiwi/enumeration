@@ -10,22 +10,28 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {NullOr} from "@joookiwi/type"
-
-import {EnumWithNullableGrandParent}  from "../../src/EnumWithNullableGrandParent"
+import {EnumWithGrandParent}          from "../../src/EnumWithGrandParent"
 import {CompanionEnumWithGrandParent} from "../../src/companion/CompanionEnumWithGrandParent"
 import {BasicEnum}                    from "./BasicEnum"
 import {BasicEnumWithParent}          from "./BasicEnumWithParent"
 
-export class BasicEnumWithGrandParent
-    extends EnumWithNullableGrandParent<BasicEnumWithParent, BasicEnum, | 0 | 1 | 2, | 'A' | 'B' | 'C'> {
+export class BasicEnumWithGrandParent<const ORDINAL extends | 0 | 1 | 2 | 3 = | 0 | 1 | 2 | 3,
+    const NAME extends | 'A' | 'B' | 'C' | 'D' = | 'A' | 'B' | 'C' | 'D'>
+    extends EnumWithGrandParent<BasicEnumWithParent<ORDINAL, NAME>, BasicEnum<ORDINAL, NAME>, ORDINAL, NAME> {
 
-    public static readonly A = new BasicEnumWithGrandParent(BasicEnumWithParent.A, BasicEnum.A,)
-    public static readonly B = new BasicEnumWithGrandParent(BasicEnumWithParent.B,)
-    public static readonly C = new BasicEnumWithGrandParent()
+    public static readonly A = new BasicEnumWithGrandParent<0, 'A'>(BasicEnumWithParent.A, BasicEnum.A,)
+    public static readonly B = new BasicEnumWithGrandParent<1, 'B'>(BasicEnumWithParent.B,)
+    public static readonly C = new BasicEnumWithGrandParent<2, 'C'>()
+    public static readonly D = new BasicEnumWithGrandParent<3, 'D'>()
 
-    private constructor(parent: NullOr<BasicEnumWithParent> = null, grandParent: NullOr<BasicEnum> = null,) {
-        super(parent, grandParent,)
+    private constructor(parent?: BasicEnumWithParent<ORDINAL, NAME>, grandParent?: BasicEnum<ORDINAL, NAME>,) {
+        const argumentsSize = arguments.length
+        if (argumentsSize === 0)
+            super()
+        else if (argumentsSize === 1)
+            super(parent,)
+        else
+            super(parent, grandParent,)
     }
 
     public static CompanionEnum = class CompanionEnum_BasicEnumWithGrandParent
