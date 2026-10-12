@@ -168,10 +168,17 @@ export class EnumWithGreatGrandParent<const PARENT extends EnumerableWithGrandPa
             return
         }
 
-        if (arguments.length === 1)
+        if (arguments.length === 1) {
             super(parent,)
-        else
-            super(parent, grandParent,)
+            this.#greatGrandParent = lazy(() => _getGreatGrandParentValueFromName(this, this.name,),)
+            return
+        }
+
+        super(parent, grandParent,)
+        if (arguments.length === 2) {
+            this.#greatGrandParent = lazy(() => _getGreatGrandParentValueFromName(this, this.name,),)
+            return
+        }
 
         if (greatGrandParent instanceof Function)
             this.#greatGrandParent = lazy(() => _getGreatGrandParentValue(this, greatGrandParent(),),)

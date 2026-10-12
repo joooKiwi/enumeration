@@ -104,6 +104,11 @@ export class EnumWithNullableGrandParent<const PARENT extends EnumerableWithNull
         }
 
         super(parent,)
+        if (arguments.length === 1) {
+            this.#parent = lazy(() => super.parent,)
+            this.#grandParent = lazy(() => _getGrandParentValueFromName(this, this.name,),)
+            return
+        }
 
         this.#parent = lazy(() => {
             const parent = super.parent

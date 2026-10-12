@@ -172,10 +172,19 @@ export class EnumWithNullableGreatGrandParent<const PARENT extends EnumerableWit
             return
         }
 
-        if (arguments.length === 1)
+        if (arguments.length === 1) {
             super(parent,)
-        else
-            super(parent, grandParent,)
+            this.#grandParent = lazy(() => super.grandParent,)
+            this.#greatGrandParent = lazy(() => _getGreatGrandParentValueFromName(this, this.name,),)
+            return
+        }
+
+        super(parent, grandParent,)
+        if (arguments.length === 2) {
+            this.#grandParent = lazy(() => super.grandParent,)
+            this.#greatGrandParent = lazy(() => _getGreatGrandParentValueFromName(this, this.name,),)
+            return
+        }
 
         this.#grandParent = lazy(() => {
             const grandParent = super.grandParent
