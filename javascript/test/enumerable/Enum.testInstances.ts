@@ -79,54 +79,6 @@ export class BasicEnumWithGrandParent extends EnumWithGrandParent<BasicEnumWithP
 
 //#endregion -------------------- Enum instance variables / types / classes --------------------
 
-//#region -------------------- EnumWithParent test instances --------------------
-
-export class Parent_TestInstance_Direct extends EnumWithParent<BasicEnum, number, NameWithAdditional> {
-    public static readonly A = new Parent_TestInstance_Direct()
-    public static readonly B = new Parent_TestInstance_Direct()
-    public static readonly C = new Parent_TestInstance_Direct()
-    public static readonly D = new Parent_TestInstance_Direct()
-    public static readonly BY_STRING = new Parent_TestInstance_Direct('D',)
-    public static readonly BY_OBJECT_STRING = new Parent_TestInstance_Direct(new String('D',),)
-    public static readonly BY_STRING_IN_A_CALLBACK = new Parent_TestInstance_Direct(() => 'D',)
-    public static readonly BY_OBJECT_STRING_IN_A_CALLBACK = new Parent_TestInstance_Direct(() => new String('D',),)
-    public constructor(parent?: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnum>,)
-    public constructor(...args: readonly [PossibleEnumerableValueOrNameByValueOrCallback<BasicEnum>?,]) { super(...args,) }
-    public static readonly CompanionEnum: CompanionEnumWithParentSingleton<Parent_TestInstance_Direct, typeof Parent_TestInstance_Direct, BasicEnum, typeof BasicEnum>
-        = class CompanionEnum_ParentTestInstanceDirect1 extends CompanionEnumWithParent<Parent_TestInstance_Direct, typeof Parent_TestInstance_Direct, BasicEnum, typeof BasicEnum> {
-        static #instance?: CompanionEnum_ParentTestInstanceDirect1
-        private constructor() { super(Parent_TestInstance_Direct, BasicEnum,) }
-        public static get get(): CompanionEnum_ParentTestInstanceDirect1 { return CompanionEnum_ParentTestInstanceDirect1.#instance ??= new CompanionEnum_ParentTestInstanceDirect1() }
-    }
-}
-export class Parent_TestInstance_BySymbol extends EnumWithParent<BasicEnum, number, NameWithD> {
-    public static readonly A = new Parent_TestInstance_BySymbol()
-    public static readonly B = new Parent_TestInstance_BySymbol()
-    public static readonly C = new Parent_TestInstance_BySymbol()
-    public static readonly D = new Parent_TestInstance_BySymbol()
-    private constructor() { super(EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL,) }
-    public static readonly CompanionEnum: CompanionEnumWithParentSingleton<Parent_TestInstance_BySymbol, typeof Parent_TestInstance_BySymbol, BasicEnum, typeof BasicEnum>
-        = class CompanionEnum_ParentTestInstanceBySymbol1 extends CompanionEnumWithParent<Parent_TestInstance_BySymbol, typeof Parent_TestInstance_BySymbol, BasicEnum, typeof BasicEnum> {
-        static #instance?: CompanionEnum_ParentTestInstanceBySymbol1
-        private constructor() { super(Parent_TestInstance_BySymbol, BasicEnum,) }
-        public static get get(): CompanionEnum_ParentTestInstanceBySymbol1 { return CompanionEnum_ParentTestInstanceBySymbol1.#instance ??= new CompanionEnum_ParentTestInstanceBySymbol1() }
-    }
-}
-export class Parent_TestInstance_ByCallbackSymbol extends EnumWithParent<BasicEnum, number, NameWithD> {
-    public static readonly A = new Parent_TestInstance_ByCallbackSymbol()
-    public static readonly B = new Parent_TestInstance_ByCallbackSymbol()
-    public static readonly C = new Parent_TestInstance_ByCallbackSymbol()
-    public static readonly D = new Parent_TestInstance_ByCallbackSymbol()
-    private constructor() { super(() => EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL as PossibleEnumSymbol,) }
-    public static readonly CompanionEnum: CompanionEnumWithParentSingleton<Parent_TestInstance_ByCallbackSymbol, typeof Parent_TestInstance_ByCallbackSymbol, BasicEnum, typeof BasicEnum>
-        = class CompanionEnum_ParentTestInstanceByCallbackSymbol1 extends CompanionEnumWithParent<Parent_TestInstance_ByCallbackSymbol, typeof Parent_TestInstance_ByCallbackSymbol, BasicEnum, typeof BasicEnum> {
-        static #instance?: CompanionEnum_ParentTestInstanceByCallbackSymbol1
-        private constructor() { super(Parent_TestInstance_ByCallbackSymbol, BasicEnum,) }
-        public static get get(): CompanionEnum_ParentTestInstanceByCallbackSymbol1 { return CompanionEnum_ParentTestInstanceByCallbackSymbol1.#instance ??= new CompanionEnum_ParentTestInstanceByCallbackSymbol1() }
-    }
-}
-
-//#endregion -------------------- EnumWithParent test instances --------------------
 //#region -------------------- EnumWithNullableParent test instances --------------------
 
 export class NullableParent_TestInstance_Direct extends EnumWithNullableParent<BasicEnum, number, NameWithAdditional> {
