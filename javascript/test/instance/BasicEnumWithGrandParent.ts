@@ -12,9 +12,9 @@
 
 import type {NullOrUndefined, StringOrObject} from "@joookiwi/type"
 
-import type {CompanionEnumWithGrandParentSingleton} from "../../src/type/singleton"
+import type {CompanionEnumWithGrandParentSingleton}          from "../../src/type/singleton"
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "../../src/type/possibleInstance"
-import type {PossibleEnumSymbol}      from "../../src/type/symbol"
+import type {PossibleEnumSymbol}                             from "../../src/type/symbol"
 
 import {EnumWithGrandParent}          from "../../src/EnumWithGrandParent"
 import {CompanionEnumWithGrandParent} from "../../src/companion/CompanionEnumWithGrandParent"

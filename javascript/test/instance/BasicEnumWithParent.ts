@@ -20,7 +20,11 @@ import {EnumWithParent}          from "../../src/EnumWithParent"
 import {CompanionEnumWithParent} from "../../src/companion/CompanionEnumWithParent"
 import {BasicEnum}               from "./BasicEnum"
 
-/** An {@link EnumWithParent} having the {@link BasicEnum} as its parent and an opened constructor for the tests */
+/**
+ * An {@link EnumWithParent} having
+ * the {@link BasicEnum} as its parent
+ * plus an opened constructor for the tests
+ */
 export class BasicEnumWithParent<const ORDINAL extends | 0 | 1 | 2 | 3 = | 0 | 1 | 2 | 3,
     const NAME extends | 'A' | 'B' | 'C' | 'D' = | 'A' | 'B' | 'C' | 'D'>
     extends EnumWithParent<BasicEnum<ORDINAL, NAME>, ORDINAL, NAME> {

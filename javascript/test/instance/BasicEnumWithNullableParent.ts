@@ -20,7 +20,11 @@ import {EnumWithNullableParent}  from "../../src/EnumWithNullableParent"
 import {CompanionEnumWithParent} from "../../src/companion/CompanionEnumWithParent"
 import {BasicEnum}               from "./BasicEnum"
 
-/** An {@link EnumWithNullableParent} having the {@link BasicEnum} as its parent and an opened constructor for the tests */
+/**
+ * An {@link EnumWithNullableParent} having
+ * the {@link BasicEnum} as its parent
+ * plus an opened constructor for the tests
+ */
 export class BasicEnumWithNullableParent<const ORDINAL extends | 0 | 1 | 2 | 3 = | 0 | 1 | 2 | 3,
     const NAME extends | 'A' | 'B' | 'C' | 'D' = | 'A' | 'B' | 'C' | 'D'>
     extends EnumWithNullableParent<BasicEnum<ORDINAL, NAME>, ORDINAL, NAME> {
