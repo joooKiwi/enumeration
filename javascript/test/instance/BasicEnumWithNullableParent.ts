@@ -10,7 +10,7 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {Nullable, StringOrObject} from "@joookiwi/type"
+import type {NullOrUndefined, StringOrObject} from "@joookiwi/type"
 
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "../../src/type/possibleInstance"
 import type {CompanionEnumWithParentSingleton}               from "../../src/type/singleton"
@@ -31,8 +31,9 @@ export class BasicEnumWithNullableParent<const ORDINAL extends | 0 | 1 | 2 | 3 =
     public static readonly D = new BasicEnumWithNullableParent<3, 'D'>()
 
     public constructor()
-    public constructor(parent: (() => Nullable<BasicEnum<ORDINAL, NAME>>) | Nullable<BasicEnum<ORDINAL, NAME>>,)
-    public constructor(parentName: (() => Nullable<StringOrObject<NAME>>) | Nullable<StringOrObject<NAME>>,)
+    public constructor(nullParent: (() => NullOrUndefined) | NullOrUndefined,)
+    public constructor(parent: (() => BasicEnum<ORDINAL, NAME>) | BasicEnum<ORDINAL, NAME>,)
+    public constructor(parentName: (() => StringOrObject<NAME>) | StringOrObject<NAME>,)
     public constructor(specialCase: (() => PossibleEnumSymbol) | PossibleEnumSymbol,)
     public constructor(parent?: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnum<ORDINAL, NAME>>,) {
         if (arguments.length === 0)
