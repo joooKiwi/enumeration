@@ -20,9 +20,10 @@ import type {NameOf, PossibleNameOf}                         from "./type/nameOf
 import type {PossibleOrdinalOf}                              from "./type/ordinalOf"
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "./type/possibleInstance"
 
-import {Enum}                     from "./Enum"
-import {KnownEnumConstructors}    from "./KnownEnumConstructors"
-import {_getParentValue}         from "./method/_getParentValue"
+import {Enum}                    from "./Enum"
+import {EnumConstants}           from "./EnumConstants"
+import {KnownEnumConstructors}   from "./KnownEnumConstructors"
+import {NullReferenceException}  from "./exception/NullReferenceException"
 import {_getParentValueFromName} from "./method/_getParentValueFromName"
 
 /**
@@ -102,9 +103,22 @@ export abstract class EnumWithParent<const PARENT extends Enumerable,
         }
 
         if (parent instanceof Function)
-            this.#parent = lazy(() => _getParentValue(this, parent(),),)
-        else
-            this.#parent = lazy(() => _getParentValue(this, parent,),)
+            parent = parent()
+        this.#parent = lazy(() => {
+            if (parent == null)
+                throw new NullReferenceException(`The parent received on the “${this.constructor.name}” cannot be null on an Enumerable with non-null value.`, parent,)
+            if (typeof parent == "string")
+                return _getParentValueFromName(this, parent,)
+
+            if (parent === EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL)
+                return _getParentValueFromName(this, this.name,)
+            if (parent === EnumConstants.NULL_ENUM_REFERENCE_SYMBOL)
+                throw new NullReferenceException(`The parent received on the “${this.constructor.name}” cannot be null on an Enumerable with non-null value.`, parent,)
+
+            if (parent instanceof String)
+                return _getParentValueFromName(this, parent.valueOf(),)
+            return parent
+        },)
     }
 
     //#endregion -------------------- Constructor --------------------

@@ -22,10 +22,11 @@ import type {NameOf, PossibleNameOf}                         from "./type/nameOf
 import type {PossibleOrdinalOf}                              from "./type/ordinalOf"
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "./type/possibleInstance"
 
+import {EnumConstants}                     from "./EnumConstants"
 import {EnumWithGrandParent}               from "./EnumWithGrandParent"
 import {KnownEnumConstructors}             from "./KnownEnumConstructors"
+import {NullReferenceException}            from "./exception/NullReferenceException"
 import {_getGreatGrandParentValueFromName} from "./method/_getGreatGrandParentValueFromName"
-import {_getGreatGrandParentValue}         from "./method/_getGreatGrandParentValue"
 
 /**
  * An {@link Enum} class in conjuncture with the {@link EnumerableWithGreatGrandParent}.
@@ -181,9 +182,22 @@ export class EnumWithGreatGrandParent<const PARENT extends EnumerableWithGrandPa
         }
 
         if (greatGrandParent instanceof Function)
-            this.#greatGrandParent = lazy(() => _getGreatGrandParentValue(this, greatGrandParent(),),)
-        else
-            this.#greatGrandParent = lazy(() => _getGreatGrandParentValue(this, greatGrandParent,),)
+            greatGrandParent = greatGrandParent()
+        this.#greatGrandParent = lazy(() => {
+            if (greatGrandParent == null)
+                throw new NullReferenceException(`The value received on the “${this.constructor.name}” cannot be null on an Enumerable with non-null value.`, greatGrandParent,)
+            if (typeof greatGrandParent == "string")
+                return _getGreatGrandParentValueFromName(this, greatGrandParent,)
+
+            if (greatGrandParent === EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL)
+                return _getGreatGrandParentValueFromName(this, this.name,)
+            if (greatGrandParent === EnumConstants.NULL_ENUM_REFERENCE_SYMBOL)
+                throw new NullReferenceException(`The value received on the “${this.constructor.name}” cannot be null on an Enumerable with non-null value.`, greatGrandParent,)
+
+            if (greatGrandParent instanceof String)
+                return _getGreatGrandParentValueFromName(this, greatGrandParent.valueOf(),)
+            return greatGrandParent
+        },)
     }
 
     //#endregion -------------------- Constructor --------------------

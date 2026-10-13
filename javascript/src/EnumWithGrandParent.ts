@@ -21,9 +21,10 @@ import type {NameOf, PossibleNameOf}                         from "./type/nameOf
 import type {PossibleOrdinalOf}                              from "./type/ordinalOf"
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "./type/possibleInstance"
 
+import {EnumConstants}                from "./EnumConstants"
 import {EnumWithParent}               from "./EnumWithParent"
 import {KnownEnumConstructors}        from "./KnownEnumConstructors"
-import {_getGrandParentValue}         from "./method/_getGrandParentValue"
+import {NullReferenceException}       from "./exception/NullReferenceException"
 import {_getGrandParentValueFromName} from "./method/_getGrandParentValueFromName"
 
 /**
@@ -106,11 +107,23 @@ export class EnumWithGrandParent<const PARENT extends EnumerableWithParent<GRAND
             return
         }
 
-
         if (grandParent instanceof Function)
-            this.#grandParent = lazy(() => _getGrandParentValue(this, grandParent(),),)
-        else
-            this.#grandParent = lazy(() => _getGrandParentValue(this, grandParent,),)
+            grandParent = grandParent()
+        this.#grandParent = lazy(() => {
+            if (grandParent == null)
+                throw new NullReferenceException(`The value received on the “${this.constructor.name}” cannot be null on an Enumerable with non-null value.`, grandParent,)
+            if (typeof grandParent == "string")
+                return _getGrandParentValueFromName(this, grandParent,)
+
+            if (grandParent === EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL)
+                return _getGrandParentValueFromName(this, this.name,)
+            if (grandParent === EnumConstants.NULL_ENUM_REFERENCE_SYMBOL)
+                throw new NullReferenceException(`The value received on the “${this.constructor.name}” cannot be null on an Enumerable with non-null value.`, grandParent,)
+
+            if (grandParent instanceof String)
+                return _getGrandParentValueFromName(this, grandParent.valueOf(),)
+            return grandParent
+        },)
     }
 
     //#endregion -------------------- Constructor --------------------

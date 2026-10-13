@@ -12,7 +12,7 @@
 
 import type {Lazy}             from "@joookiwi/lazy"
 import type {Nullable, NullOr} from "@joookiwi/type"
-import {lazy}                  from "@joookiwi/lazy"
+import {CommonLazy, lazy}      from "@joookiwi/lazy"
 
 import type {EnumerableWithNullableGrandParent}              from "./EnumerableWithNullableGrandParent"
 import type {EnumerableWithNullableParent}                   from "./EnumerableWithNullableParent"
@@ -22,10 +22,10 @@ import type {PossibleOrdinalOf}                              from "./type/ordina
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "./type/possibleInstance"
 
 import {EnumWithNullableParent}       from "./EnumWithNullableParent"
+import {EnumConstants}                from "./EnumConstants"
 import {KnownEnumConstructors}        from "./KnownEnumConstructors"
 import {ImpossibleIntegrityException} from "./exception/ImpossibleIntegrityException"
 import {_getGrandParentValueFromName} from "./method/_getGrandParentValueFromName"
-import {_getNullableGrandParentValue} from "./method/_getNullableGrandParentValue"
 
 /**
  * An {@link Enum} class in conjuncture with the {@link EnumerableWithNullableGrandParent}.
@@ -120,9 +120,24 @@ export class EnumWithNullableGrandParent<const PARENT extends EnumerableWithNull
             return parent
         },)
         if (grandParent instanceof Function)
-            this.#grandParent = lazy(() => _getNullableGrandParentValue(this, grandParent(),),)
-        else
-            this.#grandParent = lazy(() => _getNullableGrandParentValue(this, grandParent,),)
+            grandParent = grandParent()
+        if (grandParent == null) {
+            this.#grandParent = CommonLazy.NULL
+            return
+        }
+        this.#grandParent = lazy(() => {
+            if (typeof grandParent == "string")
+                return _getGrandParentValueFromName(this, grandParent,)
+
+            if (grandParent === EnumConstants.NULL_ENUM_REFERENCE_SYMBOL)
+                return null
+            if (grandParent === EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL)
+                return _getGrandParentValueFromName(this, this.name,)
+
+            if (grandParent instanceof String)
+                return _getGrandParentValueFromName(this, grandParent.valueOf(),)
+            return grandParent
+        },)
     }
 
     //#endregion -------------------- Constructor --------------------

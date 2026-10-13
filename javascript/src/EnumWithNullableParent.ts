@@ -12,7 +12,7 @@
 
 import type {Lazy}             from "@joookiwi/lazy"
 import type {Nullable, NullOr} from "@joookiwi/type"
-import {lazy}                  from "@joookiwi/lazy"
+import {CommonLazy, lazy}                  from "@joookiwi/lazy"
 
 import type {Enumerable}                                     from "./Enumerable"
 import type {EnumerableWithNullableParent}                   from "./EnumerableWithNullableParent"
@@ -21,9 +21,9 @@ import type {PossibleOrdinalOf}                              from "./type/ordina
 import type {PossibleEnumerableValueOrNameByValueOrCallback} from "./type/possibleInstance"
 
 import {Enum}                    from "./Enum"
+import {EnumConstants}           from "./EnumConstants"
 import {KnownEnumConstructors}   from "./KnownEnumConstructors"
 import {_getParentValueFromName} from "./method/_getParentValueFromName"
-import {_getNullableParentValue} from "./method/_getNullableParentValue"
 
 /**
  * An {@link Enum} class in conjuncture with the {@link EnumerableWithNullableParent}.
@@ -100,9 +100,24 @@ export abstract class EnumWithNullableParent<const PARENT extends Enumerable,
         }
 
         if (parent instanceof Function)
-            this.#parent = lazy(() => _getNullableParentValue(this, parent(),),)
-        else
-            this.#parent = lazy(() => _getNullableParentValue(this, parent,),)
+            parent = parent()
+        if (parent == null) {
+            this.#parent = CommonLazy.NULL
+            return
+        }
+        this.#parent = lazy(() => {
+            if (typeof parent == "string")
+                return _getParentValueFromName(this, parent,)
+
+            if (parent === EnumConstants.NULL_ENUM_REFERENCE_SYMBOL)
+                return null
+            if (parent === EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL)
+                return _getParentValueFromName(this, this.name,)
+
+            if (parent instanceof String)
+                return _getParentValueFromName(this, parent.valueOf(),)
+            return parent
+        },)
     }
 
     //#endregion -------------------- Constructor --------------------
