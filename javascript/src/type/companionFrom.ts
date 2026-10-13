@@ -10,11 +10,13 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
+import type {Enumerable}                 from "../Enumerable"
 import type {EnumerableConstructor}      from "../EnumerableConstructor"
 import type {CompanionEnumerable}        from "../companion/CompanionEnumerable"
 import type {PossibleEnumerableInstance} from "./possibleInstance"
+import type {CompanionEnumerableType}    from "./companion"
 import type {CompanionOf}                from "./companionOf"
 
-export type CompanionEnumFromEnumerableConstructorOrCompanionEnum<T extends PossibleEnumerableInstance<any>, >
-    = T extends EnumerableConstructor<any, any> ? CompanionOf<T>
-    : T extends CompanionEnumerable<any, any> ? T : never
+export type CompanionEnumFromEnumerableConstructorOrCompanionEnum<T extends PossibleEnumerableInstance, >
+    = T extends EnumerableConstructor<Enumerable, CompanionEnumerableType<Enumerable>>                                  ? CompanionOf<T>
+    : T extends CompanionEnumerable<Enumerable, EnumerableConstructor<Enumerable, CompanionEnumerableType<Enumerable>>> ? T : never
