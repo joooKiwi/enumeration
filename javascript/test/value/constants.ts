@@ -35,24 +35,6 @@ export const unhandledValues = [
     new Holder(new WeakSet(),      "empty weak set",),
     new Holder(new WeakMap(),      "empty weak map",),
 ] as const
-export const invalidInstances = [
-    new Holder('',                "string",),
-    new Holder(new String(),      "string object",),
-    new Holder(1,                 "number",),
-    new Holder(new Number(),      "number object",),
-    new Holder(1n,                "bigint",),
-    new Holder(Object(1n,),       "bigint object",),
-    new Holder(true,              "boolean",),
-    new Holder(new Boolean(),     "boolean object",),
-    new Holder(Symbol(),          "symbol",),
-    new Holder(Object(Symbol(),), "symbol object",),
-    new Holder({},                "empty object",),
-    new Holder([],                "empty array",),
-    new Holder(new Set(),         "empty set",),
-    new Holder(new Map(),         "empty map",),
-    new Holder(new WeakSet(),     "empty weak set",),
-    new Holder(new WeakMap(),     "empty weak map",),
-] as const
 export const impossibleOrdinals = [
     new Holder(-1,                                                 `-1 as number`,),
     new Holder(new Number(-1,),                                    `-1 as number object`,),
