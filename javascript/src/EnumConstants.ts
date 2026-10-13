@@ -252,6 +252,12 @@ export namespace EnumConstants {
      * Tell that the {@link Enumerable} reference will be `null`
      *
      * @uniqueToJavascript
+     * @see EnumerableWithNullableParent
+     * @see EnumerableWithNullableGrandParent
+     * @see EnumerableWithNullableGreatGrandParent
+     * @see EnumWithNullableParent
+     * @see EnumWithNullableGrandParent
+     * @see EnumWithNullableGreatGrandParent
      */
     export const NULL_ENUM_REFERENCE_SYMBOL = Symbol("Null enum reference",)
 
