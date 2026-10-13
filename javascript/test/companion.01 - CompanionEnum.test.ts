@@ -108,10 +108,10 @@ describe("companionTests (CompanionEnum)", () => {
         test("D as string object",  () => expect(() => new BasicCompanionEnum().defaultValue = new String('D',),)               .not.toThrow(),)
         test("E as string",         () => expect(() => new BasicCompanionEnum().defaultValue = 'E',)                            .toThrow(NullReferenceException,),)
         test("E as string object",  () => expect(() => new BasicCompanionEnum().defaultValue = new String('E',),)               .toThrow(NullReferenceException,),)
-        test("instance.A",          () => expect(() => new BasicCompanionEnum().defaultValue = BasicEnum.A,)                    .not.toThrow(),)
-        test("instance.B",          () => expect(() => new BasicCompanionEnum().defaultValue = BasicEnum.B,)                    .not.toThrow(),)
-        test("instance.C",          () => expect(() => new BasicCompanionEnum().defaultValue = BasicEnum.C,)                    .not.toThrow(),)
-        test("instance.D",          () => expect(() => new BasicCompanionEnum().defaultValue = BasicEnum.D,)                    .not.toThrow(),)
+        test("child.A",             () => expect(() => new BasicCompanionEnum().defaultValue = BasicEnum.A,)                    .not.toThrow(),)
+        test("child.B",             () => expect(() => new BasicCompanionEnum().defaultValue = BasicEnum.B,)                    .not.toThrow(),)
+        test("child.C",             () => expect(() => new BasicCompanionEnum().defaultValue = BasicEnum.C,)                    .not.toThrow(),)
+        test("child.D",             () => expect(() => new BasicCompanionEnum().defaultValue = BasicEnum.D,)                    .not.toThrow(),)
         // @ts-expect-error
         test("parent.A",            () => expect(() => new BasicCompanionEnum().defaultValue = BasicEnumWithParent.A,)          .toThrow(InvalidEnumerableException,),)
         // @ts-expect-error
@@ -162,10 +162,10 @@ describe("companionTests (CompanionEnum)", () => {
         test("D as string object",  () => expect(() => new BasicCompanionEnum().setDefaultValue(new String('D',),),)               .not.toThrow(),)
         test("E as string",         () => expect(() => new BasicCompanionEnum().setDefaultValue('E',),)                            .toThrow(NullReferenceException,),)
         test("E as string object",  () => expect(() => new BasicCompanionEnum().setDefaultValue(new String('E',),),)               .toThrow(NullReferenceException,),)
-        test("instance.A",          () => expect(() => new BasicCompanionEnum().setDefaultValue(BasicEnum.A,),)                    .not.toThrow(),)
-        test("instance.B",          () => expect(() => new BasicCompanionEnum().setDefaultValue(BasicEnum.B,),)                    .not.toThrow(),)
-        test("instance.C",          () => expect(() => new BasicCompanionEnum().setDefaultValue(BasicEnum.C,),)                    .not.toThrow(),)
-        test("instance.D",          () => expect(() => new BasicCompanionEnum().setDefaultValue(BasicEnum.D,),)                    .not.toThrow(),)
+        test("child.A",             () => expect(() => new BasicCompanionEnum().setDefaultValue(BasicEnum.A,),)                    .not.toThrow(),)
+        test("child.B",             () => expect(() => new BasicCompanionEnum().setDefaultValue(BasicEnum.B,),)                    .not.toThrow(),)
+        test("child.C",             () => expect(() => new BasicCompanionEnum().setDefaultValue(BasicEnum.C,),)                    .not.toThrow(),)
+        test("child.D",             () => expect(() => new BasicCompanionEnum().setDefaultValue(BasicEnum.D,),)                    .not.toThrow(),)
         // @ts-expect-error
         test("parent.A",            () => expect(() => new BasicCompanionEnum().setDefaultValue(BasicEnumWithParent.A,),)          .toThrow(InvalidEnumerableException,),)
         // @ts-expect-error
@@ -216,10 +216,10 @@ describe("companionTests (CompanionEnum)", () => {
         test("D as string object",  () => expect(      new BasicCompanionEnum().getValue(new String('D',),),)               .toBe(BasicEnum.D,),)
         test("E as string",         () => expect(() => new BasicCompanionEnum().getValue('E',),)                            .toThrow(NullReferenceException,),)
         test("E as string object",  () => expect(() => new BasicCompanionEnum().getValue(new String('E',),),)               .toThrow(NullReferenceException,),)
-        test("instance.A",          () => expect(      new BasicCompanionEnum().getValue(BasicEnum.A,),)                    .toBe(BasicEnum.A,),)
-        test("instance.B",          () => expect(      new BasicCompanionEnum().getValue(BasicEnum.B,),)                    .toBe(BasicEnum.B,),)
-        test("instance.C",          () => expect(      new BasicCompanionEnum().getValue(BasicEnum.C,),)                    .toBe(BasicEnum.C,),)
-        test("instance.D",          () => expect(      new BasicCompanionEnum().getValue(BasicEnum.D,),)                    .toBe(BasicEnum.D,),)
+        test("child.A",             () => expect(      new BasicCompanionEnum().getValue(BasicEnum.A,),)                    .toBe(BasicEnum.A,),)
+        test("child.B",             () => expect(      new BasicCompanionEnum().getValue(BasicEnum.B,),)                    .toBe(BasicEnum.B,),)
+        test("child.C",             () => expect(      new BasicCompanionEnum().getValue(BasicEnum.C,),)                    .toBe(BasicEnum.C,),)
+        test("child.D",             () => expect(      new BasicCompanionEnum().getValue(BasicEnum.D,),)                    .toBe(BasicEnum.D,),)
         // @ts-expect-error
         test("parent.A",            () => expect(() => new BasicCompanionEnum().getValue(BasicEnumWithParent.A,),)          .toThrow(InvalidEnumerableException,),)
         // @ts-expect-error
@@ -270,10 +270,10 @@ describe("companionTests (CompanionEnum)", () => {
         test("D as string object",  () => expect(      new BasicCompanionEnum().getName(new String('D',),),)               .toBe('D',),)
         test("E as string",         () => expect(() => new BasicCompanionEnum().getName('E',),)                            .toThrow(NullReferenceException,),)
         test("E as string object",  () => expect(() => new BasicCompanionEnum().getName(new String('E',),),)               .toThrow(NullReferenceException,),)
-        test("instance.A",          () => expect(      new BasicCompanionEnum().getName(BasicEnum.A,),)                    .toBe('A',),)
-        test("instance.B",          () => expect(      new BasicCompanionEnum().getName(BasicEnum.B,),)                    .toBe('B',),)
-        test("instance.C",          () => expect(      new BasicCompanionEnum().getName(BasicEnum.C,),)                    .toBe('C',),)
-        test("instance.D",          () => expect(      new BasicCompanionEnum().getName(BasicEnum.D,),)                    .toBe('D',),)
+        test("child.A",             () => expect(      new BasicCompanionEnum().getName(BasicEnum.A,),)                    .toBe('A',),)
+        test("child.B",             () => expect(      new BasicCompanionEnum().getName(BasicEnum.B,),)                    .toBe('B',),)
+        test("child.C",             () => expect(      new BasicCompanionEnum().getName(BasicEnum.C,),)                    .toBe('C',),)
+        test("child.D",             () => expect(      new BasicCompanionEnum().getName(BasicEnum.D,),)                    .toBe('D',),)
         // @ts-expect-error
         test("parent.A",            () => expect(() => new BasicCompanionEnum().getName(BasicEnumWithParent.A,),)          .toThrow(InvalidEnumerableException,),)
         // @ts-expect-error
@@ -324,10 +324,10 @@ describe("companionTests (CompanionEnum)", () => {
         test("D as string object",  () => expect(      new BasicCompanionEnum().getOrdinal(new String('D',),),)               .toBe(3,),)
         test("E as string",         () => expect(() => new BasicCompanionEnum().getOrdinal('E',),)                            .toThrow(NullReferenceException,),)
         test("E as string object",  () => expect(() => new BasicCompanionEnum().getOrdinal(new String('E',),),)               .toThrow(NullReferenceException,),)
-        test("instance.A",          () => expect(      new BasicCompanionEnum().getOrdinal(BasicEnum.A,),)                    .toBe(0,),)
-        test("instance.B",          () => expect(      new BasicCompanionEnum().getOrdinal(BasicEnum.B,),)                    .toBe(1,),)
-        test("instance.C",          () => expect(      new BasicCompanionEnum().getOrdinal(BasicEnum.C,),)                    .toBe(2,),)
-        test("instance.D",          () => expect(      new BasicCompanionEnum().getOrdinal(BasicEnum.D,),)                    .toBe(3,),)
+        test("child.A",             () => expect(      new BasicCompanionEnum().getOrdinal(BasicEnum.A,),)                    .toBe(0,),)
+        test("child.B",             () => expect(      new BasicCompanionEnum().getOrdinal(BasicEnum.B,),)                    .toBe(1,),)
+        test("child.C",             () => expect(      new BasicCompanionEnum().getOrdinal(BasicEnum.C,),)                    .toBe(2,),)
+        test("child.D",             () => expect(      new BasicCompanionEnum().getOrdinal(BasicEnum.D,),)                    .toBe(3,),)
         // @ts-expect-error
         test("parent.A",            () => expect(() => new BasicCompanionEnum().getOrdinal(BasicEnumWithParent.A,),)          .toThrow(InvalidEnumerableException,),)
         // @ts-expect-error
