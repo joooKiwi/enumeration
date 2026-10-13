@@ -18,7 +18,6 @@ import {Enum}                              from "../../src/Enum"
 import {EnumConstants}                     from "../../src/EnumConstants"
 import {EnumWithGrandParent}               from "../../src/EnumWithGrandParent"
 import {EnumWithGreatGrandParent}          from "../../src/EnumWithGreatGrandParent"
-import {EnumWithNullableGrandParent}       from "../../src/EnumWithNullableGrandParent"
 import {EnumWithNullableGreatGrandParent}  from "../../src/EnumWithNullableGreatGrandParent"
 import {EnumWithParent}                    from "../../src/EnumWithParent"
 import {CompanionEnum}                     from "../../src/companion/CompanionEnum"
@@ -78,72 +77,6 @@ export class BasicEnumWithGrandParent extends EnumWithGrandParent<BasicEnumWithP
 
 //#endregion -------------------- Enum instance variables / types / classes --------------------
 
-//#region -------------------- EnumWithNullableGrandParent test instances --------------------
-
-export class NullableGrandParent_TestInstance_Direct1 extends EnumWithNullableGrandParent<BasicEnumWithParent, BasicEnum, number, NameWithAdditional> {
-    public static readonly A = new NullableGrandParent_TestInstance_Direct1()
-    public static readonly B = new NullableGrandParent_TestInstance_Direct1()
-    public static readonly C = new NullableGrandParent_TestInstance_Direct1()
-    public static readonly D = new NullableGrandParent_TestInstance_Direct1()
-    public static readonly BY_STRING = new NullableGrandParent_TestInstance_Direct1('D',)
-    public static readonly BY_OBJECT_STRING = new NullableGrandParent_TestInstance_Direct1(new String('D',),)
-    public static readonly BY_STRING_IN_A_CALLBACK = new NullableGrandParent_TestInstance_Direct1(() => 'D',)
-    public static readonly BY_OBJECT_STRING_IN_A_CALLBACK = new NullableGrandParent_TestInstance_Direct1(() => new String('D',),)
-    public constructor(parent?: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnumWithParent>, grandParent?: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnum>,)
-    public constructor(...args: readonly [PossibleEnumerableValueOrNameByValueOrCallback<BasicEnumWithParent>?, PossibleEnumerableValueOrNameByValueOrCallback<BasicEnum>?,]) { super(...args,) }
-    public static readonly CompanionEnum: CompanionEnumWithGrandParentSingleton<NullableGrandParent_TestInstance_Direct1, typeof NullableGrandParent_TestInstance_Direct1, BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum>
-        = class CompanionEnum_NullableGrandParentTestInstanceDirect1 extends CompanionEnumWithGrandParent<NullableGrandParent_TestInstance_Direct1, typeof NullableGrandParent_TestInstance_Direct1, BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum> {
-        static #instance?: CompanionEnum_NullableGrandParentTestInstanceDirect1
-        private constructor() { super(NullableGrandParent_TestInstance_Direct1, BasicEnumWithParent, BasicEnum,) }
-        public static get get(): CompanionEnum_NullableGrandParentTestInstanceDirect1 { return CompanionEnum_NullableGrandParentTestInstanceDirect1.#instance ??= new CompanionEnum_NullableGrandParentTestInstanceDirect1() }
-    }
-}
-export class NullableGrandParent_TestInstance_Direct2 extends EnumWithNullableGrandParent<BasicEnumWithParent, BasicEnum, number, NameWithAdditional> {
-    public static readonly A = new NullableGrandParent_TestInstance_Direct2()
-    public static readonly B = new NullableGrandParent_TestInstance_Direct2()
-    public static readonly C = new NullableGrandParent_TestInstance_Direct2()
-    public static readonly D = new NullableGrandParent_TestInstance_Direct2()
-    public static readonly BY_STRING = new NullableGrandParent_TestInstance_Direct2('D',)
-    public static readonly BY_OBJECT_STRING = new NullableGrandParent_TestInstance_Direct2(new String('D',),)
-    public static readonly BY_STRING_IN_A_CALLBACK = new NullableGrandParent_TestInstance_Direct2(() => 'D',)
-    public static readonly BY_OBJECT_STRING_IN_A_CALLBACK = new NullableGrandParent_TestInstance_Direct2(() => new String('D',),)
-    public constructor(grandParent?: PossibleEnumerableValueOrNameByValueOrCallback<BasicEnum>,)
-    public constructor(...args: readonly [PossibleEnumerableValueOrNameByValueOrCallback<BasicEnum>?,]) { super(failCallback, ...args,) }
-    public static readonly CompanionEnum: CompanionEnumWithGrandParentSingleton<NullableGrandParent_TestInstance_Direct2, typeof NullableGrandParent_TestInstance_Direct2, BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum>
-        = class CompanionEnum_NullableGrandParentTestInstanceDirect2 extends CompanionEnumWithGrandParent<NullableGrandParent_TestInstance_Direct2, typeof NullableGrandParent_TestInstance_Direct2, BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum> {
-        static #instance?: CompanionEnum_NullableGrandParentTestInstanceDirect2
-        private constructor() { super(NullableGrandParent_TestInstance_Direct2, BasicEnumWithParent, BasicEnum,) }
-        public static get get(): CompanionEnum_NullableGrandParentTestInstanceDirect2 { return CompanionEnum_NullableGrandParentTestInstanceDirect2.#instance ??= new CompanionEnum_NullableGrandParentTestInstanceDirect2() }
-    }
-}
-export class NullableGrandParent_TestInstance_BySymbol extends EnumWithNullableGrandParent<BasicEnumWithParent, BasicEnum, number, NameWithD> {
-    public static readonly A = new NullableGrandParent_TestInstance_BySymbol()
-    public static readonly B = new NullableGrandParent_TestInstance_BySymbol()
-    public static readonly C = new NullableGrandParent_TestInstance_BySymbol()
-    public static readonly D = new NullableGrandParent_TestInstance_BySymbol()
-    private constructor() { super(nameSymbol, nameSymbol,) }
-    public static readonly CompanionEnum: CompanionEnumWithGrandParentSingleton<NullableGrandParent_TestInstance_BySymbol, typeof NullableGrandParent_TestInstance_BySymbol, BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum>
-        = class CompanionEnum_NullableGrandParentTestInstanceBySymbol extends CompanionEnumWithGrandParent<NullableGrandParent_TestInstance_BySymbol, typeof NullableGrandParent_TestInstance_BySymbol, BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum>{
-        static #instance?: CompanionEnum_NullableGrandParentTestInstanceBySymbol
-        private constructor() { super(NullableGrandParent_TestInstance_BySymbol, BasicEnumWithParent, BasicEnum,) }
-        public static get get(): CompanionEnum_NullableGrandParentTestInstanceBySymbol { return CompanionEnum_NullableGrandParentTestInstanceBySymbol.#instance ??= new CompanionEnum_NullableGrandParentTestInstanceBySymbol() }
-    }
-}
-export class NullableGrandParent_TestInstance_ByCallbackSymbol extends EnumWithNullableGrandParent<BasicEnumWithParent, BasicEnum, number, NameWithD> {
-    public static readonly A = new NullableGrandParent_TestInstance_ByCallbackSymbol()
-    public static readonly B = new NullableGrandParent_TestInstance_ByCallbackSymbol()
-    public static readonly C = new NullableGrandParent_TestInstance_ByCallbackSymbol()
-    public static readonly D = new NullableGrandParent_TestInstance_ByCallbackSymbol()
-    private constructor() { super(nameSymbolCallback, nameSymbolCallback,) }
-    public static readonly CompanionEnum: CompanionEnumWithGrandParentSingleton<NullableGrandParent_TestInstance_ByCallbackSymbol, typeof NullableGrandParent_TestInstance_ByCallbackSymbol, BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum>
-        = class CompanionEnum_NullableGrandParentTestInstanceBySymbol extends CompanionEnumWithGrandParent<NullableGrandParent_TestInstance_ByCallbackSymbol, typeof NullableGrandParent_TestInstance_ByCallbackSymbol, BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum>{
-        static #instance?: CompanionEnum_NullableGrandParentTestInstanceBySymbol
-        private constructor() { super(NullableGrandParent_TestInstance_ByCallbackSymbol, BasicEnumWithParent, BasicEnum,) }
-        public static get get(): CompanionEnum_NullableGrandParentTestInstanceBySymbol { return CompanionEnum_NullableGrandParentTestInstanceBySymbol.#instance ??= new CompanionEnum_NullableGrandParentTestInstanceBySymbol() }
-    }
-}
-
-//#endregion -------------------- EnumWithNullableGrandParent test instances --------------------
 //#region -------------------- EnumWithGreatGrandParent test instances --------------------
 
 export class GreatGrandParent_TestInstance_Direct1 extends EnumWithGreatGrandParent<BasicEnumWithGrandParent, BasicEnumWithParent, BasicEnum, number, NameWithAdditional> {
