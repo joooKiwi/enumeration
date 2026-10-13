@@ -30,7 +30,7 @@ _(This may change once the implementation is made)_
 [npm-image-link]:          https://img.shields.io/npm/v/@joookiwi/enumerable.svg?logo=npm&label=
 [npm-link]:                https://npmjs.org/package/@joookiwi/enumerable
 [npm-download-image-link]: https://img.shields.io/npm/dt/@joookiwi/enumerable.svg
-[npm-download-link]:       https://npm-stat.com/charts.html?package=@joookiwi/enmumerable
+[npm-download-link]:       https://npm-stat.com/charts.html?package=@joookiwi/enumerable
 
 ## Related projects
 
