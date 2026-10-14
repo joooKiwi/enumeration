@@ -848,6 +848,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
     //#region -------------------- "Get value" methods --------------------
 
     public getValue                                                                                        (value: Nullable<ImpossibleNames>,):                                                      never
+    public getValue<const ORDINAL extends number, >                                                        (ordinal: Nullable<ORDINAL>,):                                                            ValueBySpecificOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
     public getValue<const ORDINAL extends number, >                                                        (ordinal: Nullable<TemplateOrNumber<ORDINAL>>,):                                          ValueBySpecificOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
     public getValue                                                                                        (ordinal: Nullable<TemplateOrNumericOrObject>,):                                          ENUM
     public getValue<const NAME extends string, >                                                           (name: Nullable<NAME>,):                                                                  ValueBySpecificName<ENUM_CONSTRUCTOR, ENUM, NAME>
@@ -963,6 +964,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
     //#region -------------------- "Get name" methods --------------------
 
     public getName                                                                                               (value: Nullable<ImpossibleNames>,):                                                      never
+    public getName<const ORDINAL extends number, >                                                               (ordinal: Nullable<ORDINAL>,):                                                            NameByOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
     public getName<const ORDINAL extends number, >                                                               (ordinal: Nullable<TemplateOrNumber<ORDINAL>>,):                                          NameByOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
     public getName                                                                                               (ordinal: Nullable<TemplateOrNumericOrObject>,):                                          NameOf<ENUM>
     public getName<const NAME extends string, >                                                                  (name: Nullable<NAME>,):                                                                  SpecificNameOf<NAME, ENUM>
@@ -1080,6 +1082,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
     //#region -------------------- "Get ordinal" methods --------------------
 
     public getOrdinal                                                                                               (value: Nullable<ImpossibleNames>,):                                                      never
+    public getOrdinal<const ORDINAL extends number, >                                                               (ordinal: Nullable<ORDINAL>,):                                                            SpecificOrdinalOf<ORDINAL, ENUM>
     public getOrdinal<const ORDINAL extends number, >                                                               (ordinal: Nullable<TemplateOrNumber<ORDINAL>>,):                                          SpecificOrdinalOf<ORDINAL, ENUM>
     public getOrdinal                                                                                               (ordinal: Nullable<TemplateOrNumericOrObject>,):                                          OrdinalOf<ENUM>
     public getOrdinal<const NAME extends string, >                                                                  (name: Nullable<NAME>,):                                                                  OrdinalByName<ENUM_CONSTRUCTOR, ENUM, NAME>
