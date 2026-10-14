@@ -432,7 +432,12 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @throws {ForbiddenInheritedEnumerableMemberException}
      */
     protected _isNotInInheritedEnumerableMembers(nameOrOrdinal: string, originalValue: StringOrObject,): void {
-        if ((EnumConstants.ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS as CollectionHolder<string>).has(nameOrOrdinal,))
+        if (nameOrOrdinal !== "name")
+        if (nameOrOrdinal !== "ordinal")
+        if (nameOrOrdinal !== "parent")
+        if (nameOrOrdinal !== "grandParent")
+        if (nameOrOrdinal !== "greatGrandParent")
+            return
         throw new ForbiddenInheritedEnumerableMemberException(`Forbidden inherited enumerable member. The string value “${originalValue}” cannot be an inherited member of the Enumerable (“name”, “ordinal”, “parent”, “grandParent”, “greatGrandParent”).`, originalValue,)
     }
 
