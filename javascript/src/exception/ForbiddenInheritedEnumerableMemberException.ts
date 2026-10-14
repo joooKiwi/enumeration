@@ -16,7 +16,9 @@ import type {ExceptionWithNullableCause} from "./declaration/ExceptionWithNullab
 import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
 
 /**
- * An exception to tell that an {@link EnumConstants.ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS enumerable member} was used
+ * An exception to tell that a member of an
+ * {@link Enumerable}|{@link EnumerableWithParent}|{@link EnumerableWithGrandParent}|{@link EnumerableWithGreatGrandParent}|{@link EnumerableWithNullableParent}|{@link EnumerableWithNullableGrandParent}|{@link EnumerableWithNullableGreatGrandParent}
+ * was used (`name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`)
  *
  * @see EnumConstants.ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS
  * @see https://docs.oracle.com/en/java/javase/22/docs/api/java.base/java/lang/IllegalArgumentException.html Java IllegalArgumentException
