@@ -33,6 +33,11 @@ export class BasicEnumWithGreatGrandParent<const ORDINAL extends | 0 | 1 | 2 | 3
     const NAME extends | 'A' | 'B' | 'C' | 'D' = | 'A' | 'B' | 'C' | 'D'>
     extends EnumWithGreatGrandParent<BasicEnumWithGrandParent<ORDINAL, NAME>, BasicEnumWithParent<ORDINAL, NAME>, BasicEnum<ORDINAL, NAME>, ORDINAL, NAME> {
 
+    public static readonly 0: typeof BasicEnumWithGreatGrandParent.A
+    public static readonly 1: typeof BasicEnumWithGreatGrandParent.B
+    public static readonly 2: typeof BasicEnumWithGreatGrandParent.C
+    public static readonly 3: typeof BasicEnumWithGreatGrandParent.D
+
     public static readonly A = new BasicEnumWithGreatGrandParent<0, 'A'>(BasicEnumWithGrandParent.A, BasicEnumWithParent.A, BasicEnum.A,)
     public static readonly B = new BasicEnumWithGreatGrandParent<1, 'B'>(BasicEnumWithGrandParent.B, BasicEnumWithParent.B,)
     public static readonly C = new BasicEnumWithGreatGrandParent<2, 'C'>(BasicEnumWithGrandParent.C,)

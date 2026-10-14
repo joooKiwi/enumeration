@@ -29,6 +29,11 @@ export class BasicEnumWithParent<const ORDINAL extends | 0 | 1 | 2 | 3 = | 0 | 1
     const NAME extends | 'A' | 'B' | 'C' | 'D' = | 'A' | 'B' | 'C' | 'D'>
     extends EnumWithParent<BasicEnum<ORDINAL, NAME>, ORDINAL, NAME> {
 
+    public static readonly 0: typeof BasicEnumWithParent.A
+    public static readonly 1: typeof BasicEnumWithParent.B
+    public static readonly 2: typeof BasicEnumWithParent.C
+    public static readonly 3: typeof BasicEnumWithParent.D
+
     public static readonly A = new BasicEnumWithParent<0, 'A'>(BasicEnum.A,)
     public static readonly B = new BasicEnumWithParent<1, 'B'>()
     public static readonly C = new BasicEnumWithParent<2, 'C'>()

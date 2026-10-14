@@ -19,6 +19,11 @@ export class BasicEnum<const ORDINAL extends | 0 | 1 | 2 | 3 = | 0 | 1 | 2 | 3,
     const NAME extends | 'A' | 'B' | 'C' | 'D' = | 'A' | 'B' | 'C' | 'D'>
     extends Enum<ORDINAL, NAME> {
 
+    public static readonly 0: typeof BasicEnum.A
+    public static readonly 1: typeof BasicEnum.B
+    public static readonly 2: typeof BasicEnum.C
+    public static readonly 3: typeof BasicEnum.D
+
     public static readonly A = new BasicEnum<0, 'A'>()
     public static readonly B = new BasicEnum<1, 'B'>()
     public static readonly C = new BasicEnum<2, 'C'>()
