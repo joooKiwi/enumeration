@@ -17,6 +17,7 @@ import {ArrayAsCollectionHolder}                  from "@joookiwi/collection"
 import type {Enumerable}                                                                                                                                                                                                                                   from "./Enumerable"
 import type {EnumerableConstructor}                                                                                                                                                                                                                        from "./EnumerableConstructor"
 import type {CompanionEnumerable}                                                                                                                                                                                                                          from "./companion/CompanionEnumerable"
+import type {CompanionEnumerableType}                                                                                                                                                                                                                      from "./type/companion"
 import type {KeyOfCompanionEnum, KeyOfCompanionEnumWithGrandParent, KeyOfCompanionEnumWithGreatGrandParent, KeyOfCompanionEnumWithParent, KeyOfEnumerable, KeyOfEnumerableWithGrandParent, KeyOfEnumerableWithGreatGrandParent, KeyOfEnumerableWithParent} from "./type/keyOf"
 
 /** A class containing every field used by an {@link Enumerable} helper, instance or companion */
@@ -35,13 +36,13 @@ export namespace EnumConstants {
      *
      * @see CompanionEnumerable.defaultValue
      */
-    export const DEFAULT_MAP = new Map<CompanionEnumerable<any, any>, NullOr<Enumerable>>()
+    export const DEFAULT_MAP = new Map<CompanionEnumerableType<Enumerable>, NullOr<Enumerable>>()
     /**
      * A map of every {@link Enumerable} {@link CompanionEnumerable.values values} stored from a {@link CompanionEnumerable}
      *
      * @see CompanionEnumerable.values
      */
-    export const VALUES_MAP = new Map<CompanionEnumerable<any, any>, CollectionHolder<Enumerable>>()
+    export const VALUES_MAP = new Map<CompanionEnumerableType<Enumerable>, CollectionHolder<Enumerable>>()
     /**
      * A map of an individual {@link Enumerable.name name} associated to a {@link Enumerable}
      *
@@ -53,13 +54,13 @@ export namespace EnumConstants {
      *
      * @see CompanionEnumerable.names
      */
-    export const NAMES_MAP = new Map<CompanionEnumerable<any, any>, CollectionHolder<string>>()
+    export const NAMES_MAP = new Map<CompanionEnumerableType<Enumerable>, CollectionHolder<string>>()
     /**
      * A map of the last ordinal of {@link Enum} instance
      *
      * @see Enum.constructor
      */
-    export const LAST_ORDINAL_MAP = new Map<EnumerableConstructor<any, any>, number>()
+    export const LAST_ORDINAL_MAP = new Map<EnumerableConstructor<Enumerable, CompanionEnumerableType<Enumerable>>, number>()
     /**
      * A map of an individual {@link Enumerable.ordinal ordinal} associated to a {@link Enumerable}
      *
@@ -71,7 +72,7 @@ export namespace EnumConstants {
      *
      * @see CompanionEnumerable.ordinals
      */
-    export const ORDINALS_MAP = new Map<CompanionEnumerable<any, any>, CollectionHolder<number>>()
+    export const ORDINALS_MAP = new Map<CompanionEnumerableType<Enumerable>, CollectionHolder<number>>()
 
     //#endregion -------------------- Maps --------------------
     //#region -------------------- Initialization validation fields --------------------
