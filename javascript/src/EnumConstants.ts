@@ -177,27 +177,35 @@ export namespace EnumConstants {
 
     /** Every member of an {@link CompanionEnumerable} */
     export const COMPANION_ENUM_MEMBERS: CollectionHolder<KeyOfCompanionEnum>
-        = new ArrayAsCollectionHolder<KeyOfCompanionEnum>(["instance", "defaultValue", "setDefaultValue",
-        "values", "names", "ordinals", "iterator",
-        "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const,)
+        = new ArrayAsCollectionHolder<KeyOfCompanionEnum>([
+            "instance", "defaultValue", "setDefaultValue",
+            "values", "names", "ordinals", "iterator",
+            "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,
+        ] as const,)
 
     /** Every member of an {@link CompanionEnumerableWithParent} */
     export const COMPANION_ENUM_WITH_PARENT_MEMBERS: CollectionHolder<KeyOfCompanionEnumWithParent>
-        = new ArrayAsCollectionHolder<KeyOfCompanionEnumWithParent>(["instance", "parentInstance", "defaultValue", "setDefaultValue",
-        "values", "names", "ordinals", "iterator",
-        "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const,)
+        = new ArrayAsCollectionHolder<KeyOfCompanionEnumWithParent>([
+            "instance", "parentInstance", "defaultValue", "setDefaultValue",
+            "values", "names", "ordinals", "iterator",
+            "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,
+        ] as const,)
 
     /** Every member of an {@link CompanionEnumerableWithGrandParent} */
     export const COMPANION_ENUM_WITH_GRAND_PARENT_MEMBERS: CollectionHolder<KeyOfCompanionEnumWithGrandParent>
-        = new ArrayAsCollectionHolder<KeyOfCompanionEnumWithGrandParent>(["instance", "parentInstance", "grandParentInstance", "defaultValue", "setDefaultValue",
-        "values", "names", "ordinals", "iterator",
-        "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const,)
+        = new ArrayAsCollectionHolder<KeyOfCompanionEnumWithGrandParent>([
+            "instance", "parentInstance", "grandParentInstance", "defaultValue", "setDefaultValue",
+            "values", "names", "ordinals", "iterator",
+            "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,
+        ] as const,)
 
     /** Every member of an {@link CompanionEnumerableWithGreatGrandParent} */
     export const COMPANION_ENUM_WITH_GREAT_GRAND_PARENT_MEMBERS: CollectionHolder<KeyOfCompanionEnumWithGreatGrandParent>
-        = new ArrayAsCollectionHolder<KeyOfCompanionEnumWithGreatGrandParent>(["instance", "parentInstance", "grandParentInstance", "greatGrandParentInstance", "defaultValue", "setDefaultValue",
-        "values", "names", "ordinals", "iterator",
-        "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,] as const,)
+        = new ArrayAsCollectionHolder<KeyOfCompanionEnumWithGreatGrandParent>([
+            "instance", "parentInstance", "grandParentInstance", "greatGrandParentInstance", "defaultValue", "setDefaultValue",
+            "values", "names", "ordinals", "iterator",
+            "getValue", "getName", "getOrdinal", Symbol.iterator, Symbol.toStringTag,
+        ] as const,)
 
 
     /**
