@@ -327,7 +327,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
             return true
         } catch (exception) {
             if (exception instanceof ForbiddenInheritedEnumerableMemberException)
-                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value “${defaultName}” is one possible value of the inherited field name (\"name\", \"ordinal\", \"parent\", \"grandParent\", \"greatGrandParent\", \"[Symbol.toPrimitive]\", \"[Symbol.toStringTag]\").`, exception,)
+                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value “${defaultName}” is one possible value of the inherited field name (“name”, “ordinal”, “parent”, “grandParent”, “greatGrandParent”, “[Symbol.toPrimitive]”, “[Symbol.toStringTag]”).`, exception,)
             if (exception instanceof ForbiddenNameException)
                 throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value “${defaultName}” is an excluded name ${this._excludedNames.joinToString(", ", '(', ')', null, null, it => `“${it}”`,)}.`, exception,)
             if (exception instanceof ForbiddenNumericException)
@@ -433,7 +433,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      */
     protected _isNotInInheritedEnumerableMembers(nameOrOrdinal: string, originalValue: StringOrObject,): void {
         if ((EnumConstants.ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS as CollectionHolder<string>).has(nameOrOrdinal,))
-            throw new ForbiddenInheritedEnumerableMemberException(`Forbidden inherited enumerable member. The string value “${originalValue}” cannot be an inherited member of the inherited Enum static methods (\"name\", \"ordinal\", \"parent\", \"grandParent\", \"greatGrandParent\").`, originalValue,)
+        throw new ForbiddenInheritedEnumerableMemberException(`Forbidden inherited enumerable member. The string value “${originalValue}” cannot be an inherited member of the Enumerable (“name”, “ordinal”, “parent”, “grandParent”, “greatGrandParent”).`, originalValue,)
     }
 
     //#endregion -------------------- Validation (is not in "inherited enumerable members") methods --------------------
