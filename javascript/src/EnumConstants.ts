@@ -112,18 +112,18 @@ export namespace EnumConstants {
 
     /**
      * A {@link RegExp regex} to include any {@link Number numeric}
-     * in the exponential form (<i>±1e10</i> or <i>±1e-10</i>).
+     * in the exponential form (<i>±1e10</i>, <i>±1e±10</i>, <i>±1.1e10</i> or <i>±1.1e±10</i>).
      *
      * This will be an eventual valid regex in the {@link CompanionEnum companion enum}.
      */
-    export const EXPONENTIAL_REGEX = /^-?\d+e-?\d+$/i
+    export const EXPONENTIAL_REGEX = /^-?\d+(\.\d+)?e[-+]?\d+$/i
     /**
      * A {@link RegExp regex} to include any {@link Number numeric}
-     * in the exponential form (<i>±1¹⁰</i> or <i>±1⁻¹⁰</i>).
+     * in the exponential form (<i>±1¹⁰</i>, <i>±1⁻¹⁰</i> or <i>±1⁺¹⁰</i>).
      *
      * This will be an eventual valid regex in the {@link CompanionEnum companion enum}.
      */
-    export const UNICODE_EXPONENTIAL_REGEX = /^-?\d+⁻?[⁰¹²³⁴⁵⁶⁷⁸⁹]+$/
+    export const UNICODE_EXPONENTIAL_REGEX = /^-?\d+(\.\d+)?[⁻⁺]?[⁰¹²³⁴⁵⁶⁷⁸⁹]+$/
 
     /**
      * A {@link RegExp regex} to include any {@link Number numeric}
