@@ -13,7 +13,10 @@
 import {CompanionEnum} from "../../src/companion/CompanionEnum"
 import {BasicEnum}     from "./BasicEnum"
 
-/** A {@link CompanionEnum} that has the purpose to give the {@link BasicEnum} for its {@link Enum} type */
+/**
+ * A {@link CompanionEnum} that has the purpose to give
+ * the {@link BasicEnum} for its {@link Enum} type
+ */
 export class BasicCompanionEnum
     extends CompanionEnum<BasicEnum, typeof BasicEnum> {
 
