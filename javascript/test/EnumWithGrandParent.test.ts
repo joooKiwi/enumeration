@@ -59,7 +59,7 @@ describe("EnumWithGrandParent tests", () => {
         test("instance.D",              () => expect(      new BasicEnumWithGrandParent(BasicEnumWithParent.D,)                                                         .parent,).toBe(BasicEnumWithParent.D,),)
         test("() → instance.D",         () => expect(      new BasicEnumWithGrandParent(() => BasicEnumWithParent.D,)                                                   .parent,).toBe(BasicEnumWithParent.D,),)
     },)
-    describe("grandparent", () => {
+    describe("grandParent", () => {
         test("null",                    () => expect(() => new BasicEnumWithGrandParent(null, null,)                                                                .grandParent,).toThrow(NullReferenceException,),)
         test("undefined",               () => expect(() => new BasicEnumWithGrandParent(null, undefined,)                                                           .grandParent,).toThrow(NullReferenceException,),)
         test("() → null",               () => expect(() => new BasicEnumWithGrandParent(null, () => null,)                                                          .grandParent,).toThrow(NullReferenceException,),)

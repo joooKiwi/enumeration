@@ -52,7 +52,7 @@ import {isEnumWithGreatGrandParentByStructure}          from "../src/method/isEn
 import {isEnumWithParent}                               from "../src/method/isEnumWithParent"
 import {isEnumWithParentByStructure}                    from "../src/method/isEnumWithParentByStructure"
 
-describe("methodsTests (is)", () => {
+describe("methodTests (is)", () => {
 
     describe("null", () => {
         const value = null

@@ -71,7 +71,7 @@ describe("EnumWithNullableGreatGrandParent tests", () => {
         test("instance.C", () => expect(() => new BasicEnumWithNullableGreatGrandParent(null, BasicEnumWithParent.C,).parent,).toThrow(ImpossibleIntegrityException,),)
         test("instance.D", () => expect(() => new BasicEnumWithNullableGreatGrandParent(null, BasicEnumWithParent.D,).parent,).toThrow(ImpossibleIntegrityException,),)
     },)
-    describe("grandparent", () => {
+    describe("grandParent", () => {
         test("null",                    () => expect(      new BasicEnumWithNullableGreatGrandParent(null, null,)                                                                .grandParent,).toBe(null,),)
         test("undefined",               () => expect(      new BasicEnumWithNullableGreatGrandParent(null, undefined,)                                                           .grandParent,).toBe(null,),)
         test("() → null",               () => expect(      new BasicEnumWithNullableGreatGrandParent(null, () => null,)                                                          .grandParent,).toBe(null,),)
