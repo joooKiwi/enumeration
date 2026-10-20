@@ -32,14 +32,14 @@ export type KeyOfEnumerableWithGrandParent = keyof EnumerableWithNullableGrandPa
 export type KeyOfEnumerableWithGreatGrandParent = keyof EnumerableWithNullableGreatGrandParent<never, never, never, never, never>
 
 
-/** The keys applicable to an {@link CompanionEnumerable} */
+/** The keys applicable to a {@link CompanionEnumerable} */
 export type KeyOfCompanionEnum = keyof CompanionEnumerable<never, never>
 
-/** The keys applicable to an {@link CompanionEnumerableWithParent} */
+/** The keys applicable to a {@link CompanionEnumerableWithParent} */
 export type KeyOfCompanionEnumWithParent = keyof CompanionEnumerableWithParent<never, never, never, never>
 
-/** The keys applicable to an {@link CompanionEnumerableWithGrandParent} */
+/** The keys applicable to a {@link CompanionEnumerableWithGrandParent} */
 export type KeyOfCompanionEnumWithGrandParent = keyof CompanionEnumerableWithGrandParent<never, never, never, never, never, never>
 
-/** The keys applicable to an {@link CompanionEnumerableWithGreatGrandParent} */
+/** The keys applicable to a {@link CompanionEnumerableWithGreatGrandParent} */
 export type KeyOfCompanionEnumWithGreatGrandParent = keyof CompanionEnumerableWithGreatGrandParent<never, never, never, never, never, never, never, never>

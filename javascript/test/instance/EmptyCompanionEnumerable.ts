@@ -17,7 +17,7 @@ import type {CompanionEnumerable} from "../../src/companion/CompanionEnumerable"
 
 import {EmptyEnum} from "./EmptyEnum"
 
-/** An {@link CompanionEnumerable} that has the purpose to be empty with nothing to specify */
+/** A {@link CompanionEnumerable} that has the purpose to be empty with nothing to specify */
 export class EmptyCompanionEnumerable
     implements CompanionEnumerable<EmptyEnum, typeof EmptyEnum> {
 

@@ -13,7 +13,7 @@
 import {CompanionEnum} from "../../src/companion/CompanionEnum"
 import {EmptyEnum}     from "./EmptyEnum"
 
-/** An {@link CompanionEnum} that has the purpose to be empty with nothing to specify */
+/** A {@link CompanionEnum} that has the purpose to be empty with nothing to specify */
 export class EmptyCompanionEnum
     extends CompanionEnum<EmptyEnum, typeof EmptyEnum> {
 

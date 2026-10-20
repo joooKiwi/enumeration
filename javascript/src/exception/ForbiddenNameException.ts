@@ -17,7 +17,7 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
 
 
 /**
- * An exception to tell that the value was an {@link CompanionEnum._EXCLUDED_NAMES excluded name}
+ * An exception to tell that the value was a {@link CompanionEnum._EXCLUDED_NAMES excluded name}
  * or an impossible {@link String name}
  * in a {@link CompanionEnum}
  *

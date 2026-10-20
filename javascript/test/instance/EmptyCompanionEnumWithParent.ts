@@ -14,7 +14,7 @@ import {CompanionEnumWithParent} from "../../src/companion/CompanionEnumWithPare
 import {EmptyEnum}               from "./EmptyEnum"
 import {EmptyEnumWithParent}     from "./EmptyEnumWithParent"
 
-/** An {@link CompanionEnumWithParent} that has the purpose to be empty with nothing to specify */
+/** A {@link CompanionEnumWithParent} that has the purpose to be empty with nothing to specify */
 export class EmptyCompanionEnumWithParent
     extends CompanionEnumWithParent<EmptyEnumWithParent, typeof EmptyEnumWithParent, EmptyEnum, typeof EmptyEnum> {
 
