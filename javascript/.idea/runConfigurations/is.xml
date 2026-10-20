@@ -7,7 +7,7 @@
     <scope-kind value="SUITE" />
     <test-file value="$PROJECT_DIR$/test/method.03 - is.test.ts" />
     <test-names>
-      <test-name value="is" />
+      <test-name value="methodTests (is)" />
     </test-names>
     <method v="2" />
   </configuration>
