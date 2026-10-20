@@ -111,8 +111,6 @@ export class KnownEnumConstructors {
 
     /** @internal */
     protected _has(value: Function,): boolean {
-        if (arguments.length !== 1)
-            throw new Error("The method “KnownEnumConstructors.has” can only receive 1 argument.",)
         this.#validateType(value,)
         const values = this.#rawValues
         const size = values.length
@@ -125,8 +123,6 @@ export class KnownEnumConstructors {
 
     /** @internal */
     protected _add(value: Function,): boolean {
-        if (arguments.length !== 1)
-            throw new Error("The method “KnownEnumConstructors.add” can only receive 1 argument.",)
         this.#validateType(value,)
         const values = this.#rawValues
         const size = values.length
@@ -142,8 +138,6 @@ export class KnownEnumConstructors {
 
     /** @internal */
     protected _remove(value: Function,): boolean {
-        if (arguments.length !== 1)
-            throw new Error("The method “KnownEnumConstructors.remove” can only receive 1 argument.",)
         this.#validateType(value,)
         const values = this.#rawValues
         const sizeMinus1 = values.length - 1
@@ -188,7 +182,6 @@ export class KnownEnumConstructors {
      *
      * @param value The value to verify its existence
      * @return {boolean} The valus is present
-     * @throws Error                    The number of arguments received is not exactly 1
      * @throws NullReferenceException   The {@link value} is `null`|`undefined`
      * @throws InvalidInstanceException The {@link value} is not of type {@link Function}
      * @throws InvalidInstanceException The inheritor of the {@link value} is not {@link Enum} (by instance) or {@link Enumerable} (by structure)
@@ -200,7 +193,6 @@ export class KnownEnumConstructors {
      *
      * @param value The value to add
      * @return {boolean} The value was added
-     * @throws Error                    The number of arguments received is not exactly 1
      * @throws NullReferenceException   The {@link value} is `null`|`undefined`
      * @throws InvalidInstanceException The {@link value} is not of type {@link Function}
      * @throws InvalidInstanceException The inheritor of the {@link value} is not {@link Enum} (by instance) or {@link Enumerable} (by structure)
@@ -212,7 +204,6 @@ export class KnownEnumConstructors {
      *
      * @param value The value to remove
      * @return {boolean} The value was removed
-     * @throws Error                    The number of arguments received is not exactly 1
      * @throws NullReferenceException   The {@link value} is `null`|`undefined`
      * @throws InvalidInstanceException The {@link value} is not of type {@link Function}
      * @throws InvalidInstanceException The inheritor of the {@link value} is not {@link Enum} (by instance) or {@link Enumerable} (by structure)

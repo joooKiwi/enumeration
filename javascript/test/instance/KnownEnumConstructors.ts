@@ -42,10 +42,8 @@ export class KnownEnumConstructors
      * @param value The value to verify its existence
      * @return {boolean} The {@link value} is present
      */
-    public has(value: Function,): boolean
-    public has() {
-        //@ts-ignore: We will send the amount of arguments to the super._has(...)
-        return this._has(...arguments,)
+    public has(value: Function,): boolean {
+        return this._has(value,)
     }
 
     /**
@@ -54,10 +52,8 @@ export class KnownEnumConstructors
      * @param value The value to add
      * @return {boolean} The {@link value} was added
      */
-    public add(value: Function,): boolean
-    public add() {
-        //@ts-ignore: We will send the amount of arguments to the super._add(...)
-        return this._add(...arguments,)
+    public add(value: Function,): boolean {
+        return this._add(value,)
     }
 
     /**
@@ -66,10 +62,8 @@ export class KnownEnumConstructors
      * @param value The value to remove
      * @return {boolean} The {@link value} was removed
      */
-    public remove(value: Function,): boolean
-    public remove() {
-        //@ts-ignore: We will send the amount of arguments to the super._remove(...)
-        return this._remove(...arguments,)
+    public remove(value: Function,): boolean {
+        return this._remove(value,)
     }
 
     /**

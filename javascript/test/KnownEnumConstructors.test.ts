@@ -34,20 +34,14 @@ describe("KnownEnumConstructorsTest", () => {
     },)
     describe("has", () => {
         //@ts-expect-error
-        test("0 arguments",         () => expect(() => new KnownEnumConstructors().has(),).toThrow(),)
-        //@ts-expect-error
         test("null",                () => expect(() => new KnownEnumConstructors().has(null,),).toThrow(NullReferenceException,),)
         //@ts-expect-error
         test("undefined",           () => expect(() => new KnownEnumConstructors().has(undefined,),).toThrow(NullReferenceException,),)
         test("invalid",             () => expect(() => new KnownEnumConstructors().has(String,),).toThrow(InvalidInstanceException,),)
         test("valid",               () => expect(      new KnownEnumConstructors().has(EmptyEnum,),).toBeFalse(),)
         test("after add",           () => expect(      new KnownEnumConstructors().addAnd(EmptyEnum,).has(EmptyEnum,),).toBeTrue(),)
-        //@ts-expect-error
-        test("2 arguments",         () => expect(() => new KnownEnumConstructors().has(EmptyEnum, EmptyEnum,),).toThrow(),)
     },)
     describe("add", () => {
-        //@ts-expect-error
-        test("0 arguments",               () => expect(() => new KnownEnumConstructors().add(),).toThrow(),)
         //@ts-expect-error
         test("null",                      () => expect(() => new KnownEnumConstructors().add(null,),).toThrow(NullReferenceException,),)
         //@ts-expect-error
@@ -61,12 +55,8 @@ describe("KnownEnumConstructorsTest", () => {
         test("EnumerableWithParent",      () => expect(      new KnownEnumConstructors().add(EmptyEnumerableWithParent,),).toBeTrue(),)
         test("EnumerableWithGrandParent", () => expect(      new KnownEnumConstructors().add(EmptyEnumerableWithGrandParent,),).toBeTrue(),)
         test("EnumerableWithGrandParent", () => expect(      new KnownEnumConstructors().add(EmptyEnumerableWithGreatGrandParent,),).toBeTrue(),)
-        //@ts-expect-error
-        test("2 arguments",               () => expect(() => new KnownEnumConstructors().add(EmptyEnum, EmptyEnum,),).toThrow(),)
     },)
     describe("remove", () => {
-        //@ts-expect-error
-        test("0 arguments", () => expect(() => new KnownEnumConstructors().remove(),).toThrow(),)
         //@ts-expect-error
         test("null",        () => expect(() => new KnownEnumConstructors().remove(null,),).toThrow(NullReferenceException,),)
         //@ts-expect-error
@@ -74,8 +64,6 @@ describe("KnownEnumConstructorsTest", () => {
         test("invalid",     () => expect(() => new KnownEnumConstructors().remove(String,),).toThrow(InvalidInstanceException,),)
         test("valid",       () => expect(      new KnownEnumConstructors().remove(EmptyEnum,),).toBeFalse(),)
         test("after add",   () => expect(      new KnownEnumConstructors().addAnd(EmptyEnum,).remove(EmptyEnum,),).toBeTrue(),)
-        //@ts-expect-error
-        test("2 arguments", () => expect(() => new KnownEnumConstructors().remove(EmptyEnum, EmptyEnum,),).toThrow(),)
     },)
 
 },)
