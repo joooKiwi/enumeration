@@ -98,7 +98,7 @@ export abstract class Enum<const ORDINAL extends number = number,
     get #lastOrdinalPlus1(): ORDINAL {
         const instance = this.#prototypeConstructor
         const map = EnumConstants.LAST_ORDINAL_MAP
-        const nextValue = (map.get(instance,) ?? -1) + 1 as ORDINAL
+        const nextValue = map.getOrInsert(instance, -1,) + 1 as ORDINAL
         map.set(instance, nextValue,)
         return nextValue
     }
