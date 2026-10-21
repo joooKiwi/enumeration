@@ -624,9 +624,9 @@ export class CompanionEnum<const ENUM extends Enumerable,
      */
     protected _getValidValueByEnumerable(enumerable: Enumerable,): ENUM {
         const instance = this.instance
-        if (!(enumerable instanceof instance))
-            throw new InvalidEnumerableException(`The enumerable “${getLastPrototype(enumerable,).name}.${enumerable.name}” is not an instance of “${instance.name}”.`, enumerable, [instance,],)
-        return this._getValueFromValues(enumerable,)
+        if (enumerable instanceof instance)
+            return this._getValueFromValues(enumerable,)
+        throw new InvalidEnumerableException(`The enumerable “${getLastPrototype(enumerable,).name}.${enumerable.name}” is not an instance of “${instance.name}”.`, enumerable, [instance,],)
     }
 
     /**
@@ -636,7 +636,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param nameOrOrdinal Either the {@link Enumerable.name name} or the {@link Enumerable.ordinal ordinal}
      * @param originalValue The original {@link nameOrOrdinal} received
      * @param instance The instance to tell if it is an instance of it
-     * @throws {InvalidInstanceException}
+     * @throws InvalidInstanceException The value found reflectively was not an `instanceof` the {@link instance}
      */
     protected _getValidValueByString(value: NonNullable<unknown>, nameOrOrdinal: string, originalValue: StringOrObject, instance: ENUM_CONSTRUCTOR,): ENUM {
         if (value instanceof instance)
@@ -661,7 +661,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
         if (!Reflect.has(instance, nameOrOrdinal,))
             throw new NullReferenceException(`No value exist in “${instance.name}.${nameOrOrdinal}”.`, originalValue,)
 
-        const field: unknown = Reflect.get(instance, nameOrOrdinal,)
+        const field = Reflect.get(instance, nameOrOrdinal,)
         if (field == null)
             throw new NullReferenceException(`The value “${instance.name}.CompanionEnum.get.${nameOrOrdinal}” cannot be a null reference.`, originalValue,)
         return this._getValidValueByString(field, nameOrOrdinal, originalValue, instance,)
