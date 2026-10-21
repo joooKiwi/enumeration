@@ -49,6 +49,6 @@ export class EmptyCompanionEnumerable
 
     public get [Symbol.toStringTag](): never { return expect.fail("The getter method “Symbol.toStringTag” was not expected to be called.",) }
 
-    public methodFromEmptyCompanionEnumDeclaration() {}
+    public methodFromEmptyCompanionEnumerable() {}
 
 }
