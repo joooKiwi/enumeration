@@ -10,7 +10,7 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {BigIntOrObject, Nullable, StringOrNumericOrObject} from "@joookiwi/type"
+import type {Nullable} from "@joookiwi/type"
 
 import type {Enumerable}                              from "../Enumerable"
 import type {EnumerableConstructor}                   from "../EnumerableConstructor"
@@ -25,7 +25,6 @@ import type {CompanionEnumerableWithGreatGrandParent} from "../companion/Compani
 import type {CompanionEnumerableWithParent}           from "../companion/CompanionEnumerableWithParent"
 import type {CompanionEnumerableType}                 from "./companion"
 import type {NameOf}                                  from "./nameOf"
-import type {OrdinalOf}                               from "./ordinalOf"
 import type {PossibleEnumSymbol}                      from "./symbol"
 
 /**
@@ -49,22 +48,6 @@ export type PossibleEnumerableInstance<ENUMERABLE extends Enumerable = Enumerabl
     | CompanionEnumerableWithGrandParent<any, any, any, any, ENUMERABLE, any>
     | CompanionEnumerableWithGreatGrandParent<any, any, any, any, any, any, ENUMERABLE, any>
     | EnumerableConstructor<ENUMERABLE, CompanionEnumerableType<ENUMERABLE>>
-
-/**
- * A type possibility for an {@link Enumerable}, {@link String}, {@link Number} or {@link BigInt} (object or primitive)
- *
- * @see StrictEnumerableOrStringOrNumericOrObject
- */
-export type EnumerableOrStringOrNumericOrObject<ENUM extends Enumerable = Enumerable, > =
-    | StringOrNumericOrObject | ENUM
-/**
- * A strict type possibility for an {@link Enumerable}, {@link Enumerable.name name}, {@link Enumerable.ordinal ordinal},
- * {@link String}, {@link Number} or {@link BigInt} object
- *
- * @see EnumerableOrStringOrNumericOrObject
- */
-export type StrictEnumerableOrStringOrNumericOrObject<ENUM extends Enumerable, >
-    = | NameOf<ENUM> | String | OrdinalOf<ENUM> | Number | BigIntOrObject | ENUM
 
 /**
  * A type of {@link Enumerable} by its value or its {@link Enumerable.name name} (object or primitive)
