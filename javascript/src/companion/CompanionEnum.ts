@@ -282,12 +282,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @throws UnhandledValueException The default value was an improper type
      */
     #initializeDefaultByEnumerable(): boolean {
-        let defaultValue: Nullable<ENUM>
-        try {
-            defaultValue = this._DEFAULT
-        } catch (exception) {
-            throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT". An exception was thrown when attempting to retrieve the value.`, exception as never,)
-        }
+        const defaultValue = this._DEFAULT
         if (defaultValue == null)
             return false
 
@@ -312,12 +307,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @throws UnhandledValueException The default value was an improper type
      */
     #initializeDefaultByName(): boolean {
-        let defaultName: Nullable<StringOrObject>
-        try {
-            defaultName = this._DEFAULT_NAME
-        } catch (exception) {
-            throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". An exception was thrown when attempting to retrieve the value.`, exception as never,)
-        }
+        const defaultName = this._DEFAULT_NAME
         if (defaultName == null)
             return false
 
@@ -355,12 +345,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @throws UnhandledValueException The default value was an improper type
      */
     #initializeDefaultByOrdinal(): boolean {
-        let defaultOrdinal: Nullable<NumericOrObject>
-        try {
-            defaultOrdinal = this._DEFAULT_ORDINAL
-        } catch (exception) {
-            throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". An exception was thrown when attempting to retrieve the value.`, exception as never,)
-        }
+        const defaultOrdinal = this._DEFAULT_ORDINAL
         if (defaultOrdinal == null)
             return false
 
