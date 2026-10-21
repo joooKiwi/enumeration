@@ -806,6 +806,8 @@ export class CompanionEnum<const ENUM extends Enumerable,
             throw new UnhandledValueException(`A WeakSet value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
         if (value instanceof WeakMap)
             throw new UnhandledValueException(`A WeakMap value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
+        if (value instanceof Iterator)
+            throw new UnhandledValueException(`An Iterator value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
         throw new UnhandledValueException(`The value received is not of type String, Number, BigInt or Enumerable. It cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
     }
 
