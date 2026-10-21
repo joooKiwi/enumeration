@@ -619,7 +619,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * for the current {@link instance}
      *
      * @param enumerable The instance to validate
-     * @throws InvalidEnumerableException The {@link value} was not an `instanceof` {@link CompanionEnum.instance instance}
+     * @throws InvalidEnumerableException The {@link enumerable} was not an `instanceof` {@link CompanionEnum.instance instance}
      * @throws NullReferenceException     No equivalent value (`===`) was in {@link CompanionEnum.values values}
      */
     protected _getValidValueByEnumerable(enumerable: Enumerable,): ENUM {
