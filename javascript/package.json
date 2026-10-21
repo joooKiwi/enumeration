@@ -54,6 +54,11 @@
       "import":  "./dist/ecmascript module/helper/index.js",
       "require": "./dist/common javascript/helper/index.js"
     },
+    "./method": {
+      "types":   "./dist/types/method/index.d.ts",
+      "import":  "./dist/ecmascript module/method/index.js",
+      "require": "./dist/common javascript/method/index.js"
+    },
     "./type": { "types": "./dist/types/type/index.d.ts" },
 
     "./*": {
@@ -75,6 +80,11 @@
       "types":   "./dist/types/helper/*.d.ts",
       "import":  "./dist/ecmascript module/helper/*.js",
       "require": "./dist/common javascript/helper/*.js"
+    },
+    "./method/*": {
+      "types":   "./dist/types/method/*.d.ts",
+      "import":  "./dist/ecmascript module/method/*.js",
+      "require": "./dist/common javascript/method/*.js"
     },
     "./type/*": { "types": "./dist/types/type/*.d.ts" }
   },
