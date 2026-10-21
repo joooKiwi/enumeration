@@ -58,7 +58,7 @@ export function _getParentValueFromName<const INSTANCE extends Enumerable, >(ins
 function __getInstance<const INSTANCE extends Enumerable, >(instance: EnumerableWithNullableParent<INSTANCE>,): CompanionEnumerableWithParentType<EnumerableWithNullableParent<INSTANCE>, INSTANCE> {
     let companionEnum: CompanionEnumerableWithParent<EnumerableWithNullableParent<INSTANCE>, any, any, any>
     try {
-        companionEnum = getCompanion(getLastPrototype(instance,),)
+        companionEnum = getCompanion(getLastPrototype<EnumerableWithNullableParent<INSTANCE>>(instance,),)
     } catch (exception) {
         if (exception instanceof NonExistantKeyException)
             throw new NullReferenceException("There was an error while retrieving the companion enum.", instance, exception,)

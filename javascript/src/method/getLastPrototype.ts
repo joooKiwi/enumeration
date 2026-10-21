@@ -13,8 +13,13 @@
 import type {MutableArray, Nullable, NullOr, NullOrUndefined} from "@joookiwi/type"
 import {joinToStringByArray}                                  from "@joookiwi/collection"
 
-import type {Enumerable}            from "../Enumerable"
-import type {EnumerableConstructor} from "../EnumerableConstructor"
+import type {Enumerable}                                                                                                                                      from "../Enumerable"
+import type {EnumerableWithNullableGrandParent}                                                                                                               from "../EnumerableWithNullableGrandParent"
+import type {EnumerableWithNullableGreatGrandParent}                                                                                                          from "../EnumerableWithNullableGreatGrandParent"
+import type {EnumerableWithNullableParent}                                                                                                                    from "../EnumerableWithNullableParent"
+import type {EnumerableConstructor}                                                                                                                           from "../EnumerableConstructor"
+import type {CompanionEnumerableType, CompanionEnumerableWithGrandParentType, CompanionEnumerableWithGreatGrandParentType, CompanionEnumerableWithParentType} from "../type/companion"
+import type {EnumerableWithNullableGrandParentGeneralType, EnumerableWithNullableGreatGrandParentGeneralType, EnumerableWithNullableParentGeneralType}        from "../type/general"
 
 import {InvalidInstanceException}      from "../exception/InvalidInstanceException"
 import {NullReferenceException}        from "../exception/NullReferenceException"
@@ -23,6 +28,13 @@ import {_getSimplifiedPrototypeChains} from "./_getSimplifiedPrototypeChains"
 import {isEnumByStructure}             from "./isEnumByStructure"
 import {isEnum}                        from "./isEnum"
 
+/**
+ * Get nothing because of a `null` instance
+ *
+ * @param instance The `null` instance
+ * @throws NullReferenceException The instance was `null` or `undefined`
+ */
+export function getLastPrototype(instance: NullOrUndefined,): never
 /**
  * Get the last {@link ObjectConstructor.prototype prototype}
  * until it is the constructor types in {@link KnownEnumConstructors} in the case of an {@link Enum}
@@ -36,7 +48,134 @@ import {isEnum}                        from "./isEnum"
  * @see https://stackoverflow.com/a/68323749
  * @note No proper type inference can be made since it is possible to have a different prototype than the closest one (`instance.constructor`)
  */
-export function getLastPrototype<const T extends Enumerable, >(instance: object,): EnumerableConstructor<T, any> {
+export function getLastPrototype<const ENUM extends EnumerableWithNullableGreatGrandParentGeneralType,                                                                                                                                                                                                                                                                       >(instance: Nullable<EnumerableWithNullableGreatGrandParentGeneralType>,): EnumerableConstructor<ENUM, CompanionEnumerableWithGreatGrandParentType<ENUM, EnumerableWithNullableGrandParentGeneralType, EnumerableWithNullableParentGeneralType, Enumerable>>
+/**
+ * Get the last {@link ObjectConstructor.prototype prototype}
+ * until it is the constructor types in {@link KnownEnumConstructors} in the case of an {@link Enum}
+ * and the last proper {@link Enumerable}-like on a {@link Enumerable} instance
+ *
+ * @param instance The instance (by default as the current instance)
+ * @throws NullReferenceException   The instance was `null` or `undefined`
+ * @throws NullReferenceException   No {@link Enum} constructor from the instance could be found (if it was a {@link Enum})
+ * @throws NullReferenceException   No {@link Enumerable} constructor from the instance could be found (if it was a {@link Enumerable})
+ * @throws InvalidInstanceException No prototype could be found since it did not have the {@link Enumerable} structure
+ * @see https://stackoverflow.com/a/68323749
+ * @note No proper type inference can be made since it is possible to have a different prototype than the closest one (`instance.constructor`)
+ */
+export function getLastPrototype<const ENUM extends EnumerableWithNullableGreatGrandParent<PARENT, EnumerableWithNullableParentGeneralType, Enumerable>, const PARENT extends EnumerableWithNullableGrandParentGeneralType,                                                                                                                                                  >(instance: Nullable<EnumerableWithNullableGreatGrandParentGeneralType>,): EnumerableConstructor<ENUM, CompanionEnumerableWithGreatGrandParentType<ENUM, PARENT, EnumerableWithNullableParentGeneralType, Enumerable>>
+/**
+ * Get the last {@link ObjectConstructor.prototype prototype}
+ * until it is the constructor types in {@link KnownEnumConstructors} in the case of an {@link Enum}
+ * and the last proper {@link Enumerable}-like on a {@link Enumerable} instance
+ *
+ * @param instance The instance (by default as the current instance)
+ * @throws NullReferenceException   The instance was `null` or `undefined`
+ * @throws NullReferenceException   No {@link Enum} constructor from the instance could be found (if it was a {@link Enum})
+ * @throws NullReferenceException   No {@link Enumerable} constructor from the instance could be found (if it was a {@link Enumerable})
+ * @throws InvalidInstanceException No prototype could be found since it did not have the {@link Enumerable} structure
+ * @see https://stackoverflow.com/a/68323749
+ * @note No proper type inference can be made since it is possible to have a different prototype than the closest one (`instance.constructor`)
+ */
+export function getLastPrototype<const ENUM extends EnumerableWithNullableGreatGrandParent<PARENT, GRAND_PARENT, Enumerable>,                            const PARENT extends EnumerableWithNullableGrandParent<GRAND_PARENT, Enumerable>,         const GRAND_PARENT extends EnumerableWithNullableParentGeneralType,                                                       >(instance: Nullable<EnumerableWithNullableGreatGrandParentGeneralType>,): EnumerableConstructor<ENUM, CompanionEnumerableWithGreatGrandParentType<ENUM, PARENT, GRAND_PARENT, Enumerable>>
+/**
+ * Get the last {@link ObjectConstructor.prototype prototype}
+ * until it is the constructor types in {@link KnownEnumConstructors} in the case of an {@link Enum}
+ * and the last proper {@link Enumerable}-like on a {@link Enumerable} instance
+ *
+ * @param instance The instance (by default as the current instance)
+ * @throws NullReferenceException   The instance was `null` or `undefined`
+ * @throws NullReferenceException   No {@link Enum} constructor from the instance could be found (if it was a {@link Enum})
+ * @throws NullReferenceException   No {@link Enumerable} constructor from the instance could be found (if it was a {@link Enumerable})
+ * @throws InvalidInstanceException No prototype could be found since it did not have the {@link Enumerable} structure
+ * @see https://stackoverflow.com/a/68323749
+ * @note No proper type inference can be made since it is possible to have a different prototype than the closest one (`instance.constructor`)
+ */
+export function getLastPrototype<const ENUM extends EnumerableWithNullableGreatGrandParent<PARENT, GRAND_PARENT, GREAT_GRAND_PARENT>,                    const PARENT extends EnumerableWithNullableGrandParent<GRAND_PARENT, GREAT_GRAND_PARENT>, const GRAND_PARENT extends EnumerableWithNullableParent<GREAT_GRAND_PARENT>, const GREAT_GRAND_PARENT extends Enumerable, >(instance: Nullable<EnumerableWithNullableGreatGrandParentGeneralType>,): EnumerableConstructor<ENUM, CompanionEnumerableWithGreatGrandParentType<ENUM, PARENT, GRAND_PARENT, GREAT_GRAND_PARENT>>
+/**
+ * Get the last {@link ObjectConstructor.prototype prototype}
+ * until it is the constructor types in {@link KnownEnumConstructors} in the case of an {@link Enum}
+ * and the last proper {@link Enumerable}-like on a {@link Enumerable} instance
+ *
+ * @param instance The instance (by default as the current instance)
+ * @throws NullReferenceException   The instance was `null` or `undefined`
+ * @throws NullReferenceException   No {@link Enum} constructor from the instance could be found (if it was a {@link Enum})
+ * @throws NullReferenceException   No {@link Enumerable} constructor from the instance could be found (if it was a {@link Enumerable})
+ * @throws InvalidInstanceException No prototype could be found since it did not have the {@link Enumerable} structure
+ * @see https://stackoverflow.com/a/68323749
+ * @note No proper type inference can be made since it is possible to have a different prototype than the closest one (`instance.constructor`)
+ */
+export function getLastPrototype<const ENUM extends EnumerableWithNullableGrandParentGeneralType,                                                                                                                                                                                                                                                                            >(instance: Nullable<EnumerableWithNullableGrandParentGeneralType>,):      EnumerableConstructor<ENUM, CompanionEnumerableWithGrandParentType<ENUM, EnumerableWithNullableParentGeneralType, Enumerable>>
+/**
+ * Get the last {@link ObjectConstructor.prototype prototype}
+ * until it is the constructor types in {@link KnownEnumConstructors} in the case of an {@link Enum}
+ * and the last proper {@link Enumerable}-like on a {@link Enumerable} instance
+ *
+ * @param instance The instance (by default as the current instance)
+ * @throws NullReferenceException   The instance was `null` or `undefined`
+ * @throws NullReferenceException   No {@link Enum} constructor from the instance could be found (if it was a {@link Enum})
+ * @throws NullReferenceException   No {@link Enumerable} constructor from the instance could be found (if it was a {@link Enumerable})
+ * @throws InvalidInstanceException No prototype could be found since it did not have the {@link Enumerable} structure
+ * @see https://stackoverflow.com/a/68323749
+ * @note No proper type inference can be made since it is possible to have a different prototype than the closest one (`instance.constructor`)
+ */
+export function getLastPrototype<const ENUM extends EnumerableWithNullableGrandParent<PARENT, Enumerable>,                                   const PARENT extends EnumerableWithNullableParentGeneralType,                                                                                                                                                                   >(instance: Nullable<EnumerableWithNullableGrandParentGeneralType>,):      EnumerableConstructor<ENUM, CompanionEnumerableWithGrandParentType<ENUM, PARENT, Enumerable>>
+/**
+ * Get the last {@link ObjectConstructor.prototype prototype}
+ * until it is the constructor types in {@link KnownEnumConstructors} in the case of an {@link Enum}
+ * and the last proper {@link Enumerable}-like on a {@link Enumerable} instance
+ *
+ * @param instance The instance (by default as the current instance)
+ * @throws NullReferenceException   The instance was `null` or `undefined`
+ * @throws NullReferenceException   No {@link Enum} constructor from the instance could be found (if it was a {@link Enum})
+ * @throws NullReferenceException   No {@link Enumerable} constructor from the instance could be found (if it was a {@link Enumerable})
+ * @throws InvalidInstanceException No prototype could be found since it did not have the {@link Enumerable} structure
+ * @see https://stackoverflow.com/a/68323749
+ * @note No proper type inference can be made since it is possible to have a different prototype than the closest one (`instance.constructor`)
+ */
+export function getLastPrototype<const ENUM extends EnumerableWithNullableGrandParent<PARENT, GRAND_PARENT>,                                 const PARENT extends EnumerableWithNullableParent<GRAND_PARENT>, GRAND_PARENT extends Enumerable,                                                                                                                               >(instance: Nullable<EnumerableWithNullableGrandParentGeneralType>,):      EnumerableConstructor<ENUM, CompanionEnumerableWithGrandParentType<ENUM, PARENT, GRAND_PARENT>>
+/**
+ * Get the last {@link ObjectConstructor.prototype prototype}
+ * until it is the constructor types in {@link KnownEnumConstructors} in the case of an {@link Enum}
+ * and the last proper {@link Enumerable}-like on a {@link Enumerable} instance
+ *
+ * @param instance The instance (by default as the current instance)
+ * @throws NullReferenceException   The instance was `null` or `undefined`
+ * @throws NullReferenceException   No {@link Enum} constructor from the instance could be found (if it was a {@link Enum})
+ * @throws NullReferenceException   No {@link Enumerable} constructor from the instance could be found (if it was a {@link Enumerable})
+ * @throws InvalidInstanceException No prototype could be found since it did not have the {@link Enumerable} structure
+ * @see https://stackoverflow.com/a/68323749
+ * @note No proper type inference can be made since it is possible to have a different prototype than the closest one (`instance.constructor`)
+ */
+export function getLastPrototype<const ENUM extends EnumerableWithNullableParentGeneralType,                                                                                                                                                                                                                                                                                 >(instance: Nullable<EnumerableWithNullableParentGeneralType>,):           EnumerableConstructor<ENUM, CompanionEnumerableWithParentType<ENUM, Enumerable>>
+/**
+ * Get the last {@link ObjectConstructor.prototype prototype}
+ * until it is the constructor types in {@link KnownEnumConstructors} in the case of an {@link Enum}
+ * and the last proper {@link Enumerable}-like on a {@link Enumerable} instance
+ *
+ * @param instance The instance (by default as the current instance)
+ * @throws NullReferenceException   The instance was `null` or `undefined`
+ * @throws NullReferenceException   No {@link Enum} constructor from the instance could be found (if it was a {@link Enum})
+ * @throws NullReferenceException   No {@link Enumerable} constructor from the instance could be found (if it was a {@link Enumerable})
+ * @throws InvalidInstanceException No prototype could be found since it did not have the {@link Enumerable} structure
+ * @see https://stackoverflow.com/a/68323749
+ * @note No proper type inference can be made since it is possible to have a different prototype than the closest one (`instance.constructor`)
+ */
+export function getLastPrototype<const ENUM extends EnumerableWithNullableParent<PARENT>,    const PARENT extends Enumerable,                                                                                                                                                                                                                                                >(instance: Nullable<EnumerableWithNullableParentGeneralType>,):           EnumerableConstructor<ENUM, CompanionEnumerableWithParentType<ENUM, PARENT>>
+/**
+ * Get the last {@link ObjectConstructor.prototype prototype}
+ * until it is the constructor types in {@link KnownEnumConstructors} in the case of an {@link Enum}
+ * and the last proper {@link Enumerable}-like on a {@link Enumerable} instance
+ *
+ * @param instance The instance (by default as the current instance)
+ * @throws NullReferenceException   The instance was `null` or `undefined`
+ * @throws NullReferenceException   No {@link Enum} constructor from the instance could be found (if it was a {@link Enum})
+ * @throws NullReferenceException   No {@link Enumerable} constructor from the instance could be found (if it was a {@link Enumerable})
+ * @throws InvalidInstanceException No prototype could be found since it did not have the {@link Enumerable} structure
+ * @see https://stackoverflow.com/a/68323749
+ * @note No proper type inference can be made since it is possible to have a different prototype than the closest one (`instance.constructor`)
+ */
+export function getLastPrototype<const ENUM extends Enumerable, >(instance: Nullable<Enumerable>,): EnumerableConstructor<ENUM, CompanionEnumerableType<ENUM>>
+export function getLastPrototype(instance: Nullable<Enumerable>,) {
     if (instance == null)
         throw new NullReferenceException(`No prototype on a EnumerableConstructor could be found by a null value.`, instance,)
 

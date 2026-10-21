@@ -61,7 +61,7 @@ export function _getGreatGrandParentValueFromName<const INSTANCE extends Enumera
 function __getInstance<const INSTANCE extends Enumerable, >(instance: EnumerableWithNullableGreatGrandParentGeneralType,): CompanionEnumerableWithGreatGrandParentType<EnumerableWithNullableGreatGrandParent<EnumerableWithNullableGrandParent<EnumerableWithNullableParent<INSTANCE>, INSTANCE>, EnumerableWithNullableParent<INSTANCE>, INSTANCE>, EnumerableWithNullableGrandParent<EnumerableWithNullableParent<INSTANCE>, INSTANCE>, EnumerableWithNullableParent<INSTANCE>, INSTANCE> {
     let companionEnum: CompanionEnumerableWithGreatGrandParent<EnumerableWithNullableGreatGrandParent<EnumerableWithNullableGrandParent<EnumerableWithNullableParent<INSTANCE>, any>, any, any>, any, any, any, any, any, any, any>
     try {
-        companionEnum = getCompanion(getLastPrototype(instance,),)
+        companionEnum = getCompanion(getLastPrototype<EnumerableWithNullableGreatGrandParent<EnumerableWithNullableGrandParent<EnumerableWithNullableParent<INSTANCE>, INSTANCE>, EnumerableWithNullableParent<INSTANCE>, INSTANCE>>(instance,),)
     } catch (exception) {
         if (exception instanceof NonExistantKeyException)
             throw new NullReferenceException("There was an error while retrieving the companion enum.", instance, exception,)
