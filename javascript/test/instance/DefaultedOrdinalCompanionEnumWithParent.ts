@@ -10,7 +10,7 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {OrdinalOf} from "../../src/type/ordinalOf"
+import type {Nullable, NumericOrObject} from "@joookiwi/type"
 
 import {CompanionEnumWithParent} from "../../src/companion/CompanionEnumWithParent"
 import {BasicEnum}               from "./BasicEnum"
@@ -22,7 +22,7 @@ import {BasicEnumWithParent}     from "./BasicEnumWithParent"
  * the {@link BasicEnum} for its {@link Enum} type
  * plus a default ordinal
  */
-export class DefaultedOrdinalCompanionEnumWithParent<const DEFAULT_ORDINAL extends OrdinalOf<BasicEnumWithParent>, >
+export class DefaultedOrdinalCompanionEnumWithParent<const DEFAULT_ORDINAL extends Nullable<NumericOrObject>, >
     extends CompanionEnumWithParent<BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum> {
 
     protected override readonly _DEFAULT_ORDINAL: DEFAULT_ORDINAL

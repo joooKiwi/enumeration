@@ -10,7 +10,7 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {NameOf} from "../../src/type/nameOf"
+import type {Nullable, StringOrObject} from "@joookiwi/type"
 
 import {CompanionEnum} from "../../src/companion/CompanionEnum"
 import {BasicEnum}     from "./BasicEnum"
@@ -19,7 +19,7 @@ import {BasicEnum}     from "./BasicEnum"
  * A {@link CompanionEnum} that has the purpose to give the {@link BasicEnum} for its {@link Enum} type
  * plus a default name
  */
-export class DefaultedNameCompanionEnum<const DEFAULT_NAME extends NameOf<BasicEnum>, >
+export class DefaultedNameCompanionEnum<const DEFAULT_NAME extends Nullable<StringOrObject>, >
     extends CompanionEnum<BasicEnum, typeof BasicEnum> {
 
     protected override readonly _DEFAULT_NAME: DEFAULT_NAME

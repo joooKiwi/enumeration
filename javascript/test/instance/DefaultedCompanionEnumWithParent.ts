@@ -10,6 +10,8 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
+import type {Nullable} from "@joookiwi/type"
+
 import {CompanionEnumWithParent} from "../../src/companion/CompanionEnumWithParent"
 import {BasicEnum}               from "./BasicEnum"
 import {BasicEnumWithParent}     from "./BasicEnumWithParent"
@@ -20,7 +22,7 @@ import {BasicEnumWithParent}     from "./BasicEnumWithParent"
  * the {@link BasicEnum} for its {@link Enum} type
  * plus a default value
  */
-export class DefaultedCompanionEnumWithParent<const DEFAULT extends BasicEnumWithParent, >
+export class DefaultedCompanionEnumWithParent<const DEFAULT extends Nullable<BasicEnumWithParent>, >
     extends CompanionEnumWithParent<BasicEnumWithParent, typeof BasicEnumWithParent, BasicEnum, typeof BasicEnum> {
 
     protected override readonly _DEFAULT: DEFAULT
