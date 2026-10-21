@@ -78,9 +78,9 @@ export function getCompanion(instance: Nullable<PossibleEnumerableInstance>,) {
         throw new NonExistantKeyException(`No “CompanionEnum” exist in the instance “${(instance as Function)?.name ?? `${(instance as NonNullable<unknown>).toString()}`}”.`, "CompanionEnum", instance,)
     const companionConstructor = instance.CompanionEnum
     if (companionConstructor == null)
-        throw new NullReferenceException(`The reference “${instance.name}.CompanionEnum" cannot be null when retrieving its companion value.`, instance,)
+        throw new NullReferenceException(`The reference “${instance.name}.CompanionEnum” cannot be null when retrieving its companion value.`, instance,)
     if (!(companionConstructor instanceof Function))
-        throw new InvalidInstanceException(`The reference “${instance.name}.CompanionEnum" is not a function type.`, instance,)
+        throw new InvalidInstanceException(`The reference “${instance.name}.CompanionEnum” is not a function type.`, instance,)
     if (!("get" in companionConstructor))
         throw new NonExistantKeyException(`No reference “get” exist in “${instance.name}.CompanionEnum”.`, "get", instance,)
 

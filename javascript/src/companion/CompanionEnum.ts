@@ -128,7 +128,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
 
         const defaultValue = this.#defaultValue
         if (defaultValue == null)
-            throw new NullEnumerableException(`The default value was set to null or removed on “${this.instance.name}”.\n\tTry a calling “${this.instance.name}.CompanionEnum.get.defaultValue = value" or “${this.instance.name}.CompanionEnum.get.setDefault(value)".`,)
+            throw new NullEnumerableException(`The default value was set to null or removed on “${this.instance.name}”. Try a calling “${this.instance.name}.CompanionEnum.get.defaultValue = value” or “${this.instance.name}.CompanionEnum.get.setDefault(value)”.`,)
         return defaultValue
     }
 
@@ -271,7 +271,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
         if (this.#initializeDefaultByOrdinal())
             return
 
-        throw new NullEnumerableException(`Unable to get the default value. There is no default stored for “${this.instance.name}”.\n\tTry using the the "_DEFAULT", "_DEFAULT_NAME" or "_DEFAULT_ORDINAL" (at declaration)\n\tor call “${this.instance.name}.defaultValue = value".`,)
+        throw new NullEnumerableException(`Unable to get the default value. There is no default stored for “${this.instance.name}”. Try using the the “_DEFAULT”, “_DEFAULT_NAME” or “_DEFAULT_ORDINAL” (at declaration) or call “${this.instance.name}.defaultValue = value”.`,)
     }
 
     /**
@@ -299,7 +299,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
             return true
         } catch (exception) {
             if (exception instanceof InvalidEnumerableException)
-                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT". The value ${defaultValue} is not a valid instance received by the companion enum.`, exception,)
+                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT”. The value ${defaultValue} is not a valid instance received by the companion enum.`, exception,)
             throw exception
         }
     }
@@ -332,17 +332,17 @@ export class CompanionEnum<const ENUM extends Enumerable,
             return true
         } catch (exception) {
             if (exception instanceof ForbiddenInheritedEnumerableMemberException)
-                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value “${defaultName}” is one possible value of the inherited field name (“name”, “ordinal”, “parent”, “grandParent”, “greatGrandParent”, “[Symbol.toPrimitive]”, “[Symbol.toStringTag]”).`, exception,)
+                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME”. The value “${defaultName}” is one possible value of the inherited field name (“name”, “ordinal”, “parent”, “grandParent”, “greatGrandParent”, “[Symbol.toPrimitive]”, “[Symbol.toStringTag]”).`, exception,)
             if (exception instanceof ForbiddenNameException)
-                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value “${defaultName}” is an excluded name ${this._excludedNames.joinToString(", ", '(', ')', null, null, it => `“${it}”`,)}.`, exception,)
+                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME”. The value “${defaultName}” is an excluded name ${this._excludedNames.joinToString(", ", '(', ')', null, null, it => `“${it}”`,)}.`, exception,)
             if (exception instanceof ForbiddenNumericException)
-                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value “${defaultName}” is equivalent to ±∞ or NaN.`, exception,)
+                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME”. The value “${defaultName}” is equivalent to ±∞ or NaN.`, exception,)
             if (exception instanceof ImpossibleOrdinalException)
-                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value “${defaultName}” is an impossible ordinal value.`, exception,)
+                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME”. The value “${defaultName}” is an impossible ordinal value.`, exception,)
             if (exception instanceof InvalidInstanceException)
-                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value “${this.instance.name}.${defaultName}” is not a valid instance for the companion enum.`, exception,)
+                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME”. The value “${this.instance.name}.${defaultName}” is not a valid instance for the companion enum.`, exception,)
             if (exception instanceof NullReferenceException)
-                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME". The value “${this.instance.name}.${defaultName}” does not exist.`, exception,)
+                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_NAME”. The value “${this.instance.name}.${defaultName}” does not exist.`, exception,)
             throw exception
         }
     }
@@ -381,11 +381,11 @@ export class CompanionEnum<const ENUM extends Enumerable,
             return true
         } catch (exception) {
             if (exception instanceof ForbiddenNumericException)
-                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". The value “${defaultOrdinal}” is ±∞ or NaN.`, exception,)
+                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL”. The value “${defaultOrdinal}” is ±∞ or NaN.`, exception,)
             if (exception instanceof ImpossibleOrdinalException)
-                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". The value “${defaultOrdinal}” is negative, over the Number.MAX_VALUE or a floating value.`, exception,)
+                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL”. The value “${defaultOrdinal}” is negative, over the Number.MAX_VALUE or a floating value.`, exception,)
             if (exception instanceof NullReferenceException)
-                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL". The value “${this.instance.name}.${defaultOrdinal}” does not exist.`, exception,)
+                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL”. The value “${this.instance.name}.${defaultOrdinal}” does not exist.`, exception,)
             throw exception
         }
     }
@@ -462,7 +462,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
     protected _isNotInExcludedNames(nameOrOrdinal: string, originalValue: StringOrObject,): void {
         const excludedNames = this._excludedNames
         if (excludedNames.has(nameOrOrdinal,))
-            throw new ForbiddenNameException(`Forbidden name. The char value “${nameOrOrdinal}” is one of the excluded names ${excludedNames.joinToString(", ", '(', ')', null, null, it => `“${it}”`,)}.`, originalValue,)
+            throw new ForbiddenNameException(`Forbidden name. The value “${nameOrOrdinal}” is one of the excluded names ${excludedNames.joinToString(", ", '(', ')', null, null, it => `“${it}”`,)}.`, originalValue,)
     }
 
     //#endregion -------------------- Validation (is not in "excluded names") methods --------------------
@@ -796,30 +796,30 @@ export class CompanionEnum<const ENUM extends Enumerable,
      */
     #throwInvalidCases(value: NonNullable<unknown>, methodCalled: MethodCalledName,): never {
         if (typeof value == "boolean")
-            throw new UnhandledValueException(`A primitive Boolean value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`A primitive Boolean value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
         if (value instanceof Boolean)
-            throw new UnhandledValueException(`A Boolean object value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`A Boolean object value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
         if (typeof value == "symbol")
-            throw new UnhandledValueException(`A primitive Symbol value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`A primitive Symbol value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
         if (value instanceof Symbol)
-            throw new UnhandledValueException(`A Symbol object value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`A Symbol object value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
         if (typeof value == "function")
-            throw new UnhandledValueException(`A primitive Function value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`A primitive Function value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
         if (value instanceof Function)
-            throw new UnhandledValueException(`A Function object value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`A Function object value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
         if (value instanceof RegExp)
-            throw new UnhandledValueException(`A Regex value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`A Regex value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
         if (value instanceof Array)
-            throw new UnhandledValueException(`An Array value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`An Array value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
         if (value instanceof Set)
-            throw new UnhandledValueException(`A Set value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`A Set value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
         if (value instanceof Map)
-            throw new UnhandledValueException(`A Map value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`A Map value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
         if (value instanceof WeakSet)
-            throw new UnhandledValueException(`A WeakSet value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`A WeakSet value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
         if (value instanceof WeakMap)
-            throw new UnhandledValueException(`A WeakMap value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
-        throw new UnhandledValueException(`The value received is not of type String, Number, BigInt or Enumerable. It cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)".`, value,)
+            throw new UnhandledValueException(`A WeakMap value cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
+        throw new UnhandledValueException(`The value received is not of type String, Number, BigInt or Enumerable. It cannot be received in “${this.instance.name}.CompanionEnum.get.${methodCalled}(value)”.`, value,)
     }
 
     //#endregion -------------------- Validation methods --------------------
