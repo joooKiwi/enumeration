@@ -295,6 +295,8 @@ export class CompanionEnum<const ENUM extends Enumerable,
         } catch (exception) {
             if (exception instanceof InvalidEnumerableException)
                 throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT”. The value ${defaultValue} is not a valid instance received by the companion enum.`, exception,)
+            if (exception instanceof NullReferenceException)
+                throw new NullEnumerableException(`Unable to initialize the default value by the “${this.instance.name}.CompanionEnum.get._DEFAULT”. The value ${defaultValue} is not a valid instance received by the companion enum.`, exception,)
             throw exception
         }
     }
