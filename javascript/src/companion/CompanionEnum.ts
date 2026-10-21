@@ -689,7 +689,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @throws NullReferenceException No equivalent value (`===`) was in {@link CompanionEnum.values values}
      */
     protected _getValueFromValues(value: Enumerable,) {
-        const valueFound = this.values.find(it => it === value,)
+        const valueFound = this.values.findFirstOrNull(it => it === value,)
         if (valueFound == null)
             throw new NullReferenceException(`No “${value.name}” could be found on the “${this.instance.name}”.`, value,)
         return valueFound
