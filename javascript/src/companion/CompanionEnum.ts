@@ -132,7 +132,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
         return defaultValue
     }
 
-    public set defaultValue(value: Nullable<PossibleEnumerableValue<ENUM>>,) {
+    public set defaultValue(value: Nullable<| StringOrNumericOrObject | ENUM>,) {
         if (value == null)
             EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = null,)
         else
@@ -866,7 +866,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
     public getValue                                                                                        (nameOrOrdinal: Nullable<StringOrObject>,):                                               ENUM
     public getValue<const INSTANCE extends ENUM, >                                                         (instance: Nullable<INSTANCE>,):                                                          INSTANCE
     public getValue<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM, >(value: Nullable<TemplateOrNumericOrObject<ORDINAL> | StringOrObject<NAME> | INSTANCE>,): | ValueBySpecificOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | ValueBySpecificName<ENUM_CONSTRUCTOR, ENUM, NAME> | INSTANCE | ENUM
-    public getValue(value: Nullable<| StringOrNumericOrObject | ENUM>,): ENUM {
+    public getValue(value: Nullable<| StringOrNumericOrObject | ENUM>,) {
         return this._getValue(value,)
     }
 
@@ -993,7 +993,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
     public getName                                                                                               (nameOrOrdinal: Nullable<StringOrObject>,):                                               NameOf<ENUM>
     public getName<const INSTANCE extends ENUM, >                                                                (instance: Nullable<INSTANCE>,):                                                          NameOf<INSTANCE>
     public getName<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<TemplateOrNumericOrObject<ORDINAL> | StringOrObject<NAME> | INSTANCE>,): | NameByOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | SpecificNameOf<NAME, ENUM> | NameOf<INSTANCE> | NameOf<ENUM>
-    public getName(value: Nullable<| StringOrNumericOrObject | ENUM>,): NameOf<ENUM> {
+    public getName(value: Nullable<| StringOrNumericOrObject | ENUM>,) {
         return this._getName(value,)
     }
 
@@ -1119,7 +1119,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
     public getOrdinal                                                                                               (nameOrOrdinal: Nullable<StringOrObject>,):                                               OrdinalOf<ENUM>
     public getOrdinal<const INSTANCE extends ENUM, >                                                                (instance: Nullable<INSTANCE>,):                                                          OrdinalOf<INSTANCE>
     public getOrdinal<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<TemplateOrNumericOrObject<ORDINAL> | StringOrObject<NAME> | INSTANCE>,): | SpecificOrdinalOf<ORDINAL, ENUM> | OrdinalByName<ENUM_CONSTRUCTOR, ENUM, NAME> | OrdinalOf<INSTANCE> | OrdinalOf<ENUM>
-    public getOrdinal(value: Nullable<| StringOrNumericOrObject | ENUM>,): OrdinalOf<ENUM> {
+    public getOrdinal(value: Nullable<| StringOrNumericOrObject | ENUM>,) {
         return this._getOrdinal(value,)
     }
 
