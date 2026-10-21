@@ -122,8 +122,9 @@ export class CompanionEnum<const ENUM extends Enumerable,
 
 
     public get defaultValue(): ENUM {
-        if (this.#defaultValue === undefined && !EnumConstants.DEFAULT_MAP.has(this,))
-            this.#initializeDefault()
+        if (this.#defaultValue === undefined)
+            if (!EnumConstants.DEFAULT_MAP.has(this,))
+                this.#initializeDefault()
 
         const defaultValue = this.#defaultValue
         if (defaultValue == null)
@@ -151,8 +152,9 @@ export class CompanionEnum<const ENUM extends Enumerable,
 
 
     public get values(): CollectionHolder<ENUM> {
-        if (this.#values === undefined && !EnumConstants.VALUES_MAP.has(this,))
-            this.#initializeMaps()
+        if (this.#values === undefined)
+            if (!EnumConstants.VALUES_MAP.has(this,))
+                this.#initializeMaps()
 
         const values = this.#values
         if (values == null)
@@ -161,8 +163,9 @@ export class CompanionEnum<const ENUM extends Enumerable,
     }
 
     public get names(): CollectionHolder<NameOf<ENUM>> {
-        if (this.#names === undefined && !EnumConstants.NAMES_MAP.has(this,))
-            this.#initializeMaps()
+        if (this.#names === undefined)
+            if (!EnumConstants.NAMES_MAP.has(this,))
+                this.#initializeMaps()
 
         const names = this.#names
         if (names == null)
@@ -171,8 +174,9 @@ export class CompanionEnum<const ENUM extends Enumerable,
     }
 
     public get ordinals(): CollectionHolder<OrdinalOf<ENUM>> {
-        if (this.#ordinals === undefined && !EnumConstants.ORDINALS_MAP.has(this,))
-            this.#initializeMaps()
+        if (this.#ordinals === undefined)
+            if (!EnumConstants.ORDINALS_MAP.has(this,))
+                this.#initializeMaps()
 
         const ordinals = this.#ordinals
         if (ordinals == null)
@@ -287,8 +291,9 @@ export class CompanionEnum<const ENUM extends Enumerable,
         if (defaultValue == null)
             return false
 
-        if (!isEnum(defaultValue,) && !isEnumByStructure(defaultValue,))
-            throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT) was not an Enum or in the structure of an Enumerable.`, defaultValue,)
+        if (!isEnum(defaultValue,))
+            if (!isEnumByStructure(defaultValue,))
+                throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT) was not an Enum or in the structure of an Enumerable.`, defaultValue,)
         try {
             EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByEnumerable(defaultValue,),)
             return true
@@ -316,8 +321,9 @@ export class CompanionEnum<const ENUM extends Enumerable,
         if (defaultName == null)
             return false
 
-        if (typeof defaultName != "string" && !(defaultName instanceof String))
-            throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT_NAME) was not an string (primitive or object).`, defaultName,)
+        if (typeof defaultName != "string")
+            if (!(defaultName instanceof String))
+                throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT_NAME) was not a string (primitive or object).`, defaultName,)
         try {
             if (typeof defaultName == "string")
                 EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByString(defaultName, defaultName,),)
@@ -358,8 +364,11 @@ export class CompanionEnum<const ENUM extends Enumerable,
         if (defaultOrdinal == null)
             return false
 
-        if (typeof defaultOrdinal != "number" && typeof defaultOrdinal != "bigint" && !(defaultOrdinal instanceof Number) && !(defaultOrdinal instanceof BigInt))
-            throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL) was not an number or bigint (primitive or object).`, defaultOrdinal,)
+        if (typeof defaultOrdinal != "number")
+            if (typeof defaultOrdinal != "bigint")
+                if (!(defaultOrdinal instanceof Number))
+                    if (!(defaultOrdinal instanceof BigInt))
+                        throw new UnhandledValueException(`The default value (${this.instance.name}.CompanionEnum.get._DEFAULT_ORDINAL) was not a number or bigint (primitive or object).`, defaultOrdinal,)
         try {
             if (typeof defaultOrdinal == "number")
                 EnumConstants.DEFAULT_MAP.set(this, this.#defaultValue = this._getValueByNumber(defaultOrdinal, defaultOrdinal,),)
