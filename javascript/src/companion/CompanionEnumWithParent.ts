@@ -72,7 +72,7 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
         return super.defaultValue
     }
 
-    public override set defaultValue(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM>) {
+    public override set defaultValue(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM>,) {
         super.defaultValue = value == null ? null : this._getValue(value,)
     }
 
@@ -80,8 +80,8 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
     public override setDefaultValue(value: ImpossibleNames,): never
     public override setDefaultValue(ordinal: Nullable<NumericOrObject>,): this
     public override setDefaultValue(name: Nullable<StringOrObject>,): this
-    public override setDefaultValue(enumerable: Nullable<ENUM>,): this
-    public override setDefaultValue(parentEnumerable: Nullable<PARENT_ENUM>,): this
+    public override setDefaultValue(instance: Nullable<ENUM>,): this
+    public override setDefaultValue(parentInstance: Nullable<PARENT_ENUM>,): this
     public override setDefaultValue(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM>,): this
     public override setDefaultValue(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM>): this {
         this.defaultValue = value

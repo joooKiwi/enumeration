@@ -12,5 +12,5 @@
 
 import type {EnumerableConstructor} from "../EnumerableConstructor"
 
-/** The {@link CompanionEnumDeclaration Companion enum} reference of an {@link EnumerableConstructor} */
+/** The {@link CompanionEnumerable} reference of an {@link EnumerableConstructor} */
 export type CompanionOf<ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any>, > = ENUM_CONSTRUCTOR["CompanionEnum"]["get"]

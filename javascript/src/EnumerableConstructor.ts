@@ -14,13 +14,13 @@ import type {Enumerable}          from "./Enumerable"
 import type {Singleton}           from "./Singleton"
 import type {CompanionEnumerable} from "./companion/CompanionEnumerable"
 
-/** The <i>static</i> {@link Enumerable} definition containing the {@link CompanionEnumDeclaration companion enum} {@link Singleton singleton} field */
+/** The `static` {@link Enumerable} definition containing the {@link CompanionEnumerable} {@link Singleton} field */
 export interface EnumerableConstructor<out ENUMERABLE extends Enumerable,
     out COMPANION_ENUM extends CompanionEnumerable<ENUMERABLE, EnumerableConstructor<ENUMERABLE, COMPANION_ENUM>>, >
     extends Function {
 
     /**
-     * The {@link CompanionEnumDeclaration companion enum} {@link Singleton}
+     * The {@link CompanionEnumerable} {@link Singleton}
      * containing the utility methods for the {@link Enumerable}
      */
     readonly CompanionEnum: Singleton<COMPANION_ENUM>

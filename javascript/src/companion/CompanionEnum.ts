@@ -20,7 +20,6 @@ import type {CompanionEnumerable}                                               
 import type {ImpossibleNames}                                                           from "../type/name"
 import type {NameOf, SpecificNameOf}                                                    from "../type/nameOf"
 import type {OrdinalOf, SpecificOrdinalOf}                                              from "../type/ordinalOf"
-import type {PossibleEnumerableValue, PossibleEnumerableValueBy}                        from "../type/possibleInstance"
 import type {NameByOrdinal, OrdinalByName, ValueBySpecificName, ValueBySpecificOrdinal} from "../type/valueBy"
 import type {CompanionEnumName}                                                         from "../type/toStringTag"
 
@@ -142,11 +141,10 @@ export class CompanionEnum<const ENUM extends Enumerable,
     public setDefaultValue(value: NullOrUndefined,): this
     public setDefaultValue(value: ImpossibleNames,): never
     public setDefaultValue(enumerable: Nullable<ENUM>,): this
-    public setDefaultValue(value: Nullable<PossibleEnumerableValueBy<ENUM>>,): this
-    public setDefaultValue(ordinal: Nullable<NumericOrObject>,): this
+    public setDefaultValue(ordinal: Nullable<TemplateOrNumericOrObject>,): this
     public setDefaultValue(name: Nullable<StringOrObject>,): this
-    public setDefaultValue(value: Nullable<PossibleEnumerableValue<ENUM>>,): this
-    public setDefaultValue(value: Nullable<PossibleEnumerableValue<ENUM>>,): this {
+    public setDefaultValue(value: Nullable<| StringOrNumericOrObject | ENUM>,): this
+    public setDefaultValue(value: Nullable<| StringOrNumericOrObject | ENUM>,) {
         this.defaultValue = value
         return this
     }
@@ -257,8 +255,9 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * are not in the expected type, then an {@link UnhandledValueException} is thrown.
      *
      * @see EnumConstants.DEFAULT_MAP
-     * @throws {NullEnumerableException}
-     * @throws {UnhandledValueException}
+     * @throws NullEnumerableException An exception occurred while retrieving and validating the {@link _DEFAULT}|{@link _DEFAULT_NAME}|{@link _DEFAULT_ORDINAL}
+     * @throws NullEnumerableException The default value could not be initialized
+     * @throws UnhandledValueException The {@link _DEFAULT}|{@link _DEFAULT_NAME}|{@link _DEFAULT_ORDINAL} was an improper type
      */
     #initializeDefault(): void {
         if (this.#initializeDefaultByEnumerable())
@@ -275,8 +274,8 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * Initialize the default value from {@link _DEFAULT}
      *
      * @returns {boolean} The default value has been initialized
-     * @throws {NullEnumerableException}
-     * @throws {UnhandledValueException}
+     * @throws NullEnumerableException An exception occurred while retrieving and validating the {@link _DEFAULT}
+     * @throws UnhandledValueException The default value was an improper type
      */
     #initializeDefaultByEnumerable(): boolean {
         let defaultValue: Nullable<ENUM>
@@ -304,8 +303,8 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * Initialize the default value from {@link _DEFAULT_NAME}
      *
      * @returns {boolean} The default value has been initialized
-     * @throws {NullEnumerableException}
-     * @throws {UnhandledValueException}
+     * @throws NullEnumerableException An exception occurred while retrieving and validating the {@link _DEFAULT_NAME}
+     * @throws UnhandledValueException The default value was an improper type
      */
     #initializeDefaultByName(): boolean {
         let defaultName: Nullable<StringOrObject>
@@ -346,8 +345,8 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * Initialize the default value from {@link _DEFAULT_ORDINAL}
      *
      * @returns {boolean} The default value has been initialized
-     * @throws {NullEnumerableException}
-     * @throws {UnhandledValueException}
+     * @throws NullEnumerableException An exception occurred while retrieving and validating the {@link _DEFAULT_ORDINAL}
+     * @throws UnhandledValueException The default value was an improper type
      */
     #initializeDefaultByOrdinal(): boolean {
         let defaultOrdinal: Nullable<NumericOrObject>
@@ -393,7 +392,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link nameOrOrdinal}
-     * @throws {ForbiddenNumericException}
+     * @throws ForbiddenNumericException The {@link nameOrOrdinal} was either ±∞ or {@link NaN}
      */
     protected _isNotInEdgeCaseNumericByString(nameOrOrdinal: string, originalValue: StringOrObject,): void {
         if (nameOrOrdinal === "NaN")
@@ -410,7 +409,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ForbiddenNumericException}
+     * @throws ForbiddenNumericException The {@link ordinal} was either ±∞ or {@link NaN}
      */
     protected _isNotInEdgeCaseNumericByNumber(ordinal: number, originalValue: NumberOrObject,): void {
         if (Number.isNaN(ordinal,))
@@ -429,7 +428,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link nameOrOrdinal}
-     * @throws {ForbiddenInheritedEnumerableMemberException}
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link nameOrOrdinal} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
      */
     protected _isNotInInheritedEnumerableMembers(nameOrOrdinal: string, originalValue: StringOrObject,): void {
         if (nameOrOrdinal !== "name")
@@ -449,7 +448,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link nameOrOrdinal}
-     * @throws {ForbiddenNameException}
+     * @throws ForbiddenNameException The {@link nameOrOrdinal} was one of the {@link CompanionEnum._EXCLUDED_NAMES excluded names}
      */
     protected _isNotInExcludedNames(nameOrOrdinal: string, originalValue: StringOrObject,): void {
         const excludedNames = this._excludedNames
@@ -465,7 +464,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ImpossibleOrdinalException}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link CompanionEnum.ordinals ordinals}
      */
     protected _isInOrdinalsByString(ordinal: NumberTemplate, originalValue: StringOrObject,): void {
         const ordinals = this.ordinals
@@ -480,7 +479,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
      * @returns number The {@link ordinal}
-     * @throws {ImpossibleOrdinalException}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link CompanionEnum.ordinals ordinals}
      */
     protected _isInOrdinalsByNumber(ordinal: number, originalValue: NumberOrObject,): OrdinalOf<ENUM> {
         const ordinals = this.ordinals
@@ -495,7 +494,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
      * @returns number The converted {@link ordinal} as a {@link Number}
-     * @throws {ImpossibleOrdinalException}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link CompanionEnum.ordinals ordinals}
      */
     protected _isInOrdinalsByBigInt(ordinal: bigint, originalValue: BigIntOrObject,): OrdinalOf<ENUM> {
         const convertedOrdinal = Number(ordinal,)
@@ -513,7 +512,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ImpossibleOrdinalException}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is negative
      */
     protected _isPositiveByString(ordinal: NumberTemplate, originalValue: StringOrObject,): void {
         if (ordinal[0] === '-')
@@ -525,7 +524,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ImpossibleOrdinalException}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is negative
      */
     protected _isPositiveByNumber(ordinal: number, originalValue: NumberOrObject,): void {
         if (ordinal < 0)
@@ -537,7 +536,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ImpossibleOrdinalException}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is negative
      */
     protected _isPositiveByBigInt(ordinal: bigint, originalValue: BigIntOrObject,): void {
         if (ordinal < 0n)
@@ -552,7 +551,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ImpossibleOrdinalException}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
      */
     protected _isNotOverMaxValueByString(ordinal: NumberTemplate, originalValue: StringOrObject,): void {
         if (ordinal.length > 10)
@@ -566,7 +565,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ImpossibleOrdinalException}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
      */
     protected _isNotOverMaxValueByNumber(ordinal: number, originalValue: NumberOrObject,): void {
         if (ordinal > 0b111_1111_1111_1111_1111_1111_1111_1111)
@@ -578,7 +577,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ImpossibleOrdinalException}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_BIG_INT}
      */
     protected _isNotOverMaxValueByBigInt(ordinal: bigint, originalValue: BigIntOrObject,): void {
         if (ordinal > 0b111_1111_1111_1111_1111_1111_1111_1111n)
@@ -593,7 +592,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ImpossibleOrdinalException}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
      */
     protected _isNotAFloatingNumberByString(ordinal: NumberTemplate, originalValue: StringOrObject,): void {
         const size = ordinal.length
@@ -608,7 +607,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ImpossibleOrdinalException}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
      */
     protected _isNotAFloatingNumberByNumber(ordinal: number, originalValue: NumberOrObject,): void {
         if (ordinal % 1 != 0)
@@ -624,8 +623,8 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * for the current {@link instance}
      *
      * @param enumerable The instance to validate
-     * @throws {InvalidEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws InvalidEnumerableException The {@link value} was not an `instanceof` {@link CompanionEnum.instance instance}
+     * @throws NullReferenceException     No equivalent value (`===`) was in {@link CompanionEnum.values values}
      */
     protected _getValidValueByEnumerable(enumerable: Enumerable,): ENUM {
         const instance = this.instance
@@ -657,8 +656,9 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link nameOrOrdinal}
-     * @throws {InvalidInstanceException}
-     * @throws {NullReferenceException}
+     * @throws InvalidInstanceException The value found reflectively was not an `instanceof` the {@link CompanionEnum.instance instance}
+     * @throws NullReferenceException   The value found reflectively was `null`
+     * @throws NullReferenceException   No value exist in the {@link CompanionEnum.instance instance} with the {@link nameOrOrdinal}
      */
     protected _getValueFromReflection(nameOrOrdinal: string, originalValue: StringOrObject,): ENUM {
         const instance = this.instance
@@ -677,7 +677,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {NullReferenceException}
+     * @throws NullReferenceException The {@link ordinal} did not have any association in {@link CompanionEnum.values values}
      */
     protected _getValueFromOrdinals(ordinal: OrdinalOf<ENUM>, originalValue: NumericOrObject,) {
         const valueFound = this.values.getOrNull(ordinal,)
@@ -690,7 +690,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * Get an {@link Enumerable} from the {@link values}
      *
      * @param value The {@link Enumerable} to find
-     * @throws {NullReferenceException}
+     * @throws NullReferenceException No equivalent value (`===`) was in {@link CompanionEnum.values values}
      */
     protected _getValueFromValues(value: Enumerable,) {
         const valueFound = this.values.find(it => it === value,)
@@ -707,10 +707,13 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link nameOrOrdinal}
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link nameOrOrdinal} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link nameOrOrdinal} was one of the {@link CompanionEnum._EXCLUDED_NAMES excluded names}
+     * @throws ForbiddenNumericException                   The {@link nameOrOrdinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is positive
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is over {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} was not one of the {@link CompanionEnum.ordinals ordinals}
      */
     protected _getValidName(nameOrOrdinal: string, originalValue: StringOrObject,): string {
         this._isNotInEdgeCaseNumericByString(nameOrOrdinal, originalValue,)
@@ -742,8 +745,11 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link CompanionEnum.ordinals ordinals}
      */
     protected _getValidOrdinalByNumber(ordinal: number, originalValue: NumberOrObject,): OrdinalOf<ENUM> {
         this._isNotInEdgeCaseNumericByNumber(ordinal, originalValue,)
@@ -758,7 +764,9 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ImpossibleOrdinalException}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over {@link EnumConstants.MAX_VALUE_AS_BIG_INT}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link CompanionEnum.ordinals ordinals}
      */
     protected _getValidOrdinalByBigInt(ordinal: bigint, originalValue: BigIntOrObject,): OrdinalOf<ENUM> {
         this._isPositiveByBigInt(ordinal, originalValue,)
@@ -773,7 +781,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param value The value that is not a {@link String}, {@link Number}, {@link BigInt} or {@link Enumerable}
      * @param methodCalled The method calling it
-     * @throws {UnhandledValueException} An exception with a personalized message depending on the invalid type
+     * @throws UnhandledValueException The {@link value} was an improper type
      *
      * @uniqueToJavascript
      */
@@ -814,7 +822,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * from a {@link getValue} method
      *
      * @param value The value to validate
-     * @throws NullEnumerableException
+     * @throws NullEnumerableException The {@link value} was `null`|`undefined`
      */
     protected _getNonNullValueFromGetValue<const T, >(value: Nullable<T>,): T {
         if (value == null)
@@ -827,7 +835,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * from a {@link getName} method
      *
      * @param value The value to validate
-     * @throws NullEnumerableException
+     * @throws NullEnumerableException The {@link value} was `null`|`undefined`
      */
     protected _getNonNullValueFromGetName<const T, >(value: Nullable<T>,): T {
         if (value == null)
@@ -840,7 +848,7 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * from a {@link getOrdinal} method
      *
      * @param value The value to validate
-     * @throws NullEnumerableException
+     * @throws NullEnumerableException The {@link value} was `null`|`undefined`
      */
     protected _getNonNullValueFromGetOrdinal<const T, >(value: Nullable<T>,): T {
         if (value == null)
@@ -868,22 +876,27 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * Get an {@link Enumerable} by any possible values
      * ({@link String}, {@link Number}, {@link BigInt} or an {@link Enumerable})
      *
-     * <i><b>Note:</b><br/>
-     * This method is only here in order to provide a way to distinguish the type of the value.
-     * It should not be overridden in normal circumstances.</i>
-     *
      * @param value The value to compare and to retrieve the {@link Enumerable instance}
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidEnumerableException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
-     * @throws {UnhandledValueException}
+     * @note This method is only here in order to provide a way to distinguish the type of the value.
+     *       It should not be overridden in normal circumstances.
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link value} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link value} was one of the {@link CompanionEnum._EXCLUDED_NAMES excluded names}
+     * @throws ForbiddenNumericException                   The {@link value} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link value} is positive
+     * @throws ImpossibleOrdinalException                  The {@link value} is over the MAX_VALUE ({@link EnumConstants.MAX_VALUE_AS_NUMBER number} or {@link EnumConstants.MAX_VALUE_AS_BIG_INT bigint})
+     * @throws ImpossibleOrdinalException                  The {@link value} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link value} was not one of the {@link CompanionEnum.ordinals ordinals}
+     * @throws InvalidEnumerableException                  The {@link value} was not an `instanceof` {@link CompanionEnum.instance instance}
+     * @throws InvalidInstanceException                    The {@link value} found reflectively was not an `instanceof` {@link CompanionEnum.instance instance}
+     * @throws NullEnumerableException                     The {@link value} was `null`|`undefined`
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      The {@link value} did not have any association in {@link CompanionEnum.values values}
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnum.instance instance} with the {@link value}
+     * @throws NullReferenceException                      No equivalent value (`===`) was in {@link CompanionEnum.values values}
+     * @throws UnhandledValueException                     The {@link value} was an improper type
      * @readonly
      */
-    protected _getValue(value: Nullable<PossibleEnumerableValue>,): ENUM {
+    protected _getValue(value: Nullable<| StringOrNumericOrObject | Enumerable>,): ENUM {
         value = this._getNonNullValueFromGetValue(value,)
 
         if (typeof value == "string")
@@ -912,8 +925,8 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * Get a valid {@link Enumerable} by an {@link Enumerable}
      *
      * @param enumerable The enumerable to validate
-     * @throws {InvalidEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws InvalidEnumerableException The {@link enumerable} was not an `instanceof` {@link CompanionEnum.instance instance}
+     * @throws NullReferenceException     No equivalent value (`===`) was in {@link CompanionEnum.values values}
      */
     protected _getValueByEnumerable(enumerable: Enumerable,): ENUM {
         return this._getValidValueByEnumerable(enumerable,)
@@ -924,13 +937,16 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param name The name to validate
      * @param originalValue The original {@link name}
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullReferenceException}
-     * @readonly
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link name} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link name} was one of the {@link CompanionEnum._EXCLUDED_NAMES excluded names}
+     * @throws ForbiddenNumericException                   The {@link name} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link name} is positive
+     * @throws ImpossibleOrdinalException                  The {@link name} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException                  The {@link name} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link name} was not one of the {@link CompanionEnum.ordinals ordinals}
+     * @throws InvalidInstanceException                    The {@link value} found reflectively was not an `instanceof` {@link CompanionEnum.instance instance}
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnum.instance instance} with the {@link name}
      */
     protected _getValueByString(name: string, originalValue: StringOrObject,): ENUM {
         return this._getValueFromReflection(this._getValidName(name, originalValue,), originalValue,)
@@ -941,10 +957,12 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The ordinal to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullReferenceException}
-     * @readonly
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link CompanionEnum.ordinals ordinals}
+     * @throws NullReferenceException     The {@link ordinal} did not have any association in {@link CompanionEnum.values values}
      */
     protected _getValueByNumber(ordinal: number, originalValue: NumberOrObject,): ENUM {
         return this._getValueFromOrdinals(this._getValidOrdinalByNumber(ordinal, originalValue,), originalValue,)
@@ -955,9 +973,10 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The ordinal
      * @param originalValue The original {@link ordinal}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullReferenceException}
-     * @readonly
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_BIG_INT}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link CompanionEnum.ordinals ordinals}
+     * @throws NullReferenceException     The {@link ordinal} did not have any association in {@link CompanionEnum.values values}
      */
     protected _getValueByBigInt(ordinal: bigint, originalValue: BigIntOrObject,): ENUM {
         return this._getValueFromOrdinals(this._getValidOrdinalByBigInt(ordinal, originalValue,), originalValue,)
@@ -984,23 +1003,27 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * Get an {@link Enumerable} {@link Enumerable.name name} by any possible values
      * ({@link String}, {@link Number}, {@link BigInt} or an {@link Enumerable})
      *
-     * <i><b>Note:</b><br/>
-     * This method is only here in order to provide a way to distinguish the type of the value.
-     * It should not be overridden in normal circumstances.</i>
-     *
      * @param value The value to compare and to retrieve the {@link Enumerable instance} {@link Enumerable.name name}
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidEnumerableException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
-     * @throws {UnhandledValueException}
+     * @note This method is only here in order to provide a way to distinguish the type of the value.
+     *       It should not be overridden in normal circumstances.
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link value} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link value} was one of the {@link CompanionEnum._EXCLUDED_NAMES excluded names}
+     * @throws ForbiddenNumericException                   The {@link value} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link value} is positive
+     * @throws ImpossibleOrdinalException                  The {@link value} is over the MAX_VALUE ({@link EnumConstants.MAX_VALUE_AS_NUMBER number} or {@link EnumConstants.MAX_VALUE_AS_BIG_INT bigint})
+     * @throws ImpossibleOrdinalException                  The {@link value} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link value} was not one of the {@link CompanionEnum.ordinals ordinals}
+     * @throws InvalidEnumerableException                  The {@link value} was not an `instanceof` {@link CompanionEnum.instance instance}
+     * @throws InvalidInstanceException                    The {@link value} found reflectively was not an `instanceof` {@link CompanionEnum.instance instance}
+     * @throws NullEnumerableException                     The {@link value} was `null`|`undefined`
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      The {@link value} did not have any association in {@link CompanionEnum.values values}
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnum.instance instance} with the {@link value}
+     * @throws NullReferenceException                      No equivalent value (`===`) was in {@link CompanionEnum.values values}
+     * @throws UnhandledValueException                     The {@link value} was an improper type
      * @readonly
      */
-    protected _getName(value: Nullable<PossibleEnumerableValue>,) {
+    protected _getName(value: Nullable<| StringOrNumericOrObject | Enumerable>,) {
         value = this._getNonNullValueFromGetName(value,)
 
         if (typeof value == "string")
@@ -1029,9 +1052,8 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * Get a valid {@link Enumerable.name} by an {@link Enumerable}
      *
      * @param enumerable The {@link Enumerable} to validate
-     * @throws {InvalidEnumerableException}
-     * @throws {NullReferenceException}
-     * @readonly
+     * @throws InvalidEnumerableException The {@link enumerable} was not an `instanceof` {@link CompanionEnum.instance instance}
+     * @throws NullReferenceException     No equivalent value (`===`) was in {@link CompanionEnum.values values}
      */
     protected _getNameByEnumerable(enumerable: Enumerable,): NameOf<ENUM> {
         return this._getValidValueByEnumerable(enumerable,).name
@@ -1042,13 +1064,15 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link nameOrOrdinal}
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullReferenceException}
-     * @readonly
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link nameOrOrdinal} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link nameOrOrdinal} was one of the {@link CompanionEnum._EXCLUDED_NAMES excluded names}
+     * @throws ForbiddenNumericException                   The {@link nameOrOrdinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is positive
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} was not one of the {@link CompanionEnum.ordinals ordinals}
+     * @throws InvalidInstanceException                    The {@link nameOrOrdinal} found reflectively was not an `instanceof` {@link CompanionEnum.instance instance}
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnum.instance instance} with the {@link nameOrOrdinal}
      */
     protected _getNameByString(nameOrOrdinal: string, originalValue: StringOrObject,): NameOf<ENUM> {
         return this._getValueFromReflection(this._getValidName(nameOrOrdinal, originalValue,), originalValue,).name
@@ -1059,10 +1083,12 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullReferenceException}
-     * @readonly
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link CompanionEnum.ordinals ordinals}
+     * @throws NullReferenceException     The {@link ordinal} did not have any association in {@link CompanionEnum.values values}
      */
     protected _getNameByNumber(ordinal: number, originalValue: NumberOrObject,): NameOf<ENUM> {
         return this._getValueFromOrdinals(this._getValidOrdinalByNumber(ordinal, originalValue,), originalValue,).name
@@ -1073,9 +1099,10 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullReferenceException}
-     * @readonly
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_BIG_INT}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link CompanionEnum.ordinals ordinals}
+     * @throws NullReferenceException     The {@link ordinal} did not have any association in {@link CompanionEnum.values values}
      */
     protected _getNameByBigInt(ordinal: bigint, originalValue: BigIntOrObject,): NameOf<ENUM> {
         return this._getValueFromOrdinals(this._getValidOrdinalByBigInt(ordinal, originalValue,), originalValue,).name
@@ -1102,23 +1129,25 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * Get an {@link Enumerable} {@link Enumerable.ordinal ordinal} by any possible values
      * ({@link String}, {@link Number}, {@link BigInt} or an {@link Enumerable}).
      *
-     * <i><b>Note:</b><br/>
-     * This method is only here in order to provide a way to distinguish the type of the value.
-     * It should not be overridden in normal circumstances.</i>
-     *
      * @param value The value to compare and to retrieve the {@link Enumerable instance} {@link Enumerable.ordinal ordinal}
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidEnumerableException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
-     * @throws {UnhandledValueException}
-     * @readonly
+     * @note This method is only here in order to provide a way to distinguish the type of the value.
+     *       It should not be overridden in normal circumstances.
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link value} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link value} was one of the {@link CompanionEnum._EXCLUDED_NAMES excluded names}
+     * @throws ForbiddenNumericException                   The {@link value} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link value} is positive
+     * @throws ImpossibleOrdinalException                  The {@link value} is over the MAX_VALUE ({@link EnumConstants.MAX_VALUE_AS_NUMBER number} or {@link EnumConstants.MAX_VALUE_AS_BIG_INT bigint})
+     * @throws ImpossibleOrdinalException                  The {@link value} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link value} was not one of the {@link CompanionEnum.ordinals ordinals}
+     * @throws InvalidEnumerableException                  The {@link value} was not an `instanceof` {@link CompanionEnum.instance instance}
+     * @throws InvalidInstanceException                    The {@link value} found reflectively was not an `instanceof` {@link CompanionEnum.instance instance}
+     * @throws NullEnumerableException                     The {@link value} was `null`|`undefined`
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnum.instance instance} with the {@link value}
+     * @throws NullReferenceException                      No equivalent value (`===`) was in {@link CompanionEnum.values values}
+     * @throws UnhandledValueException                     The {@link value} was an improper type
      */
-    protected _getOrdinal(value: Nullable<PossibleEnumerableValue>,): OrdinalOf<ENUM> {
+    protected _getOrdinal(value: Nullable<| StringOrNumericOrObject | Enumerable>,): OrdinalOf<ENUM> {
         value = this._getNonNullValueFromGetOrdinal(value,)
 
         if (typeof value == "string")
@@ -1147,9 +1176,8 @@ export class CompanionEnum<const ENUM extends Enumerable,
      * Get a valid {@link Enumerable.ordinal} by an {@link Enumerable}
      *
      * @param enumerable The enumerable to validate
-     * @throws {InvalidEnumerableException}
-     * @throws {NullReferenceException}
-     * @readonly
+     * @throws InvalidEnumerableException The {@link enumerable} was not an `instanceof` {@link CompanionEnum.instance instance}
+     * @throws NullReferenceException     No equivalent value (`===`) was in {@link CompanionEnum.values values}
      */
     protected _getOrdinalByEnumerable(enumerable: Enumerable,): OrdinalOf<ENUM> {
         return this._getValidValueByEnumerable(enumerable,).ordinal
@@ -1160,13 +1188,16 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link nameOrOrdinal}
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullReferenceException}
-     * @readonly
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link nameOrOrdinal} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link nameOrOrdinal} was one of the {@link CompanionEnum._EXCLUDED_NAMES excluded names}
+     * @throws ForbiddenNumericException                   The {@link nameOrOrdinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is positive
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} was not one of the {@link CompanionEnum.ordinals ordinals}
+     * @throws InvalidInstanceException                    The {@link nameOrOrdinal} found reflectively was not an `instanceof` {@link CompanionEnum.instance instance}
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnum.instance instance} with the {@link nameOrOrdinal}
      */
     protected _getOrdinalByString(nameOrOrdinal: string, originalValue: StringOrObject,): OrdinalOf<ENUM> {
         return this._getValueFromReflection(this._getValidName(nameOrOrdinal, originalValue,), originalValue,).ordinal
@@ -1177,9 +1208,11 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @readonly
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link CompanionEnum.ordinals ordinals}
      */
     protected _getOrdinalByNumber(ordinal: number, originalValue: NumberOrObject,): OrdinalOf<ENUM> {
         return this._getValidOrdinalByNumber(ordinal, originalValue,)
@@ -1190,8 +1223,9 @@ export class CompanionEnum<const ENUM extends Enumerable,
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to validate
      * @param originalValue The original {@link ordinal}
-     * @throws {ImpossibleOrdinalException}
-     * @readonly
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_BIG_INT}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link CompanionEnum.ordinals ordinals}
      */
     protected _getOrdinalByBigInt(ordinal: bigint, originalValue: BigIntOrObject,): OrdinalOf<ENUM> {
         return this._getValidOrdinalByBigInt(ordinal, originalValue,)

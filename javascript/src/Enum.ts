@@ -42,7 +42,7 @@ export abstract class Enum<const ORDINAL extends number = number,
     /**
      * Create a new {@link Enum} instance with an {@link Enum.ordinal} defined at the construction.
      *
-     * Note that the use of {@link Enum.#Companion companion} is present so it <b>reflectively</b> set the instance received to <b>this</b>.
+     * Note that the use of `companion` is present so it __reflectively__ set the instance received to `this`.
      */
     protected constructor() {
         Reflect.set(this.#prototypeConstructor = getLastPrototype(this,), this.#ordinal = this.#lastOrdinalPlus1, this,)
@@ -104,10 +104,10 @@ export abstract class Enum<const ORDINAL extends number = number,
     }
 
     /**
-     * Get the {@link Enumerable enumerable} {@link Enumerable.name name}
-     * by using the {@link CompanionEnumDeclaration.values companion values}
+     * Get the {@link Enumerable} {@link Enumerable.name name}
+     * by using the {@link CompanionEnumerable.values companion values}
      *
-     * @throws {NullReferenceException} The current instance was not found in the {@link CompanionEnumDeclaration.values companion values}
+     * @throws NullReferenceException The current instance was not found in the {@link CompanionEnumerable.values companion values}
      */
     get #nameOnCurrentInstance(): NAME {
         const companion = this.#__companion

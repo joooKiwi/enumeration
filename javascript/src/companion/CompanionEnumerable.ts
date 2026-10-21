@@ -10,15 +10,14 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {CollectionHolder, CollectionIterator}                                                                                                      from "@joookiwi/collection"
-import type {Nullable, NullOrUndefined, NumericOrObject, StringOrObject, TemplateOrBigIntOrObject, TemplateOrNumberOrObject, TemplateOrNumericOrObject} from "@joookiwi/type"
+import type {CollectionHolder, CollectionIterator}                                                                                                                                from "@joookiwi/collection"
+import type {Nullable, NullOrUndefined, StringOrNumericOrObject, StringOrObject, TemplateOrBigIntOrObject, TemplateOrNumber, TemplateOrNumberOrObject, TemplateOrNumericOrObject} from "@joookiwi/type"
 
 import type {Enumerable}                                                                from "../Enumerable"
 import type {EnumerableConstructor}                                                     from "../EnumerableConstructor"
 import type {ImpossibleNames}                                                           from "../type/name"
 import type {NameOf, SpecificNameOf}                                                    from "../type/nameOf"
 import type {OrdinalOf, SpecificOrdinalOf}                                              from "../type/ordinalOf"
-import type {PossibleEnumerableValue, PossibleEnumerableValueBy}                        from "../type/possibleInstance"
 import type {CompanionEnumName}                                                         from "../type/toStringTag"
 import type {NameByOrdinal, OrdinalByName, ValueBySpecificName, ValueBySpecificOrdinal} from "../type/valueBy"
 
@@ -33,19 +32,34 @@ export interface CompanionEnumerable<out ENUM extends Enumerable,
     /**
      * Get the default value
      *
-     * @throws {NullEnumerableException}
-     * @throws {UnhandledValueException}
+     * @throws NullEnumerableException An exception occurred while retrieving and validating the `default value`|`default name`|`default ordinal`
+     * @throws NullEnumerableException The default value could not be initialized
+     * @throws UnhandledValueException The `default value`|`default name`|`default ordinal` was an improper type
      */
     get defaultValue(): ENUM
 
     /**
-     * Set the default value by an {@link Enumerable}, {@link Number}, {@link BigInt} or {@link String}
+     * Set the default value by an `ENUM`, {@link Number}, {@link BigInt} or {@link String}.
      *
-     * @param value The value to find ({@link Enumerable}, {@link Number}, {@link BigInt} or {@link String})
+     * If it did receive a `null`|`undefined`, it removes the default value.
+     *
+     * @param value The value to find (`ENUM`, {@link Number}, {@link BigInt} or {@link String})
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link value} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link value} was one of the `excluded name`
+     * @throws ForbiddenNumericException                   The {@link value} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link value} is positive
+     * @throws ImpossibleOrdinalException                  The {@link value} is over the MAX_VALUE ({@link EnumConstants.MAX_VALUE_AS_NUMBER number} or {@link EnumConstants.MAX_VALUE_AS_BIG_INT bigint})
+     * @throws ImpossibleOrdinalException                  The {@link value} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link value} was not one of the {@link #ordinals}
+     * @throws InvalidEnumerableException                  The {@link value} was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws InvalidInstanceException                    The {@link value} found reflectively was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnumerable.instance instance} with the {@link value}
+     * @throws NullReferenceException                      No equivalent value (`===`) was in {@link CompanionEnumerable.values values}
+     * @throws UnhandledValueException                     The {@link value} was an improper type
      * @see setDefaultValue
-     * @removeIfNullReceived
      */
-    set defaultValue(value: Nullable<PossibleEnumerableValue<ENUM>>,)
+    set defaultValue(value: Nullable<| StringOrNumericOrObject | ENUM>,)
 
     /**
      * Remove the default value
@@ -60,53 +74,113 @@ export interface CompanionEnumerable<out ENUM extends Enumerable,
      * or an {@link EnumConstants.ENUMERABLE_WITH_GREAT_GRAND_PARENT_MEMBERS enumerable member name}
      *
      * @param value The edge-case value
-     * @throws {ForbiddenNumericException}
-     * @throws {ForbiddenNameException}
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link value} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link value} was one of the `excluded name`
      * @typescriptDefinition
      */
     setDefaultValue(value: ImpossibleNames,): never
 
     /**
-     * Set the default value by an {@link Enumerable}
+     * Set the default value to `ENUM`.
      *
-     * @param enumerable The current {@link Enumerable}
-     * @removeIfNullReceived
+     * If it did receive a `null`|`undefined`, it removes the default value.
+     *
+     * @param instance The current `ENUM`
+     * @throws InvalidEnumerableException The {@link instance} was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws NullReferenceException     No equivalent value (`===`) was in {@link CompanionEnumerable.values values}
      */
-    setDefaultValue(enumerable: Nullable<ENUM>,): this
+    setDefaultValue(instance: Nullable<ENUM>,): this
 
     /**
-     * Set the default value by an {@link Enumerable}, {@link Number}, {@link BigInt} or {@link String}
+     * Set the default value by a {@link Number} {@link Enumerable.ordinal ordinal} (in a template or directly).
      *
-     * @param value The value to find ({@link Enumerable}, {@link Number}, {@link BigInt} or {@link String})
-     * @removeIfNullReceived
-     * @typescriptDefinition
-     */
-    setDefaultValue(value: Nullable<PossibleEnumerableValueBy<ENUM>>,): this
-
-    /**
-     * Set the default value by an {@link Enumerable}
+     * If it did receive a `null`|`undefined`, it removes the default value.
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find ({@link Number}/{@link BigInt})
-     * @removeIfNullReceived
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
+     * @throws NullReferenceException     The value found reflectively was `null`
+     * @throws NullReferenceException     No value exist in the {@link CompanionEnumerable.instance instance} with the {@link ordinal}
      */
-    setDefaultValue(ordinal: Nullable<NumericOrObject>,): this
+    setDefaultValue(ordinal: Nullable<TemplateOrNumberOrObject>,): this
 
     /**
-     * Set the default value by a {@link String}
+     * Set the default value by a {@link BigInt} {@link Enumerable.ordinal ordinal} (in a template or directly).
+     *
+     * If it did receive a `null`|`undefined`, it removes the default value.
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to find ({@link Number}/{@link BigInt})
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
+     * @throws NullReferenceException     The value found reflectively was `null`
+     * @throws NullReferenceException     No value exist in the {@link CompanionEnumerable.instance instance} with the {@link ordinal}
+     */
+    setDefaultValue(ordinal: Nullable<TemplateOrBigIntOrObject>,): this
+
+    /**
+     * Set the default value by an {@link Number} or {@link BigInt} {@link Enumerable.ordinal ordinal} (in a template or directly).
+     *
+     * If it did receive a `null`|`undefined`, it removes the default value.
+     *
+     * @param ordinal The {@link Enumerable.ordinal ordinal} to find ({@link Number}/{@link BigInt})
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
+     * @throws NullReferenceException     The value found reflectively was `null`
+     * @throws NullReferenceException     No value exist in the {@link CompanionEnumerable.instance instance} with the {@link ordinal}
+     */
+    setDefaultValue(ordinal: Nullable<TemplateOrNumericOrObject>,): this
+
+    /**
+     * Set the default value by a {@link String} {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal}.
+     *
+     * If it did receive a `null`|`undefined`, it removes the default value.
      *
      * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to find
-     * @removeIfNullReceived
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link value} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link value} was one of the `excluded name`
+     * @throws ForbiddenNumericException                   The {@link value} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link value} is positive
+     * @throws ImpossibleOrdinalException                  The {@link value} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException                  The {@link value} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link value} was not one of the {@link #ordinals}
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      No equivalent value (`===`) was in {@link CompanionEnumerable.values values}
      */
     setDefaultValue(nameOrOrdinal: Nullable<StringOrObject>,): this
 
     /**
-     * Set the default value by a {@link Enumerable}, {@link Number}, {@link BigInt} or {@link String}
+     * Set the default value by an `ENUM`, {@link Number}, {@link BigInt} or {@link String}.
      *
-     * @param value The value to find ({@link Enumerable}, {@link Number}, {@link BigInt} or {@link String})
-     * @removeIfNullReceived
+     * If it did receive a `null`|`undefined`, it removes the default value.
+     *
+     * @param value The value to find (`ENUM`, {@link Number}, {@link BigInt} or {@link String})
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link value} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link value} was one of the `excluded name`
+     * @throws ForbiddenNumericException                   The {@link value} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link value} is positive
+     * @throws ImpossibleOrdinalException                  The {@link value} is over the MAX_VALUE ({@link EnumConstants.MAX_VALUE_AS_NUMBER number} or {@link EnumConstants.MAX_VALUE_AS_BIG_INT bigint})
+     * @throws ImpossibleOrdinalException                  The {@link value} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link value} was not one of the {@link #ordinals}
+     * @throws InvalidEnumerableException                  The {@link value} was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws InvalidInstanceException                    The {@link value} found reflectively was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnumerable.instance instance} with the {@link value}
+     * @throws NullReferenceException                      No equivalent value (`===`) was in {@link CompanionEnumerable.values values}
+     * @throws UnhandledValueException                     The {@link value} was an improper type
      * @typescriptDefinition
      */
-    setDefaultValue(value: Nullable<PossibleEnumerableValue<ENUM>>,): this
+    setDefaultValue(value: Nullable<| StringOrNumericOrObject | ENUM>,): this
 
     //#endregion -------------------- Default getter & setter methods --------------------
     //#region -------------------- Values getter methods --------------------
@@ -131,124 +205,157 @@ export interface CompanionEnumerable<out ENUM extends Enumerable,
      * Get nothing because of an impossible value
      *
      * @param value An impossible value
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {NullEnumerableException}
+     * @throws ForbiddenNameException    The {@link value} was one of the `excluded name`
+     * @throws ForbiddenNumericException The {@link value} was either ±∞ or {@link NaN}
+     * @throws NullEnumerableException   The {@link value} was `null`|`undefined`
      * @typescriptDefinition
      */
     getValue(value: Nullable<ImpossibleNames>,): never
 
     /**
-     * Get an {@link Enumerable} by an {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` by an {@link Enumerable.ordinal ordinal}
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link Number})
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
+     * @throws NullReferenceException     The value found reflectively was `null`
+     * @throws NullReferenceException     No value exist in the {@link CompanionEnumerable.instance instance} with the {@link ordinal}
      * @typescriptDefinition
      */
     getValue<const ORDINAL extends number, >(ordinal: Nullable<ORDINAL>,): ValueBySpecificOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
 
     /**
-     * Get an {@link Enumerable} by an {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` by an {@link Enumerable.ordinal ordinal} (in a template or directly)
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link Number} or {@link String} template)
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
+     * @throws NullReferenceException     The value found reflectively was `null`
+     * @throws NullReferenceException     No value exist in the {@link CompanionEnumerable.instance instance} with the {@link ordinal}
      * @typescriptDefinition
      */
-    getValue<const ORDINAL extends number, >(ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,): ValueBySpecificOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
+    getValue<const ORDINAL extends number, >(ordinal: Nullable<TemplateOrNumber<ORDINAL>>,): ValueBySpecificOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
 
     /**
-     * Get an {@link Enumerable} by an {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` by an {@link Enumerable.ordinal ordinal} (in a template or directly)
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link Number} or {@link String} template)
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
+     * @throws NullReferenceException     The value found reflectively was `null`
+     * @throws NullReferenceException     No value exist in the {@link CompanionEnumerable.instance instance} with the {@link ordinal}
      */
     getValue(ordinal: Nullable<TemplateOrNumberOrObject>,): ENUM
 
     /**
-     * Get an {@link Enumerable} by an {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` by an {@link Enumerable.ordinal ordinal} (in a template or directly)
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link BigInt} or {@link String} template)
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_BIG_INT}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
+     * @throws NullReferenceException     The value found reflectively was `null`
+     * @throws NullReferenceException     No value exist in the {@link CompanionEnumerable.instance instance} with the {@link ordinal}
      */
     getValue(ordinal: Nullable<TemplateOrBigIntOrObject>,): ENUM
 
     /**
-     * Get an {@link Enumerable} by an {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` by an {@link Enumerable.ordinal ordinal} (in a template or directly)
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link Number}, {@link BigInt} or {@link String} template)
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the MAX_VALUE ({@link EnumConstants.MAX_VALUE_AS_NUMBER number} or {@link EnumConstants.MAX_VALUE_AS_BIG_INT bigint})
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
+     * @throws NullReferenceException     The value found reflectively was `null`
+     * @throws NullReferenceException     No value exist in the {@link CompanionEnumerable.instance instance} with the {@link ordinal}
      */
     getValue(ordinal: Nullable<TemplateOrNumericOrObject>,): ENUM
 
     /**
-     * Get an {@link Enumerable} by a {@link Enumerable.name name}
+     * Get an `ENUM` by a {@link Enumerable.name name}
      *
      * @param name The {@link Enumerable.name name} to find
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link name} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link name} was one of the `excluded name`
+     * @throws ImpossibleOrdinalException                  The {@link name} is positive
+     * @throws ImpossibleOrdinalException                  The {@link name} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException                  The {@link name} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link name} was not one of the {@link #ordinals}
+     * @throws InvalidInstanceException                    The {@link name} found reflectively was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws NullEnumerableException                     The {@link name} was `null`|`undefined`
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnumerable.instance instance} with the {@link name}
      * @typescriptDefinition
      */
-    getValue<const NAME extends string, >(name: Nullable<StringOrObject<NAME>>,): ValueBySpecificName<ENUM_CONSTRUCTOR, ENUM, NAME>
+    getValue<const NAME extends string, >(name: Nullable<NAME>,): ValueBySpecificName<ENUM_CONSTRUCTOR, ENUM, NAME>
 
     /**
-     * Get an {@link Enumerable} by a {@link Enumerable.name name} or an {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` by a {@link Enumerable.name name} or an {@link Enumerable.ordinal ordinal}
      *
      * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to find
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link nameOrOrdinal} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link nameOrOrdinal} was one of the `excluded name`
+     * @throws ForbiddenNumericException                   The {@link nameOrOrdinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is positive
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} was not one of the {@link #ordinals}
+     * @throws InvalidEnumerableException                  The {@link nameOrOrdinal} was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws InvalidInstanceException                    The {@link nameOrOrdinal} found reflectively was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws NullEnumerableException                     The {@link nameOrOrdinal} was `null`|`undefined`
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnumerable.instance instance} with the {@link nameOrOrdinal}
      */
     getValue(nameOrOrdinal: Nullable<StringOrObject>,): ENUM
 
     /**
-     * Get an {@link Enumerable} directly
+     * Get an instance `ENUM` directly
      *
      * @param instance The instance to find
-     * @throws {InvalidEnumerableException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws InvalidEnumerableException The {@link instance} was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws NullEnumerableException    The {@link instance} was `null`|`undefined`
+     * @throws NullReferenceException     No equivalent value (`===`) was in {@link CompanionEnumerable.values values}
      */
     getValue<const INSTANCE extends ENUM, >(instance: Nullable<INSTANCE>,): INSTANCE
 
     /**
-     * Get an {@link Enumerable instance} by any valid value
-     * ({@link Enumerable}, {@link Enumerable.ordinal ordinal} or {@link Enumerable.name name})
+     * Get an `ENUM` by any valid value
+     * (`ENUM`, {@link Enumerable.ordinal ordinal} or {@link Enumerable.name name})
      *
-     * @param value The value to find ({@link Enumerable}, {@link Number}, {@link BigInt} or {@link String})
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidEnumerableException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @param value The value to find (`ENUM`, {@link Number}, {@link BigInt} or {@link String})
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link value} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link value} was one of the `excluded name`
+     * @throws ForbiddenNumericException                   The {@link value} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link value} is positive
+     * @throws ImpossibleOrdinalException                  The {@link value} is over the MAX_VALUE ({@link EnumConstants.MAX_VALUE_AS_NUMBER number} or {@link EnumConstants.MAX_VALUE_AS_BIG_INT bigint})
+     * @throws ImpossibleOrdinalException                  The {@link value} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link value} was not one of the {@link #ordinals}
+     * @throws InvalidEnumerableException                  The {@link value} was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws InvalidInstanceException                    The {@link value} found reflectively was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws NullEnumerableException                     The {@link value} was `null`|`undefined`
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnumerable.instance instance} with the {@link value}
+     * @throws NullReferenceException                      No equivalent value (`===`) was in {@link CompanionEnumerable.values values}
+     * @throws UnhandledValueException                     The {@link value} was an improper type
      * @typescriptDefinition
      */
-    getValue<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM, >(value: Nullable<| TemplateOrNumericOrObject<ORDINAL> | StringOrObject<NAME> | INSTANCE>,): | ValueBySpecificOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | ValueBySpecificName<ENUM_CONSTRUCTOR, ENUM, NAME> | INSTANCE
+    getValue<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM, >(value: Nullable<| TemplateOrNumber<ORDINAL> | NAME | StringOrNumericOrObject | INSTANCE>,): | ValueBySpecificOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | ValueBySpecificName<ENUM_CONSTRUCTOR, ENUM, NAME> | INSTANCE
 
     //#endregion -------------------- "Get value" methods --------------------
     //#region -------------------- "Get name" methods --------------------
@@ -257,124 +364,151 @@ export interface CompanionEnumerable<out ENUM extends Enumerable,
      * Get nothing because of an impossible value
      *
      * @param value An impossible value
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {NullEnumerableException}
+     * @throws ForbiddenNameException    The {@link value} was one of the `excluded name`
+     * @throws ForbiddenNumericException The {@link value} was either ±∞ or {@link NaN}
+     * @throws NullEnumerableException   The {@link value} was `null`|`undefined`
      * @typescriptdefinition
      */
     getName(value: Nullable<ImpossibleNames>,): never
 
     /**
-     * Get a {@link Enumerable.name name} by an {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` {@link Enumerable.name name} by an {@link Enumerable.ordinal ordinal}
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link Number})
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
      * @typescriptDefinition
      */
     getName<const ORDINAL extends number, >(ordinal: Nullable<ORDINAL>,): NameByOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
 
     /**
-     * Get a {@link Enumerable.name name} by an {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` {@link Enumerable.name name} by an {@link Enumerable.ordinal ordinal} (in a template or directly)
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link Number} or {@link String} template)
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the MAX_VALUE ({@link EnumConstants.MAX_VALUE_AS_NUMBER number} or {@link EnumConstants.MAX_VALUE_AS_BIG_INT bigint})
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
+     * @throws NullReferenceException     The {@link ordinal} did not have any association in {@link CompanionEnumerable.values values}
      * @typescriptDefinition
      */
-    getName<const ORDINAL extends number, >(ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,): NameByOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
+    getName<const ORDINAL extends number, >(ordinal: Nullable<TemplateOrNumber<ORDINAL>>,): NameByOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
 
     /**
-     * Get a {@link Enumerable.name name} by an {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` {@link Enumerable.name name} by an {@link Enumerable.ordinal ordinal} (in a template or directly)
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link Number} or {@link String} template)
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the MAX_VALUE ({@link EnumConstants.MAX_VALUE_AS_NUMBER number} or {@link EnumConstants.MAX_VALUE_AS_BIG_INT bigint})
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
+     * @throws NullReferenceException     The {@link ordinal} did not have any association in {@link CompanionEnumerable.values values}
      */
     getName(ordinal: Nullable<TemplateOrNumberOrObject>,): NameOf<ENUM>
 
     /**
-     * Get a {@link Enumerable.name name} by an {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` {@link Enumerable.name name} by an {@link Enumerable.ordinal ordinal} (in a template or directly)
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link BigInt} or {@link String} template)
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_BIG_INT}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
+     * @throws NullReferenceException     The {@link ordinal} did not have any association in {@link CompanionEnumerable.values values}
      */
     getName(ordinal: Nullable<TemplateOrBigIntOrObject>,): NameOf<ENUM>
 
     /**
-     * Get a {@link Enumerable.name name} by an {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` {@link Enumerable.name name} by an {@link Enumerable.ordinal ordinal} (in a template or directly)
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link Number}, {@link BigInt} or {@link String} template)
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the MAX_VALUE ({@link EnumConstants.MAX_VALUE_AS_NUMBER number} or {@link EnumConstants.MAX_VALUE_AS_BIG_INT bigint})
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
+     * @throws NullReferenceException     The {@link ordinal} did not have any association in {@link CompanionEnumerable.values values}
      */
     getName(ordinal: Nullable<TemplateOrNumericOrObject>,): NameOf<ENUM>
 
     /**
-     * Get the {@link Enumerable.name name} by a {@link Enumerable.name name}
+     * Get an `ENUM` {@link Enumerable.name name} by a {@link Enumerable.name name}
      *
      * @param name The {@link Enumerable.name name} to find
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link name} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link name} was one of the `excluded name`
+     * @throws ImpossibleOrdinalException                  The {@link name} is positive
+     * @throws ImpossibleOrdinalException                  The {@link name} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException                  The {@link name} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link name} was not one of the {@link #ordinals}
+     * @throws InvalidInstanceException                    The {@link name} found reflectively was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws NullEnumerableException                     The {@link name} was `null`|`undefined`
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnumerable.instance instance} with the {@link name}
      * @typescriptDefinition
      */
-    getName<const NAME extends string, >(name: Nullable<StringOrObject<NAME>>,): SpecificNameOf<NAME, ENUM>
+    getName<const NAME extends string, >(name: Nullable<NAME>,): SpecificNameOf<NAME, ENUM>
 
     /**
-     * Get the {@link Enumerable.name name} by a {@link Enumerable.name name} or an {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` {@link Enumerable.name name} by a {@link Enumerable.name name} or an {@link Enumerable.ordinal ordinal}
      *
      * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to find
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link nameOrOrdinal} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link nameOrOrdinal} was one of the `excluded name`
+     * @throws ForbiddenNumericException                   The {@link nameOrOrdinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is positive
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} was not one of the {@link #ordinals}
+     * @throws InvalidInstanceException                    The {@link nameOrOrdinal} found reflectively was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws NullEnumerableException                     The {@link nameOrOrdinal} was `null`|`undefined`
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnumerable.instance instance} with the {@link nameOrOrdinal}
      */
     getName(nameOrOrdinal: Nullable<StringOrObject>,): NameOf<ENUM>
 
     /**
-     * Get the {@link Enumerable.name name} by the {@link Enumerable} directly
+     * Get an `ENUM` {@link Enumerable.name name} directly
      *
      * @param instance The instance to find
-     * @throws {InvalidEnumerableException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws InvalidEnumerableException The {@link instance} was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws NullEnumerableException    The {@link instance} was `null`|`undefined`
+     * @throws NullReferenceException     No equivalent value (`===`) was in {@link CompanionEnumerable.values values}
      */
     getName<const INSTANCE extends ENUM, >(instance: Nullable<INSTANCE>,): NameOf<INSTANCE>
 
     /**
-     * Get the {@link Enumerable.name name} from any valid value
-     * ({@link Enumerable}, {@link Enumerable.ordinal ordinal} or {@link Enumerable.name name})
+     * Get an `ENUM` {@link Enumerable.name name} from any valid value
+     * (`ENUM`, {@link Enumerable.ordinal ordinal} or {@link Enumerable.name name})
      *
-     * @param value The value to find ({@link Enumerable}, {@link Number}, {@link BigInt} or {@link String})
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidEnumerableException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @param value The value to find (`ENUM`, {@link Number}, {@link BigInt} or {@link String})
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link value} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link value} was one of the `excluded name`
+     * @throws ForbiddenNumericException                   The {@link value} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link value} is positive
+     * @throws ImpossibleOrdinalException                  The {@link value} is over the MAX_VALUE ({@link EnumConstants.MAX_VALUE_AS_NUMBER number} or {@link EnumConstants.MAX_VALUE_AS_BIG_INT bigint})
+     * @throws ImpossibleOrdinalException                  The {@link value} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link value} was not one of the {@link #ordinals}
+     * @throws InvalidEnumerableException                  The {@link value} was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws InvalidInstanceException                    The {@link value} found reflectively was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws NullEnumerableException                     The {@link value} was `null`|`undefined`
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      The {@link value} did not have any association in {@link CompanionEnumerable.values values}
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnumerable.instance instance} with the {@link value}
+     * @throws NullReferenceException                      No equivalent value (`===`) was in {@link CompanionEnumerable.values values}
+     * @throws UnhandledValueException                     The {@link value} was an improper type
      * @typescriptDefinition
      */
-    getName<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<| TemplateOrNumericOrObject<ORDINAL> | StringOrObject<NAME> | INSTANCE>,): | NameByOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | SpecificNameOf<NAME, ENUM> | NameOf<INSTANCE>
+    getName<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<| TemplateOrNumber<ORDINAL> | NAME | StringOrNumericOrObject | INSTANCE>,): | NameByOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | SpecificNameOf<NAME, ENUM> | NameOf<INSTANCE>
 
     //#endregion -------------------- "Get name" methods --------------------
     //#region -------------------- "Get ordinal" methods --------------------
@@ -383,121 +517,149 @@ export interface CompanionEnumerable<out ENUM extends Enumerable,
      * Get nothing because of an impossible value
      *
      * @param value An impossible value
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {NullEnumerableException}
+     * @throws ForbiddenNameException    The {@link value} was one of the `excluded name`
+     * @throws ForbiddenNumericException The {@link value} was either ±∞ or {@link NaN}
+     * @throws NullEnumerableException   The {@link value} was `null`|`undefined`
      * @typescriptDefinition
      */
     getOrdinal(value: Nullable<ImpossibleNames>,): never
 
     /**
-     * Get the {@link Enumerable.ordinal ordinal} by an {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` {@link Enumerable.ordinal ordinal} by an {@link Enumerable.ordinal ordinal}
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link Number})
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullEnumerableException}
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
      * @typescriptDefinition
      */
     getOrdinal<const ORDINAL extends number, >(ordinal: Nullable<ORDINAL>,): SpecificOrdinalOf<ORDINAL, ENUM>
 
     /**
-     * Get the {@link Enumerable.ordinal ordinal} by an {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` {@link Enumerable.ordinal ordinal} by an {@link Enumerable.ordinal ordinal} (in a template or directly)
      *
      * @param ordinal The ordinal to find (as a {@link String} template form)
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullEnumerableException}
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
      * @typescriptDefinition
      */
-    getOrdinal<const ORDINAL extends number, >(ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,): SpecificOrdinalOf<ORDINAL, ENUM>
+    getOrdinal<const ORDINAL extends number, >(ordinal: Nullable<TemplateOrNumber<ORDINAL>>,): SpecificOrdinalOf<ORDINAL, ENUM>
 
     /**
-     * Get the {@link Enumerable.ordinal ordinal} by a {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` {@link Enumerable.ordinal ordinal} by a {@link Enumerable.ordinal ordinal} (in a template or directly)
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link Number} or {@link String} template)
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullEnumerableException}
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
      * @typescriptDefinition
      */
     getOrdinal(ordinal: Nullable<TemplateOrNumberOrObject>,): OrdinalOf<ENUM>
 
     /**
-     * Get the {@link Enumerable.ordinal ordinal} by a {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` {@link Enumerable.ordinal ordinal} by a {@link Enumerable.ordinal ordinal} (in a template or directly)
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link BigInt} or {@link String} template)
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullEnumerableException}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the {@link EnumConstants.MAX_VALUE_AS_BIG_INT}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
      * @typescriptDefinition
      */
     getOrdinal(ordinal: Nullable<TemplateOrBigIntOrObject>,): OrdinalOf<ENUM>
 
     /**
-     * Get the {@link Enumerable.ordinal ordinal} by a {@link Enumerable.ordinal ordinal}
+     * Get an `ENUM` {@link Enumerable.ordinal ordinal} by a {@link Enumerable.ordinal ordinal} (in a template or directly)
      *
      * @param ordinal The {@link Enumerable.ordinal ordinal} to find (as a {@link Number}, {@link BigInt} or {@link String} template)
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {NullEnumerableException}
+     * @throws ForbiddenNumericException  The {@link ordinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException The {@link ordinal} is positive
+     * @throws ImpossibleOrdinalException The {@link ordinal} is over the MAX_VALUE ({@link EnumConstants.MAX_VALUE_AS_NUMBER number} or {@link EnumConstants.MAX_VALUE_AS_BIG_INT bigint})
+     * @throws ImpossibleOrdinalException The {@link ordinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException The {@link ordinal} was not one of the {@link #ordinals}
+     * @throws NullEnumerableException    The {@link ordinal} was `null`|`undefined`
      * @typescriptDefinition
      */
     getOrdinal(ordinal: Nullable<TemplateOrNumericOrObject>,): OrdinalOf<ENUM>
 
     /**
-     * Get the {@link Enumerable.ordinal ordinal} by a {@link Enumerable.name name}
+     * Get an `ENUM` {@link Enumerable.ordinal ordinal} by a {@link Enumerable.name name}
      *
      * @param name The {@link Enumerable.name name} to find
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link name} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link name} was one of the `excluded name`
+     * @throws ForbiddenNumericException                   The {@link name} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link name} is positive
+     * @throws ImpossibleOrdinalException                  The {@link name} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException                  The {@link name} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link name} was not one of the {@link #ordinals}
+     * @throws InvalidInstanceException                    The {@link name} found reflectively was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws NullEnumerableException                     The {@link name} was `null`|`undefined`
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnumerable.instance instance} with the {@link name}
      */
-    getOrdinal<const NAME extends string, >(name: Nullable<StringOrObject<NAME>>,): OrdinalByName<ENUM_CONSTRUCTOR, ENUM, NAME>
+    getOrdinal<const NAME extends string, >(name: Nullable<NAME>,): OrdinalByName<ENUM_CONSTRUCTOR, ENUM, NAME>
 
     /**
-     * Get the {@link Enumerable.ordinal ordinal} by a {@link Enumerable.name name}
+     * Get an `ENUM` {@link Enumerable.ordinal ordinal} by a {@link Enumerable.name name}
      *
      * @param nameOrOrdinal The {@link Enumerable.name name} or {@link Enumerable.ordinal ordinal} to find
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNameException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link nameOrOrdinal} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link nameOrOrdinal} was one of the `excluded name`
+     * @throws ForbiddenNumericException                   The {@link nameOrOrdinal} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is positive
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is over the {@link EnumConstants.MAX_VALUE_AS_NUMBER}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link nameOrOrdinal} was not one of the {@link #ordinals}
+     * @throws InvalidInstanceException                    The {@link nameOrOrdinal} found reflectively was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws NullEnumerableException                     The {@link nameOrOrdinal} was `null`|`undefined`
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnumerable.instance instance} with the {@link nameOrOrdinal}
      */
     getOrdinal(nameOrOrdinal: Nullable<StringOrObject>,): OrdinalOf<ENUM>
 
     /**
-     * Get the {@link Enumerable.ordinal ordinal} by an {@link Enumerable} directly
+     * Get an `ENUM` {@link Enumerable.ordinal ordinal} directly
      *
      * @param instance The instance to find
-     * @throws {InvalidEnumerableException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @throws InvalidEnumerableException The {@link instance} was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws NullEnumerableException    The {@link instance} was `null`|`undefined`
+     * @throws NullReferenceException     No equivalent value (`===`) was in {@link CompanionEnumerable.values values}
      */
     getOrdinal<const INSTANCE extends ENUM, >(instance: Nullable<INSTANCE>,): OrdinalOf<INSTANCE>
 
     /**
-     * Get the {@link Enumerable.ordinal ordinal} from any valid value
-     * ({@link Enumerable.ordinal ordinal}, {@link Enumerable.name name} or {@link Enumerable instance})
+     * Get an `ENUM` {@link Enumerable.ordinal ordinal} from any valid value
+     * (`ENUM`, {@link Enumerable.ordinal ordinal} or {@link Enumerable.name name})
      *
-     * @param value The value to find ({@link Enumerable}, {@link Number}, {@link BigInt} or {@link String})
-     * @throws {ForbiddenInheritedEnumerableMemberException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ForbiddenNumericException}
-     * @throws {ImpossibleOrdinalException}
-     * @throws {InvalidEnumerableException}
-     * @throws {InvalidInstanceException}
-     * @throws {NullEnumerableException}
-     * @throws {NullReferenceException}
+     * @param value The value to find (`ENUM`, {@link Number}, {@link BigInt} or {@link String})
+     * @throws ForbiddenInheritedEnumerableMemberException The {@link value} was either `name`, `ordinal`, `parent`, `grandParent` or `greatGrandParent`
+     * @throws ForbiddenNameException                      The {@link value} was one of the `excluded name`
+     * @throws ForbiddenNumericException                   The {@link value} was either ±∞ or {@link NaN}
+     * @throws ImpossibleOrdinalException                  The {@link value} is positive
+     * @throws ImpossibleOrdinalException                  The {@link value} is over the MAX_VALUE ({@link EnumConstants.MAX_VALUE_AS_NUMBER number} or {@link EnumConstants.MAX_VALUE_AS_BIG_INT bigint})
+     * @throws ImpossibleOrdinalException                  The {@link value} is a floating {@link Number}
+     * @throws ImpossibleOrdinalException                  The {@link value} was not one of the {@link #ordinals}
+     * @throws InvalidEnumerableException                  The {@link value} was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws InvalidInstanceException                    The {@link value} found reflectively was not an `instanceof` {@link CompanionEnumerable.instance instance}
+     * @throws NullEnumerableException                     The {@link value} was `null`|`undefined`
+     * @throws NullReferenceException                      The value found reflectively was `null`
+     * @throws NullReferenceException                      No value exist in the {@link CompanionEnumerable.instance instance} with the {@link value}
+     * @throws NullReferenceException                      No equivalent value (`===`) was in {@link CompanionEnumerable.values values}
+     * @throws UnhandledValueException                     The {@link value} was an improper type
      * @typescriptDefinition
      */
-    getOrdinal<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<| TemplateOrNumericOrObject<ORDINAL> | StringOrObject<NAME> | INSTANCE>,): | SpecificOrdinalOf<ORDINAL, ENUM> | OrdinalByName<ENUM_CONSTRUCTOR, ENUM, NAME> | OrdinalOf<INSTANCE>
+    getOrdinal<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM = ENUM, >(value: Nullable<| TemplateOrNumber<ORDINAL> | NAME | StringOrNumericOrObject | INSTANCE>,): | SpecificOrdinalOf<ORDINAL, ENUM> | OrdinalByName<ENUM_CONSTRUCTOR, ENUM, NAME> | OrdinalOf<INSTANCE>
 
     //#endregion -------------------- "Get ordinal" methods --------------------
 
@@ -505,7 +667,7 @@ export interface CompanionEnumerable<out ENUM extends Enumerable,
     [Symbol.iterator](): CollectionIterator<ENUM>
 
     /**
-     * An output for the call from {@link Object.prototype.toString.call} [object CompanionEnum] instead of [object Object]
+     * An output for the call from {@link Object.prototype.toString.call} [object CompanionEnumerable] instead of [object Object]
      *
      * @see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toStringTag
      */
