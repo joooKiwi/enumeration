@@ -12,11 +12,12 @@
 
 import type {PossibleEdgeCaseNumericName} from "@joookiwi/type"
 
-import type {PossibleEnumerableMembers} from "./possibleInstance"
-
 /**
  * Every possible string that throws an {@link ForbiddenNameException}
  * when being retrieving in a {@link CompanionEnumerable}
+ *
+ * @see PossibleEdgeCaseNumericName
+ * @see PossibleEnumerableMembers
  */
 export type ImpossibleNames = | PossibleEdgeCaseNumericName
-                              | Exclude<PossibleEnumerableMembers, typeof Symbol["toStringTag" | "toPrimitive"] | "[Symbol.toStringTag]" | "[Symbol.toPrimitive]" | "toStringTag" | "toPrimitive">
+                              | "name" | "ordinal" | "parent" | "grandParent" | "greatGrandParent"
