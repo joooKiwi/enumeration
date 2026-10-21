@@ -10,7 +10,7 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {BigIntOrObject, Nullable, NumberOrObject, StringOrObject} from "@joookiwi/type"
+import type {BigIntOrObject, Nullable, StringOrNumericOrObject} from "@joookiwi/type"
 
 import type {Enumerable}                              from "../Enumerable"
 import type {EnumerableConstructor}                   from "../EnumerableConstructor"
@@ -50,21 +50,30 @@ export type PossibleEnumerableInstance<ENUMERABLE extends Enumerable = Enumerabl
     | CompanionEnumerableWithGreatGrandParent<any, any, any, any, any, any, ENUMERABLE, any>
     | EnumerableConstructor<ENUMERABLE, CompanionEnumerableType<ENUMERABLE>>
 
-/** A general {@link Enumerable} type possibility */
-export type PossibleEnumerableValue<ENUM extends Enumerable = Enumerable, ORDINAL extends number = number, NAME extends string = string, > =
-    | StringOrObject<NAME> | NumberOrObject<ORDINAL> | BigIntOrObject | ENUM
-/** A strict {@link Enumerable} type possibility */
-export type PossibleEnumerableValueBy<ENUM extends Enumerable, >
-    = | StringOrObject<NameOf<ENUM>> | NumberOrObject<OrdinalOf<ENUM>> | BigIntOrObject | ENUM
+/**
+ * A type possibility for an {@link Enumerable}, {@link String}, {@link Number} or {@link BigInt} (object or primitive)
+ *
+ * @see StrictEnumerableOrStringOrNumericOrObject
+ */
+export type EnumerableOrStringOrNumericOrObject<ENUM extends Enumerable = Enumerable, > =
+    | StringOrNumericOrObject | ENUM
+/**
+ * A strict type possibility for an {@link Enumerable}, {@link Enumerable.name name}, {@link Enumerable.ordinal ordinal},
+ * {@link String}, {@link Number} or {@link BigInt} object
+ *
+ * @see EnumerableOrStringOrNumericOrObject
+ */
+export type StrictEnumerableOrStringOrNumericOrObject<ENUM extends Enumerable, >
+    = | NameOf<ENUM> | String | OrdinalOf<ENUM> | Number | BigIntOrObject | ENUM
 
 /**
  * A type of {@link Enumerable} by its value or its {@link Enumerable.name name} (object or primitive)
  * via the {@link Nullable} value itself or a callback returning the {@link Nullable} value
  */
-export type PossibleEnumerableValueOrNameByValue<T extends Enumerable = Enumerable, > = Nullable<| T | StringOrObject<NameOf<T>> | PossibleEnumSymbol>
+export type PossibleEnumerableValueOrNameByValue<T extends Enumerable = Enumerable, > = Nullable<| T | NameOf<T> | String | PossibleEnumSymbol>
 
 /**
  * A type of {@link Enumerable} by its value or its {@link Enumerable.name name} (object or primitive)
  * via the {@link Nullable} value itself or a callback returning the {@link Nullable} value
  */
-export type PossibleEnumerableValueOrNameByValueOrCallback<T extends Enumerable = Enumerable, > = Nullable<| T | StringOrObject<NameOf<T>> | PossibleEnumSymbol | (() => Nullable<T | StringOrObject<NameOf<T>> | PossibleEnumSymbol>)>
+export type PossibleEnumerableValueOrNameByValueOrCallback<T extends Enumerable = Enumerable, > = Nullable<| T | NameOf<T> | String | PossibleEnumSymbol | (() => Nullable<T | NameOf<T> | String | PossibleEnumSymbol>)>

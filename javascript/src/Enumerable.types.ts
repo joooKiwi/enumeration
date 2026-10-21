@@ -120,14 +120,14 @@ export type PossibleEnumerableMembers = | keyof Enumerable
 /**
  * A general {@link Enumerable} type possibility
  *
- * @deprecated Replace with the same type in @joookiwi/enumerable/type/possibleInstance" instead. This will be removed in version 3.14.
+ * @deprecated Replace with the same type in {@link EnumerableOrStringOrNumericOrObject} instead. This will be removed in version 3.14.
  */
 export type PossibleEnumerableValue<ENUM extends Enumerable = Enumerable, ORDINAL extends number = number, NAME extends string = string, > =
     | StringOrObject<NAME> | NumberOrObject<ORDINAL> | BigIntOrObject | ENUM
 /**
  * A strict {@link Enumerable} type possibility
  *
- * @deprecated Replace with the same type in @joookiwi/enumerable/type/possibleInstance" instead. This will be removed in version 3.14.
+ * @deprecated Replace with the same type in {@link StrictEnumerableOrStringOrNumericOrObject} instead. This will be removed in version 3.14.
  */
 export type PossibleEnumerableValueBy<ENUM extends Enumerable, >
     = | StringOrObject<ENUM["name"]> | NumberOrObject<ENUM["ordinal"]> | BigIntOrObject | ENUM
