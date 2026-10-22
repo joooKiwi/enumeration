@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CompanionEnumWithGrandParent" type="JavaScriptTestRunnerVitest" folderName="companions">
+    <node-interpreter value="project" />
+    <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
+    <working-dir value="$PROJECT_DIR$" />
+    <envs />
+    <scope-kind value="SUITE" />
+    <test-file value="$PROJECT_DIR$/test/companion.03 - CompanionEnumWithGrandParent.test.ts" />
+    <test-names>
+      <test-name value="companionTests (CompanionEnumWithGrandParent)" />
+    </test-names>
+    <method v="2" />
+  </configuration>
+</component>

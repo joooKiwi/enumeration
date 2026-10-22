@@ -29,8 +29,8 @@ export class InvalidHintException<const HINT extends string,
                ExceptionWithNullableCause<CAUSE> {
 
     public override readonly name = this.constructor.name
-    readonly #value
-    readonly #cause
+    readonly #value: HINT
+    readonly #cause: NullOr<CAUSE>
 
     public constructor(message: string, value: HINT, cause?: Nullable<CAUSE>,) {
         super(message,)

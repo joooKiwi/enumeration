@@ -15,7 +15,7 @@ import type {Nullable, NullOr} from "@joookiwi/type"
 import type {ExceptionWithNullableCause} from "./declaration/ExceptionWithNullableCause"
 
 /**
- * An {@link Enumerable} was expected to not be <b>null</b>
+ * An {@link Enumerable} was expected to not be `null`
  *
  * @see https://docs.oracle.com/en/java/javase/22/docs/api/java.base/java/lang/NullPointerException.html Java NullPointerException
  * @see https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-null-pointer-exception Kotlin NullPointerException
@@ -26,7 +26,7 @@ export class NullEnumerableException<const CAUSE extends Error = never, >
     implements ExceptionWithNullableCause<CAUSE> {
 
     public override readonly name = this.constructor.name
-    readonly #cause
+    readonly #cause: NullOr<CAUSE>
 
     public constructor(message: string, cause?: Nullable<CAUSE>,) {
         super(message,)

@@ -31,8 +31,8 @@ export class ImpossibleOrdinalException<const T extends StringOrNumericOrObject,
                ExceptionWithNullableCause<CAUSE> {
 
     public override readonly name = this.constructor.name
-    readonly #value
-    readonly #cause
+    readonly #value: T
+    readonly #cause: NullOr<CAUSE>
 
     public constructor(message: string, value: T, cause?: Nullable<CAUSE>,) {
         super(message,)

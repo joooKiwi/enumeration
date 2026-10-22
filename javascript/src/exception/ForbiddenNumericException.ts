@@ -25,16 +25,16 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
  * @see https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception C# ArgumentOutOfRangeException
  */
 export class ForbiddenNumericException<const T extends StringOrNumericOrObject,
-    const ERROR extends Error = never, >
+    const CAUSE extends Error = never, >
     extends ReferenceError
     implements ExceptionWithValue<T>,
-               ExceptionWithNullableCause<ERROR> {
+               ExceptionWithNullableCause<CAUSE> {
 
     public override readonly name = this.constructor.name
-    readonly #value
-    readonly #cause
+    readonly #value: T
+    readonly #cause: NullOr<CAUSE>
 
-    public constructor(message: string, value: T, cause?: Nullable<ERROR>,) {
+    public constructor(message: string, value: T, cause?: Nullable<CAUSE>,) {
         super(message,)
         this.#value = value
         this.#cause = cause ?? null
@@ -48,7 +48,7 @@ export class ForbiddenNumericException<const T extends StringOrNumericOrObject,
         return this.#value
     }
 
-    public override get cause(): NullOr<ERROR> {
+    public override get cause(): NullOr<CAUSE> {
         return this.#cause
     }
 

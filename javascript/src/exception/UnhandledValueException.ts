@@ -17,8 +17,8 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
 
 /**
  * An {@link Error exception} made to tell that the type received by
- * {@link CompanionEnumDeclaration.getValue getValue}, {@link CompanionEnumDeclaration.getName getName}
- * and {@link CompanionEnumDeclaration.getOrdinal getOrdinal}
+ * {@link CompanionEnumerable.getValue getValue}, {@link CompanionEnumerable.getName getName}
+ * and {@link CompanionEnumerable.getOrdinal getOrdinal}
  * that the value received was not a {@link String}, {@link Number}, {@link BigInt} or {@link Enumerable}
  *
  * @see https://docs.oracle.com/en/java/javase/22/docs/api/java.base/java/lang/ClassCastException.html Java ClassCastException
@@ -33,8 +33,8 @@ export class UnhandledValueException<const T extends NonNullable<unknown>,
                ExceptionWithNullableCause<CAUSE> {
 
     public override readonly name = this.constructor.name
-    readonly #value
-    readonly #cause
+    readonly #value: T
+    readonly #cause: NullOr<CAUSE>
 
     public constructor(message: string, value: T, cause?: Nullable<CAUSE>,) {
         super(message,)

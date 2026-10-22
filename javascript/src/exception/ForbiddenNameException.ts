@@ -17,7 +17,7 @@ import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
 
 
 /**
- * An exception to tell that the value was an {@link CompanionEnum._EXCLUDED_NAMES excluded name}
+ * An exception to tell that the value was a {@link CompanionEnum._EXCLUDED_NAMES excluded name}
  * or an impossible {@link String name}
  * in a {@link CompanionEnum}
  *
@@ -33,8 +33,8 @@ export class ForbiddenNameException<const T extends StringOrObject,
                ExceptionWithNullableCause<CAUSE> {
 
     public override readonly name = this.constructor.name
-    readonly #value
-    readonly #cause
+    readonly #value: T
+    readonly #cause: NullOr<CAUSE>
 
     public constructor(message: string, value: T, cause?: Nullable<CAUSE>,) {
         super(message,)

@@ -16,7 +16,7 @@ import type {ExceptionWithNullableCause} from "./declaration/ExceptionWithNullab
 import type {ExceptionWithValue}         from "./declaration/ExceptionWithValue"
 
 /**
- * The {@link value reference to retrieve} was not expected to be <b>null</b>
+ * The {@link value reference to retrieve} was not expected to be `null`
  *
  * @see https://docs.oracle.com/en/java/javase/22/docs/api/java.base/java/lang/NullPointerException.html Java NullPointerException
  * @see https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-null-pointer-exception Kotlin NullPointerException
@@ -29,8 +29,8 @@ export class NullReferenceException<const T,
                ExceptionWithNullableCause<CAUSE> {
 
     public override readonly name = this.constructor.name
-    readonly #value
-    readonly #cause
+    readonly #value: T
+    readonly #cause: NullOr<CAUSE>
 
     public constructor(message: string, value: T, cause?: Nullable<CAUSE>,) {
         super(message,)
@@ -38,7 +38,7 @@ export class NullReferenceException<const T,
         this.#cause = cause ?? null
     }
 
-    /** The value that had a <b>null</b> reference or could not be found by something */
+    /** The value that had a `null` reference or could not be found by something */
     public get value(): T {
         return this.#value
     }

@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2024",
     "esModuleInterop": true,
     "lib": [
       "DOM",
       "ESNext",
     ],
+    "types": ["node",],
     "noErrorTruncation": true,
     "pretty": true,
 
@@ -38,7 +39,14 @@
     "isolatedModules": true,
     "sourceMap": true,
     "declaration": false,
+    "rootDir": "src",
   },
+  "references": [
+    { "path": "./tsconfig.cjs.json", },
+    { "path": "./tsconfig.esm.json", },
+    { "path": "./tsconfig.types.json", },
+    { "path": "./test/tsconfig.json", },
+  ],
   "include": [
     "src",
     "test",

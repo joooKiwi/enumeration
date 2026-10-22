@@ -27,8 +27,8 @@ export class ImpossibleIntegrityException<const INSTANCE,
     implements ExceptionWithNullableCause<CAUSE> {
 
     public override readonly name = this.constructor.name
-    readonly #instance
-    readonly #cause
+    readonly #instance: INSTANCE
+    readonly #cause: NullOr<CAUSE>
 
     public constructor(message: string, instance: INSTANCE, cause?: Nullable<CAUSE>,) {
         super(message,)

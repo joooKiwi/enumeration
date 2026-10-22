@@ -1,24 +1,19 @@
 {
   "name": "@joookiwi/enumerable",
-  "version": "3.12.0",
-  "description": "A Javascript implementation of an enum class",
+  "version": "3.13.0",
+  "description": "A Javascript implementation of an enum class with a related companion-enum",
 
   "scripts": {
     "clear-dist-folder": "del-cli dist/",
     "build-esm":         "tsc --project tsconfig.esm.json",
     "build-cjs":         "tsc --project tsconfig.cjs.json",
-    "build-amd":         "tsc --project tsconfig.amd.json",
-    "build-umd":         "tsc --project tsconfig.umd.json",
     "build-types":       "tsc --project tsconfig.types.json",
 
-    "test":                                "jest",
-    "test-with-coverage":                  "jest --coverage",
-    "test-general-enum":                   "jest --testNamePattern=GeneralEnumTest",
-    "test-helper-methods":                 "jest --testNamePattern=HelperMethodsTest",
-    "test-helper-known-enum-constructors": "jest --testNamePattern=KnownEnumConstructorsTest",
-    "test-companion-enum":                 "jest --testNamePattern=CompanionEnumTest",
-    "test-enum-inheritor":                 "jest --testNamePattern=EnumInheritorTest",
-    "test-typescript":                     "tsc --build test/typescript",
+    "test":                "vitest run",
+    "test-with-coverage":  "vitest run --coverage",
+    "test-enum":           "vitest run EnumWith",
+    "test-companion":      "vitest run CompanionEnum",
+    "see-import-duration": "vitest --experimental.importDurations.print",
 
     "test-pack":    "npm pack --dry-run",
     "test-publish": "npm publish --access=public --dry-run",
@@ -44,21 +39,32 @@
       "require": "./dist/common javascript/index.js"
     },
 
-    "./Enum": {
-      "types":   "./dist/types/util/enumerable/Enum.d.ts",
-      "import":  "./dist/ecmascript module/util/enumerable/Enum.js",
-      "require": "./dist/common javascript/util/enumerable/Enum.js"
+    "./companion": {
+      "types":   "./dist/types/companion/index.d.ts",
+      "import":  "./dist/ecmascript module/companion/index.js",
+      "require": "./dist/common javascript/companion/index.js"
     },
+    "./exception": {
+      "types":   "./dist/types/exception/index.d.ts",
+      "import":  "./dist/ecmascript module/exception/index.js",
+      "require": "./dist/common javascript/exception/index.js"
+    },
+    "./helper": {
+      "types":   "./dist/types/helper/index.d.ts",
+      "import":  "./dist/ecmascript module/helper/index.js",
+      "require": "./dist/common javascript/helper/index.js"
+    },
+    "./method": {
+      "types":   "./dist/types/method/index.d.ts",
+      "import":  "./dist/ecmascript module/method/index.js",
+      "require": "./dist/common javascript/method/index.js"
+    },
+    "./type": { "types": "./dist/types/type/index.d.ts" },
 
     "./*": {
       "types":   "./dist/types/*.d.ts",
       "import":  "./dist/ecmascript module/*.js",
       "require": "./dist/common javascript/*.js"
-    },
-    "./enumerable/*": {
-      "types":   "./dist/types/*.d.ts",
-      "import":  "./dist/ecmascript module/js",
-      "require": "./dist/common javascript/js"
     },
     "./companion/*": {
       "types":   "./dist/types/companion/*.d.ts",
@@ -75,57 +81,12 @@
       "import":  "./dist/ecmascript module/helper/*.js",
       "require": "./dist/common javascript/helper/*.js"
     },
-    "./enumerable/companion/*": {
-      "types":   "./dist/types/companion/*.d.ts",
-      "import":  "./dist/ecmascript module/companion/*.js",
-      "require": "./dist/common javascript/companion/*.js"
+    "./method/*": {
+      "types":   "./dist/types/method/*.d.ts",
+      "import":  "./dist/ecmascript module/method/*.js",
+      "require": "./dist/common javascript/method/*.js"
     },
-    "./enumerable/exception/*": {
-      "types":   "./dist/types/exception/*.d.ts",
-      "import":  "./dist/ecmascript module/exception/*.js",
-      "require": "./dist/common javascript/exception/*.js"
-    },
-    "./enumerable/helper/*": {
-      "types":   "./dist/types/helper/*.d.ts",
-      "import":  "./dist/ecmascript module/helper/*.js",
-      "require": "./dist/common javascript/helper/*.js"
-    },
-
-    "./enumerable": {
-      "types":   "./dist/types/index.d.ts",
-      "import":  "./dist/ecmascript module/index.js",
-      "require": "./dist/common javascript/index.js"
-    },
-    "./companion": {
-      "types":   "./dist/types/companion/index.d.ts",
-      "import":  "./dist/ecmascript module/companion/index.js",
-      "require": "./dist/common javascript/companion/index.js"
-    },
-    "./exception": {
-      "types":   "./dist/types/exception/index.d.ts",
-      "import":  "./dist/ecmascript module/exception/index.js",
-      "require": "./dist/common javascript/exception/index.js"
-    },
-    "./helper": {
-      "types":   "./dist/types/helper/index.d.ts",
-      "import":  "./dist/ecmascript module/helper/index.js",
-      "require": "./dist/common javascript/helper/index.js"
-    },
-    "./enumerable/companion": {
-      "types":   "./dist/types/companion/index.d.ts",
-      "import":  "./dist/ecmascript module/companion/index.js",
-      "require": "./dist/common javascript/companion/index.js"
-    },
-    "./enumerable/exception": {
-      "types":   "./dist/types/exception/index.d.ts",
-      "import":  "./dist/ecmascript module/exception/index.js",
-      "require": "./dist/common javascript/exception/index.js"
-    },
-    "./enumerable/helper": {
-      "types":   "./dist/types/helper/index.d.ts",
-      "import":  "./dist/ecmascript module/helper/index.js",
-      "require": "./dist/common javascript/helper/index.js"
-    }
+    "./type/*": { "types": "./dist/types/type/*.d.ts" }
   },
 
   "files": [
@@ -153,18 +114,17 @@
   "author": "JóôòKiwi",
   "license": "MIT",
   "dependencies": {
-    "@joookiwi/collection": "^2.0.1",
-    "@joookiwi/lazy":       "^1.7.3",
-    "@joookiwi/type":       "^1.2.2"
+    "@joookiwi/collection": "^2.1.0",
+    "@joookiwi/lazy":       "^1.8.0",
+    "@joookiwi/type":       "^1.3.0"
   },
   "devDependencies": {
-    "@types/jest":            "^30.0.0",
-    "@types/node":            "^26.2.0",
-    "del-cli":                "^7.0.0",
-    "jest-environment-jsdom": "^30.4.1",
+    "@types/node":            "^26.6.5",
+    "@vitest/coverage-v8":    "^5.0.5",
+    "del-cli":                "^8.0.1",
     "jest-extended":          "^7.0.0",
-    "ts-jest":                "^29.4.12",
     "ts-node":                "^10.9.2",
-    "typescript":             "^5.9.3"
+    "typescript":             "^7.0.2",
+    "vitest":                 "^5.0.5"
   }
 }

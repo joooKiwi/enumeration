@@ -12,28 +12,31 @@
 
 import type {Lazy}             from "@joookiwi/lazy"
 import type {Nullable, NullOr} from "@joookiwi/type"
-import {lazy}                  from "@joookiwi/lazy"
+import {CommonLazy, lazy}      from "@joookiwi/lazy"
 
-import type {EnumerableWithNullableGrandParent}                                                         from "./EnumerableWithNullableGrandParent"
-import type {NameOf, PossibleEnumerableValueOrNameByValueOrCallback, PossibleNameOf, PossibleOrdinalOf} from "./Enumerable.types"
-import type {EnumerableWithNullableParent}                                                              from "./EnumerableWithNullableParent"
-import type {Enumerable}                                                                                from "./Enumerable"
+import type {EnumerableWithNullableGrandParent}              from "./EnumerableWithNullableGrandParent"
+import type {EnumerableWithNullableParent}                   from "./EnumerableWithNullableParent"
+import type {Enumerable}                                     from "./Enumerable"
+import type {NameOf, PossibleNameOf}                         from "./type/nameOf"
+import type {PossibleOrdinalOf}                              from "./type/ordinalOf"
+import type {PossibleEnumerableValueOrNameByValueOrCallback} from "./type/possibleInstance"
 
 import {EnumWithNullableParent}       from "./EnumWithNullableParent"
+import {EnumConstants}                from "./EnumConstants"
+import {KnownEnumConstructors}        from "./KnownEnumConstructors"
 import {ImpossibleIntegrityException} from "./exception/ImpossibleIntegrityException"
-import {Helper}                       from "./helper/Helper"
-import {KnownEnumConstructors}        from "./helper/KnownEnumConstructors"
+import {_getGrandParentValueFromName} from "./method/_getGrandParentValueFromName"
 
 /**
  * An {@link Enum} class in conjuncture with the {@link EnumerableWithNullableGrandParent}.
  *
- * Compared to its sibling {@link EnumWithGrandParent}, it can receive <b>null</b>.
+ * Compared to its sibling {@link EnumWithGrandParent}, it can receive `null`.
  *
  * But it can still throw a {@link NullReferenceException} in different scenarios:
  *  - An exception is thrown when attempting to retrieve its {@link CompanionEnumWithGrandParent}
  *  - An exception is thrown when attempting to retrieve the value by {@link CompanionEnumWithGrandParentDeclaration.getValue getValue()}
  *
- * Also, it can throw a {@link ImpossibleIntegrityException} when receiving a <b>null</b>
+ * Also, it can throw a {@link ImpossibleIntegrityException} when receiving a `null`
  * on a value that was not expected to be null on the {@link EnumWithNullableGrandParent.parent parent} method.
  *
  * @see EnumWithGrandParent
@@ -51,7 +54,7 @@ export class EnumWithNullableGrandParent<const PARENT extends EnumerableWithNull
     readonly #grandParent: Lazy<NullOr<GRAND_PARENT>>
 
     static {
-        KnownEnumConstructors.get.add(EnumWithNullableGrandParent,)
+        KnownEnumConstructors.add(EnumWithNullableGrandParent,)
     }
 
     //#endregion -------------------- Fields --------------------
@@ -90,34 +93,51 @@ export class EnumWithNullableGrandParent<const PARENT extends EnumerableWithNull
      * @param grandParent The grandparent value (from any possibilities in Javascript)
      *
      * @typescriptDefinition
-     * @throws {NullReferenceException}
      */
     protected constructor(parent?: PossibleEnumerableValueOrNameByValueOrCallback<PARENT>, grandParent?: PossibleEnumerableValueOrNameByValueOrCallback<GRAND_PARENT>,)
-    protected constructor(...args: readonly [PossibleEnumerableValueOrNameByValueOrCallback<PARENT>?, PossibleEnumerableValueOrNameByValueOrCallback<GRAND_PARENT>?]) {
-        let argumentsToSuper: readonly [PossibleEnumerableValueOrNameByValueOrCallback<PARENT>?,]
-        if (args.length === 0)
-            argumentsToSuper = []
-        else
-            argumentsToSuper = [args[0],]
-        super(...argumentsToSuper,)
-
-        if (args.length === 0) {
+    protected constructor(parent?: PossibleEnumerableValueOrNameByValueOrCallback<PARENT>, grandParent?: PossibleEnumerableValueOrNameByValueOrCallback<GRAND_PARENT>,) {
+        if (arguments.length === 0) {
+            super()
             this.#parent = lazy(() => super.parent,)
-            this.#grandParent = lazy(() => Helper.getValueFromInstanceName<GRAND_PARENT>(this, "grandparent",),)
+            this.#grandParent = lazy(() => _getGrandParentValueFromName(this, this.name,),)
             return
         }
+
+        super(parent,)
+        if (arguments.length === 1) {
+            this.#parent = lazy(() => super.parent,)
+            this.#grandParent = lazy(() => _getGrandParentValueFromName(this, this.name,),)
+            return
+        }
+
         this.#parent = lazy(() => {
             const parent = super.parent
             const grandParent = this.grandParent
 
-            if (parent == null && grandParent != null)
-                throw new ImpossibleIntegrityException(`The parent reference in "${this.constructor.name}" was not expected to be null when its grandparent is not-null.`, this,)
+            if (parent == null)
+                if (grandParent != null)
+                    throw new ImpossibleIntegrityException(`The parent reference in “${this.constructor.name}” was not expected to be null when its grandparent is not-null.`, this,)
             return parent
         },)
-        if (args.length <= 1)
-            this.#grandParent = lazy(() => Helper.getValueFromInstanceName<GRAND_PARENT>(this, "grandparent",),)
-        else
-            this.#grandParent = lazy(() => Helper.getNullableValue(this, args[1], "grandparent",),)
+        if (grandParent instanceof Function)
+            grandParent = grandParent()
+        if (grandParent == null) {
+            this.#grandParent = CommonLazy.NULL
+            return
+        }
+        this.#grandParent = lazy(() => {
+            if (typeof grandParent == "string")
+                return _getGrandParentValueFromName(this, grandParent,)
+
+            if (grandParent === EnumConstants.NULL_ENUM_REFERENCE_SYMBOL)
+                return null
+            if (grandParent === EnumConstants.ENUM_REFERENCE_BY_ITS_NAME_SYMBOL)
+                return _getGrandParentValueFromName(this, this.name,)
+
+            if (grandParent instanceof String)
+                return _getGrandParentValueFromName(this, grandParent.valueOf(),)
+            return grandParent
+        },)
     }
 
     //#endregion -------------------- Constructor --------------------
@@ -127,8 +147,8 @@ export class EnumWithNullableGrandParent<const PARENT extends EnumerableWithNull
      * The {@link NullOr nullable} parent of the current instance
      *
      * @lazy
-     * @throws {ImpossibleIntegrityException}
-     * @throws {NullReferenceException}
+     * @throws ImpossibleIntegrityException The value was `null` when the {@link grandParent} was not `null`
+     * @throws NullReferenceException An error happened while attempting to retrieve the parent value
      */
     public override get parent(): NullOr<PARENT> {
         return this.#parent.value
@@ -138,7 +158,7 @@ export class EnumWithNullableGrandParent<const PARENT extends EnumerableWithNull
      * The {@link NullOr nullable} grandparent of the current instance
      *
      * @lazy
-     * @throws {NullReferenceException}
+     * @throws NullReferenceException An error happened while attempting to retrieve the grandparent value
      */
     public get grandParent(): NullOr<GRAND_PARENT> {
         return this.#grandParent.value

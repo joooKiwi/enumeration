@@ -11,13 +11,13 @@
 //··························································
 
 import type {CollectionHolder}   from "@joookiwi/collection"
-import {GenericCollectionHolder} from "@joookiwi/collection"
 
-import {Enum} from "../Enum"
+import {KnownEnumConstructors as NewKnownEnumConstructors} from "../KnownEnumConstructors"
 
 /**
  * The known {@link Enum}-like types that can be validated on {@link getLastPrototype}
  *
+ * @deprecated Replace with the same name inside "@joookiwi/enumerable" instead. This will be removed in version 3.14
  * @singleton
  */
 export class KnownEnumConstructors {
@@ -27,46 +27,25 @@ export class KnownEnumConstructors {
     static #instance?: KnownEnumConstructors
 
     /** @internal */
-    protected constructor() {
-    }
+    protected constructor() {}
 
     public static get get(): KnownEnumConstructors {
         return KnownEnumConstructors.#instance ??= new KnownEnumConstructors()
     }
 
     //#endregion -------------------- Singleton usage --------------------
-    //#region -------------------- Fields --------------------
-
-    /** Tell that the values have changed between the calls of {@link KnownEnumConstructors.values} */
-    #isValuesDifferentBetweenCalls = false
-    #values?: Function[]
-    /** A {@link CollectionHolder} to encapsulate the values on the {@link KnownEnumConstructors.values} */
-    #collection?: CollectionHolder<Function>
-
-    //#endregion -------------------- Fields --------------------
     //#region -------------------- Getter methods --------------------
-
-    get #__values(): Function[] {
-        return this.#values ??= [Enum,]
-    }
 
     /**
      * Get a copy of the known {@link EnumerableConstructor} {@link Array} as a {@link CollectionHolder}.
      *
      * Or the same instance if nothing was changed in between the calls of this method.
      */
-    public get values(): CollectionHolder<Function> {
-        if (this.#isValuesDifferentBetweenCalls) {
-            const collection = this.#collection = new GenericCollectionHolder(this.#__values,)
-            this.#isValuesDifferentBetweenCalls = false
-            return collection
-        }
-        return this.#collection ??= new GenericCollectionHolder(this.#__values,)
-    }
+    public get values(): CollectionHolder<Function> { return NewKnownEnumConstructors.values }
 
     /** An alias toward the {@link KnownEnumConstructors} instance {@link KnownEnumConstructors.values "values method"} */
     public static get values() {
-        return KnownEnumConstructors.get.values
+        return NewKnownEnumConstructors.values
     }
 
     //#endregion -------------------- Getter methods --------------------
@@ -81,21 +60,9 @@ export class KnownEnumConstructors {
      */
     public add(...values: readonly Function[]): this {
         const size = values.length
-        if (size == 0)
-            return this // Nothing can be added
-
-        const instanceValues = this.#__values
-        const instanceSize = instanceValues.length
         let index = -1
-        while (++index < size) {
-            const value = values[index]!
-            if (!instanceValues.includes(value,))
-                instanceValues.push(value,)
-        }
-        if (instanceValues.length === instanceSize)
-            return this // Nothing was removed
-
-        this.#isValuesDifferentBetweenCalls = true
+        while (++index < size)
+            NewKnownEnumConstructors.add(values[index]!,)
         return this
     }
 
@@ -107,7 +74,10 @@ export class KnownEnumConstructors {
      * @param values The values to add
      */
     public static add(...values: readonly Function[]) {
-        return KnownEnumConstructors.get.add(...values,)
+        const size = values.length
+        let index = -1
+        while (++index < size)
+            NewKnownEnumConstructors.add(values[index]!,)
     }
 
 
@@ -118,34 +88,9 @@ export class KnownEnumConstructors {
      */
     public remove(...values: Function[]): this {
         const size = values.length
-        if (size == 0)
-            return this // Nothing can be removed
-
-        const newArray = [] as Function[]
-
-        const instanceValues = this.#__values
-        const instanceSize = instanceValues.length
-        let instanceIndex = -1
-        instanceLoop:while (++instanceIndex < instanceSize) {
-            const instanceValue = instanceValues[instanceIndex]!
-
-            let size = values.length
-            if (size === 0)
-                break
-
-            let index = -1
-            while (++index < size)
-                if (instanceValue === values[index]) {
-                    values.splice(index, 1,)
-                    continue instanceLoop
-                }
-            newArray.push(instanceValue,)
-        }
-        if (newArray.length === instanceSize)
-            return this // Nothing was removed
-
-        this.#values = newArray
-        this.#isValuesDifferentBetweenCalls = true
+        let index = -1
+        while (++index < size)
+            NewKnownEnumConstructors.remove(values[index]!,)
         return this
     }
 
@@ -155,7 +100,10 @@ export class KnownEnumConstructors {
      * @param values The values to remove
      */
     public static remove(...values: readonly Function[]) {
-        return KnownEnumConstructors.get.remove(...values,)
+        const size = values.length
+        let index = -1
+        while (++index < size)
+            NewKnownEnumConstructors.remove(values[index]!,)
     }
 
     //#endregion -------------------- Methods --------------------

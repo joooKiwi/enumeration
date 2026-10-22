@@ -10,46 +10,54 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {BigIntOrObject, NullOrUndefined, Nullable, NumericOrObject, StringOrNumericOrObject, StringOrObject, TemplateOrBigIntOrObject, TemplateOrNumberOrObject, TemplateOrNumericOrObject} from "@joookiwi/type"
+import type {BigIntOrObject, MutableArray, NullOr, NullOrUndefined, Nullable, NumericOrObject, StringOrNumericOrObject, StringOrObject, TemplateOrNumber, TemplateOrNumericOrObject} from "@joookiwi/type"
 
-import type {Enumerable}                                                                                                                                                                                                                                                                                                                                                   from "../Enumerable"
-import type {EnumerableConstructor}                                                                                                                                                                                                                                                                                                                                        from "../EnumerableConstructor"
-import type {EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal, EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName, NameOf, OrdinalOf, SpecificNameOf, SpecificOrdinalOf, ValueByEnumerableConstructorAndEnumerableNameAndName, ValueByEnumerableConstructorAndEnumerableName, ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal} from "../Enumerable.types"
-import type {EnumerableWithNullableParent}                                                                                                                                                                                                                                                                                                                                 from "../EnumerableWithNullableParent"
-import type {CompanionEnumDeclaration}                                                                                                                                                                                                                                                                                                                                     from "./CompanionEnum.declaration"
-import type {CompanionEnumWithParentDeclaration}                                                                                                                                                                                                                                                                                                                           from "./CompanionEnumWithParent.declaration"
-import type {ImpossibleNames}                                                                                                                                                                                                                                                                                                                                              from "./types"
+import type {Enumerable}                                                                             from "../Enumerable"
+import type {EnumerableConstructor}                                                                  from "../EnumerableConstructor"
+import type {EnumerableWithNullableParent}                                                           from "../EnumerableWithNullableParent"
+import type {CompanionEnumerable}                                                                    from "./CompanionEnumerable"
+import type {CompanionEnumerableWithParent}                                                          from "./CompanionEnumerableWithParent"
+import type {CompanionEnumerableType}                                                                from "../type/companion"
+import type {ImpossibleNames}                                                                        from "../type/name"
+import type {NameOf, SpecificNameOf}                                                                 from "../type/nameOf"
+import type {OrdinalOf, SpecificOrdinalOf}                                                           from "../type/ordinalOf"
+import type {NameByOrdinal, OrdinalByName, ValueByName, ValueBySpecificName, ValueBySpecificOrdinal} from "../type/valueBy"
+import type {EnumerableWithNullableParentGeneralType}                                                from "../type/general"
 
-import {CompanionEnum}              from "./CompanionEnum"
-import {InvalidEnumerableException} from "../exception/InvalidEnumerableException"
-import {InvalidInstanceException}   from "../exception/InvalidInstanceException"
-import {NonExistantKeyException}    from "../exception/NonExistantKeyException"
-import {NullInstanceException}      from "../exception/NullInstanceException"
-import {NullReferenceException}     from "../exception/NullReferenceException"
+import {CompanionEnum}                 from "./CompanionEnum"
+import {Enum}                          from "../Enum"
+import {EnumWithNullableParent}        from "../EnumWithNullableParent"
+import {EnumWithParent}                from "../EnumWithParent"
+import {InvalidEnumerableException}    from "../exception/InvalidEnumerableException"
+import {InvalidInstanceException}      from "../exception/InvalidInstanceException"
+import {NullInstanceException}         from "../exception/NullInstanceException"
+import {NullReferenceException}        from "../exception/NullReferenceException"
+import {_getSimplifiedPrototypeChains} from "../method/_getSimplifiedPrototypeChains"
+import {_hasPrototypeOf}               from "../method/_hasPrototypeOf"
 
 export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullableParent<PARENT_ENUM>,
-    const ENUM_CONSTRUCTOR extends EnumerableConstructor<ENUM, CompanionEnumWithParentDeclaration<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR>>,
+    const ENUM_CONSTRUCTOR extends EnumerableConstructor<ENUM, CompanionEnumerableWithParent<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR>>,
     const PARENT_ENUM extends Enumerable,
-    const PARENT_ENUM_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUM, CompanionEnumDeclaration<PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR>>, >
+    const PARENT_ENUM_CONSTRUCTOR extends EnumerableConstructor<PARENT_ENUM, CompanionEnumerable<PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR>>, >
     extends CompanionEnum<ENUM, ENUM_CONSTRUCTOR>
-    implements CompanionEnumWithParentDeclaration<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR> {
+    implements CompanionEnumerableWithParent<ENUM, ENUM_CONSTRUCTOR, PARENT_ENUM, PARENT_ENUM_CONSTRUCTOR> {
 
     //#region -------------------- Fields --------------------
 
-    readonly #parentInstance
+    readonly #parentInstance: PARENT_ENUM_CONSTRUCTOR
 
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------
 
     protected constructor(instance: ENUM_CONSTRUCTOR, parentInstance: PARENT_ENUM_CONSTRUCTOR,) {
         super(instance,)
-        if (!("parent" in instance.prototype))
-            throw new NonExistantKeyException(`No attribute "parent" exist in the "${instance.name}" instance. Either use a getter method or add it in the class.`, "parent", instance.prototype,)
+        __validateInstance(instance,)
+
         if (parentInstance == null)
             throw new NullInstanceException()
         if (!(parentInstance instanceof Function))
-            throw new InvalidInstanceException(`The parent instance received in "${this.constructor.name}" is not a function type.`, parentInstance,)
-        this.#parentInstance = parentInstance
+            throw new InvalidInstanceException(`Invalid instance exception. The parent instance received in “${this.constructor.name}” is not a function type.`, parentInstance,)
+        this.#parentInstance = __validateParentInstance(parentInstance,)
     }
 
     //#endregion -------------------- Constructor --------------------
@@ -64,16 +72,16 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
         return super.defaultValue
     }
 
-    public override set defaultValue(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM>) {
-        super.defaultValue = value == null ? null : this._getValue(value)
+    public override set defaultValue(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM>,) {
+        super.defaultValue = value == null ? null : this._getValue(value,)
     }
 
     public override setDefaultValue(value: NullOrUndefined,): this
     public override setDefaultValue(value: ImpossibleNames,): never
     public override setDefaultValue(ordinal: Nullable<NumericOrObject>,): this
     public override setDefaultValue(name: Nullable<StringOrObject>,): this
-    public override setDefaultValue(enumerable: Nullable<ENUM>,): this
-    public override setDefaultValue(parentEnumerable: Nullable<PARENT_ENUM>,): this
+    public override setDefaultValue(instance: Nullable<ENUM>,): this
+    public override setDefaultValue(parentInstance: Nullable<PARENT_ENUM>,): this
     public override setDefaultValue(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM>,): this
     public override setDefaultValue(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM>): this {
         this.defaultValue = value
@@ -98,13 +106,13 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
     protected override _getValidValueByEnumerable(enumerable: Enumerable,): ENUM {
         const instance = this.instance
         if (enumerable instanceof instance)
-            return this._getValueFromValues(enumerable)
+            return this._getValueFromValues(enumerable,)
 
         const parentInstance = this.parentInstance
         if (enumerable instanceof parentInstance)
             return this._getValueFromValuesByParent(enumerable,)
 
-        throw new InvalidEnumerableException(`The enumerable "${instance.name}.${enumerable.name}" is not an instance of "${instance.name}" or "${parentInstance.name}".`, enumerable, [instance, parentInstance,],)
+        throw new InvalidEnumerableException(`The enumerable “${instance.name}.${enumerable.name}” is not an instance of “${instance.name}” or “${parentInstance.name}”.`, enumerable, [instance, parentInstance,],)
     }
 
     //#endregion -------------------- Get value (validated) methods --------------------
@@ -119,9 +127,9 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
      * @throws {NullReferenceException}
      */
     protected _getValueFromValuesByParent(value: Enumerable,): ENUM {
-        const valueFound = this.values.find(it => it.parent === value)
+        const valueFound = this.values.findFirstOrNull(it => it.parent === value,)
         if (valueFound == null)
-            throw new NullReferenceException(`No parent "${value}" could be found on the "${this.instance.name}".`, value,)
+            throw new NullReferenceException(`No parent “${value}” could be found on the “${this.instance.name}”.`, value,)
         return valueFound
     }
 
@@ -129,53 +137,109 @@ export class CompanionEnumWithParent<const ENUM extends EnumerableWithNullablePa
 
     //#endregion -------------------- Validation methods --------------------
 
-    public override getValue                                                                                                                                   (value: Nullable<ImpossibleNames>,):                                                                                 never
-    public override getValue<const ORDINAL extends number, >                                                                                                   (ordinal: Nullable<ORDINAL>,):                                                                                       ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
-    public override getValue<const ORDINAL extends number, >                                                                                                   (ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,):                                                             ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
-    public override getValue                                                                                                                                   (ordinal: Nullable<TemplateOrNumberOrObject>,):                                                                      ENUM
-    public override getValue                                                                                                                                   (ordinal: Nullable<TemplateOrBigIntOrObject>,):                                                                      ENUM
-    public override getValue                                                                                                                                   (ordinal: Nullable<TemplateOrNumericOrObject>,):                                                                     ENUM
-    public override getValue<const NAME extends string, >                                                                                                      (name: Nullable<StringOrObject<NAME>>,):                                                                             ValueByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME>
-    public override getValue                                                                                                                                   (nameOrOrdinal: Nullable<StringOrObject>,):                                                                          ENUM
-    public override getValue<const INSTANCE extends ENUM, >                                                                                                    (instance: Nullable<INSTANCE>,):                                                                                     INSTANCE
-    public override getValue<const PARENT_INSTANCE extends PARENT_ENUM, >                                                                                      (parentInstance: Nullable<PARENT_INSTANCE>,):                                                                        ValueByEnumerableConstructorAndEnumerableName<ENUM_CONSTRUCTOR, PARENT_INSTANCE>
-    public override getValue<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM, const PARENT_INSTANCE extends PARENT_ENUM, >(value: Nullable<| ORDINAL | `${ORDINAL}` | NAME | String | Number | BigIntOrObject | INSTANCE | PARENT_INSTANCE>,): | ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | ValueByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME> | INSTANCE | ValueByEnumerableConstructorAndEnumerableName<ENUM_CONSTRUCTOR, PARENT_INSTANCE>
-    public override getValue(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM>,): ENUM {
+    public override getValue                                                                                                                                   (value: Nullable<ImpossibleNames>,):                                                                                    never
+    public override getValue<const ORDINAL extends number, >                                                                                                   (ordinal: Nullable<ORDINAL>,):                                                                                          ValueBySpecificOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
+    public override getValue<const ORDINAL extends number, >                                                                                                   (ordinal: Nullable<TemplateOrNumber<ORDINAL>>,):                                                                        ValueBySpecificOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
+    public override getValue                                                                                                                                   (ordinal: Nullable<TemplateOrNumericOrObject>,):                                                                        ENUM
+    public override getValue<const NAME extends string, >                                                                                                      (name: Nullable<NAME>,):                                                                                                ValueBySpecificName<ENUM_CONSTRUCTOR, ENUM, NAME>
+    public override getValue                                                                                                                                   (nameOrOrdinal: Nullable<StringOrObject>,):                                                                             ENUM
+    public override getValue<const INSTANCE extends ENUM, >                                                                                                    (instance: Nullable<INSTANCE>,):                                                                                        INSTANCE
+    public override getValue<const PARENT_INSTANCE extends PARENT_ENUM, >                                                                                      (parentInstance: Nullable<PARENT_INSTANCE>,):                                                                           ValueByName<ENUM_CONSTRUCTOR, PARENT_INSTANCE>
+    public override getValue<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM, const PARENT_INSTANCE extends PARENT_ENUM, >(value: Nullable<| TemplateOrNumber<ORDINAL> | NAME | String | Number | BigIntOrObject | INSTANCE | PARENT_INSTANCE>,): | ValueBySpecificOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | ValueBySpecificName<ENUM_CONSTRUCTOR, ENUM, NAME> | INSTANCE | ValueByName<ENUM_CONSTRUCTOR, PARENT_INSTANCE>
+    public override getValue(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM>,) {
         return this._getValue(value,)
     }
 
 
-    public override getName                                                                                                                                   (value: Nullable<ImpossibleNames>,):                                                                               never
-    public override getName<const ORDINAL extends number, >                                                                                                   (ordinal: Nullable<ORDINAL>,):                                                                                     EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
-    public override getName<const ORDINAL extends number, >                                                                                                   (ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,):                                                           EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
-    public override getName                                                                                                                                   (ordinal: Nullable<TemplateOrNumberOrObject>,):                                                                   NameOf<ENUM>
-    public override getName                                                                                                                                   (ordinal: Nullable<TemplateOrBigIntOrObject>,):                                                                   NameOf<ENUM>
-    public override getName                                                                                                                                   (ordinal: Nullable<TemplateOrNumericOrObject>,):                                                                   NameOf<ENUM>
-    public override getName<const NAME extends string, >                                                                                                      (name: Nullable<StringOrObject<NAME>>,):                                                                           SpecificNameOf<NAME, ENUM>
-    public override getName                                                                                                                                   (nameOrOrdinal: Nullable<StringOrObject>,):                                                                        NameOf<ENUM>
-    public override getName<const INSTANCE extends ENUM, >                                                                                                    (instance: Nullable<INSTANCE>,):                                                                                   NameOf<INSTANCE>
-    public override getName<const PARENT_INSTANCE extends PARENT_ENUM, >                                                                                      (parentInstance: Nullable<PARENT_INSTANCE>,):                                                                      NameOf<PARENT_INSTANCE>
-    public override getName<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM, const PARENT_INSTANCE extends PARENT_ENUM, >(value: Nullable<ORDINAL | `${ORDINAL}` | NAME | Number | String | BigIntOrObject | INSTANCE | PARENT_INSTANCE>,): | EnumerableNameByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | SpecificNameOf<NAME, ENUM> | NameOf<INSTANCE> | NameOf<PARENT_INSTANCE>
-    public override getName(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM>,): NameOf<ENUM> {
+    public override getName                                                                                                                                   (value: Nullable<ImpossibleNames>,):                                                                                    never
+    public override getName<const ORDINAL extends number, >                                                                                                   (ordinal: Nullable<ORDINAL>,):                                                                                          NameByOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
+    public override getName<const ORDINAL extends number, >                                                                                                   (ordinal: Nullable<TemplateOrNumber<ORDINAL>>,):                                                                        NameByOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL>
+    public override getName                                                                                                                                   (ordinal: Nullable<TemplateOrNumericOrObject>,):                                                                        NameOf<ENUM>
+    public override getName<const NAME extends string, >                                                                                                      (name: Nullable<NAME>,):                                                                                                SpecificNameOf<NAME, ENUM>
+    public override getName                                                                                                                                   (nameOrOrdinal: Nullable<StringOrObject>,):                                                                             NameOf<ENUM>
+    public override getName<const INSTANCE extends ENUM, >                                                                                                    (instance: Nullable<INSTANCE>,):                                                                                        NameOf<INSTANCE>
+    public override getName<const PARENT_INSTANCE extends PARENT_ENUM, >                                                                                      (parentInstance: Nullable<PARENT_INSTANCE>,):                                                                           NameOf<PARENT_INSTANCE>
+    public override getName<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM, const PARENT_INSTANCE extends PARENT_ENUM, >(value: Nullable<| TemplateOrNumber<ORDINAL> | NAME | String | Number | BigIntOrObject | INSTANCE | PARENT_INSTANCE>,): | NameByOrdinal<ENUM_CONSTRUCTOR, ENUM, ORDINAL> | SpecificNameOf<NAME, ENUM> | NameOf<INSTANCE> | NameOf<PARENT_INSTANCE>
+    public override getName(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM>,) {
         return this._getName(value,)
     }
 
 
-    public override getOrdinal                                                                                                                                   (value: Nullable<ImpossibleNames>,):                                                                               never
-    public override getOrdinal<const ORDINAL extends number, >                                                                                                   (ordinal: Nullable<ORDINAL>,):                                                                                     SpecificOrdinalOf<ORDINAL, ENUM>
-    public override getOrdinal<const ORDINAL extends number, >                                                                                                   (ordinal: Nullable<TemplateOrNumberOrObject<ORDINAL>>,):                                                           SpecificOrdinalOf<ORDINAL, ENUM>
-    public override getOrdinal                                                                                                                                   (ordinal: Nullable<TemplateOrNumberOrObject>,):                                                                   OrdinalOf<ENUM>
-    public override getOrdinal                                                                                                                                   (ordinal: Nullable<TemplateOrBigIntOrObject>,):                                                                   OrdinalOf<ENUM>
-    public override getOrdinal                                                                                                                                   (ordinal: Nullable<TemplateOrNumericOrObject>,):                                                                   OrdinalOf<ENUM>
-    public override getOrdinal<const NAME extends string, >                                                                                                      (name: Nullable<StringOrObject<NAME>>,):                                                                           EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME>
-    public override getOrdinal                                                                                                                                   (nameOrOrdinal: Nullable<StringOrObject>,):                                                                        OrdinalOf<ENUM>
-    public override getOrdinal<const INSTANCE extends ENUM, >                                                                                                    (instance: Nullable<INSTANCE>,):                                                                                   OrdinalOf<INSTANCE>
-    public override getOrdinal<const PARENT_INSTANCE extends PARENT_ENUM, >                                                                                      (parentInstance: Nullable<PARENT_INSTANCE>,):                                                                      OrdinalOf<PARENT_INSTANCE>
-    public override getOrdinal<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM, const PARENT_INSTANCE extends PARENT_ENUM, >(value: Nullable<ORDINAL | `${ORDINAL}` | NAME | Number | String | BigIntOrObject | INSTANCE | PARENT_INSTANCE>,): | SpecificOrdinalOf<ORDINAL, ENUM> | EnumerableOrdinalByEnumerableConstructorAndEnumerableNameAndName<ENUM_CONSTRUCTOR, ENUM, NAME> | OrdinalOf<INSTANCE> | OrdinalOf<PARENT_INSTANCE>
-    public override getOrdinal(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM>,): OrdinalOf<ENUM> {
+    public override getOrdinal                                                                                                                                   (value: Nullable<ImpossibleNames>,):                                                                                    never
+    public override getOrdinal<const ORDINAL extends number, >                                                                                                   (ordinal: Nullable<ORDINAL>,):                                                                                          SpecificOrdinalOf<ORDINAL, ENUM>
+    public override getOrdinal<const ORDINAL extends number, >                                                                                                   (ordinal: Nullable<TemplateOrNumber<ORDINAL>>,):                                                                        SpecificOrdinalOf<ORDINAL, ENUM>
+    public override getOrdinal                                                                                                                                   (ordinal: Nullable<TemplateOrNumericOrObject>,):                                                                        OrdinalOf<ENUM>
+    public override getOrdinal<const NAME extends string, >                                                                                                      (name: Nullable<NAME>,):                                                                                                OrdinalByName<ENUM_CONSTRUCTOR, ENUM, NAME>
+    public override getOrdinal                                                                                                                                   (nameOrOrdinal: Nullable<StringOrObject>,):                                                                             OrdinalOf<ENUM>
+    public override getOrdinal<const INSTANCE extends ENUM, >                                                                                                    (instance: Nullable<INSTANCE>,):                                                                                        OrdinalOf<INSTANCE>
+    public override getOrdinal<const PARENT_INSTANCE extends PARENT_ENUM, >                                                                                      (parentInstance: Nullable<PARENT_INSTANCE>,):                                                                           OrdinalOf<PARENT_INSTANCE>
+    public override getOrdinal<const ORDINAL extends number, const NAME extends string, const INSTANCE extends ENUM, const PARENT_INSTANCE extends PARENT_ENUM, >(value: Nullable<| TemplateOrNumber<ORDINAL> | NAME | String | Number | BigIntOrObject | INSTANCE | PARENT_INSTANCE>,): | OrdinalByName<ENUM_CONSTRUCTOR, ENUM, NAME> | SpecificOrdinalOf<ORDINAL, ENUM> | OrdinalOf<INSTANCE> | OrdinalOf<PARENT_INSTANCE>
+    public override getOrdinal(value: Nullable<| StringOrNumericOrObject | ENUM | PARENT_ENUM>,) {
         return this._getOrdinal(value,)
     }
 
     //#endregion -------------------- Methods --------------------
 
+}
+
+/**
+ * Validate that the {@link parentInstance} is a relative to {@link Enum} or has the structure of an {@link Enumerable}
+ *
+ * @param parentInstance The {@link CompanionEnumerable} constructor to validate
+ * @throws InvalidInstanceException It is not a relative to {@link Enum} or does not have the structure of an {@link Enumerable}
+ */
+function __validateParentInstance<const PARENT_ENUM_CONSTRUCTOR extends EnumerableConstructor<Enumerable, CompanionEnumerable<Enumerable, PARENT_ENUM_CONSTRUCTOR>>, >(
+    parentInstance: PARENT_ENUM_CONSTRUCTOR,): PARENT_ENUM_CONSTRUCTOR {
+    if (_hasPrototypeOf(parentInstance, Enum,))
+        // Is relative to the Enum class
+        return parentInstance
+
+    const parentInstancePrototype = parentInstance.prototype as NullOr<object>
+    if (parentInstancePrototype != null)
+    if ("name" in parentInstancePrototype)
+    if ("ordinal" in parentInstancePrototype)
+    if (Symbol.toStringTag in parentInstancePrototype)
+    if (Symbol.toPrimitive in parentInstancePrototype)
+        // Is Enumerable by structure
+        return parentInstance
+
+    // We now know that it is invalid.
+    // We will get its chain to display in a simplified manner toward the inheritance
+    let prototype: NullOr<object> = parentInstance
+    const prototypeChain: MutableArray<object> = []
+    while (prototype != null) {
+        prototypeChain.push(prototype,)
+        prototype = Reflect.getPrototypeOf(prototype,)
+    }
+    throw new InvalidInstanceException(`Invalid instance exception. The parent instance received in ${_getSimplifiedPrototypeChains(prototypeChain,)} does not have an inheritor of “Enum” or the structure of an “Enumerable”.`, parentInstance,)
+}
+
+/**
+ * Validate that the {@link instance} is a relative to {@link EnumWithNullableParent}, {@link EnumWithParent} or has the structure of an {@link EnumerableWithParent}
+ *
+ * @param instance The {@link CompanionEnumerableWithParent} constructor to validate
+ * @throws InvalidInstanceException It is not a relative to {@link EnumWithNullableParent}|{@link EnumWithParent} or does not have the structure of an {@link EnumerableWithParent}
+ */
+function __validateInstance<const ENUM_CONSTRUCTOR extends EnumerableConstructor<EnumerableWithNullableParentGeneralType, CompanionEnumerableWithParent<EnumerableWithNullableParentGeneralType, ENUM_CONSTRUCTOR, Enumerable, EnumerableConstructor<Enumerable, CompanionEnumerableType<Enumerable>>>>, >(
+    instance: ENUM_CONSTRUCTOR,): void {
+    if (_hasPrototypeOf(instance, EnumWithNullableParent,))
+        // Is relative to the EnumWithNullableParent class
+        return
+    if (_hasPrototypeOf(instance, EnumWithParent,))
+        // Is relative to the EnumWithParent class
+        return
+
+    if ("parent" in (instance.prototype as object))
+        // Is EnumerableWithParent by structure
+        return
+
+    // We now know that it is invalid.
+    // We will get its chain to display in a simplified manner toward the inheritance
+    let prototype: NullOr<object> = instance
+    const prototypeChain: MutableArray<object> = []
+    while (prototype != null) {
+        prototypeChain.push(prototype,)
+        prototype = Reflect.getPrototypeOf(prototype,)
+    }
+    throw new InvalidInstanceException(`Invalid instance exception. The instance received in ${_getSimplifiedPrototypeChains(prototypeChain,)} does not have an inheritor of “EnumWithNullableParent”, “EnumWithParent” or the structure of an “EnumerableWithParent”.`, instance,)
 }

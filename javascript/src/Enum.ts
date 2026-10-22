@@ -10,18 +10,20 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
-import type {Nullable, PossiblePrimitiveHint, StringOrObject} from "@joookiwi/type"
+import type {Nullable, StringOrObject} from "@joookiwi/type"
 
-import type {Enumerable}                            from "./Enumerable"
-import type {EnumerableName, EnumerableToPrimitive} from "./Enumerable.types"
-import type {CompanionEnumDeclarationType}          from "./companion/types"
+import type {Enumerable}              from "./Enumerable"
+import type {EnumerableConstructor}   from "./EnumerableConstructor"
+import type {CompanionEnumerableType} from "./type/companion"
+import type {EnumerableToPrimitive}   from "./type/toPrimitive"
+import type {EnumerableName}          from "./type/toStringTag"
 
 import {EnumConstants}          from "./EnumConstants"
 import {InvalidHintException}   from "./exception/InvalidHintException"
 import {NullHintException}      from "./exception/NullHintException"
 import {NullReferenceException} from "./exception/NullReferenceException"
-import {getCompanion}           from "./helper/getCompanion"
-import {getLastPrototype}       from "./helper/getLastPrototype"
+import {getCompanion}           from "./method/getCompanion"
+import {getLastPrototype}       from "./method/getLastPrototype"
 
 export abstract class Enum<const ORDINAL extends number = number,
     const NAME extends string = string, >
@@ -31,8 +33,8 @@ export abstract class Enum<const ORDINAL extends number = number,
 
     #name?: NAME
     readonly #ordinal: ORDINAL
-    readonly #prototypeConstructor
-    #companion?: CompanionEnumDeclarationType<Enum>
+    readonly #prototypeConstructor: EnumerableConstructor<Enum<ORDINAL, NAME>, CompanionEnumerableType<Enum<ORDINAL, NAME>>>
+    #companion?: CompanionEnumerableType<Enum<ORDINAL, NAME>>
 
     //#endregion -------------------- Fields --------------------
     //#region -------------------- Constructor --------------------
@@ -40,7 +42,7 @@ export abstract class Enum<const ORDINAL extends number = number,
     /**
      * Create a new {@link Enum} instance with an {@link Enum.ordinal} defined at the construction.
      *
-     * Note that the use of {@link Enum.#Companion companion} is present so it <b>reflectively</b> set the instance received to <b>this</b>.
+     * Note that the use of `companion` is present so it __reflectively__ set the instance received to `this`.
      */
     protected constructor() {
         Reflect.set(this.#prototypeConstructor = getLastPrototype(this,), this.#ordinal = this.#lastOrdinalPlus1, this,)
@@ -62,10 +64,10 @@ export abstract class Enum<const ORDINAL extends number = number,
     }
 
     public [Symbol.toPrimitive]<const HINT extends string, >(hint: Nullable<HINT>,): EnumerableToPrimitive<HINT, this>
-    public [Symbol.toPrimitive](hint: Nullable<StringOrObject>,): EnumerableToPrimitive<PossiblePrimitiveHint, this>
-    public [Symbol.toPrimitive](hint: Nullable<StringOrObject>,): | ORDINAL | NAME {
+    public [Symbol.toPrimitive](hint: Nullable<StringOrObject>,): | ORDINAL | NAME
+    public [Symbol.toPrimitive](hint: Nullable<StringOrObject>,) {
         if (hint == null)
-            throw new NullHintException(`Invalid null hint: The "${this.#__companion.instance.name}" cannot be converted to a string or number primitive.`,)
+            throw new NullHintException(`Invalid null hint: The “${this.#__companion.instance.name}” cannot be converted to a string or number primitive.`,)
         if (hint instanceof String)
             return this[Symbol.toPrimitive](hint.valueOf(),)
 
@@ -76,7 +78,7 @@ export abstract class Enum<const ORDINAL extends number = number,
             return this.name
         if (lowerCaseHint === "default")
             return this.name
-        throw new InvalidHintException(`Invalid hint "${hint}": The "${this.#__companion.instance.name}" could only be converted to a string or number primitive.`, hint,)
+        throw new InvalidHintException(`Invalid hint “${hint}”: The “${this.#__companion.instance.name}” could only be converted to a string or number primitive.`, hint,)
     }
 
     public get [Symbol.toStringTag](): EnumerableName {
@@ -96,16 +98,16 @@ export abstract class Enum<const ORDINAL extends number = number,
     get #lastOrdinalPlus1(): ORDINAL {
         const instance = this.#prototypeConstructor
         const map = EnumConstants.LAST_ORDINAL_MAP
-        const nextValue = (map.get(instance,) ?? -1) + 1 as ORDINAL
+        const nextValue = map.getOrInsert(instance, -1,) + 1 as ORDINAL
         map.set(instance, nextValue,)
         return nextValue
     }
 
     /**
-     * Get the {@link Enumerable enumerable} {@link Enumerable.name name}
-     * by using the {@link CompanionEnumDeclaration.values companion values}
+     * Get the {@link Enumerable} {@link Enumerable.name name}
+     * by using the {@link CompanionEnumerable.values companion values}
      *
-     * @throws {NullReferenceException} The current instance was not found in the {@link CompanionEnumDeclaration.values companion values}
+     * @throws NullReferenceException The current instance was not found in the {@link CompanionEnumerable.values companion values}
      */
     get #nameOnCurrentInstance(): NAME {
         const companion = this.#__companion
@@ -114,7 +116,7 @@ export abstract class Enum<const ORDINAL extends number = number,
         while (index-- > 0)
             if (values.get(index,) === this)
                 return companion.names.get(index,) as NAME
-        throw new NullReferenceException(`Reference not found! No name to the "${companion.instance.name}" were found. Or it was called during its construction.`, this,)
+        throw new NullReferenceException(`Reference not found! No name to the “${companion.instance.name}” were found. Or it was called during its construction.`, this,)
     }
 
     //#endregion -------------------- Methods --------------------
