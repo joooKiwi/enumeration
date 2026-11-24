@@ -114,7 +114,7 @@
   "author": "JóôòKiwi",
   "license": "MIT",
   "dependencies": {
-    "@joookiwi/collection": "^2.1.0",
+    "@joookiwi/collection": "^2.1.1",
     "@joookiwi/lazy":       "^1.8.0",
     "@joookiwi/type":       "^1.3.0"
   },
