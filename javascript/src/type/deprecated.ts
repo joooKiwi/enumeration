@@ -10,6 +10,8 @@
 //  - https://github.com/joooKiwi/enumeration
 //··························································
 
+import type {BigIntOrObject, NumberOrObject, StringOrObject} from "@joookiwi/type"
+
 import type {Enumerable}                                                                                                                                      from "../Enumerable"
 import type {EnumerableWithNullableGreatGrandParent}                                                                                                          from "../EnumerableWithNullableGreatGrandParent"
 import type {EnumerableWithNullableGrandParent}                                                                                                               from "../EnumerableWithNullableGrandParent"
@@ -23,6 +25,21 @@ import type {CompanionEnumerableWithParent}                                     
 import type {CompanionEnumerableType, CompanionEnumerableWithGrandParentType, CompanionEnumerableWithGreatGrandParentType, CompanionEnumerableWithParentType} from "./companion"
 import type {OrdinalOf, SpecificOrdinalOf}                                                                                                                    from "./ordinalOf"
 import type {NameOf, SpecificNameOf}                                                                                                                          from "./nameOf"
+
+/**
+ * A general {@link Enumerable} type possibility
+ *
+ * @deprecated Replace with {@link EnumerableOrStringOrNumericOrObject} instead
+ */
+export type PossibleEnumerableValue<ENUM extends Enumerable = Enumerable, ORDINAL extends number = number, NAME extends string = string, > =
+    | StringOrObject<NAME> | NumberOrObject<ORDINAL> | BigIntOrObject | ENUM
+/**
+ * A strict {@link Enumerable} type possibility
+ *
+ * @deprecated Replace with {@link StrictEnumerableOrStringOrNumericOrObject} instead
+ */
+export type PossibleEnumerableValueBy<ENUM extends Enumerable, >
+    = | StringOrObject<NameOf<ENUM>> | NumberOrObject<OrdinalOf<ENUM>> | BigIntOrObject | ENUM
 
 /** @deprecated Replace with {@link ValueBySpecificOrdinal} instead. This will be removed in version 3.14 */
 export type ValueByEnumerableConstructorAndEnumerableOrdinalAndOrdinal<ENUM_CONSTRUCTOR extends EnumerableConstructor<any, any>, ENUM extends Enumerable, ORDINAL extends number, >
