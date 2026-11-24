@@ -540,6 +540,7 @@ class GrandParentingEnumExample:
 
 | JS / TS version    | Date                 | Quick note                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 |--------------------|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 3.13.1             | November 24th, 2026  | Addition of the missing deprecated files,<br/>[collection][collection] (~~2.1.0~~ → [2.1.1][js-collection-v2.1])                                                                                                                                                                                                                                                                                                                                                  |
 | [3.13.0][js-v3.13] | October 21st, 2026   | Renaming from `CompanionEnumDeclaration` to `CompanionEnumerable` plus the other similar names<br/>Relocation of the `helper` methods to the `method` folder<br/>[collection][collection] (~~2.0.0~~ → [2.1.0][js-collection-v2.1])                                                                                                                                                                                                                               |
 | 3.12.0             | August 12th, 2026    | [collection][collection] (~~1.13.0~~ → [2.0.1][js-collection-v2.0])                                                                                                                                                                                                                                                                                                                                                                                               |
 | 3.11.0             | Febuary 24th, 2026   | 2026 update,<br/>[collection][collection] (~~1.13.0~~ → [1.14.0][js-collection-v1.14])                                                                                                                                                                                                                                                                                                                                                                            |
@@ -589,7 +590,7 @@ class GrandParentingEnumExample:
 [js-v2.5]:  https://github.com/joooKiwi/enumeration/releases/tag/v2.5.0-js
 [js-v2.7]:  https://github.com/joooKiwi/enumeration/releases/tag/v2.7.0-js
 [js-v3.0]:  https://github.com/joooKiwi/enumeration/releases/tag/v3.12.0-js
-[js-v3.13]: https://github.com/joooKiwi/enumeration/releases/tag/v3.13.0-js
+[js-v3.13]: https://github.com/joooKiwi/enumeration/releases/tag/v3.13.1-js
 
 [collection]: https://github.com/joooKiwi/collection
 
@@ -606,7 +607,7 @@ class GrandParentingEnumExample:
 [js-collection-v1.13]: https://github.com/joooKiwi/collection/releases/tag/v1.13.0-js
 [js-collection-v1.14]: https://github.com/joooKiwi/collection/releases/tag/v1.14.0-js
 [js-collection-v2.0]:  https://github.com/joooKiwi/collection/releases/tag/v2.0.1-js
-[js-collection-v2.1]:  https://github.com/joooKiwi/collection/releases/tag/v2.1.0-js
+[js-collection-v2.1]:  https://github.com/joooKiwi/collection/releases/tag/v2.1.1-js
 
 [type]: https://github.com/joooKiwi/type
 
